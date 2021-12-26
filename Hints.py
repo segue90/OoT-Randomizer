@@ -784,6 +784,135 @@ def get_junk_hint(spoiler, world, checked):
 
     return (GossipText(hint.text, prefix=''), None)
 
+def get_important_check_hint(spoiler, world, checked):
+    important_check = [
+        "Biggoron Sword",
+        "Bolero of Fire",
+        "Bomb Bag",
+        "Boomerang",
+        "Bottle",
+        "Bottle with Red Potion",
+        "Bottle with Green Potion",
+        "Bottle with Blue Potion",
+        "Bottle with Milk",
+        "Bottle with Fairy",
+        "Bottle with Fish",
+        "Bottle with Blue Fire",
+        "Bottle with Bugs",
+        "Bottle with Big Poe",
+        "Bottle with Poe",
+        "Bow",
+        "Pocket Egg",
+        "Pocket Cucco",
+        "Cojiro",
+        "Odd Mushroom",
+        "Poachers Saw",
+        "Broken Sword",
+        "Prescription",
+        "Eyeball Frog",
+        "Eyedrops",
+        "Claim Check",
+        "Dins Fire",
+        "Double Defense",
+        "Eponas Song",
+        "Farores Wind",
+        "Fire Arrows",
+        "Gerudo Membership Card",
+        "Giants Knife",
+        "Goron Tunic",
+        "Hover Boots",
+        "Ice Arrows",
+        "Iron Boots",
+        "Kokiri Sword",
+        "Lens of Truth",
+        "Light Arrows",
+        "Magic Bean Pack",
+        "Magic Meter",
+        "Megaton Hammer",
+        "Minuet of Forest",
+        "Mirror Shield",
+        "Nayrus Love",
+        "Nocturne of Shadow",
+        "Ocarina",
+        "Prelude of Light",
+        "Progressive Hookshot",
+        "Progressive Scale",
+        "Progressive Strength Upgrade",
+        "Progressive Wallet",
+        "Requiem of Spirit",
+        "Rutos Letter",
+        "Sarias Song",
+        "Serenade of Water",
+        "Slingshot",
+        "Song of Storms",
+        "Song of Time",
+        "Stone of Agony",
+        "Suns Song",
+        "Weird Egg",
+        "Zeldas Lullaby",
+        "Zora Tunic"
+    ]
+
+    location_list = [
+        "Kokiri Forest",
+        "the Lost Woods",
+        "the Sacred Forest Meadow",
+        "Hyrule Field",
+        "Kakariko Village",
+        "the Graveyard",
+        "Lon Lon Ranch",
+        "the Market",
+        "Hyrule Castle",
+        "the Temple of Time",
+        "outside Ganon's Castle",
+        "Zora's River",
+        "Zora's Domain",
+        "Zora's Fountain",
+        "Lake Hylia",
+        "Gerudo Valley",
+        "Gerudo's Fortress",
+        "the Haunted Wasteland",
+        "the Desert Colossus",
+        "Goron City",
+        "Death Mountain Trail",
+        "Death Mountain Crater",
+        "the Deku Tree",
+        "Dodongo's Cavern",
+        "Jabu Jabu's Belly",
+        "the Forest Temple",
+        "the Fire Temple",
+        "the Water Temple",
+        "the Shadow Temple",
+        "the Spirit Temple",
+        "the Bottom of the Well",
+        "the Ice Cavern",
+        "the Gerudo Training Ground",
+        "inside Ganon's Castle"
+    ]
+    location_list = list(filter(lambda location: (location + " Important Check") not in checked, location_list))
+    hintLoc = random.choice(location_list)
+    item_count = 0
+    for location in world.get_filled_locations():
+        region = get_hint_area(location)
+        if region == hintLoc:
+            for item in important_check:
+                if item == location.item.name:
+                    item_count = item_count + 1
+
+    checked.add(hintLoc + " Important Check")
+
+    if item_count == 0:
+        numcolor = "Red"
+    elif item_count == 1:
+        numcolor = "Pink"
+    elif item_count == 2:
+        numcolor = "Yellow"
+    elif item_count == 3:
+        numcolor = "Light Blue"
+    else:
+        numcolor = "Green"
+    return (GossipText('#%s# has #%d# major items.' % (hintLoc, item_count), [numcolor, 'Light Blue']), None)
+
 
 hint_func = {
     'trial':      lambda spoiler, world, checked: None,
@@ -799,7 +928,8 @@ hint_func = {
     'entrance':         get_entrance_hint,
     'random':           get_random_location_hint,
     'junk':             get_junk_hint,
-    'named-item':       get_specific_item_hint
+    'named-item':       get_specific_item_hint,
+    'important_check':  get_important_check_hint
 }
 
 hint_dist_keys = {
