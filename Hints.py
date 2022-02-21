@@ -826,13 +826,10 @@ def get_important_check_hint(spoiler, world, checked):
         "Eponas Song",
         "Farores Wind",
         "Fire Arrows",
-        "Gerudo Membership Card",
-        "Giants Knife",
         "Goron Tunic",
         "Hover Boots",
         "Ice Arrows",
         "Iron Boots",
-        "Kokiri Sword",
         "Lens of Truth",
         "Light Arrows",
         "Magic Bean Pack",
@@ -842,7 +839,6 @@ def get_important_check_hint(spoiler, world, checked):
         "Mirror Shield",
         "Nayrus Love",
         "Nocturne of Shadow",
-        "Ocarina",
         "Prelude of Light",
         "Progressive Hookshot",
         "Progressive Scale",
@@ -898,15 +894,24 @@ def get_important_check_hint(spoiler, world, checked):
         "the Gerudo Training Ground",
         "inside Ganon's Castle"
     ]
+    if world.settings.shuffle_kokiri_sword:
+        important_check.append("Kokiri Sword")
+    if world.settings.shuffle_medigoron_carpet_salesman:
+        important_check.append("Giants Knife")
+    if world.settings.shuffle_gerudo_card:
+        important_check.append("Gerudo Membership Card")
+    if world.settings.shuffle_ocarinas:
+        important_check.append("Ocarina")
     location_list = list(filter(lambda location: (location + " Important Check") not in checked, location_list))
     hintLoc = random.choice(location_list)
     item_count = 0
     for location in world.get_filled_locations():
-        region = get_hint_area(location)
+        region, locationColor = get_hint_area(location)
         if region == hintLoc:
             for item in important_check:
                 if item == location.item.name:
-                    item_count = item_count + 1
+                    if not (location.name == "Song from Impa" and world.settings.skip_child_zelda):
+                        item_count = item_count + 1
 
     checked.add(hintLoc + " Important Check")
 
@@ -920,7 +925,7 @@ def get_important_check_hint(spoiler, world, checked):
         numcolor = "Light Blue"
     else:
         numcolor = "Green"
-    return (GossipText('#%s# has #%d# major items.' % (hintLoc, item_count), [numcolor, 'Light Blue']), None)
+    return (GossipText('#%s# has #%d# major items.' % (hintLoc, item_count), [numcolor, locationColor]), None)
 
 
 hint_func = {
