@@ -794,123 +794,23 @@ def get_junk_hint(spoiler, world, checked):
     return (GossipText(hint.text, prefix=''), None)
 
 def get_important_check_hint(spoiler, world, checked):
-    important_check = [
-        "Biggoron Sword",
-        "Bolero of Fire",
-        "Bomb Bag",
-        "Boomerang",
-        "Bottle",
-        "Bottle with Red Potion",
-        "Bottle with Green Potion",
-        "Bottle with Blue Potion",
-        "Bottle with Milk",
-        "Bottle with Fairy",
-        "Bottle with Fish",
-        "Bottle with Blue Fire",
-        "Bottle with Bugs",
-        "Bottle with Big Poe",
-        "Bottle with Poe",
-        "Bow",
-        "Pocket Egg",
-        "Pocket Cucco",
-        "Cojiro",
-        "Odd Mushroom",
-        "Poachers Saw",
-        "Broken Sword",
-        "Prescription",
-        "Eyeball Frog",
-        "Eyedrops",
-        "Claim Check",
-        "Dins Fire",
-        "Double Defense",
-        "Eponas Song",
-        "Farores Wind",
-        "Fire Arrows",
-        "Goron Tunic",
-        "Hover Boots",
-        "Ice Arrows",
-        "Iron Boots",
-        "Lens of Truth",
-        "Light Arrows",
-        "Magic Bean Pack",
-        "Magic Meter",
-        "Megaton Hammer",
-        "Minuet of Forest",
-        "Mirror Shield",
-        "Nayrus Love",
-        "Nocturne of Shadow",
-        "Prelude of Light",
-        "Progressive Hookshot",
-        "Progressive Scale",
-        "Progressive Strength Upgrade",
-        "Progressive Wallet",
-        "Requiem of Spirit",
-        "Rutos Letter",
-        "Sarias Song",
-        "Serenade of Water",
-        "Slingshot",
-        "Song of Storms",
-        "Song of Time",
-        "Stone of Agony",
-        "Suns Song",
-        "Weird Egg",
-        "Zeldas Lullaby",
-        "Zora Tunic"
-    ]
-
-    location_list = [
-        "Kokiri Forest",
-        "the Lost Woods",
-        "the Sacred Forest Meadow",
-        "Hyrule Field",
-        "Kakariko Village",
-        "the Graveyard",
-        "Lon Lon Ranch",
-        "the Market",
-        "Hyrule Castle",
-        "the Temple of Time",
-        "outside Ganon's Castle",
-        "Zora's River",
-        "Zora's Domain",
-        "Zora's Fountain",
-        "Lake Hylia",
-        "Gerudo Valley",
-        "Gerudo's Fortress",
-        "the Haunted Wasteland",
-        "the Desert Colossus",
-        "Goron City",
-        "Death Mountain Trail",
-        "Death Mountain Crater",
-        "the Deku Tree",
-        "Dodongo's Cavern",
-        "Jabu Jabu's Belly",
-        "the Forest Temple",
-        "the Fire Temple",
-        "the Water Temple",
-        "the Shadow Temple",
-        "the Spirit Temple",
-        "the Bottom of the Well",
-        "the Ice Cavern",
-        "the Gerudo Training Ground",
-        "inside Ganon's Castle"
-    ]
-    if world.settings.shuffle_kokiri_sword:
-        important_check.append("Kokiri Sword")
-    if world.settings.shuffle_medigoron_carpet_salesman:
-        important_check.append("Giants Knife")
-    if world.settings.shuffle_gerudo_card:
-        important_check.append("Gerudo Membership Card")
-    if world.settings.shuffle_ocarinas:
-        important_check.append("Ocarina")
-    location_list = list(filter(lambda location: (location + " Important Check") not in checked, location_list))
-    hintLoc = random.choice(location_list)
+    top_level_locations = []
+    for location in world.get_filled_locations():
+        if (get_hint_area(location)[0] not in top_level_locations 
+            and (get_hint_area(location)[0] + " Important Check") not in checked
+            and get_hint_area(location)[0] != "Link's Pocket"):
+            top_level_locations.append(get_hint_area(location)[0])
+    hintLoc = random.choice(top_level_locations)
     item_count = 0
     for location in world.get_filled_locations():
         region, locationColor = get_hint_area(location)
         if region == hintLoc:
-            for item in important_check:
-                if item == location.item.name:
-                    if not (location.name == "Song from Impa" and world.settings.skip_child_zelda):
+            if (location.item.majoritem
+                and not (location.name == "Song from Impa" and world.settings.skip_child_zelda)):
+                    if (not(location.item.name == "Kokiri Sword" and not world.settings.shuffle_kokiri_sword
+                        or location.item.name == "Giants Knife" and not world.settings.shuffle_medigoron_carpet_salesman
+                        or location.item.name == "Gerudo Membership Card" and not world.settings.shuffle_gerudo_card
+                        or location.item.name == "Ocarina" and not world.settings.shuffle_ocarinas)):
                         item_count = item_count + 1
 
     checked.add(hintLoc + " Important Check")
@@ -925,7 +825,7 @@ def get_important_check_hint(spoiler, world, checked):
         numcolor = "Light Blue"
     else:
         numcolor = "Green"
-    return (GossipText('#%s# has #%d# major items.' % (hintLoc, item_count), [numcolor, locationColor]), None)
+    return (GossipText('#%s# has #%d# major items.' % (hintLoc, item_count), [numcolor, "Green"]), None)
 
 
 hint_func = {
