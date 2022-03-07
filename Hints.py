@@ -806,12 +806,19 @@ def get_important_check_hint(spoiler, world, checked):
         region, locationColor = get_hint_area(location)
         if region == hintLoc:
             if (location.item.majoritem
-                and not (location.name == "Song from Impa" and world.settings.skip_child_zelda)):
-                    if (not(location.item.name == "Kokiri Sword" and not world.settings.shuffle_kokiri_sword
-                        or location.item.name == "Giants Knife" and not world.settings.shuffle_medigoron_carpet_salesman
-                        or location.item.name == "Gerudo Membership Card" and not world.settings.shuffle_gerudo_card
-                        or location.item.name == "Ocarina" and not world.settings.shuffle_ocarinas)):
-                        item_count = item_count + 1
+                and not (location.name == "Song from Impa" and world.settings.skip_child_zelda)
+                and not(location.item.name == "Kokiri Sword" and not world.settings.shuffle_kokiri_sword
+                or location.item.name == "Giants Knife" and not world.settings.shuffle_medigoron_carpet_salesman
+                or location.item.name == "Gerudo Membership Card" and not world.settings.shuffle_gerudo_card
+                or location.item.name == "Ocarina" and not world.settings.shuffle_ocarinas)
+                or (location.item.type == 'SmallKey' and not (world.settings.shuffle_smallkeys == 'dungeon' or world.settings.shuffle_smallkeys == 'vanilla'))
+                or (location.item.type == 'HideoutSmallKey' and not world.settings.shuffle_hideoutkeys == 'vanilla')
+                or (location.item.type == 'BossKey' and not (world.settings.shuffle_bosskeys == 'dungeon' or world.settings.shuffle_bosskeys == 'vanilla'))
+                or (location.item.type == 'GanonBossKey' and not (world.settings.shuffle_ganon_bosskey == 'vanilla' 
+                or world.settings.shuffle_ganon_bosskey == 'dungeon' or world.settings.shuffle_ganon_bosskey == "on_lacs"
+                or world.settings.shuffle_ganon_bosskey == 'stones' or world.settings.shuffle_ganon_bosskey == "medallions"
+                or world.settings.shuffle_ganon_bosskey == 'dungeons' or world.settings.shuffle_ganon_bosskey == "tokens"))):
+                item_count = item_count + 1
 
     checked.add(hintLoc + " Important Check")
 
