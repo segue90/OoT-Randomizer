@@ -806,6 +806,7 @@ def get_important_check_hint(spoiler, world, checked):
         region, locationColor = get_hint_area(location)
         if region == hintLoc:
             if (location.item.majoritem
+                and not location.item.name == 'Triforce Piece'
                 and not ((location.name == 'Song from Impa' or location.item.name == 'Zeldas Letter') and world.settings.skip_child_zelda)
                 and not(location.item.name == 'Kokiri Sword' and not world.settings.shuffle_kokiri_sword
                 or location.item.name == 'Giants Knife' and not world.settings.shuffle_medigoron_carpet_salesman
