@@ -797,7 +797,7 @@ def get_important_check_hint(spoiler, world, checked):
     top_level_locations = []
     for location in world.get_filled_locations():
         if (get_hint_area(location)[0] not in top_level_locations 
-            and (get_hint_area(location)[0] + " Important Check") not in checked
+            and (get_hint_area(location)[0] + ' Important Check') not in checked
             and get_hint_area(location)[0] != "Link's Pocket"):
             top_level_locations.append(get_hint_area(location)[0])
     hintLoc = random.choice(top_level_locations)
@@ -806,33 +806,33 @@ def get_important_check_hint(spoiler, world, checked):
         region, locationColor = get_hint_area(location)
         if region == hintLoc:
             if (location.item.majoritem
-                and not (location.name == "Song from Impa" and world.settings.skip_child_zelda)
-                and not(location.item.name == "Kokiri Sword" and not world.settings.shuffle_kokiri_sword
-                or location.item.name == "Giants Knife" and not world.settings.shuffle_medigoron_carpet_salesman
-                or location.item.name == "Gerudo Membership Card" and not world.settings.shuffle_gerudo_card
-                or location.item.name == "Ocarina" and not world.settings.shuffle_ocarinas)
+                and not ((location.name == 'Song from Impa' or location.item.name == 'Zeldas Letter') and world.settings.skip_child_zelda)
+                and not(location.item.name == 'Kokiri Sword' and not world.settings.shuffle_kokiri_sword
+                or location.item.name == 'Giants Knife' and not world.settings.shuffle_medigoron_carpet_salesman
+                or location.item.name == 'Gerudo Membership Card' and not world.settings.shuffle_gerudo_card
+                or location.item.name == 'Ocarina' and not world.settings.shuffle_ocarinas)
                 or (location.item.type == 'SmallKey' and not (world.settings.shuffle_smallkeys == 'dungeon' or world.settings.shuffle_smallkeys == 'vanilla'))
                 or (location.item.type == 'HideoutSmallKey' and not world.settings.shuffle_hideoutkeys == 'vanilla')
                 or (location.item.type == 'BossKey' and not (world.settings.shuffle_bosskeys == 'dungeon' or world.settings.shuffle_bosskeys == 'vanilla'))
                 or (location.item.type == 'GanonBossKey' and not (world.settings.shuffle_ganon_bosskey == 'vanilla' 
-                or world.settings.shuffle_ganon_bosskey == 'dungeon' or world.settings.shuffle_ganon_bosskey == "on_lacs"
-                or world.settings.shuffle_ganon_bosskey == 'stones' or world.settings.shuffle_ganon_bosskey == "medallions"
-                or world.settings.shuffle_ganon_bosskey == 'dungeons' or world.settings.shuffle_ganon_bosskey == "tokens"))):
+                or world.settings.shuffle_ganon_bosskey == 'dungeon' or world.settings.shuffle_ganon_bosskey == 'on_lacs'
+                or world.settings.shuffle_ganon_bosskey == 'stones' or world.settings.shuffle_ganon_bosskey == 'medallions'
+                or world.settings.shuffle_ganon_bosskey == 'dungeons' or world.settings.shuffle_ganon_bosskey == 'tokens'))):
                 item_count = item_count + 1
 
-    checked.add(hintLoc + " Important Check")
+    checked.add(hintLoc + ' Important Check')
 
     if item_count == 0:
-        numcolor = "Red"
+        numcolor = 'Red'
     elif item_count == 1:
-        numcolor = "Pink"
+        numcolor = 'Pink'
     elif item_count == 2:
-        numcolor = "Yellow"
+        numcolor = 'Yellow'
     elif item_count == 3:
-        numcolor = "Light Blue"
+        numcolor = 'Light Blue'
     else:
-        numcolor = "Green"
-    return (GossipText('#%s# has #%d# major items.' % (hintLoc, item_count), [numcolor, "Green"]), None)
+        numcolor = 'Green'
+    return (GossipText('#%s# has #%d# major items.' % (hintLoc, item_count), [numcolor, 'Green']), None)
 
 
 hint_func = {
