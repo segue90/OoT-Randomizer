@@ -929,14 +929,14 @@ def get_junk_hint(spoiler, world, checked):
 def get_important_check_hint(spoiler, world, checked):
     top_level_locations = []
     for location in world.get_filled_locations():
-        if (get_hint_area(location)[0] not in top_level_locations 
-            and (get_hint_area(location)[0] + ' Important Check') not in checked
-            and get_hint_area(location)[0] != "Link's Pocket"):
-            top_level_locations.append(get_hint_area(location)[0])
+        if (HintArea.at(location).text(world.settings.clearer_hints) not in top_level_locations 
+            and (HintArea.at(location).text(world.settings.clearer_hints) + ' Important Check') not in checked
+            and "Pocket" not in HintArea.at(location).text(world.settings.clearer_hints)):
+            top_level_locations.append(HintArea.at(location).text(world.settings.clearer_hints))
     hintLoc = random.choice(top_level_locations)
     item_count = 0
     for location in world.get_filled_locations():
-        region, locationColor = get_hint_area(location)
+        region = HintArea.at(location).text(world.settings.clearer_hints)
         if region == hintLoc:
             if (location.item.majoritem
                 and not location.item.name == 'Triforce Piece'
