@@ -946,7 +946,7 @@ def get_important_check_hint(spoiler, world, checked):
                 or location.item.name == 'Giants Knife' and not world.settings.shuffle_medigoron_carpet_salesman
                 or location.item.name == 'Gerudo Membership Card' and not world.settings.shuffle_gerudo_card
                 or location.item.name == 'Ocarina' and not world.settings.shuffle_ocarinas
-                or location.item.name == 'Magic Bean' and not world.settings.shuffle_beans
+                or 'Bean' in location.item.name and not world.settings.shuffle_beans
                 or location.item.name == 'Weird Egg' and not world.settings.shuffle_weird_egg)
                 or (location.item.type == 'SmallKey' and not (world.settings.shuffle_smallkeys == 'dungeon' or world.settings.shuffle_smallkeys == 'vanilla'))
                 or (location.item.type == 'HideoutSmallKey' and not world.settings.shuffle_hideoutkeys == 'vanilla')
