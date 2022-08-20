@@ -119,7 +119,7 @@ do that.
   * New setting `Show Seed Info on File Screen` which also allows a user-set message to be displayed.
   * New settings allow for Rainbow Bridge and Ganon's Boss Key to be obtained upon reaching a certain amount of total heart containers.
   * New setting `Easier Fire Arrow Entry` allows you to set the amount of torches that must be lit to open Shadow Temple.
-  * The pause screen info menu has been split into 3 menus, which show icons on the D-Pad indicating which direction leads to which menu. In addition, the menu now tracks the total keys you've found for a dungeon, not just how many you have remaining.
+  * The pause screen info menu has been split into 3 menus, which show icons on the D-Pad indicating which direction leads to which menu. In addition, the menu now tracks the total keys you've found for a dungeon, not just how many you have remaining. The old menu from pressing A still exists as well.
   * New setting `Invisible Chests` makes all chests in the game invisible.
   * New setting `Bonks Do Damage` will deal damage to Link when bonking, including `One Bonk KO` which will instantly kill him from bonking.
   * New hint type `Dual Hint` which allows multiple locations to be hinted in the same hint. Hint distros can also use new option `upgrade_hints` to upgrade some hints to Dual Hints.
@@ -136,6 +136,8 @@ do that.
   * Red Ice transparency is increased when any Chest Appearance setting is enabled.
   * Zelda's text after defeating Ganon now advances automatically.
   * Health and Magic potion models in shops will now match your health and magic colors when `Item Model Colors Match Cosmetics` is enabled.
+  * The Gerudo guard on the Wasteland side of the gate will now spawn regardless of settings.
+  * Several vanilla warp destination messages have been updated to keep consistency with our custom warp destination messages.
 
 
 #### Bug fixes
@@ -162,6 +164,7 @@ do that.
 * Many minor logic bugs have been corrected.
 * Fix a softlock when plandoing starting with less than 10 beans.
 * Fix plando negative locations (ex. "!Gold Skulltula Token") choosing Buy items for non-Buy locations.
+* Ice traps will no longer be sent to players in the Treasure Chest Game to prevent using deaths to circumvent the game.
 
 #### Other changes
 * Added an auto-tracker context area to memory, so auto-trackers can find certain symbols much easier.

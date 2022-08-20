@@ -115,7 +115,7 @@ class World(object):
 
                 for area in HintArea:
                     if area.is_dungeon and area.dungeon_name in self:
-                        self[area.dungeon_name].hint_name = str(area)
+                        self[area.dungeon_name].hint_name = area
             
             def __missing__(self, dungeon_name):
                 return self.EmptyDungeonInfo(None)
@@ -425,6 +425,14 @@ class World(object):
             self.randomized_list.append('dungeon_shortcuts')
         elif (self.settings.dungeon_shortcuts_choice == 'all'):
             self.settings.dungeon_shortcuts = dungeons
+
+        # Determine area with keyring
+        if (self.settings.key_rings_choice == 'random'):
+            areas = ['Thieves Hideout', 'Forest Temple', 'Fire Temple', 'Water Temple', 'Shadow Temple', 'Spirit Temple', 'Bottom of the Well', 'Gerudo Training Ground', 'Ganons Castle']
+            self.settings.key_rings = random.sample(areas, random.randint(0, len(areas)))
+            self.randomized_list.append('key_rings')
+        elif (self.settings.key_rings_choice == 'all'):
+            self.settings.key_rings = ['Thieves Hideout', 'Forest Temple', 'Fire Temple', 'Water Temple', 'Shadow Temple', 'Spirit Temple', 'Bottom of the Well', 'Gerudo Training Ground', 'Ganons Castle']
 
         # Handle random Rainbow Bridge condition
         if (self.settings.bridge == 'random'
