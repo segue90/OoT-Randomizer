@@ -8,7 +8,7 @@
         },
         "exits": {
             "Root Exits": "is_starting_age or Time_Travel",
-            "HC Garden Locations": "shuffle_child_trade == 'skip_child_zelda'"
+            "HC Garden Locations": "skip_child_zelda"
         }
     },
     {
@@ -235,6 +235,8 @@
         },
         "locations": {
             "LW Skull Kid": "is_child and can_play(Sarias_Song)",
+            "LW Trade Cojiro": "is_adult and Cojiro",
+            "LW Trade Odd Potion": "is_adult and Odd_Potion",
             "LW Ocarina Memory Game": "is_child and Ocarina",
             "LW Target in Woods": "can_use(Slingshot)",
             "LW Deku Scrub Near Bridge": "is_child and can_stun_deku",
@@ -479,6 +481,7 @@
                 ('Eyeball Frog Access' or (Eyeball_Frog and disable_trade_revert))"
         },
         "locations": {
+            "LH Trade Eyeball Frog": "is_adult and Eyeball_Frog",
             "LH Lab Dive": "
                 (Progressive_Scale, 2) or
                 (logic_lab_diving and is_adult and Iron_Boots and Hookshot)",
@@ -584,6 +587,7 @@
         },
         "locations": {
             "GV Chest": "can_use(Megaton_Hammer)",
+            "GV Trade Poachers Saw": "is_adult and Poachers_Saw",
             "GV GS Behind Tent": "can_use(Hookshot) and at_night",
             "GV GS Pillar": "can_use(Hookshot) and at_night"
         },
@@ -1138,7 +1142,7 @@
         },
         "exits": {
             "Castle Grounds": "True",
-            "HC Garden": "Weird_Egg",
+            "HC Garden": "Weird_Egg or Chicken",
             "HC Great Fairy Fountain": "has_explosives",
             "HC Storms Grotto": "can_open_storm_grotto"
         }
@@ -1293,12 +1297,32 @@
         "region_name": "Market Mask Shop",
         "scene": "Market Mask Shop",
         "events": {
-            "Skull Mask": "Zeldas_Letter and (complete_mask_quest or at('Kakariko Village', is_child))",
-            "Mask of Truth": "'Skull Mask' and
-                (complete_mask_quest or
-                (at('Lost Woods', is_child and can_play(Sarias_Song)) and
-                    at('Graveyard', is_child and at_day) and
-                    at('Hyrule Field', is_child and has_all_stones)))"
+            "Mask Shop Open": "at('HC Garden Locations', is_child) and 'Kakariko Village Gate Open'",
+            "Mask of Truth Access": "'Mask Shop Open' and (complete_mask_quest or (Bunny_Hood and at('Hyrule Field', is_child and has_all_stones)))"
+        },
+        "locations": {
+            # Gerudo Mask
+            "Market Mask Shop Item 1": "'Mask of Truth Access'",
+            # Zora Mask
+            "Market Mask Shop Item 2": "'Mask of Truth Access'",
+            # Mask of Truth
+            "Market Mask Shop Item 3": "'Mask of Truth Access'",
+            # Goron Mask
+            "Market Mask Shop Item 4": "'Mask of Truth Access'",
+            # Skull Mask
+            "Market Mask Shop Item 5": "
+                'Mask of Truth Access' or
+                ('Mask Shop Open' and Keaton_Mask and at('Kakariko Village', is_child))",
+            # Keaton Mask
+            "Market Mask Shop Item 6": "'Mask Shop Open'",
+            # Bunny Hood
+            "Market Mask Shop Item 7": "
+                'Mask of Truth Access' or
+                ('Mask Shop Open' and Spooky_Mask and at('Graveyard', is_child and at_day))",
+            # Spooky Mask
+            "Market Mask Shop Item 8": "
+                'Mask of Truth Access' or
+                ('Mask Shop Open' and Skull_Mask and at('Lost Woods', is_child and can_play(Sarias_Song)))"
         },
         "exits": {
             "Market": "True"
@@ -1399,7 +1423,7 @@
         "scene": "Kakariko Village",
         "hint": "KAKARIKO_VILLAGE",
         "events": {
-            "Cojiro Access": "is_adult and 'Wake Up Adult Talon'",
+            "Cojiro Access": "is_adult and at_day and 'Wake Up Adult Talon'",
             "Kakariko Village Gate Open": "is_child and (Zeldas_Letter or open_kakariko == 'open')"
         },
         "locations": {
@@ -1407,6 +1431,7 @@
                 is_adult and Forest_Medallion and Fire_Medallion and Water_Medallion",
             "Kak Anju as Adult": "is_adult and at_day",
             "Kak Anju as Child": "is_child and at_day and (can_break_crate or chicken_count < 7)",
+            "Kak Anju Trade Pocket Cucco": "is_adult and at_day and 'Wake Up Adult Talon'",
             "Kak Near Guards House Pot 1": "is_child",
             "Kak Near Guards House Pot 2": "is_child",
             "Kak Near Guards House Pot 3": "is_child",
@@ -1631,6 +1656,9 @@
                 is_adult and
                 ('Odd Mushroom Access' or (Odd_Mushroom and disable_trade_revert))"
         },
+        "locations": {
+            "Kak Granny Trade Odd Mushroom": "is_adult and Odd_Mushroom"
+        },
         "exits": {
             "Kak Backyard": "True"
         }
@@ -1807,10 +1835,12 @@
         },
         "locations": {
             "DMT Biggoron": "
-                is_adult and
-                (Claim_Check or
-                    (guarantee_trade_path and
+                is_adult and 
+                (Claim_Check or 
+                    (guarantee_trade_path and (not adult_trade_shuffle) and 
                     ('Eyedrops Access' or (Eyedrops and disable_trade_revert))))",
+            "DMT Trade Broken Sword": "is_adult and Broken_Sword",
+            "DMT Trade Eyedrops": "is_adult and Eyedrops",
             "DMT GS Falling Rocks Path": "
                 is_adult and (Megaton_Hammer or logic_trail_gs_upper) and at_night",
             "DMT Gossip Stone": "True",
@@ -2241,6 +2271,7 @@
             "ZD Pot 5": "True",
             "ZD In Front of King Zora Beehive 1": "is_child and can_break_upper_beehive",
             "ZD In Front of King Zora Beehive 2": "is_child and can_break_upper_beehive",
+            "ZD Trade Prescription": "'King Zora Thawed' and Eyeball_Frog",
             "ZD GS Frozen Waterfall": "
                 is_adult and at_night and
                 (Hookshot or Bow or Magic_Meter or logic_domain_gs)",
@@ -2506,8 +2537,8 @@
         "region_name": "Deku Theater",
         "scene": "Deku Theater",
         "locations": {
-            "Deku Theater Skull Mask": "is_child and 'Skull Mask'",
-            "Deku Theater Mask of Truth": "is_child and 'Mask of Truth'"
+            "Deku Theater Skull Mask": "is_child and Skull_Mask",
+            "Deku Theater Mask of Truth": "is_child and Mask_of_Truth"
         },
         "exits": {
             "LW Beyond Mido": "True"

@@ -34,7 +34,7 @@
         "shopsanity": "off",
         "tokensanity": "off",
         "shuffle_scrubs": "off",
-        "shuffle_child_trade": "skip_child_zelda",
+        "shuffle_child_trade": [],
         "shuffle_freestanding_items": "off",
         "shuffle_pots": "off",
         "shuffle_crates": "off",
@@ -63,7 +63,9 @@
         ],
         "allowed_tricks": [],
         "starting_equipment": [],
-        "starting_items": [],
+        "starting_items": [
+            "zeldas_letter"
+        ],
         "starting_songs": [],
         "start_with_consumables": true,
         "start_with_rupees": true,
@@ -150,7 +152,7 @@
         "shopsanity": "off",
         "tokensanity": "off",
         "shuffle_scrubs": "off",
-        "shuffle_child_trade": "skip_child_zelda",
+        "shuffle_child_trade": [],
         "shuffle_freestanding_items": "off",
         "shuffle_pots": "off",
         "shuffle_crates": "off",
@@ -196,7 +198,8 @@
             "deku_shield"
         ],
         "starting_items": [
-            "ocarina"
+            "ocarina",
+            "zeldas_letter"
         ],
         "starting_songs": [],
         "start_with_consumables": true,
@@ -285,7 +288,7 @@
         "shopsanity": "off",
         "tokensanity": "off",
         "shuffle_scrubs": "off",
-        "shuffle_child_trade": "skip_child_zelda",
+        "shuffle_child_trade": [],
         "shuffle_freestanding_items": "off",
         "shuffle_pots": "off",
         "shuffle_crates": "off",
@@ -331,7 +334,8 @@
             "deku_shield"
         ],
         "starting_items": [
-            "ocarina"
+            "ocarina",
+            "zeldas_letter"
         ],
         "starting_songs": [
             "prelude"
@@ -550,7 +554,7 @@
         "shopsanity": "off",
         "tokensanity": "off",
         "shuffle_scrubs": "off",
-        "shuffle_child_trade": "skip_child_zelda",
+        "shuffle_child_trade": [],
         "shuffle_freestanding_items": "off",
         "shuffle_pots": "off",
         "shuffle_crates": "off",
@@ -599,7 +603,8 @@
         ],
         "starting_items": [
             "ocarina",
-            "lens"
+            "lens",
+            "zeldas_letter"
         ],
         "starting_songs": [
             "prelude"
@@ -695,7 +700,7 @@
         "shopsanity_prices": "random",
         "tokensanity": "off",
         "shuffle_scrubs": "low",
-        "shuffle_child_trade": "skip_child_zelda",
+        "shuffle_child_trade": [],
         "shuffle_freestanding_items": "off",
         "shuffle_pots": "off",
         "shuffle_crates": "off",
@@ -750,7 +755,8 @@
         "starting_items": [
             "ocarina",
             "farores_wind",
-            "lens"
+            "lens",
+            "zeldas_letter"
         ],
         "starting_songs": [],
         "start_with_consumables": true,
@@ -1230,7 +1236,7 @@
         "shopsanity": "off",
         "tokensanity": "off",
         "shuffle_scrubs": "off",
-        "shuffle_child_trade": "skip_child_zelda",
+        "shuffle_child_trade": [],
         "shuffle_freestanding_items": "off",
         "shuffle_pots": "off",
         "shuffle_crates": "off",
@@ -1275,7 +1281,8 @@
         "starting_items": [
             "ocarina",
             "lens",
-            "farores_wind"
+            "farores_wind",
+            "zeldas_letter"
         ],
         "starting_songs": [],
         "start_with_consumables": true,
@@ -1361,7 +1368,7 @@
         "shopsanity_prices": "random",
         "tokensanity": "off",
         "shuffle_scrubs": "low",
-        "shuffle_child_trade": "skip_child_zelda",
+        "shuffle_child_trade": [],
         "shuffle_freestanding_items": "off",
         "shuffle_pots": "off",
         "shuffle_crates": "off",
@@ -1408,7 +1415,8 @@
         ],
         "starting_equipment": [],
         "starting_items": [
-            "ocarina"
+            "ocarina",
+            "zeldas_letter"
         ],
         "starting_songs": [],
         "start_with_consumables": true,
