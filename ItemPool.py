@@ -124,6 +124,25 @@ ludicrous_items_extended = [
     'Magic Bean Pack',
     'Ice Arrows',
     'Blue Fire Arrows',
+    'Weird Egg',
+    'Chicken',
+    'Zeldas Letter',
+    'Keaton Mask',
+    'Skull Mask',
+    'Spooky Mask',
+    'Bunny Hood',
+    'Mask of Truth',
+    'Pocket Egg',
+    'Pocket Cucco',
+    'Cojiro',
+    'Odd Mushroom',
+    'Odd Potion',
+    'Poachers Saw',
+    'Broken Sword',
+    'Prescription',
+    'Eyeball Frog',
+    'Eyedrops',
+    'Claim Check'
 ]
 
 ludicrous_exclusions = [
