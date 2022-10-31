@@ -1015,7 +1015,8 @@ def get_important_check_hint(spoiler, world, checked):
         numcolor = 'Light Blue'
     else:
         numcolor = 'Green'
-    return (GossipText('#%s# has #%d# major items.' % (hintLoc, item_count), [numcolor, 'Green']), None)
+
+    return (GossipText('#%s# has #%d# major item%s.' % (hintLoc, item_count, "s" if item_count != 1 else ""), [numcolor, 'Green']), None)
 
 
 hint_func = {
