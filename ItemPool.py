@@ -383,7 +383,7 @@ def get_pool_core(world):
                     pending_junk_pool.append(f"Small Key ({dungeon})")
         if world.settings.shuffle_bosskeys in ['any_dungeon', 'overworld', 'keysanity', 'regional']:
             for dungeon in ['Forest Temple', 'Fire Temple', 'Water Temple', 'Shadow Temple', 'Spirit Temple']:
-                if not world.settings.keyring_give_bk or dungeon not in world.settings.key_rings:
+                if not world.settings.keyring_give_bk or dungeon not in world.settings.key_rings or world.settings.shuffle_smallkeys not in ['any_dungeon', 'overworld', 'keysanity', 'regional']:
                     pending_junk_pool.append(f"Boss Key ({dungeon})")
         if world.settings.shuffle_ganon_bosskey in ['any_dungeon', 'overworld', 'keysanity', 'regional']:
             pending_junk_pool.append('Boss Key (Ganons Castle)')
@@ -521,7 +521,7 @@ def get_pool_core(world):
 
             # Boss Key
             if location.vanilla_item == dungeon.item_name("Boss Key"):
-                if dungeon.name in world.settings.key_rings and world.settings.keyring_give_bk and dungeon.name in ['Forest Temple', 'Fire Temple', 'Water Temple', 'Shadow Temple', 'Spirit Temple']:
+                if world.settings.shuffle_smallkeys in ['any_dungeon', 'overworld', 'keysanity', 'regional'] and dungeon.name in world.settings.key_rings and world.settings.keyring_give_bk and dungeon.name in ['Forest Temple', 'Fire Temple', 'Water Temple', 'Shadow Temple', 'Spirit Temple']:
                     item = get_junk_item()[0]
                     shuffle_item = True
                 else:
