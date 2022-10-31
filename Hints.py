@@ -1033,7 +1033,7 @@ def get_important_check_hint(spoiler, world, checked):
             if (location.item.majoritem
                 and not location.item.name == 'Triforce Piece'
                 and not location.item.name == 'Deliver Letter'
-                and not ((location.name == 'Song from Impa' or location.item.name == 'Zeldas Letter') and world.settings.skip_child_zelda)
+                and not ((location.name == 'Song from Impa' or location.item.name == 'Zeldas Letter') and world.settings.shuffle_child_trade == 'skip_child_zelda')
                 and not(location.item.name == 'Kokiri Sword' and not world.settings.shuffle_kokiri_sword
                 or location.item.name == 'Giants Knife' and not world.settings.shuffle_medigoron_carpet_salesman
                 or location.item.name == 'Gerudo Membership Card' and not world.settings.shuffle_gerudo_card
