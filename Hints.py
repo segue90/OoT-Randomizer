@@ -1023,7 +1023,7 @@ def get_important_check_hint(spoiler, world, checked):
     for location in world.get_filled_locations():
         if (HintArea.at(location).text(world.settings.clearer_hints) not in top_level_locations 
             and (HintArea.at(location).text(world.settings.clearer_hints) + ' Important Check') not in checked
-            and "Pocket" not in HintArea.at(location).text(world.settings.clearer_hints)):
+            and "pocket" not in HintArea.at(location).text(world.settings.clearer_hints)):
             top_level_locations.append(HintArea.at(location).text(world.settings.clearer_hints))
     hintLoc = random.choice(top_level_locations)
     item_count = 0
@@ -1039,7 +1039,7 @@ def get_important_check_hint(spoiler, world, checked):
                 or location.item.name == 'Gerudo Membership Card' and not world.settings.shuffle_gerudo_card
                 or location.item.name == 'Ocarina' and not world.settings.shuffle_ocarinas
                 or 'Bean' in location.item.name and not world.settings.shuffle_beans
-                or location.item.name == 'Weird Egg' and not world.settings.shuffle_weird_egg)
+                or location.item.name == 'Weird Egg' and not world.settings.shuffle_child_trade == 'shuffle')
                 or (location.item.type == 'SmallKey' and not (world.settings.shuffle_smallkeys == 'dungeon' or world.settings.shuffle_smallkeys == 'vanilla'))
                 or (location.item.type == 'HideoutSmallKey' and not world.settings.shuffle_hideoutkeys == 'vanilla')
                 or (location.item.type == 'BossKey' and not (world.settings.shuffle_bosskeys == 'dungeon' or world.settings.shuffle_bosskeys == 'vanilla'))
