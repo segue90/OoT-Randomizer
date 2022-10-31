@@ -6,11 +6,11 @@ import json
 
 from Entrance import Entrance
 from Goals import Goal, GoalCategory
-from HintList import getRequiredHints, misc_item_hint_table
+from HintList import getRequiredHints, misc_item_hint_table, misc_location_hint_table
 from Hints import HintArea, hint_dist_keys, HintDistFiles
 from Item import ItemFactory, ItemInfo, MakeEventItem
 from Location import Location, LocationFactory
-from LocationList import business_scrubs
+from LocationList import business_scrubs, location_groups
 from Plandomizer import InvalidFileException
 from Region import Region, TimeOfDay
 from RuleParser import Rule_AST_Transformer
@@ -33,7 +33,9 @@ class World(object):
         self.shop_prices = {}
         self.scrub_prices = {}
         self.maximum_wallets = 0
+        self.hinted_dungeon_reward_locations = {}
         self.misc_hint_item_locations = {}
+        self.misc_hint_location_items = {}
         self.triforce_count = 0
         self.total_starting_triforce_count = 0
         self.bingosync_url = None
@@ -47,7 +49,7 @@ class World(object):
         self.distribution = settings.distribution.world_dists[id]
 
         # rename a few attributes...
-        self.keysanity = settings.shuffle_smallkeys in ['keysanity', 'remove', 'any_dungeon', 'overworld']
+        self.keysanity = settings.shuffle_smallkeys in ['keysanity', 'remove', 'any_dungeon', 'overworld', 'regional']
         self.check_beatable_only = settings.reachable_locations != 'all'
 
         self.shuffle_special_interior_entrances = settings.shuffle_interior_entrances == 'all'
@@ -181,7 +183,7 @@ class World(object):
         self.added_hint_types = {}
         self.item_added_hint_types = {}
         self.hint_exclusions = set()
-        if settings.skip_child_zelda:
+        if settings.shuffle_child_trade == 'skip_child_zelda':
             self.hint_exclusions.add('Song from Impa')
         self.hint_type_overrides = {}
         self.item_hint_type_overrides = {}
@@ -225,7 +227,9 @@ class World(object):
 
         self.always_hints = [hint.name for hint in getRequiredHints(self)]
 
+        self.dungeon_rewards_hinted = 'altar' in settings.misc_hints or settings.enhance_map_compass
         self.misc_hint_items = {hint_type: self.hint_dist_user.get('misc_hint_items', {}).get(hint_type, data['default_item']) for hint_type, data in misc_item_hint_table.items()}
+        self.misc_hint_locations = {hint_type: self.hint_dist_user.get('misc_hint_locations', {}).get(hint_type, data['item_location']) for hint_type, data in misc_location_hint_table.items()}
 
         self.state = State(self)
 
@@ -572,10 +576,7 @@ class World(object):
                     new_exit.rule_string = rule
                     if self.settings.logic_rules != 'none':
                         self.parser.parse_spot_rule(new_exit)
-                    if new_exit.never:
-                        logging.getLogger('').debug('Dropping unreachable exit: %s', new_exit.name)
-                    else:
-                        new_region.exits.append(new_exit)
+                    new_region.exits.append(new_exit)
             self.regions.append(new_region)
 
 
@@ -601,6 +602,8 @@ class World(object):
     def initialize_items(self):
         for item in self.itempool:
             item.world = self
+            if self.settings.shuffle_hideoutkeys in ['fortress', 'regional'] and item.type == 'HideoutSmallKey':
+                item.priority = True
         for region in self.regions:
             for location in region.locations:
                 if location.item != None:
@@ -674,20 +677,9 @@ class World(object):
         'Shadow Medallion',
         'Light Medallion'
     )
-    boss_location_names = (
-        'Queen Gohma',
-        'King Dodongo',
-        'Barinade',
-        'Phantom Ganon',
-        'Volvagia',
-        'Morpha',
-        'Bongo Bongo',
-        'Twinrova',
-        'Links Pocket'
-    )
     def fill_bosses(self, bossCount=9):
         boss_rewards = ItemFactory(self.rewardlist, self)
-        boss_locations = [self.get_location(loc) for loc in self.boss_location_names]
+        boss_locations = [self.get_location(loc) for loc in location_groups['Boss']]
 
         placed_prizes = [loc.item.name for loc in boss_locations if loc.item is not None]
         unplaced_prizes = [item for item in boss_rewards if item.name not in placed_prizes]
@@ -925,7 +917,7 @@ class World(object):
             # generate a category/goal pair, though locations are not
             # guaranteed if the higher priority Bridge category contains
             # all required locations for GBK
-            if self.settings.shuffle_ganon_bosskey in ['dungeon', 'overworld', 'any_dungeon', 'keysanity']:
+            if self.settings.shuffle_ganon_bosskey in ['dungeon', 'overworld', 'any_dungeon', 'keysanity', 'regional']:
                 # Make priority even with trials as the goal is no longer centered around dungeon completion or collectibles
                 gbk.priority = 30
                 gbk.goal_count = 1
@@ -1029,17 +1021,17 @@ class World(object):
 
         if self.settings.shuffle_mapcompass == 'dungeon':
             itempool.extend([item for dungeon in self.dungeons for item in dungeon.dungeon_items])
-        elif self.settings.shuffle_mapcompass in ['any_dungeon', 'overworld', 'keysanity']:
+        elif self.settings.shuffle_mapcompass in ['any_dungeon', 'overworld', 'keysanity', 'regional']:
             itempool.extend([item for dungeon in self.dungeons if self.empty_dungeons[dungeon.name].empty for item in dungeon.dungeon_items])
 
         if self.settings.shuffle_smallkeys == 'dungeon':
             itempool.extend([item for dungeon in self.dungeons for item in dungeon.small_keys])
-        elif self.settings.shuffle_smallkeys in ['any_dungeon', 'overworld', 'keysanity']:
+        elif self.settings.shuffle_smallkeys in ['any_dungeon', 'overworld', 'keysanity', 'regional']:
             itempool.extend([item for dungeon in self.dungeons if self.empty_dungeons[dungeon.name].empty for item in dungeon.small_keys])
 
         if self.settings.shuffle_bosskeys == 'dungeon':
             itempool.extend([item for dungeon in self.dungeons if dungeon.name != 'Ganons Castle' for item in dungeon.boss_key])
-        elif self.settings.shuffle_bosskeys in ['any_dungeon', 'overworld', 'keysanity']:
+        elif self.settings.shuffle_bosskeys in ['any_dungeon', 'overworld', 'keysanity', 'regional']:
             itempool.extend([item for dungeon in self.dungeons if self.empty_dungeons[dungeon.name].empty for item in dungeon.boss_key])
 
         if self.settings.shuffle_ganon_bosskey == 'dungeon':
@@ -1053,13 +1045,13 @@ class World(object):
     # get a list of items that don't have to be in their proper dungeon
     def get_unrestricted_dungeon_items(self):
         itempool = []
-        if self.settings.shuffle_mapcompass in ['any_dungeon', 'overworld', 'keysanity']:
+        if self.settings.shuffle_mapcompass in ['any_dungeon', 'overworld', 'keysanity', 'regional']:
             itempool.extend([item for dungeon in self.dungeons if not self.empty_dungeons[dungeon.name].empty for item in dungeon.dungeon_items])
-        if self.settings.shuffle_smallkeys in ['any_dungeon', 'overworld', 'keysanity']:
+        if self.settings.shuffle_smallkeys in ['any_dungeon', 'overworld', 'keysanity', 'regional']:
             itempool.extend([item for dungeon in self.dungeons if not self.empty_dungeons[dungeon.name].empty for item in dungeon.small_keys])
-        if self.settings.shuffle_bosskeys in ['any_dungeon', 'overworld', 'keysanity']:
+        if self.settings.shuffle_bosskeys in ['any_dungeon', 'overworld', 'keysanity', 'regional']:
             itempool.extend([item for dungeon in self.dungeons if (dungeon.name != 'Ganons Castle' and not self.empty_dungeons[dungeon.name].empty) for item in dungeon.boss_key])
-        if self.settings.shuffle_ganon_bosskey in ['any_dungeon', 'overworld', 'keysanity']:
+        if self.settings.shuffle_ganon_bosskey in ['any_dungeon', 'overworld', 'keysanity', 'regional']:
             itempool.extend([item for dungeon in self.dungeons if dungeon.name == 'Ganons Castle' for item in dungeon.boss_key])
 
         for item in itempool:
@@ -1118,18 +1110,6 @@ class World(object):
     def get_shuffled_entrances(self, type=None, only_primary=False):
         return [entrance for entrance in self.get_shufflable_entrances(type=type, only_primary=only_primary) if entrance.shuffled]
 
-
-    def get_boss_map(self):
-        map = dict((boss, boss) for boss in self.boss_location_names)
-        if self.settings.shuffle_bosses == 'off':
-            return map
-
-        for type in ('ChildBoss', 'AdultBoss'):
-            for entrance in self.get_shuffled_entrances(type, True):
-                if 'boss' not in entrance.data:
-                    continue
-                map[entrance.data['boss']] = entrance.replaces.data['boss']
-        return map
 
     def region_has_shortcuts(self, region_name):
         region = self.get_region(region_name)

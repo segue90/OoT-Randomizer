@@ -1,13 +1,14 @@
 {
   "Tabs": [
     {
-      "name": "general_tab_electron",
+      "name": "general_tab",
       "text": "ROM Options",
-      "exclude_from_web": true,
+      "app_type": ["generator"],
       "sections": [
         {
-          "name": "general_section",
+          "name": "general_section_electron",
           "text": "",
+          "exclude_from_web": true,
           "col_span": 4,
           "row_span": [2,2,3],
           "settings": [
@@ -35,35 +36,9 @@
           ]
         },
         {
-          "name": "multiworld_section",
-          "text": "Multi-World Generation",
-          "subheader": "This is used for co-op generations. Increasing Player Count will drastically increase the generation time.<br>For more information, see:<br><a href='https://github.com/TestRunnerSRL/bizhawk-co-op' target='_blank'>https://github.com/TestRunnerSRL/bizhawk-co-op</a>",
-          "row_span": [1,1,1],
-          "settings": [
-            "world_count",
-            "player_num"
-          ]
-        },
-        {
-          "name": "preset_section",
-          "text": "Settings Presets",
-          "subheader": "Presets are settings that can be saved and loaded from.<br>Loading a preset will overwrite all settings that affect the seed.",
-          "row_span": [1,1,1],
-          "settings": [
-            "presets"
-          ]
-        }
-      ]
-    },
-    {
-      "name": "general_tab_web_generator",
-      "text": "ROM Options",
-      "app_type": ["generator"],
-      "exclude_from_electron": true,
-      "sections": [
-        {
-          "name": "general_section",
+          "name": "general_section_web_generator",
           "text": "",
+          "exclude_from_electron": true,
           "col_span": 4,
           "row_span": [1,1,1],
           "settings": [
@@ -214,10 +189,10 @@
             "shopsanity_prices",
             "tokensanity",
             "shuffle_scrubs",
+            "shuffle_child_trade",
             "shuffle_cows",
             "shuffle_kokiri_sword",
             "shuffle_ocarinas",
-            "shuffle_weird_egg",
             "shuffle_gerudo_card",
             "shuffle_beans",
             "shuffle_medigoron_carpet_salesman",
@@ -335,7 +310,6 @@
           "text": "Timesavers",
           "row_span": [1,1,1],
           "settings": [
-            "skip_child_zelda",
             "no_escape_sequence",
             "no_guard_stealth",
             "no_epona_race",
@@ -361,6 +335,7 @@
           "settings": [
             "ocarina_songs",
             "correct_chest_appearances",
+            "minor_items_as_major_chest",
             "invisible_chests",
             "clearer_hints",
             "hints",
@@ -372,7 +347,8 @@
             "deadly_bonks",
             "no_collectible_hearts",
             "starting_tod",
-            "blue_fire_arrows"
+            "blue_fire_arrows",
+            "fix_broken_drops"
           ]
         },
         {
@@ -383,8 +359,7 @@
             "item_pool_value",
             "junk_ice_traps",
             "ice_trap_appearance",
-            "logic_earliest_adult_trade",
-            "logic_latest_adult_trade"
+            "adult_trade_start"
           ]
         }
       ]
@@ -397,13 +372,43 @@
       "sections": [
         {
           "name": "generalcosmetics_section",
-          "col_span": 4,
+          "text": "General Cosmetics",
+          "col_span": 2,
           "row_span": [2,2,2],
           "settings": [
             "default_targeting",
             "display_dpad",
+            "dpad_dungeon_menu",
             "correct_model_colors",
             "randomize_all_cosmetics"
+          ]
+        },
+        {
+          "name": "playermodels_section_electron",
+          "text": "Player Models",
+          "exclude_from_web": true,
+          "app_type": ["generator", "patcher"],
+          "col_span": 2,
+          "row_span": [2,2,2],
+          "settings": [
+            "model_adult",
+            "model_adult_filepicker",
+            "model_child",
+            "model_child_filepicker"
+          ]
+        },
+        {
+          "name": "playermodels_section_web",
+          "text": "Player Models",
+          "exclude_from_electron": true,
+          "app_type": ["patcher"],
+          "col_span": 2,
+          "row_span": [2,2,2],
+          "settings": [
+            "model_adult",
+            "model_adult_filepicker",
+            "model_child",
+            "model_child_filepicker"
           ]
         },
         {
@@ -472,19 +477,20 @@
           "name": "sfx_main_section",
           "is_sfx": true,
           "col_span": 4,
-          "row_span": [2,2,2],
+          "row_span": [1,1,1],
           "settings": [
-            "randomize_all_sfx",
-            "disable_battle_music"
+            "randomize_all_sfx"
           ]
         },
         {
           "name": "generalsfx_section",
           "text": "General",
           "is_sfx": true,
-          "row_span": [6,6,13],
+          "col_span": 2,
+          "row_span": [6,6,12],
           "settings": [
             "background_music",
+            "disable_battle_music",
             "fanfares",
             "ocarina_fanfares",
             "sfx_low_hp",
@@ -498,7 +504,8 @@
           "name": "menusfx_section",
           "text": "Menu",
           "is_sfx": true,
-          "row_span": [6,6,13],
+          "col_span": 2,
+          "row_span": [6,6,3],
           "settings": [
             "sfx_menu_cursor",
             "sfx_menu_select"
@@ -508,10 +515,22 @@
           "name": "npcsfx_section",
           "text": "NPC",
           "is_sfx": true,
-          "row_span": [6,6,13],
+          "col_span": 2,
+          "row_span": [6,6,3],
           "settings": [
             "sfx_navi_overworld",
             "sfx_navi_enemy"
+          ]
+        },
+        {
+          "name": "linksfx_section",
+          "text": "Link",
+          "is_sfx": true,
+          "col_span": 2,
+          "row_span": [6,6,6],
+          "settings": [
+            "sfx_link_adult",
+            "sfx_link_child"
           ]
         }
       ]

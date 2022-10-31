@@ -209,18 +209,19 @@ deku_scrubs_items = {
     'Buy Deku Seeds (30)': [('Arrows (30)', 3), ('Deku Seeds (30)', 1)],
 }
 
-trade_items = OrderedDict([
-    ("pocket_egg",   "Pocket Egg"),
-    ("pocket_cucco", "Pocket Cucco"),
-    ("cojiro",       "Cojiro"),
-    ("odd_mushroom", "Odd Mushroom"),
-    ("poachers_saw", "Poachers Saw"),
-    ("broken_sword", "Broken Sword"),
-    ("prescription", "Prescription"),
-    ("eyeball_frog", "Eyeball Frog"),
-    ("eyedrops",     "Eyedrops"),
-    ("claim_check",  "Claim Check"),
-])
+trade_items = (
+    "Pocket Egg",
+    "Pocket Cucco",
+    "Cojiro",
+    "Odd Mushroom",
+    #"Odd Potion",
+    "Poachers Saw",
+    "Broken Sword",
+    "Prescription",
+    "Eyeball Frog",
+    "Eyedrops",
+    "Claim Check",
+)
 
 normal_bottles = [bottle for bottle in sorted(ItemInfo.bottles) if bottle not in ['Deliver Letter', 'Sell Big Poe']] + ['Bottle with Big Poe']
 song_list = [item.name for item in sorted([i for n, i in ItemInfo.items.items() if i.type == 'Song'], key=lambda x: x.index)]
@@ -242,7 +243,7 @@ IGNORE_LOCATION = 'Recovery Heart'
 pending_junk_pool = []
 junk_pool = []
 
-exclude_from_major = [ 
+exclude_from_major = [
     'Deliver Letter',
     'Sell Big Poe',
     'Magic Bean',
@@ -253,15 +254,15 @@ exclude_from_major = [
     'Bombchus (20)',
     'Odd Potion',
     'Triforce Piece',
-    'Heart Container', 
-    'Piece of Heart', 
+    'Heart Container',
+    'Piece of Heart',
     'Piece of Heart (Treasure Chest Game)',
 ]
 
 item_groups = {
     'Junk': remove_junk_items,
     'JunkSong': ('Prelude of Light', 'Serenade of Water'),
-    'AdultTrade': list(trade_items.values()),
+    'AdultTrade': trade_items,
     'Bottle': normal_bottles,
     'Spell': ('Dins Fire', 'Farores Wind', 'Nayrus Love'),
     'Shield': ('Deku Shield', 'Hylian Shield'),
@@ -272,6 +273,10 @@ item_groups = {
     'ProgressItem': sorted([name for name, item in ItemInfo.items.items() if item.type == 'Item' and item.advancement]),
     'MajorItem': sorted([name for name, item in ItemInfo.items.items() if item.type in ['Item', 'Song'] and item.advancement and name not in exclude_from_major]),
     'DungeonReward': [item.name for item in sorted([i for n, i in ItemInfo.items.items() if i.type == 'DungeonReward'], key=lambda x: x.special['item_id'])],
+    'Map': sorted([name for name, item in ItemInfo.items.items() if item.type == 'Map']),
+    'Compass': sorted([name for name, item in ItemInfo.items.items() if item.type == 'Compass']),
+    'BossKey': sorted([name for name, item in ItemInfo.items.items() if item.type == 'BossKey']),
+    'SmallKey': sorted([name for name, item in ItemInfo.items.items() if item.type == 'SmallKey']),
 
     'ForestFireWater': ('Forest Medallion', 'Fire Medallion', 'Water Medallion'),
     'FireWater': ('Fire Medallion', 'Water Medallion'),
@@ -362,24 +367,24 @@ def get_pool_core(world):
         if world.settings.shuffle_beans and world.distribution.get_starting_item('Magic Bean') < 10:
             pending_junk_pool.append('Magic Bean Pack')
         if (world.settings.gerudo_fortress != "open"
-                and world.settings.shuffle_hideoutkeys in ['any_dungeon', 'overworld', 'keysanity']):
+                and world.settings.shuffle_hideoutkeys in ['any_dungeon', 'overworld', 'keysanity', 'regional']):
             if 'Thieves Hideout' in world.settings.key_rings and world.settings.gerudo_fortress != "fast":
                 pending_junk_pool.extend(['Small Key Ring (Thieves Hideout)'])
             else:
                 pending_junk_pool.append('Small Key (Thieves Hideout)')
         if world.settings.shuffle_gerudo_card:
             pending_junk_pool.append('Gerudo Membership Card')
-        if world.settings.shuffle_smallkeys in ['any_dungeon', 'overworld', 'keysanity']:
+        if world.settings.shuffle_smallkeys in ['any_dungeon', 'overworld', 'keysanity', 'regional']:
             for dungeon in ['Forest Temple', 'Fire Temple', 'Water Temple', 'Shadow Temple', 'Spirit Temple',
                             'Bottom of the Well', 'Gerudo Training Ground', 'Ganons Castle']:
                 if dungeon in world.settings.key_rings:
                     pending_junk_pool.append(f"Small Key Ring ({dungeon})")
                 else:
                     pending_junk_pool.append(f"Small Key ({dungeon})")
-        if world.settings.shuffle_bosskeys in ['any_dungeon', 'overworld', 'keysanity']:
+        if world.settings.shuffle_bosskeys in ['any_dungeon', 'overworld', 'keysanity', 'regional']:
             for dungeon in ['Forest Temple', 'Fire Temple', 'Water Temple', 'Shadow Temple', 'Spirit Temple']:
                 pending_junk_pool.append(f"Boss Key ({dungeon})")
-        if world.settings.shuffle_ganon_bosskey in ['any_dungeon', 'overworld', 'keysanity']:
+        if world.settings.shuffle_ganon_bosskey in ['any_dungeon', 'overworld', 'keysanity', 'regional']:
             pending_junk_pool.append('Boss Key (Ganons Castle)')
         if world.settings.shuffle_song_items == 'any':
             pending_junk_pool.extend(song_list)
@@ -437,11 +442,12 @@ def get_pool_core(world):
 
         # Weird Egg
         elif location.vanilla_item == 'Weird Egg':
-            if world.settings.skip_child_zelda:
+            if world.settings.shuffle_child_trade == 'skip_child_zelda':
                 item = IGNORE_LOCATION
                 shuffle_item = False
+                world.state.collect(ItemFactory('Weird Egg'))
             else:
-                shuffle_item = world.settings.shuffle_weird_egg
+                shuffle_item = world.settings.shuffle_child_trade != 'vanilla'
 
         # Ocarinas
         elif location.vanilla_item == 'Ocarina':
@@ -491,18 +497,14 @@ def get_pool_core(world):
 
         # Adult Trade Item
         elif location.vanilla_item == 'Pocket Egg':
-            trade_item_options = list(trade_items.keys())
-            earliest_trade = trade_item_options.index(world.settings.logic_earliest_adult_trade)
-            latest_trade = trade_item_options.index(world.settings.logic_latest_adult_trade)
-            if earliest_trade > latest_trade:
-                earliest_trade, latest_trade = latest_trade, earliest_trade
-            item = trade_items[random.choice(trade_item_options[earliest_trade:latest_trade + 1])]
+            potential_trade_items = world.settings.adult_trade_start if world.settings.adult_trade_start else trade_items
+            item = random.choice(potential_trade_items)
             world.selected_adult_trade_item = item
             shuffle_item = True
 
         # Thieves' Hideout
         elif location.vanilla_item == 'Small Key (Thieves Hideout)':
-            shuffle_item = world.settings.shuffle_hideoutkeys in ['any_dungeon', 'overworld', 'keysanity']
+            shuffle_item = world.settings.shuffle_hideoutkeys != 'vanilla'
             if (world.settings.gerudo_fortress == 'open'
                     or world.settings.gerudo_fortress == 'fast' and location.name != 'Hideout Jail Guard (1 Torch)'):
                 item = IGNORE_LOCATION
@@ -550,7 +552,7 @@ def get_pool_core(world):
                     world.state.collect(dungeon_collection[-1])
                     item = get_junk_item()[0]
                     shuffle_item = True
-                elif shuffle_setting in ['any_dungeon', 'overworld']:
+                elif shuffle_setting in ['any_dungeon', 'overworld', 'regional']:
                     dungeon_collection[-1].priority = True
 
         # The rest of the overworld items.

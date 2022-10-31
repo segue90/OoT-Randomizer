@@ -14,6 +14,7 @@ from Hints import HintDistList, HintDistTips, gossipLocations
 from Item import ItemInfo
 from Location import LocationIterator
 from LocationList import location_table
+from Models import get_model_choices
 import Sounds as sfx
 import StartingItems
 from Utils import data_path
@@ -184,7 +185,9 @@ logic_tricks = {
         'tags'    : ("Kakariko Village",),
         'tooltip' : '''\
                     Can be reached by side-hopping off
-                    the watchtower.
+                    the watchtower as either age, or by
+                    jumping onto the potion shop's roof
+                    from the ledge as adult.
                     '''},
     'Dodongo\'s Cavern Staircase with Bow': {
         'name'    : 'logic_dc_staircase',
@@ -1810,7 +1813,25 @@ setting_infos = [
                     'settings' : [
                         'rom','web_output_type','player_num',
                         'web_wad_file', 'web_common_key_file', 'web_common_key_string',
-                        'web_wad_channel_id','web_wad_channel_title','web_wad_legacy_mode'
+                        'web_wad_channel_id','web_wad_channel_title', 'web_wad_legacy_mode',
+                        'model_adult', 'model_child'
+                    ],
+                },
+                True : {
+                    'settings' : [
+                        'model_adult', 'model_child'
+                    ],
+                },
+            },
+            'electron:disable' : {
+                False : {
+                    'settings' : [
+                        'model_adult_filepicker', 'model_child_filepicker'
+                    ],
+                },
+                True : {
+                    'settings' : [
+                        'model_adult_filepicker', 'model_child_filepicker'
                     ],
                 },
             }
@@ -2163,7 +2184,7 @@ setting_infos = [
 
                          - Logic Rules
                          - (Random) Number of MQ Dungeons
-                         - Pre-completed dungeons
+                         - Pre-completed Dungeons
                          - Rainbow Bridge/Ganon Boss Key Requirements: Gold Skulltula Tokens
                          - Variable numbers of Spiritual Stones, Medallions, or Dungeons
                          for Rainbow Bridge and Ganon's Boss Key
@@ -2673,21 +2694,6 @@ setting_infos = [
         shared         = True,
         disabled_default = 0,
     ),
-    Checkbutton(
-        name           = 'skip_child_zelda',
-        gui_text       = 'Skip Child Zelda',
-        gui_tooltip    = '''\
-            Start having already met Zelda and obtained
-            Zelda's Letter along with the item from Impa.
-            Supersedes "Skip Child Stealth" since the whole
-            sequence is skipped. Similarly, this is
-            incompatible with Shuffle Weird Egg.
-        ''',
-        shared         = True,
-        disable = {
-            True: {'settings': ['shuffle_weird_egg']},
-        },
-    ),
     Combobox(
         name           = 'dungeon_shortcuts_choice',
         gui_text       = 'Dungeon Boss Shortcuts Mode',
@@ -2996,25 +3002,40 @@ setting_infos = [
             'randomize_key': 'randomize_settings',
         },
     ),
-    Checkbutton(
-        name           = 'shuffle_weird_egg',
-        gui_text       = 'Shuffle Weird Egg',
+    Combobox(
+        name           = 'shuffle_child_trade',
+        gui_text       = 'Shuffle Child Trade Item',
+        default        = 'vanilla',
+        choices        = {
+            'vanilla':          'Vanilla Locations',
+            'shuffle':          'Shuffle Weird Egg',
+            'skip_child_zelda': 'Skip Child Zelda',
+            },
         gui_tooltip    = '''\
-            Enabling this shuffles the Weird Egg from Malon into the pool.
-
-            This will require finding the Weird Egg to talk to Zelda in
-            Hyrule Castle, which in turn locks rewards from Impa, Saria,
-            Malon, and Talon, as well as the Happy Mask sidequest.
-            The Weird Egg is also required for Zelda's Letter to open 
-            the Kakariko Gate as child which can lock some progression.
+            This changes the beginning of the child trade quest.
+            
+            'Vanilla Locations': Weird Egg is found from Malon outside
+            of Hyrule Castle and the child trade quest continues normally.
+            
+            'Shuffle Weird Egg': The Weird Egg is shuffled into the item pool
+            and Malon gives a randomized item. This will require finding the
+            Weird Egg to talk to Zelda in Hyrule Castle, which in turn locks
+            rewards from Impa, Saria, Malon, and Talon, as well as the Happy
+            Mask sidequest.
+            
+            'Skip Child Zelda': Start having already met Zelda and obtained
+            Zelda's Letter along with the item from Impa.
+            Supersedes "Skip Child Stealth" since the whole sequence is skipped.
         ''',
-        disable        = {
-            True : {'settings' : ['skip_child_zelda']}
-        },
-        shared         = True,
         gui_params     = {
             'randomize_key': 'randomize_settings',
+            'distribution':  [
+                ('vanilla', 1),
+                ('shuffle', 1),
+                ('skip_child_zelda', 1),
+            ],
         },
+        shared         = True,
     ),
     Checkbutton(
         name           = 'shuffle_gerudo_card',
@@ -3275,17 +3296,28 @@ setting_infos = [
             'randomize_key': 'randomize_settings',
         },
     ),
-    Checkbutton(
+    Combobox(
         name           = 'spawn_positions',
         gui_text       = 'Randomize Overworld Spawns',
+        multiple_select = True,
+        choices         = {
+            'child': 'Child',
+            'adult': 'Adult',
+        },
         gui_tooltip    = '''\
-            Randomize where you start as Child or Adult when loading
+            Randomize where you start when loading
             a save in the Overworld. This means you may not necessarily
             spawn inside Link's House or Temple of Time.
 
+            'Child': Child overworld spawn will be randomized.
+            
+            'Adult': Adult overworld spawn will be randomized.
+
+            Selecting both options will randomize both spawns.
+
             This stays consistent after saving and loading the game again.
         ''',
-        default        = False,
+        default        = [],
         shared         = True,
         gui_params     = {
             'randomize_key': 'randomize_settings',
@@ -3459,6 +3491,7 @@ setting_infos = [
             'startwith':   'Start With',
             'vanilla':     'Vanilla Locations',
             'dungeon':     'Own Dungeon',
+            'regional':    'Regional',
             'overworld':   'Overworld Only',
             'any_dungeon': 'Any Dungeon',
             'keysanity':   'Anywhere',
@@ -3475,15 +3508,19 @@ setting_infos = [
             'Own Dungeon': Maps and Compasses can only appear in their respective
             dungeon.
             
-            'Overworld Only': Maps and Compasses can only appear outside of
-            dungeons.
+            'Regional': Maps and Compasses can only appear in regions near the
+            original dungeon (including the dungeon itself or other dungeons in
+            the region). <a href="https://wiki.ootrandomizer.com/index.php?title=Hints#Hint_Regions" target="_blank">The Wiki has a list of corresponding regions here.</a>
+            
+            'Overworld Only': Maps and Compasses can only appear
+            outside of dungeons.
 
             'Any Dungeon': Maps and Compasses can only appear in a dungeon, but
             not necessarily the dungeon they are for.            
 
             'Anywhere': Maps and Compasses can appear anywhere in the world.
 
-            Setting 'Remove', 'Start With, 'Overworld', or 'Anywhere' will add 2
+            Setting 'Remove', 'Start With', 'Overworld', or 'Anywhere' will add 2
             more possible locations to each Dungeons. This makes dungeons more
             profitable, especially Ice Cavern, Water Temple, and Jabu Jabu's Belly.
             
@@ -3504,6 +3541,7 @@ setting_infos = [
             'remove':      'Remove (Keysy)',
             'vanilla':     'Vanilla Locations',
             'dungeon':     'Own Dungeon',
+            'regional':    'Regional',
             'overworld':   'Overworld Only',
             'any_dungeon': 'Any Dungeon',
             'keysanity':   'Anywhere (Keysanity)',
@@ -3521,9 +3559,15 @@ setting_infos = [
             dungeon. If Fire Temple is not a Master Quest dungeon, the door to
             the Boss Key chest will be unlocked.
             
-            'Overworld Only': Small Keys can only appear outside of dungeons. You
-            may need to enter a dungeon multiple times to gain items to access the
-            overworld locations with the keys required to finish a dungeon.
+            'Regional': Small Keys can only appear
+            in regions near the original dungeon (including
+            the dungeon itself or other dungeons in the region).
+            <a href="https://wiki.ootrandomizer.com/index.php?title=Hints#Hint_Regions" target="_blank">The Wiki has a list of corresponding regions here.</a>
+            
+            'Overworld Only': Small Keys can only appear outside
+            of dungeons. You may need to enter a dungeon multiple
+            times to gain items to access the overworld locations
+            with the keys required to finish a dungeon.
             
             'Any Dungeon': Small Keys can only appear inside of any dungeon, but
             won't necessarily be in the dungeon that the key is for. A difficult mode
@@ -3554,28 +3598,36 @@ setting_infos = [
         default        = 'vanilla',
         disabled_default = 'remove',
         choices        = {
-            'vanilla':     'Vanilla Locations',
-            'overworld':   'Overworld Only',
-            'any_dungeon': 'Any Dungeon',
-            'keysanity':   'Anywhere (Keysanity)',
+            'vanilla':     "Vanilla Locations",
+            'fortress':    "Gerudo Fortress Region",
+            'regional':    "Regional",
+            'overworld':   "Overworld Only",
+            'any_dungeon': "Any Dungeon",
+            'keysanity':   "Anywhere (Keysanity)",
         },
         gui_tooltip    = '''\
-            'Vanilla': Thieves' Hideout Keys will appear in their
+            "Vanilla": Thieves' Hideout Keys will appear in their
             vanilla location, dropping from fighting Gerudo guards
             that attack when trying to free the jailed carpenters.
             
-            'Overworld Only': Thieves' Hideout Keys can only appear
+            "Regional": Thieves' Hideout Keys can only appear in
+            Gerudo Valley, Gerudo Fortress, Thieves' Hideout, Gerudo
+            Training Ground, Haunted Wasteland, Desert Colossus, or
+            Spirit Temple.
+            
+            "Overworld Only": Thieves' Hideout Keys can only appear
             outside of dungeons.
             
-            'Any Dungeon': Thieves' Hideout Keys can only appear
+            "Any Dungeon": Thieves' Hideout Keys can only appear
             inside of dungeons.
 
-            'Anywhere': Thieves' Hideout Keys can appear anywhere
+            "Anywhere": Thieves' Hideout Keys can appear anywhere
             in the world.
         ''',
         shared         = True,
         gui_params     = {
             'randomize_key': 'randomize_settings',
+            'option_remove': ['fortress'],
         },
     ),
     Combobox(
@@ -3643,6 +3695,7 @@ setting_infos = [
             'remove':      'Remove (Keysy)',
             'vanilla':     'Vanilla Locations',
             'dungeon':     'Own Dungeon',
+            'regional':    'Regional',
             'overworld':   'Overworld Only',
             'any_dungeon': 'Any Dungeon',
             'keysanity':   'Anywhere (Keysanity)',
@@ -3657,6 +3710,11 @@ setting_infos = [
 
             'Own Dungeon': Boss Keys can only appear in their
             respective dungeon.
+            
+            'Regional': Boss Keys can only appear in regions
+            near the original dungeon (including the dungeon
+            itself or other dungeons in the region).
+            <a href="https://wiki.ootrandomizer.com/index.php?title=Hints#Hint_Regions" target="_blank">The Wiki has a list of corresponding regions here.</a>
             
             'Overworld Only': Boss Keys can only appear outside
             of dungeons. You may need to enter a dungeon without
@@ -3697,6 +3755,7 @@ setting_infos = [
             'remove':          "Remove (Keysy)",
             'vanilla':         "Vanilla Location",
             'dungeon':         "Own Dungeon",
+            'regional':        "Regional",
             'overworld':       "Overworld Only",
             'any_dungeon':     "Any Dungeon",
             'keysanity':       "Anywhere (Keysanity)",
@@ -3710,12 +3769,16 @@ setting_infos = [
         gui_tooltip    = '''\
             'Remove': Ganon's Castle Boss Key is removed
             and the boss door in Ganon's Tower starts unlocked.
-
-            'Own Dungeon': Ganon's Castle Boss Key can only appear
-            inside Ganon's Castle.
-
+            
             'Vanilla': Ganon's Castle Boss Key will appear in 
             the vanilla location.
+            
+            'Own Dungeon': Ganon's Castle Boss Key can only appear
+            inside Ganon's Castle.
+            
+            'Regional': Ganon's Castle Boss Key can only appear
+            in Hyrule Field, Lon Lon Ranch, Market, Temple of Time, Hyrule Castle,
+            (Outside) Ganon's Castle, and Inside Ganon's Castle.
             
             'Overworld Only': Ganon's Castle Boss Key can only appear
             outside of dungeons.
@@ -4079,7 +4142,7 @@ setting_infos = [
     ),
     Combobox(
         name           = 'empty_dungeons_mode',
-        gui_text       = 'Pre-completed dungeons',
+        gui_text       = 'Pre-completed Dungeons Mode',
         default        = 'none',
         choices        = {
             'none':       'Off',
@@ -4225,44 +4288,41 @@ setting_infos = [
         choices        = {},
     ),
     Combobox(
-        name           = 'logic_earliest_adult_trade',
-        gui_text       = 'Adult Trade Sequence Earliest Item',
-        default        = 'pocket_egg',
+        name           = 'adult_trade_start',
+        multiple_select= True,
+        gui_text       = 'Adult Trade Sequence Items',
+        default        = ['Pocket Egg', 'Pocket Cucco', 'Cojiro', 'Odd Mushroom', 'Poachers Saw',
+                          'Broken Sword', 'Prescription', 'Eyeball Frog', 'Eyedrops', 'Claim Check'],
         choices        = {
-            'pocket_egg':   'Pocket Egg',
-            'pocket_cucco': 'Pocket Cucco',
-            'cojiro':       'Cojiro',
-            'odd_mushroom': 'Odd Mushroom',
-            'poachers_saw': "Poacher's Saw",
-            'broken_sword': 'Broken Sword',
-            'prescription': 'Prescription',
-            'eyeball_frog': 'Eyeball Frog',
-            'eyedrops':     'Eyedrops',
-            'claim_check':  'Claim Check',
+            'Pocket Egg':   'Pocket Egg',
+            'Pocket Cucco': 'Pocket Cucco',
+            'Cojiro':       'Cojiro',
+            'Odd Mushroom': 'Odd Mushroom',
+            #'Odd Potion':   'Odd Potion',
+            'Poachers Saw': "Poacher's Saw",
+            'Broken Sword': 'Broken Sword',
+            'Prescription': 'Prescription',
+            'Eyeball Frog': 'Eyeball Frog',
+            'Eyedrops':     'Eyedrops',
+            'Claim Check':  'Claim Check',
         },
         gui_tooltip    = '''\
-            Select the earliest item that can appear in the adult trade sequence.
+            Select the items that can appear to start the adult trade sequence.
+            If none are selected, it will function as if all are selected.
         ''',
         shared         = True,
     ),
-    Combobox(
-        name           = 'logic_latest_adult_trade',
-        gui_text       = 'Adult Trade Sequence Latest Item',
-        default        = 'claim_check',
-        choices        = {
-            'pocket_egg':   'Pocket Egg',
-            'pocket_cucco': 'Pocket Cucco',
-            'cojiro':       'Cojiro',
-            'odd_mushroom': 'Odd Mushroom',
-            'poachers_saw': "Poacher's Saw",
-            'broken_sword': 'Broken Sword',
-            'prescription': 'Prescription',
-            'eyeball_frog': 'Eyeball Frog',
-            'eyedrops':     'Eyedrops',
-            'claim_check':  'Claim Check',
-        },
+    Checkbutton(
+        name           = 'fix_broken_drops',
+        gui_text       = 'Fix Broken Drops',
         gui_tooltip    = '''\
-            Select the latest item that can appear in the adult trade sequence.
+            Enabling this fixes drops that are broken in the vanilla game.
+
+            There is a deku shield drop from a pot in the Spirit Temple child
+            side Anubis room that does not appear in the vanilla game, and
+            logic might require you to get a deku shield this way. There is a
+            magic jar on top of the Gerudo Training Ground eye statue that does
+            not always refill your magic in the vanilla game.
         ''',
         shared         = True,
     ),
@@ -4363,6 +4423,25 @@ setting_infos = [
             smaller version of the fancy chest.
         ''',
         shared         = True,
+        disable        = {
+            'off' : {'settings' : ['minor_items_as_major_chest']},
+        },
+    ),
+    Checkbutton(
+        name           = 'minor_items_as_major_chest',
+        gui_text       = 'Minor Items in Big/Gold chests',
+        gui_tooltip    = '''\
+            Chests with Hylian Shield, Deku Shield
+            or Bombchus (regardless of the Bombchus
+            In Logic setting), will appear in
+            Big and/or Gold chests, depending on the 
+            Chest Appearance Matches Contents setting.
+        ''',
+        shared         = True,
+        disabled_default = False,
+        gui_params       = {
+            "hide_when_disabled" : True
+        },
     ),
     Checkbutton(
         name           = 'invisible_chests',
@@ -4502,6 +4581,11 @@ setting_infos = [
             'dampe_diary': "Dampé's Diary (Hookshot)",
             'ganondorf':   'Ganondorf (Light Arrows)',
             'warp_songs':  'Warp Songs',
+            '10_skulltulas':  'House of Skulltula: 10',
+            '20_skulltulas':  'House of Skulltula: 20',
+            '30_skulltulas':  'House of Skulltula: 30',
+            '40_skulltulas':  'House of Skulltula: 40',
+            '50_skulltulas':  'House of Skulltula: 50',
         },
         gui_tooltip    = '''\
             This setting adds some hints at locations
@@ -4532,6 +4616,10 @@ setting_infos = [
             Playing a warp song will tell you where
             it leads. (If warp song destinations
             are vanilla, this is always enabled.)
+
+            Talking to a cursed House of Skulltula 
+            resident will tell you the reward they will 
+            give you for removing their curse.
         ''',
         shared         = True,
         default        = ['altar', 'ganondorf', 'warp_songs'],
@@ -4823,6 +4911,19 @@ setting_infos = [
         default        = True,
     ),
     Checkbutton(
+        name           = 'dpad_dungeon_menu',
+        gui_text       = 'Display D-Pad Dungeon Info',
+        shared         = False,
+        cosmetic       = True,
+        gui_tooltip    = '''\
+            Shows separated menus on the pause screen for dungeon
+            keys, rewards, and Vanilla/MQ info. If disabled, these
+            menus are still available by holding the A button and
+            one of the D-Pad directions on the pause screen.
+        ''',
+        default        = True,
+    ),
+    Checkbutton(
         name           = 'correct_model_colors',
         gui_text       = 'Item Model Colors Match Cosmetics',
         shared         = False,
@@ -4837,6 +4938,74 @@ setting_infos = [
         ''',
         default        = False,
     ),
+    Combobox(
+        name           = 'model_adult',
+        gui_text       = 'Adult Link Model',
+        shared         = False,
+        cosmetic       = True,
+        choices        = get_model_choices(0),
+        gui_tooltip    = '''\
+            Link's model will be replaced by the model selected. 
+            To add more model options, save the .zobj file to 
+            data/Models/Adult.
+            Caution: Any changes to Link's skeleton have the potential 
+            to affect gameplay in significant ways and so are disallowed 
+            for all recorded Racetime races. A note will appear at the top 
+            of the pause screen if an irregular skeleton is detected.
+        ''',
+        default        = 'Default',
+        gui_params     = {
+            "hide_when_disabled": True,
+        }
+    ),
+    Setting_Info('model_adult_filepicker', str, "Adult Link Model", "Fileinput", False, {},
+        gui_params = {
+            "file_types": [
+                {
+                  "name": "Z64 Model Files",
+                  "extensions": [ "zobj" ]
+                },
+                {
+                  "name": "All Files",
+                  "extensions": [ "*" ]
+                }
+            ],
+            "hide_when_disabled": True,
+    }),
+    Combobox(
+        name           = 'model_child',
+        gui_text       = 'Child Link Model',
+        shared         = False,
+        cosmetic       = True,
+        choices        = get_model_choices(1),
+        gui_tooltip    = '''\
+            Link's model will be replaced by the model selected. 
+            To add more model options, save the .zobj file to 
+            data/Models/Child.
+            Caution: Any changes to Link's skeleton have the potential 
+            to affect gameplay in significant ways and so are disallowed 
+            for all recorded Racetime races. A note will appear at the top 
+            of the pause screen if an irregular skeleton is detected.
+        ''',
+        default        = 'Default',
+        gui_params     = {
+            "hide_when_disabled": True,
+        }
+    ),
+    Setting_Info('model_child_filepicker', str, "Child Link Model", "Fileinput", False, {},
+        gui_params = {
+            "file_types": [
+                {
+                  "name": "Z64 Model Files",
+                  "extensions": [ "zobj" ]
+                },
+                {
+                  "name": "All Files",
+                  "extensions": [ "*" ]
+                }
+            ],
+            "hide_when_disabled": True,
+    }),
     Checkbutton(
         name           = 'randomize_all_cosmetics',
         gui_text       = 'Randomize All Cosmetics',
@@ -5648,6 +5817,38 @@ setting_infos = [
                 ('random-choice', 1),
             ]
         }
+    ),
+    Combobox(
+        name           = 'sfx_link_adult',
+        gui_text       = 'Adult Voice',
+        shared         = False,
+        cosmetic       = True,
+        choices        = {
+            'default':       'Default',
+            'feminine':      'Feminine',
+            'silent':        'Silent',
+            'random-choice': 'Random Choice',
+        },
+        default        = 'default',
+        gui_tooltip    = '''\
+            Change Link's adult voice.
+        ''',
+    ),
+    Combobox(
+        name           = 'sfx_link_child',
+        gui_text       = 'Child Voice',
+        shared         = False,
+        cosmetic       = True,
+        choices        = {
+            'default':       'Default',
+            'feminine':      'Feminine',
+            'silent':        'Silent',
+            'random-choice': 'Random Choice',
+        },
+        default        = 'default',
+        gui_tooltip    = '''\
+            Change Link's child voice.
+        ''',
     ),
     Checkbutton(
         name           = 'easier_fire_arrow_entry',
