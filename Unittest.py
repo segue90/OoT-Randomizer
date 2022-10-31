@@ -16,7 +16,7 @@ from Hints import HintArea
 from Item import ItemInfo
 from ItemPool import remove_junk_items, remove_junk_ludicrous_items, ludicrous_items_base, ludicrous_items_extended, trade_items, ludicrous_exclusions
 from LocationList import location_is_viewable
-from Main import main, resolve_settings, build_world_graphs
+from Main import generate, main, resolve_settings, build_world_graphs
 from Settings import Settings, get_preset_files
 
 test_dir = os.path.join(os.path.dirname(__file__), 'tests')
@@ -380,6 +380,26 @@ class TestPlandomizer(unittest.TestCase):
 
     def test_key_rings(self):
         # Checking dungeon keys using forest temple
+        # Testing Boss Keys, should not be any Forest BK
+        # All other Boss Keys should exist, Fire Temple for example
+        distribution_file, spoiler = generate_with_plandomizer("plando-keyrings-bosskey-forest-anywhere-minimal")
+        self.assertNotIn('Boss Key (Forest Temple)', spoiler['locations'].values())
+        self.assertEqual(get_actual_pool(spoiler)['Boss Key (Fire Temple)'], 1)
+        distribution_file, spoiler = generate_with_plandomizer("plando-keyrings-bosskey-forest-anywhere-balanced")
+        self.assertNotIn('Boss Key (Forest Temple)', spoiler['locations'].values())
+        self.assertEqual(get_actual_pool(spoiler)['Boss Key (Fire Temple)'], 1)
+        # Shuffle Keys set to Vanilla, Boss Keys should exist
+        distribution_file, spoiler = generate_with_plandomizer("plando-keyrings-bosskey-forest-vanilla-plentiful")
+        self.assertEqual(get_actual_pool(spoiler)['Boss Key (Forest Temple)'], 1)
+
+        # No key rings: Make sure boss key in plentiful
+        distribution_file, spoiler = generate_with_plandomizer("plando-keyrings-bosskey-none-anywhere-plentiful")
+        self.assertEqual(get_actual_pool(spoiler)['Boss Key (Forest Temple)'], 1)
+
+        # No key rings: Make sure boss key in ludicrous
+        distribution_file, spoiler = generate_with_plandomizer("plando-keyrings-bosskey-none-anywhere-ludicrous")
+        self.assertEqual(get_actual_pool(spoiler)['Boss Key (Forest Temple)'], 1)
+
         # Minimal and balanced pools: Should be one key ring
         distribution_file, spoiler = generate_with_plandomizer("plando-keyrings-forest-anywhere-minimal")
         self.assertNotIn('Small Key (Forest Temple)', spoiler['locations'].values())
