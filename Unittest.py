@@ -16,7 +16,7 @@ from Hints import HintArea
 from Item import ItemInfo
 from ItemPool import remove_junk_items, remove_junk_ludicrous_items, ludicrous_items_base, ludicrous_items_extended, trade_items, ludicrous_exclusions
 from LocationList import location_is_viewable
-from Main import generate, main, resolve_settings, build_world_graphs
+from Main import main, resolve_settings, build_world_graphs
 from Settings import Settings, get_preset_files
 
 test_dir = os.path.join(os.path.dirname(__file__), 'tests')
