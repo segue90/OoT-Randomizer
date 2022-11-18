@@ -215,9 +215,10 @@ override_t outgoing_queue[8];
 void push_outgoing_override(override_t *override) {
     if (override->key.type != OVR_DELAYED || override->key.flag != 0xFF) { // don't send items received from incoming back to outgoing
         if (OUTGOING_KEY.all == 0) {
-            OUTGOING_KEY = override->key;
             OUTGOING_ITEM = override->value.item_id;
             OUTGOING_PLAYER = override->value.player;
+            // Set the value first and then the key, so a plugin checking whether the key is present is guaranteed to see the value as well
+            OUTGOING_KEY = override->key;
         } else {
             for (int i = 0; i < 8; i++) {
                 if (outgoing_queue[i].key.all == 0) {
