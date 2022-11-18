@@ -2260,7 +2260,7 @@ setting_infos = [
                     'starting_age', 'shuffle_interior_entrances',
                     'shuffle_grotto_entrances', 'shuffle_dungeon_entrances',
                     'shuffle_bosses', 'shuffle_overworld_entrances', 'shuffle_gerudo_valley_river_exit', 'owl_drops', 'warp_songs', 'spawn_positions',
-                    'triforce_hunt', 'triforce_count_per_world', 'triforce_goal_per_world', 'bombchus_in_logic', 'one_item_per_dungeon',
+                    'triforce_hunt', 'triforce_count_per_world', 'triforce_goal_per_world', 'one_item_per_dungeon',
                     'shuffle_mapcompass', 'shuffle_smallkeys', 'shuffle_hideoutkeys', 'key_rings_choice', 'key_rings',
                     'shuffle_bosskeys', 'enhance_map_compass'
                 ],
@@ -3752,33 +3752,6 @@ setting_infos = [
             'randomize_key': 'randomize_settings',
         },
     ),
-
-
-
-    Checkbutton(
-        name           = 'bombchus_in_logic',
-        gui_text       = 'Bombchus Are Considered in Logic',
-        gui_tooltip    = '''\
-            Bombchus are properly considered in logic.
-
-            The first Bombchu pack will always be 20.
-            Subsequent packs will be 5 or 10 based on
-            how many you have.
-
-            Bombchus can be purchased for 60/99/180
-            rupees once they have been found.
-
-            Bombchu Bowling opens with Bombchus.
-            Bombchus are available at Kokiri Shop
-            and the Bazaar. Bombchu refills cannot
-            be bought until Bombchus have been obtained.
-        ''',
-        default        = False,
-        shared         = True,
-        gui_params     = {
-            'randomize_key': 'randomize_settings',
-        },
-    ),
     Checkbutton(
         name           = 'one_item_per_dungeon',
         gui_text       = 'Dungeons Have One Major Item',
@@ -3822,9 +3795,6 @@ setting_infos = [
             'randomize_key': 'randomize_settings',
         },
     ),
-
-
-
     Combobox(
         name           = 'shuffle_song_items',
         gui_text       = 'Shuffle Songs',

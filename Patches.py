@@ -52,6 +52,7 @@ def patch_rom(spoiler:Spoiler, world:World, rom:Rom):
         ('object_gi_triforce', data_path('Triforce.zobj'), 0x193),  # Triforce Piece
         ('object_gi_keyring',  data_path('KeyRing.zobj'),  0x195),  # Key Rings
         ('object_gi_warpsong', data_path('Note.zobj'),     0x196),  # Inverted Music Note
+        ('object_gi_chubag',   data_path('ChuBag.zobj'),   0x197),  # Bombchu Bag
     ]
     for (name, zobj_path, object_id) in zobj_imports:
         obj_file = File({ 'Name': name })
@@ -200,9 +201,6 @@ def patch_rom(spoiler:Spoiler, world:World, rom:Rom):
     # Remove the unused locked door in water temple
     if not world.dungeon_mq['Water Temple']:
         rom.write_byte(0x25B8197, 0x3F)
-
-    if world.settings.bombchus_in_logic:
-        rom.write_int32(rom.sym('BOMBCHUS_IN_LOGIC'), 1)
 
     # show seed info on file select screen
     def makebytes(txt, size):
@@ -2049,12 +2047,6 @@ def patch_rom(spoiler:Spoiler, world:World, rom:Rom):
     SILVER_CHEST = 13
     SKULL_CHEST_SMALL = 14
     SKULL_CHEST_BIG =  15
-    if world.settings.bombchus_in_logic or world.settings.minor_items_as_major_chest:
-        bombchu_ids = [0x6A, 0x03, 0x6B]
-        for i in bombchu_ids:
-            item = read_rom_item(rom, i)
-            item['chest_type'] = GILDED_CHEST
-            write_rom_item(rom, i, item)
     if world.settings.bridge == 'tokens' or world.settings.lacs_condition == 'tokens' or world.settings.shuffle_ganon_bosskey == 'tokens':
         item = read_rom_item(rom, 0x5B)
         item['chest_type'] = SKULL_CHEST_BIG
