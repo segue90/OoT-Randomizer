@@ -210,7 +210,7 @@ void clear_override() {
     active_item_fast_chest = 0;
 }
 
-override_t outgoing_queue[8];
+override_t outgoing_queue[8] = { 0 };
 
 void push_outgoing_override(override_t *override) {
     if (override->key.type != OVR_DELAYED || override->key.flag != 0xFF) { // don't send items received from incoming back to outgoing
@@ -238,8 +238,7 @@ void move_outgoing_queue() {
         for (int i = 0; i < 7; i++) {
             outgoing_queue[i] = outgoing_queue[i + 1];
         }
-        outgoing_queue[7].key.all = 0;
-        outgoing_queue[7].value.all = 0;
+        outgoing_queue[7] = (override_t){ 0 };
     }
 }
 
