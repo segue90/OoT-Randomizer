@@ -210,11 +210,35 @@ void clear_override() {
     active_item_fast_chest = 0;
 }
 
-void set_outgoing_override(override_t *override) {
+override_t outgoing_queue[8];
+
+void push_outgoing_override(override_t *override) {
     if (override->key.type != OVR_DELAYED || override->key.flag != 0xFF) { // don't send items received from incoming back to outgoing
-        OUTGOING_KEY = override->key;
-        OUTGOING_ITEM = override->value.item_id;
-        OUTGOING_PLAYER = override->value.player;
+        if (OUTGOING_KEY.all == 0) {
+            OUTGOING_KEY = override->key;
+            OUTGOING_ITEM = override->value.item_id;
+            OUTGOING_PLAYER = override->value.player;
+        } else {
+            for (int i = 0; i < 8; i++) {
+                if (outgoing_queue[i].key.all == 0) {
+                    outgoing_queue[i] = *override;
+                    break;
+                }
+            }
+        }
+    }
+}
+
+void move_outgoing_queue() {
+    if (OUTGOING_KEY.all == 0) {
+        OUTGOING_KEY = outgoing_queue[0].key;
+        OUTGOING_ITEM = outgoing_queue[0].value.item_id;
+        OUTGOING_PLAYER = outgoing_queue[0].value.player;
+        for (int i = 0; i < 7; i++) {
+            outgoing_queue[i] = outgoing_queue[i + 1];
+        }
+        outgoing_queue[7].key.all = 0;
+        outgoing_queue[7].value.all = 0;
     }
 }
 
@@ -300,7 +324,7 @@ void after_item_received() {
     }
 
     if (MW_SEND_OWN_ITEMS || active_override_is_outgoing) {
-        set_outgoing_override(&active_override);
+        push_outgoing_override(&active_override);
     }
 
     if (key.all == z64_file.scene_flags[0x30].unk_00_) {
@@ -355,6 +379,7 @@ void try_pending_item() {
 }
 
 void handle_pending_items() {
+    move_outgoing_queue();
     push_coop_item();
     if (link_is_ready()) {
         pop_ice_trap();
@@ -703,16 +728,16 @@ uint8_t item_give_collectible(uint8_t item, z64_link_t *link, z64_actor_t *from_
         // Give the item to the right place
         if (resolved_item_id == 0xCA) {
             // Send triforce to everyone
-            set_outgoing_override(&collectible_override);
+            push_outgoing_override(&collectible_override);
             z64_GiveItem(&z64_game, item_row->action_id);
             call_effect_function(item_row);
         } else if (player != PLAYER_ID) {
             // Item is for another world. Set outgoing item.
-            set_outgoing_override(&collectible_override);
+            push_outgoing_override(&collectible_override);
         } else {
             // Item is for this player
             if (MW_SEND_OWN_ITEMS) {
-                set_outgoing_override(&collectible_override);
+                push_outgoing_override(&collectible_override);
             }
             z64_GiveItem(&z64_game, item_row->action_id);
             call_effect_function(item_row);
@@ -746,14 +771,14 @@ void get_skulltula_token(z64_actor_t *token_actor) {
 
     if (resolved_item_id == 0xCA) {
         // Send triforce to everyone
-        set_outgoing_override(&override);
+        push_outgoing_override(&override);
         z64_GiveItem(&z64_game, item_row->action_id);
         call_effect_function(item_row);
     } else if (player != PLAYER_ID) {
-        set_outgoing_override(&override);
+        push_outgoing_override(&override);
     } else {
         if (MW_SEND_OWN_ITEMS) {
-            set_outgoing_override(&override);
+            push_outgoing_override(&override);
         }
         z64_GiveItem(&z64_game, item_row->action_id);
         call_effect_function(item_row);
