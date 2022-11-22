@@ -47,7 +47,7 @@ extern int8_t curr_scene_setup;
 // Total amount of memory required for each flag table (in bytes).
 uint16_t num_override_flags;
 
-// Pointer to a variable length array that will contain the collectible flags for each scene. 
+// Pointer to a variable length array that will contain the collectible flags for each scene.
 uint8_t *collectible_override_flags;
 
 // Initialize the override flag tables on the heap.
@@ -87,7 +87,7 @@ override_key_t get_override_search_key(z64_actor_t *actor, uint8_t scene, uint8_
             return (override_key_t){ .all = 0 };
         }
         EnItem00 *item = (EnItem00 *)actor;
-        
+
         if(collectible_type == 0x06 || collectible_type == 0x11) //heart pieces and keys
         {
             return (override_key_t) {
@@ -99,7 +99,7 @@ override_key_t get_override_search_key(z64_actor_t *actor, uint8_t scene, uint8_
 
         // Get the collectible flag stored in the actor's initial y rotation field.
         uint16_t flag = item->actor.rot_init.y;
-        if(flag > 0) 
+        if(flag > 0)
         {
             flag |= curr_scene_setup << 14;
             if (scene == 0x19) {
@@ -112,7 +112,7 @@ override_key_t get_override_search_key(z64_actor_t *actor, uint8_t scene, uint8_
             };
             return resolve_alternative_override(key);
         }
-        
+
     } else if (actor->actor_id == 0x19C) {
         return (override_key_t){
             .scene = (actor->variable >> 8) & 0x1F,
@@ -500,7 +500,7 @@ uint16_t get_collectible_flag_offset(uint8_t scene, uint8_t room, uint8_t setup_
             index += 3 * room_setup_count;
         }
         num_scenes--;
-        
+
     }
     return 0xFFFF;
 }
@@ -528,7 +528,7 @@ bool Get_CollectibleOverrideFlag(EnItem00 *item00) {
             }
         }
     }
-    
+
     return true;
 }
 
@@ -550,12 +550,12 @@ void Set_CollectibleOverrideFlag(EnItem00 *item00) {
             }
         }
     }
-    
+
 }
 
 // Hack at the end of Item_DropCollectible to not set the time to live, or clear the "room_index" if the collectible is being overridden.
 // This allows the the item to not despawn after a few seconds like normal dropped collectibles.
-// Not clearing room_index to -1 causes collectible items to despawn upon switching rooms. 
+// Not clearing room_index to -1 causes collectible items to despawn upon switching rooms.
 void Item_DropCollectible_Room_Hack(EnItem00 *spawnedActor)
 {
     if(spawnedActor->override.key.all && !Get_CollectibleOverrideFlag(spawnedActor)) // Check if we should override the collectible
@@ -691,7 +691,7 @@ uint8_t item_give_collectible(uint8_t item, z64_link_t *link, z64_actor_t *from_
 
         PLAYER_NAME_ID = player;
 
-        // If it's a collectible item don't do the fanfare music/message box. 
+        // If it's a collectible item don't do the fanfare music/message box.
         if (item_row->collectible >= 0) { // Item is one of our base collectibles
             collectible_mutex = NULL;
             pItem->actor.health = 1;

@@ -36,7 +36,7 @@ void Actor_SetWorldToHome_End(z64_actor_t *actor) {
             actor->rot_world.y = 0;
         default:
             break;
-    } 
+    }
 }
 
 void Actor_After_UpdateAll_Hack(z64_actor_t *actor, z64_game_t* game) {
@@ -50,7 +50,7 @@ void Actor_After_UpdateAll_Hack(z64_actor_t *actor, z64_game_t* game) {
     override.value.all = 0;
     if(actor->actor_id == OBJ_TSUBO) //Pots
     {
-        override = get_pot_override(actor, game);    
+        override = get_pot_override(actor, game);
         p = &(((ObjTsubo*)actor)->chest_type);
     }
     else if(actor->actor_id == EN_TUBO_TRAP) // Flying Pots
@@ -92,7 +92,7 @@ void Actor_After_UpdateAll_Hack(z64_actor_t *actor, z64_game_t* game) {
         {
             *p = 0;
         }
-        
+
     }
-    
+
 }
