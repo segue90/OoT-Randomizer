@@ -7,6 +7,7 @@
 #include "obj_kibako2.h"
 #include "obj_comb.h"
 #include "textures.h"
+#include "actor.h"
 
 extern uint8_t POTCRATE_TEXTURES_MATCH_CONTENTS;
 extern uint16_t CURR_ACTOR_SPAWN_INDEX;
@@ -56,8 +57,7 @@ void Actor_After_UpdateAll_Hack(z64_actor_t *actor, z64_game_t* game) {
 
 // For pots/crates/beehives/freestanding, store the flag in the actor's unused initial rotation fields
 // Flag consists of the room # and the actor index
-void Actor_StoreFlagInRotation(z64_actor_t* actor, z64_game_t* game, uint16_t actor_index)
-{
+void Actor_StoreFlagInRotation(z64_actor_t* actor, z64_game_t* game, uint16_t actor_index) {
     uint16_t flag = (actor_index + 1) | (actor->room_index << 8); // Calculate the flag
     switch(actor->actor_id)
     {
@@ -86,7 +86,7 @@ void Actor_StoreFlagInRotation(z64_actor_t* actor, z64_game_t* game, uint16_t ac
 
 // For pots/crates/beehives, determine the override and store the chest type in new space in the actor instance
 // So we don't have to hit the override table every frame.
-void Actor_StoreChestType(z64_actor_t* actor, z64_game_t* game){
+void Actor_StoreChestType(z64_actor_t* actor, z64_game_t* game) {
     uint8_t* pChestType = NULL;
     override_t override;
     override.key.all = 0;

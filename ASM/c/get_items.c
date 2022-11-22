@@ -579,14 +579,14 @@ z64_actor_t* Item_DropCollectible_Actor_Spawn_Override(void* actorCtx, z64_game_
     EnItem00* spawnedActor = (EnItem00*)z64_SpawnActor(actorCtx, globalCtx,actorId, posX, posY, posZ, rotX, rotY, rotZ, params); //Spawn the actor
 
     //Get the override for the newly spawned collectible
-    spawnedActor->override = lookup_override(spawnedActor, globalCtx->scene_index, 0);
+    spawnedActor->override = lookup_override(&(spawnedActor->actor), globalCtx->scene_index, 0);
 
     //Check if it has already been collected
     if(Get_CollectibleOverrideFlag(spawnedActor))
     {
         spawnedActor->override = (override_t) { 0 };
     }
-    return spawnedActor;
+    return &(spawnedActor->actor);
 }
 
 bool Item00_KillActorIfFlagIsSet(z64_actor_t *actor) {
@@ -610,7 +610,7 @@ int16_t get_override_drop_id(int16_t dropId) {
     dummy.actor.actor_id = 0x15;
     dummy.actor.rot_init.y = drop_collectible_override_flag;
     dummy.actor.variable = dropId;
-    dummy.override = lookup_override(&dummy, z64_game.scene_index, 0);
+    dummy.override = lookup_override(&(dummy.actor), z64_game.scene_index, 0);
     if (dummy.override.key.all > 0 && !Get_CollectibleOverrideFlag(&dummy) &&
         dropId != ITEM00_HEART_PIECE &&
         dropId != ITEM00_SMALL_KEY &&
