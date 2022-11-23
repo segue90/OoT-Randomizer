@@ -1,5 +1,4 @@
 #include "z64.h"
-#include "en_item00.h"
 #include "pots.h"
 #include "item_table.h"
 #include "get_items.h"
@@ -49,13 +48,11 @@ void Actor_After_UpdateAll_Hack(z64_actor_t *actor, z64_game_t* game) {
     
     Actor_StoreFlagInRotation(actor, game, CURR_ACTOR_SPAWN_INDEX);
     Actor_StoreChestType(actor, game);
-    if(actor->actor_id == EN_ITEM00) //Freestanding collectibles. Store the actual override in new space added to the actor instance.
-    {
-        EnItem00_Init_Hack((EnItem00*)actor, game);
-    }
+
+    CURR_ACTOR_SPAWN_INDEX = 0; //reset CURR_ACTOR_SPAWN_INDEX
 }
 
-// For pots/crates/beehives/freestanding, store the flag in the actor's unused initial rotation fields
+// For pots/crates/beehives, store the flag in the actor's unused initial rotation fields
 // Flag consists of the room # and the actor index
 void Actor_StoreFlagInRotation(z64_actor_t* actor, z64_game_t* game, uint16_t actor_index) {
     uint16_t flag = (actor_index + 1) | (actor->room_index << 8); // Calculate the flag
@@ -72,7 +69,6 @@ void Actor_StoreFlagInRotation(z64_actor_t* actor, z64_game_t* game, uint16_t ac
         }
         // For the following actors we store the flag in the y rotation
         case OBJ_KIBAKO2:
-        case EN_ITEM00:
         {
             actor->rot_init.y = flag;
             break;
