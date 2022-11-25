@@ -160,7 +160,7 @@ logic_tricks = {
                     '''},
     'Fewer Tunic Requirements': {
         'name'    : 'logic_fewer_tunic_requirements',
-        'tags'    : ("General", "Fire Temple", "Water Temple", "Gerudo Training Ground", "Zora's Fountain", "Death Mountain Crater", "Master Quest", "Overworld",),
+        'tags'    : ("General", "Fire Temple", "Fire Temple MQ", "Water Temple", "Water Temple MQ", "Gerudo Training Ground", "Gerudo Training Ground MQ", "Zora's Fountain", "Death Mountain Crater", "Master Quest", "Overworld", "Vanilla Dungeons",),
         'tooltip' : '''\
                     Allows the following possible without Tunics:
                     - Enter Water Temple. The area below the center
@@ -177,7 +177,7 @@ logic_tricks = {
                     '''},
     'Beehives with Bombchus' : {
         'name'    : 'logic_beehives_bombchus',
-        'tags'    : ("General", "Beehives", "Overworld",),
+        'tags'    : ("General", "Beehives", "Overworld", "Zora's Fountain",),
         'tooltip' : '''\
                     Puts breaking beehives with bombchus into logic.
                     Using bombs is already expected on beehives that
@@ -185,7 +185,7 @@ logic_tricks = {
                     '''},
     'Hammer Rusted Switches Through Walls': {
         'name'    : 'logic_rusted_switches',
-        'tags'    : ("General", "Fire Temple", "Ganon's Castle", "Master Quest",),
+        'tags'    : ("General", "Fire Temple", "Fire Temple MQ", "Ganon's Castle MQ", "Master Quest", "Vanilla Dungeons",),
         'tooltip' : '''\
                     Applies to:
                     - Fire Temple Highest Goron Chest.
