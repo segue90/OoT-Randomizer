@@ -55,7 +55,7 @@ void Actor_After_UpdateAll_Hack(z64_actor_t *actor, z64_game_t* game) {
 // For pots/crates/beehives, store the flag in the actor's unused initial rotation fields
 // Flag consists of the room # and the actor index
 void Actor_StoreFlagInRotation(z64_actor_t* actor, z64_game_t* game, uint16_t actor_index) {
-    uint16_t flag = (actor_index + 1) | (actor->room_index << 8); // Calculate the flag
+    uint16_t flag = (actor_index) | (actor->room_index << 8); // Calculate the flag
     switch(actor->actor_id)
     {
         // For the following actors we store the flag in the z rotation

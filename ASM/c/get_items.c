@@ -593,7 +593,7 @@ bool Item00_KillActorIfFlagIsSet(z64_actor_t *actor) {
     }
     else if(CURR_ACTOR_SPAWN_INDEX)
     {
-        flag = (CURR_ACTOR_SPAWN_INDEX + 1) | (actor->room_index << 8);
+        flag = (CURR_ACTOR_SPAWN_INDEX) | (actor->room_index << 8);
     }
     // Still need to build a dummy because we haven't set any info in the actor yet.
     EnItem00 dummy;
