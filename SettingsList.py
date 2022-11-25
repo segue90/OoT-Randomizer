@@ -144,7 +144,7 @@ logic_tricks = {
 
     'Pass Through Visible One-Way Collisions': {
         'name'    : 'logic_visible_collisions',
-        'tags'    : ("Entrance", "Kakariko Village",),
+        'tags'    : ("General", "Entrance Shuffle", "Kakariko Village", "Overworld",),
         'tooltip' : '''\
                     Allows climbing through the platform to reach 
                     Impa's House Back as adult with no items and 
@@ -153,14 +153,14 @@ logic_tricks = {
                     '''},
     'Hidden Grottos without Stone of Agony': {
         'name'    : 'logic_grottos_without_agony',
-        'tags'    : ("General", "Entrance",),
+        'tags'    : ("General", "Entrance Shuffle", "Overworld",),
         'tooltip' : '''\
                     Allows entering hidden grottos without the
                     Stone of Agony.
                     '''},
     'Fewer Tunic Requirements': {
         'name'    : 'logic_fewer_tunic_requirements',
-        'tags'    : ("General", "Fire Temple", "Water Temple", "Gerudo Training Ground", "Zora's Fountain", "Death Mountain Crater", "Master Quest",),
+        'tags'    : ("General", "Fire Temple", "Water Temple", "Gerudo Training Ground", "Zora's Fountain", "Death Mountain Crater", "Master Quest", "Overworld",),
         'tooltip' : '''\
                     Allows the following possible without Tunics:
                     - Enter Water Temple. The area below the center
@@ -177,7 +177,7 @@ logic_tricks = {
                     '''},
     'Beehives with Bombchus' : {
         'name'    : 'logic_beehives_bombchus',
-        'tags'    : ("Beehives",),
+        'tags'    : ("General", "Beehives", "Overworld",),
         'tooltip' : '''\
                     Puts breaking beehives with bombchus into logic.
                     Using bombs is already expected on beehives that
@@ -185,7 +185,7 @@ logic_tricks = {
                     '''},
     'Hammer Rusted Switches Through Walls': {
         'name'    : 'logic_rusted_switches',
-        'tags'    : ("Fire Temple", "Ganon's Castle", "Master Quest",),
+        'tags'    : ("General", "Fire Temple", "Ganon's Castle", "Master Quest",),
         'tooltip' : '''\
                     Applies to:
                     - Fire Temple Highest Goron Chest.
@@ -197,14 +197,14 @@ logic_tricks = {
 
     'Adult Kokiri Forest GS with Hover Boots': {
         'name'    : 'logic_adult_kokiri_gs',
-        'tags'    : ("Kokiri Forest", "Gold Skulltulas",),
+        'tags'    : ("Kokiri Forest", "Gold Skulltulas", "Overworld",),
         'tooltip' : '''\
                     Can be obtained without Hookshot by using the Hover
                     Boots off of one of the roots.
                     '''},
     'Jump onto the Lost Woods Bridge as Adult with Nothing': {
         'name'    : 'logic_lost_woods_bridge',
-        'tags'    : ("the Lost Woods", "Entrance",),
+        'tags'    : ("Lost Woods", "Entrance Shuffle", "Overworld",),
         'tooltip' : '''\
                     With very precise movement it's possible for
                     adult to jump onto the bridge without needing
@@ -212,14 +212,14 @@ logic_tricks = {
                     '''},
     'Backflip over Mido as Adult': {
         'name'    : 'logic_mido_backflip',
-        'tags'    : ("the Lost Woods",),
+        'tags'    : ("Lost Woods", "Overworld",),
         'tooltip' : '''\
                     With a specific position and angle, you can
                     backflip over Mido.
                     '''},
     'Lost Woods Adult GS without Bean': {
         'name'    : 'logic_lost_woods_gs_bean',
-        'tags'    : ("the Lost Woods", "Gold Skulltulas",),
+        'tags'    : ("Lost Woods", "Gold Skulltulas", "Overworld",),
         'tooltip' : '''\
                     You can collect the token with a precise
                     Hookshot use, as long as you can kill the
@@ -228,7 +228,7 @@ logic_tricks = {
                     '''},
     'Hyrule Castle Storms Grotto GS with Just Boomerang': {
         'name'    : 'logic_castle_storms_gs',
-        'tags'    : ("Hyrule Castle", "Gold Skulltulas",),
+        'tags'    : ("Hyrule Castle", "Gold Skulltulas", "Overworld",),
         'tooltip' : '''\
                     With precise throws, the Boomerang alone can
                     kill the Skulltula and collect the token,
@@ -236,7 +236,7 @@ logic_tricks = {
                     '''},
     'Man on Roof without Hookshot': {
         'name'    : 'logic_man_on_roof',
-        'tags'    : ("Kakariko Village",),
+        'tags'    : ("Kakariko Village", "Overworld",),
         'tooltip' : '''\
                     Can be reached by side-hopping off
                     the watchtower as either age, or by
@@ -245,7 +245,7 @@ logic_tricks = {
                     '''},
     'Kakariko Tower GS with Jump Slash': {
         'name'    : 'logic_kakariko_tower_gs',
-        'tags'    : ("Kakariko Village", "Gold Skulltulas",),
+        'tags'    : ("Kakariko Village", "Gold Skulltulas", "Overworld",),
         'tooltip' : '''\
                     Climb the tower as high as you can without
                     touching the Gold Skulltula, then let go and
@@ -256,14 +256,14 @@ logic_tricks = {
                     '''},
     'Windmill PoH as Adult with Nothing': {
         'name'    : 'logic_windmill_poh',
-        'tags'    : ("Kakariko Village",),
+        'tags'    : ("Kakariko Village", "Overworld",),
         'tooltip' : '''\
                     Can jump up to the spinning platform from
                     below as adult.
                     '''},
     'Kakariko Rooftop GS with Hover Boots': {
         'name'    : 'logic_kakariko_rooftop_gs',
-        'tags'    : ("Kakariko Village", "Gold Skulltulas",),
+        'tags'    : ("Kakariko Village", "Gold Skulltulas", "Overworld",),
         'tooltip' : '''\
                     Take the Hover Boots from the entrance to Impa's
                     House over to the rooftop of Skulltula House. From
@@ -275,7 +275,7 @@ logic_tricks = {
                     '''},
     'Graveyard Freestanding PoH with Boomerang': {
         'name'    : 'logic_graveyard_poh',
-        'tags'    : ("the Graveyard",),
+        'tags'    : ("Graveyard", "Overworld",),
         'tooltip' : '''\
                     Using a precise moving setup you can obtain
                     the Piece of Heart by having the Boomerang
@@ -283,7 +283,7 @@ logic_tricks = {
                     '''},
     'Second Dampe Race as Child': {
         'name'    : 'logic_child_dampe_race_poh',
-        'tags'    : ("the Graveyard", "Entrance",),
+        'tags'    : ("Graveyard", "Entrance Shuffle", "Overworld",),
         'tooltip' : '''\
                     It is possible to complete the second dampe
                     race as child in under a minute, but it is
@@ -291,7 +291,7 @@ logic_tricks = {
                     '''},
     'Shadow Temple Entry with Fire Arrows': {
         'name'    : 'logic_shadow_fire_arrow_entry',
-        'tags'    : ("Shadow Temple",),
+        'tags'    : ("Shadow Temple", "Overworld",),
         'tooltip' : '''\
                     It is possible to light all of the torches to
                     open the Shadow Temple entrance with just Fire
@@ -300,7 +300,7 @@ logic_tricks = {
                     '''},
     'Death Mountain Trail Soil GS without Destroying Boulder': {
         'name'    : 'logic_dmt_soil_gs',
-        'tags'    : ("Death Mountain Trail", "Gold Skulltulas",),
+        'tags'    : ("Death Mountain Trail", "Gold Skulltulas", "Overworld",),
         'tooltip' : '''\
                     Bugs will go into the soft soil even while the boulder is
                     still blocking the entrance.
@@ -310,7 +310,7 @@ logic_tricks = {
                     '''},
     'Death Mountain Trail Chest with Strength': {
         'name'    : 'logic_dmt_bombable',
-        'tags'    : ("Death Mountain Trail",),
+        'tags'    : ("Death Mountain Trail", "Overworld",),
         'tooltip' : '''\
                     Child Link can blow up the wall using a nearby bomb
                     flower. You must backwalk with the flower and then
@@ -318,7 +318,7 @@ logic_tricks = {
                     '''},
     'Death Mountain Trail Lower Red Rock GS with Hookshot': {
         'name'    : 'logic_trail_gs_lower_hookshot',
-        'tags'    : ("Death Mountain Trail", "Gold Skulltulas",),
+        'tags'    : ("Death Mountain Trail", "Gold Skulltulas", "Overworld",),
         'tooltip' : '''\
                     After killing the Skulltula, the token can be fished
                     out of the rock without needing to destroy it, by
@@ -326,7 +326,7 @@ logic_tricks = {
                     '''},
     'Death Mountain Trail Lower Red Rock GS with Hover Boots': {
         'name'    : 'logic_trail_gs_lower_hovers',
-        'tags'    : ("Death Mountain Trail", "Gold Skulltulas",),
+        'tags'    : ("Death Mountain Trail", "Gold Skulltulas", "Overworld",),
         'tooltip' : '''\
                     After killing the Skulltula, the token can be
                     collected without needing to destroy the rock by
@@ -336,7 +336,7 @@ logic_tricks = {
                     '''},
     'Death Mountain Trail Lower Red Rock GS with Magic Bean': {
         'name'    : 'logic_trail_gs_lower_bean',
-        'tags'    : ("Death Mountain Trail", "Gold Skulltulas",),
+        'tags'    : ("Death Mountain Trail", "Gold Skulltulas", "Overworld",),
         'tooltip' : '''\
                     After killing the Skulltula, the token can be
                     collected without needing to destroy the rock by
@@ -345,7 +345,7 @@ logic_tricks = {
                     '''},
     'Death Mountain Trail Climb with Hover Boots': {
         'name'    : 'logic_dmt_climb_hovers',
-        'tags'    : ("Death Mountain Trail",),
+        'tags'    : ("Death Mountain Trail", "Overworld",),
         'tooltip' : '''\
                     It is possible to use the Hover Boots to bypass
                     needing to destroy the boulders blocking the path
@@ -353,14 +353,14 @@ logic_tricks = {
                     '''},
     'Death Mountain Trail Upper Red Rock GS without Hammer': {
         'name'    : 'logic_trail_gs_upper',
-        'tags'    : ("Death Mountain Trail", "Gold Skulltulas",),
+        'tags'    : ("Death Mountain Trail", "Gold Skulltulas", "Overworld",),
         'tooltip' : '''\
                     After killing the Skulltula, the token can be collected
                     by backflipping into the rock at the correct angle.
                     '''},
     'Deliver Eye Drops with Bolero of Fire': {
         'name'    : 'logic_biggoron_bolero',
-        'tags'    : ("Death Mountain Trail",),
+        'tags'    : ("Death Mountain Trail", "Overworld",),
         'tooltip' : '''\
                     Playing a warp song normally causes a trade item to
                     spoil immediately, however, it is possible use Bolero
@@ -381,7 +381,7 @@ logic_tricks = {
                     '''},                    
     'Goron City Spinning Pot PoH with Bombchu': {
         'name'    : 'logic_goron_city_pot',
-        'tags'    : ("Goron City",),
+        'tags'    : ("Goron City", "Overworld",),
         'tooltip' : '''\
                     A Bombchu can be used to stop the spinning
                     pot, but it can be quite finicky to get it
@@ -389,7 +389,7 @@ logic_tricks = {
                     '''},
     'Goron City Spinning Pot PoH with Strength': {
         'name'    : 'logic_goron_city_pot_with_strength',
-        'tags'    : ("Goron City",),
+        'tags'    : ("Goron City", "Overworld",),
         'tooltip' : '''\
                     Allows for stopping the Goron City Spinning
                     Pot using a bomb flower alone, requiring 
@@ -397,20 +397,20 @@ logic_tricks = {
                     '''},
     'Rolling Goron (Hot Rodder Goron) as Child with Strength': {
         'name'    : 'logic_child_rolling_with_strength',
-        'tags'    : ("Goron City",),
+        'tags'    : ("Goron City", "Overworld",),
         'tooltip' : '''\
                     Use the bombflower on the stairs or near Medigoron.
                     Timing is tight, especially without backwalking.
                     '''},
     'Stop Link the Goron with Din\'s Fire': {
         'name'    : 'logic_link_goron_dins',
-        'tags'    : ("Goron City",),
+        'tags'    : ("Goron City", "Overworld",),
         'tooltip' : '''\
                     The timing is quite awkward.
                     '''},
     'Goron City Maze Left Chest with Hover Boots': {
         'name'    : 'logic_goron_city_leftmost',
-        'tags'    : ("Goron City",),
+        'tags'    : ("Goron City", "Overworld",),
         'tooltip' : '''\
                     A precise backwalk starting from on top of the
                     crate and ending with a precisely-timed backflip
@@ -419,7 +419,7 @@ logic_tricks = {
                     '''},
     'Goron City Grotto with Hookshot While Taking Damage': {
         'name'    : 'logic_goron_grotto',
-        'tags'    : ("Goron City",),
+        'tags'    : ("Goron City", "Overworld",),
         'tooltip' : '''\
                     It is possible to reach the Goron City Grotto by
                     quickly using the Hookshot while in the midst of
@@ -428,7 +428,7 @@ logic_tricks = {
                     '''},
     'Crater\'s Bean PoH with Hover Boots': {
         'name'    : 'logic_crater_bean_poh_with_hovers',
-        'tags'    : ("Death Mountain Crater",),
+        'tags'    : ("Death Mountain Crater", "Overworld",),
         'tooltip' : '''\
                     Hover from the base of the bridge
                     near Goron City and walk up the
@@ -436,7 +436,7 @@ logic_tricks = {
                     '''},
     'Death Mountain Crater Jump to Bolero': {
         'name'    : 'logic_crater_bolero_jump',
-        'tags'    : ("Death Mountain Crater",),
+        'tags'    : ("Death Mountain Crater", "Overworld",),
         'tooltip' : '''\
                     Using a shield to drop a pot while you have
                     the perfect speed and position, the pot can
@@ -445,7 +445,7 @@ logic_tricks = {
                     '''},
     'Death Mountain Crater Upper to Lower with Hammer': {
         'name'    : 'logic_crater_boulder_jumpslash',
-        'tags'    : ("Death Mountain Crater",),
+        'tags'    : ("Death Mountain Crater", "Overworld",),
         'tooltip' : '''\
                     With the Hammer, you can jump slash the rock twice
                     in the same jump in order to destroy it before you
@@ -453,7 +453,7 @@ logic_tricks = {
                     '''},
     'Death Mountain Crater Upper to Lower Boulder Skip': {
         'name'    : 'logic_crater_boulder_skip',
-        'tags'    : ("Death Mountain Crater",),
+        'tags'    : ("Death Mountain Crater", "Overworld",),
         'tooltip' : '''\
                     With careful positioning, you can jump to the ledge
                     where the boulder is, then use repeated ledge grabs
@@ -462,41 +462,41 @@ logic_tricks = {
                     '''},
     'Zora\'s River Lower Freestanding PoH as Adult with Nothing': {
         'name'    : 'logic_zora_river_lower',
-        'tags'    : ("Zora's River",),
+        'tags'    : ("Zora's River", "Overworld",),
         'tooltip' : '''\
                     Adult can reach this PoH with a precise jump,
                     no Hover Boots required.
                     '''},
     'Zora\'s River Upper Freestanding PoH as Adult with Nothing': {
         'name'    : 'logic_zora_river_upper',
-        'tags'    : ("Zora's River",),
+        'tags'    : ("Zora's River", "Overworld",),
         'tooltip' : '''\
                     Adult can reach this PoH with a precise jump,
                     no Hover Boots required.
                     '''},
     'Zora\'s Domain Entry with Cucco': {
         'name'    : 'logic_zora_with_cucco',
-        'tags'    : ("Zora's River",),
+        'tags'    : ("Zora's River", "Overworld",),
         'tooltip' : '''\
                     Can fly behind the waterfall with
                     a cucco as child.
                     '''},
     'Zora\'s Domain Entry with Hover Boots': {
         'name'    : 'logic_zora_with_hovers',
-        'tags'    : ("Zora's River",),
+        'tags'    : ("Zora's River", "Overworld",),
         'tooltip' : '''\
                     Can hover behind the waterfall as adult.
                     '''},
     'Zora\'s River Rupees with Jump Dive': {
         'name'    : 'logic_zora_river_rupees',
-        'tags'    : ("Zora's River", "Freestandings",),
+        'tags'    : ("Zora's River", "Freestandings", "Overworld",),
         'tooltip' : '''\
                     You can jump down onto them from
                     above to skip needing Iron Boots.
                     '''},
     'Skip King Zora as Adult with Nothing': {
         'name'    : 'logic_king_zora_skip',
-        'tags'    : ("Zora's Domain",),
+        'tags'    : ("Zora's Domain", "Overworld",),
         'tooltip' : '''\
                     With a precise jump as adult, it is possible to
                     get on the fence next to King Zora from the front
@@ -504,7 +504,7 @@ logic_tricks = {
                     '''},
     'Zora\'s Domain GS with No Additional Items': {
         'name'    : 'logic_domain_gs',
-        'tags'    : ("Zora's Domain", "Gold Skulltulas",),
+        'tags'    : ("Zora's Domain", "Gold Skulltulas", "Overworld",),
         'tooltip' : '''\
                     A precise jump slash can kill the Skulltula and
                     recoil back onto the top of the frozen waterfall.
@@ -513,21 +513,21 @@ logic_tricks = {
                     '''},                    
     'Lake Hylia Lab Wall GS with Jump Slash': {
         'name'    : 'logic_lab_wall_gs',
-        'tags'    : ("Lake Hylia", "Gold Skulltulas",),
+        'tags'    : ("Lake Hylia", "Gold Skulltulas", "Overworld",),
         'tooltip' : '''\
                     The jump slash to actually collect the
                     token is somewhat precise.
                     '''},
     'Lake Hylia Lab Dive without Gold Scale': {
         'name'    : 'logic_lab_diving',
-        'tags'    : ("Lake Hylia",),
+        'tags'    : ("Lake Hylia", "Overworld",),
         'tooltip' : '''\
                     Remove the Iron Boots in the midst of
                     Hookshotting the underwater crate.
                     '''},
     'Water Temple Entry without Iron Boots using Hookshot': {
         'name'    : 'logic_water_hookshot_entry',
-        'tags'    : ("Lake Hylia",),
+        'tags'    : ("Lake Hylia", "Overworld",),
         'tooltip' : '''\
                     When entering Water Temple using Gold Scale instead
                     of Iron Boots, the Longshot is usually used to be
@@ -537,7 +537,7 @@ logic_tricks = {
                     '''},
     'Gerudo Valley Crate PoH as Adult with Hover Boots': {
         'name'    : 'logic_valley_crate_hovers',
-        'tags'    : ("Gerudo Valley",),
+        'tags'    : ("Gerudo Valley", "Overworld",),
         'tooltip' : '''\
                     From the far side of Gerudo Valley, a precise
                     Hover Boots movement and jump-slash recoil can
@@ -547,7 +547,7 @@ logic_tricks = {
                     '''},
     'Thieves\' Hideout "Kitchen" with No Additional Items': {
         'name'    : 'logic_gerudo_kitchen',
-        'tags'    : ("Thieves' Hideout", "Gerudo's Fortress",),
+        'tags'    : ("Thieves' Hideout", "Gerudo's Fortress", "Overworld",),
         'tooltip' : '''\
                     Allows passing through the kitchen by avoiding being
                     seen by the guards. The logic normally guarantees
@@ -557,14 +557,14 @@ logic_tricks = {
                     '''},
     'Gerudo\'s Fortress Ledge Jumps': {
         'name'    : 'logic_gf_jump',
-        'tags'    : ("Gerudo's Fortress",),
+        'tags'    : ("Gerudo's Fortress", "Overworld",),
         'tooltip' : '''\
                     Adult can jump onto the top roof of the fortress
                     without going through the interior of the hideout.
                     '''},
     'Wasteland Crossing without Hover Boots or Longshot': {
         'name'    : 'logic_wasteland_crossing',
-        'tags'    : ("Haunted Wasteland",),
+        'tags'    : ("Haunted Wasteland", "Overworld",),
         'tooltip' : '''\
                     You can beat the quicksand by backwalking across it
                     in a specific way.
@@ -573,7 +573,7 @@ logic_tricks = {
                     '''},
     'Lensless Wasteland': {
         'name'    : 'logic_lens_wasteland',
-        'tags'    : ("Lens of Truth", "Haunted Wasteland",),
+        'tags'    : ("Lens of Truth", "Haunted Wasteland", "Overworld",),
         'tooltip' : '''\
                     By memorizing the path, you can travel through the
                     Wasteland without using the Lens of Truth to see
@@ -583,7 +583,7 @@ logic_tricks = {
                     '''},
     'Reverse Wasteland': {
         'name'    : 'logic_reverse_wasteland',
-        'tags'    : ("Haunted Wasteland",),
+        'tags'    : ("Haunted Wasteland", "Overworld",),
         'tooltip' : '''\
                     By memorizing the path, you can travel through the
                     Wasteland in reverse.
@@ -600,7 +600,7 @@ logic_tricks = {
                     '''},
     'Colossus Hill GS with Hookshot': {
         'name'    : 'logic_colossus_gs',
-        'tags'    : ("Desert Colossus", "Gold Skulltulas",),
+        'tags'    : ("Desert Colossus", "Gold Skulltulas", "Overworld",),
         'tooltip' : '''\
                     Somewhat precise. If you kill enough Leevers
                     you can get enough of a break to take some time
@@ -611,13 +611,13 @@ logic_tricks = {
 
     'Deku Tree Basement Vines GS with Jump Slash': {
         'name'    : 'logic_deku_basement_gs',
-        'tags'    : ("Deku Tree", "Gold Skulltulas",),
+        'tags'    : ("Deku Tree", "Gold Skulltulas", "Vanilla Dungeons",),
         'tooltip' : '''\
                     Can be defeated by doing a precise jump slash.
                     '''},
     'Deku Tree Basement without Slingshot': {
         'name'    : 'logic_deku_b1_skip',
-        'tags'    : ("Deku Tree", "Master Quest",),
+        'tags'    : ("Deku Tree", "Deku Tree MQ", "Master Quest", "Vanilla Dungeons",),
         'tooltip' : '''\
                     A precise jump can be used to skip
                     needing to use the Slingshot to go
@@ -630,7 +630,7 @@ logic_tricks = {
                     '''},
     'Deku Tree Basement Web to Gohma with Bow': {
         'name'    : 'logic_deku_b1_webs_with_bow',
-        'tags'    : ("Deku Tree", "Entrance",),
+        'tags'    : ("Deku Tree", "Entrance Shuffle", "Vanilla Dungeons",),
         'tooltip' : '''\
                     All spider web walls in the Deku Tree basement can be burnt
                     as adult with just a bow by shooting through torches. This
@@ -645,7 +645,7 @@ logic_tricks = {
                     '''},
     'Deku Tree MQ Compass Room GS Boulders with Just Hammer': {
         'name'    : 'logic_deku_mq_compass_gs',
-        'tags'    : ("Deku Tree", "Gold Skulltulas", "Master Quest",),
+        'tags'    : ("Deku Tree MQ", "Gold Skulltulas", "Master Quest",),
         'tooltip' : '''\
                     Climb to the top of the vines, then let go
                     and jump slash immediately to destroy the
@@ -654,7 +654,7 @@ logic_tricks = {
                     '''},
     'Deku Tree MQ Roll Under the Spiked Log': {
         'name'    : 'logic_deku_mq_log',
-        'tags'    : ("Deku Tree", "Master Quest",),
+        'tags'    : ("Deku Tree MQ", "Master Quest",),
         'tooltip' : '''\
                     You can get past the spiked log by rolling
                     to briefly shrink your hitbox. As adult,
@@ -662,7 +662,7 @@ logic_tricks = {
                     '''},
     'Dodongo\'s Cavern Scarecrow GS with Armos Statue': {
         'name'    : 'logic_dc_scarecrow_gs',
-        'tags'    : ("Dodongo's Cavern", "Gold Skulltulas",),
+        'tags'    : ("Dodongo's Cavern", "Gold Skulltulas", "Vanilla Dungeons",),
         'tooltip' : '''\
                     You can jump off an Armos Statue to reach the
                     alcove with the Gold Skulltula. It takes quite
@@ -672,7 +672,7 @@ logic_tricks = {
                     '''},
     'Dodongo\'s Cavern Vines GS from Below with Longshot': {
         'name'    : 'logic_dc_vines_gs',
-        'tags'    : ("Dodongo's Cavern", "Gold Skulltulas",),
+        'tags'    : ("Dodongo's Cavern", "Gold Skulltulas", "Vanilla Dungeons",),
         'tooltip' : '''\
                     The vines upon which this Skulltula rests are one-
                     sided collision. You can use the Longshot to get it
@@ -681,14 +681,14 @@ logic_tricks = {
                     '''},
     'Dodongo\'s Cavern Staircase with Bow': {
         'name'    : 'logic_dc_staircase',
-        'tags'    : ("Dodongo's Cavern",),
+        'tags'    : ("Dodongo's Cavern", "Vanilla Dungeons",),
         'tooltip' : '''\
                     The Bow can be used to knock down the stairs
                     with two well-timed shots.
                     '''},
     'Dodongo\'s Cavern Child Slingshot Skips': {
         'name'    : 'logic_dc_slingshot_skip',
-        'tags'    : ("Dodongo's Cavern",),
+        'tags'    : ("Dodongo's Cavern", "Vanilla Dungeons",),
         'tooltip' : '''\
                     With precise platforming, child can cross the
                     platforms while the flame circles are there.
@@ -698,7 +698,7 @@ logic_tricks = {
                     '''},
     'Dodongo\'s Cavern Two Scrub Room with Strength': {
         'name'    : 'logic_dc_scrub_room',
-        'tags'    : ("Dodongo's Cavern",),
+        'tags'    : ("Dodongo's Cavern", "Vanilla Dungeons",),
         'tooltip' : '''\
                     With help from a conveniently-positioned block,
                     Adult can quickly carry a bomb flower over to
@@ -707,13 +707,13 @@ logic_tricks = {
                     '''},
     'Dodongo\'s Cavern Spike Trap Room Jump without Hover Boots': {
         'name'    : 'logic_dc_jump',
-        'tags'    : ("Dodongo's Cavern", "Master Quest",),
+        'tags'    : ("Dodongo's Cavern", "Dodongo's Cavern MQ", "Master Quest", "Vanilla Dungeons",),
         'tooltip' : '''\
                     The jump is adult Link only. Applies to both Vanilla and MQ.
                     '''},
     'Dodongo\'s Cavern Smash the Boss Lobby Floor': {
         'name'    : 'logic_dc_hammer_floor',
-        'tags'    : ("Dodongo's Cavern", "Entrance", "Master Quest",),
+        'tags'    : ("Dodongo's Cavern", "Dodongo's Cavern MQ", "Entrance Shuffle", "Master Quest", "Vanilla Dungeons",),
         'tooltip' : '''\
                     The bombable floor before King Dodongo can be destroyed
                     with Hammer if hit in the very center. This is only
@@ -723,7 +723,7 @@ logic_tricks = {
                     '''},
     'Dodongo\'s Cavern MQ Early Bomb Bag Area as Child': {
         'name'    : 'logic_dc_mq_child_bombs',
-        'tags'    : ("Dodongo's Cavern", "Master Quest",),
+        'tags'    : ("Dodongo's Cavern MQ", "Master Quest",),
         'tooltip' : '''\
                     With a precise jump slash from above, you
                     can reach the Bomb Bag area as only child
@@ -732,7 +732,7 @@ logic_tricks = {
                     '''},
     'Dodongo\'s Cavern MQ Light the Eyes with Strength as Child': {
         'name'    : 'logic_dc_mq_eyes_child',
-        'tags'    : ("Dodongo's Cavern", "Master Quest",),
+        'tags'    : ("Dodongo's Cavern MQ", "Master Quest",),
         'tooltip' : '''\
                     If you move very quickly, it is possible to use
                     the bomb flower at the top of the room to light
@@ -744,7 +744,7 @@ logic_tricks = {
                     '''},
     'Dodongo\'s Cavern MQ Light the Eyes with Strength as Adult': {
         'name'    : 'logic_dc_mq_eyes_adult',
-        'tags'    : ("Dodongo's Cavern", "Master Quest",),
+        'tags'    : ("Dodongo's Cavern MQ", "Master Quest",),
         'tooltip' : '''\
                     If you move very quickly, it is possible to use
                     the bomb flower at the top of the room to light
@@ -752,7 +752,7 @@ logic_tricks = {
                     '''},
     'Jabu Underwater Alcove as Adult with Jump Dive': {
         'name'    : 'logic_jabu_alcove_jump_dive',
-        'tags'    : ("Jabu Jabu's Belly", "Entrance", "Master Quest",),
+        'tags'    : ("Jabu Jabu's Belly", "Jabu Jabu's Belly MQ", "Entrance Shuffle", "Master Quest", "Vanilla Dungeons",),
         'tooltip' : '''\
                     Standing above the underwater tunnel leading to the scrub,
                     jump down and swim through the tunnel. This allows adult to
@@ -762,7 +762,7 @@ logic_tricks = {
                     '''},
     'Jabu Near Boss Room with Hover Boots': {
         'name'    : 'logic_jabu_boss_hover',
-        'tags'    : ("Jabu Jabu's Belly", "Gold Skulltulas", "Entrance",),
+        'tags'    : ("Jabu Jabu's Belly", "Gold Skulltulas", "Entrance Shuffle", "Vanilla Dungeons",),
         'tooltip' : '''\
                     A box for the blue switch can be carried over
                     by backwalking with one while the elevator is
@@ -773,7 +773,7 @@ logic_tricks = {
                     '''},
     'Jabu Near Boss Ceiling Switch/GS without Boomerang or Explosives': {
         'name'    : 'logic_jabu_near_boss_ranged',
-        'tags'    : ("Jabu Jabu's Belly", "Gold Skulltulas", "Entrance", "Master Quest",),
+        'tags'    : ("Jabu Jabu's Belly", "Jabu Jabu's Belly MQ", "Gold Skulltulas", "Entrance Shuffle", "Master Quest", "Vanilla Dungeons",),
         'tooltip' : '''\
                     Vanilla Jabu: From near the entrance into the room, you can
                     hit the switch that opens the door to the boss room using a
@@ -790,7 +790,7 @@ logic_tricks = {
                     '''},                    
     'Jabu Near Boss Ceiling Switch with Explosives': {
         'name'    : 'logic_jabu_near_boss_explosives',
-        'tags'    : ("Jabu Jabu's Belly", "Entrance",),
+        'tags'    : ("Jabu Jabu's Belly", "Entrance Shuffle", "Vanilla Dungeons",),
         'tooltip' : '''\
                     You can hit the switch that opens the door to the boss
                     room using a precisely-aimed Bombchu. Also, using the
@@ -800,14 +800,14 @@ logic_tricks = {
                     '''},
     'Jabu MQ without Lens of Truth': {
         'name'    : 'logic_lens_jabu_mq',
-        'tags'    : ("Lens of Truth", "Jabu Jabu's Belly", "Master Quest",),
+        'tags'    : ("Lens of Truth", "Jabu Jabu's Belly MQ", "Master Quest",),
         'tooltip' : '''\
                     Removes the requirements for the Lens of Truth
                     in Jabu MQ.
                     '''},                                      
     'Jabu MQ Compass Chest with Boomerang': {
         'name'    : 'logic_jabu_mq_rang_jump',
-        'tags'    : ("Jabu Jabu's Belly", "Master Quest",),
+        'tags'    : ("Jabu Jabu's Belly MQ", "Master Quest",),
         'tooltip' : '''\
                     Boomerang can reach the cow switch to spawn the chest by
                     targeting the cow, jumping off of the ledge where the
@@ -817,27 +817,27 @@ logic_tricks = {
                     '''},
     'Jabu MQ Song of Time Block GS with Boomerang': {
         'name'    : 'logic_jabu_mq_sot_gs',
-        'tags'    : ("Jabu Jabu's Belly", "Gold Skulltulas", "Master Quest",),
+        'tags'    : ("Jabu Jabu's Belly MQ", "Gold Skulltulas", "Master Quest",),
         'tooltip' : '''\
                     Allow the Boomerang to return to you through
                     the Song of Time block to grab the token.
                     '''},
     'Bottom of the Well without Lens of Truth': {
         'name'    : 'logic_lens_botw',
-        'tags'    : ("Lens of Truth", "Bottom of the Well",),
+        'tags'    : ("Lens of Truth", "Bottom of the Well", "Vanilla Dungeons",),
         'tooltip' : '''\
                     Removes the requirements for the Lens of Truth
                     in Bottom of the Well.
                     '''},
     'Child Dead Hand without Kokiri Sword': {
         'name'    : 'logic_child_deadhand',
-        'tags'    : ("Bottom of the Well",),
+        'tags'    : ("Bottom of the Well", "Bottom of the Well MQ", "Vanilla Dungeons", "Master Quest",),
         'tooltip' : '''\
                     Requires 9 sticks or 5 jump slashes.
                     '''},   
     'Bottom of the Well Map Chest with Strength & Sticks': {
         'name'    : 'logic_botw_basement',
-        'tags'    : ("Bottom of the Well",),
+        'tags'    : ("Bottom of the Well", "Vanilla Dungeons",),
         'tooltip' : '''\
                     The chest in the basement can be reached with
                     strength by doing a jump slash with a lit
@@ -845,7 +845,7 @@ logic_tricks = {
                     '''},
     'Bottom of the Well MQ Jump Over the Pits': {
         'name'    : 'logic_botw_mq_pits',
-        'tags'    : ("Bottom of the Well", "Master Quest",),
+        'tags'    : ("Bottom of the Well MQ", "Master Quest",),
         'tooltip' : '''\
                     While the pits in Bottom of the Well don't allow you to
                     jump just by running straight at them, you can still get
@@ -856,14 +856,14 @@ logic_tricks = {
                     '''},
     'Bottom of the Well MQ Dead Hand Freestanding Key with Boomerang': {
         'name'    : 'logic_botw_mq_dead_hand_key',
-        'tags'    : ("Bottom of the Well", "Master Quest",),
+        'tags'    : ("Bottom of the Well MQ", "Master Quest",),
         'tooltip' : '''\
                     Boomerang can fish the item out of the rubble without
                     needing explosives to blow it up.
                     '''},
     'Forest Temple First Room GS with Difficult-to-Use Weapons': {
         'name'    : 'logic_forest_first_gs',
-        'tags'    : ("Forest Temple", "Entrance", "Gold Skulltulas",),
+        'tags'    : ("Forest Temple", "Entrance Shuffle", "Gold Skulltulas", "Vanilla Dungeons",),
         'tooltip' : '''\
                     Allows killing this Skulltula with Sword or Sticks by
                     jump slashing it as you let go from the vines. You can
@@ -874,14 +874,14 @@ logic_tricks = {
                     '''},
     'Forest Temple East Courtyard GS with Boomerang': {
         'name'    : 'logic_forest_outdoor_east_gs',
-        'tags'    : ("Forest Temple", "Entrance", "Gold Skulltulas",),
+        'tags'    : ("Forest Temple", "Entrance Shuffle", "Gold Skulltulas", "Vanilla Dungeons",),
         'tooltip' : '''\
                     Precise Boomerang throws can allow child to
                     kill the Skulltula and collect the token.
                     '''},                                      
     'Forest Temple East Courtyard Vines with Hookshot': {
         'name'    : 'logic_forest_vines',
-        'tags'    : ("Forest Temple", "Master Quest",),
+        'tags'    : ("Forest Temple", "Forest Temple MQ", "Master Quest", "Vanilla Dungeons",),
         'tooltip' : '''\
                     The vines in Forest Temple leading to where the well
                     drain switch is in the standard form can be barely
@@ -889,7 +889,7 @@ logic_tricks = {
                     '''},
     'Forest Temple NE Outdoors Ledge with Hover Boots': {
         'name'    : 'logic_forest_outdoors_ledge',
-        'tags'    : ("Forest Temple", "Entrance", "Master Quest",),
+        'tags'    : ("Forest Temple", "Forest Temple MQ", "Entrance Shuffle", "Master Quest", "Vanilla Dungeons",),
         'tooltip' : '''\
                     With precise Hover Boots movement you can fall down
                     to this ledge from upper balconies. If done precisely
@@ -900,7 +900,7 @@ logic_tricks = {
                     '''},
     'Forest Temple East Courtyard Door Frame with Hover Boots': {
         'name'    : 'logic_forest_door_frame',
-        'tags'    : ("Forest Temple", "Master Quest",),
+        'tags'    : ("Forest Temple", "Forest Temple MQ", "Master Quest", "Vanilla Dungeons",),
         'tooltip' : '''\
                     A precise Hover Boots movement from the upper
                     balconies in this courtyard can be used to get on
@@ -913,7 +913,7 @@ logic_tricks = {
                     '''},                    
     'Forest Temple Outside Backdoor with Jump Slash': {
         'name'    : 'logic_forest_outside_backdoor',
-        'tags'    : ("Forest Temple", "Master Quest",),
+        'tags'    : ("Forest Temple", "Forest Temple MQ", "Master Quest", "Vanilla Dungeons",),
         'tooltip' : '''\
                     A jump slash recoil can be used to reach the
                     ledge in the block puzzle room that leads to
@@ -924,7 +924,7 @@ logic_tricks = {
                     '''},
     'Swim Through Forest Temple MQ Well with Hookshot': {
         'name'    : 'logic_forest_well_swim',
-        'tags'    : ("Forest Temple", "Master Quest",),
+        'tags'    : ("Forest Temple MQ", "Master Quest",),
         'tooltip' : '''\
                     Shoot the vines in the well as low and as far to
                     the right as possible, and then immediately swim
@@ -934,14 +934,14 @@ logic_tricks = {
                     '''},
     'Skip Forest Temple MQ Block Puzzle with Bombchu': {
         'name'    : 'logic_forest_mq_block_puzzle',
-        'tags'    : ("Forest Temple", "Master Quest",),
+        'tags'    : ("Forest Temple MQ", "Master Quest",),
         'tooltip' : '''\
                     Send the Bombchu straight up the center of the
                     wall directly to the left upon entering the room.
                     '''},                    
     'Forest Temple MQ Twisted Hallway Switch with Jump Slash': {
         'name'    : 'logic_forest_mq_hallway_switch_jumpslash',
-        'tags'    : ("Forest Temple", "Master Quest",),
+        'tags'    : ("Forest Temple MQ", "Master Quest",),
         'tooltip' : '''\
                     The switch to twist the hallway can be hit with
                     a jump slash through the glass block. To get in
@@ -953,7 +953,7 @@ logic_tricks = {
                     '''},
     #'Forest Temple MQ Twisted Hallway Switch with Hookshot': {
     #    'name'    : 'logic_forest_mq_hallway_switch_hookshot',
-    #    'tags'    : ("Forest Temple", "Master Quest",),
+    #    'tags'    : ("Forest Temple MQ", "Master Quest",),
     #    'tooltip' : '''\
     #                There's a very small gap between the glass block
     #                and the wall. Through that gap you can hookshot
@@ -961,7 +961,7 @@ logic_tricks = {
     #                '''},
     'Forest Temple MQ Twisted Hallway Switch with Boomerang': {
         'name'    : 'logic_forest_mq_hallway_switch_boomerang',
-        'tags'    : ("Forest Temple", "Entrance", "Master Quest",),
+        'tags'    : ("Forest Temple MQ", "Entrance Shuffle", "Master Quest",),
         'tooltip' : '''\
                     The Boomerang can return to Link through walls,
                     allowing child to hit the hallway switch. This
@@ -971,7 +971,7 @@ logic_tricks = {
                     '''},
     'Fire Temple Boss Door without Hover Boots or Pillar': {
         'name'    : 'logic_fire_boss_door_jump',
-        'tags'    : ("Fire Temple", "Master Quest",),
+        'tags'    : ("Fire Temple", "Fire Temple MQ", "Master Quest", "Vanilla Dungeons",),
         'tooltip' : '''\
                     The Fire Temple Boss Door can be reached with a precise
                     jump. You must be touching the side wall of the room so
@@ -980,20 +980,20 @@ logic_tricks = {
                     '''},
     'Fire Temple Song of Time Room GS without Song of Time': {
         'name'    : 'logic_fire_song_of_time',
-        'tags'    : ("Fire Temple", "Gold Skulltulas",),
+        'tags'    : ("Fire Temple", "Gold Skulltulas", "Vanilla Dungeons",),
         'tooltip' : '''\
                     A precise jump can be used to reach this room.
                     '''},
     'Fire Temple Climb without Strength': {
         'name'    : 'logic_fire_strength',
-        'tags'    : ("Fire Temple",),
+        'tags'    : ("Fire Temple", "Vanilla Dungeons",),
         'tooltip' : '''\
                     A precise jump can be used to skip
                     pushing the block.
                     '''},
     'Fire Temple East Tower without Scarecrow\'s Song': {
         'name'    : 'logic_fire_scarecrow',
-        'tags'    : ("Fire Temple",),
+        'tags'    : ("Fire Temple", "Vanilla Dungeons",),
         'tooltip' : '''\
                     Also known as "Pixelshot".
                     The Longshot can reach the target on the elevator
@@ -1002,7 +1002,7 @@ logic_tricks = {
                     '''},
     'Fire Temple Flame Wall Maze Skip': {
         'name'    : 'logic_fire_flame_maze',
-        'tags'    : ("Fire Temple",),
+        'tags'    : ("Fire Temple", "Vanilla Dungeons",),
         'tooltip' : '''\
                     If you move quickly you can sneak past the edge of
                     a flame wall before it can rise up to block you.
@@ -1012,7 +1012,7 @@ logic_tricks = {
                     '''},
     'Fire Temple MQ Chest Near Boss without Breaking Crate': {
         'name'    : 'logic_fire_mq_near_boss',
-        'tags'    : ("Fire Temple", "Master Quest",),
+        'tags'    : ("Fire Temple MQ", "Master Quest",),
         'tooltip' : '''\
                     The hitbox for the torch extends a bit outside of the crate.
                     Shoot a flaming arrow at the side of the crate to light the
@@ -1020,7 +1020,7 @@ logic_tricks = {
                     '''},
     'Fire Temple MQ Big Lava Room Blocked Door without Hookshot': {
         'name'    : 'logic_fire_mq_blocked_chest',
-        'tags'    : ("Fire Temple", "Master Quest",),
+        'tags'    : ("Fire Temple MQ", "Master Quest",),
         'tooltip' : '''\
                     There is a gap between the hitboxes of the flame
                     wall in the big lava room. If you know where this
@@ -1030,7 +1030,7 @@ logic_tricks = {
                     '''},
     'Fire Temple MQ Boss Key Chest without Bow': {
         'name'    : 'logic_fire_mq_bk_chest',
-        'tags'    : ("Fire Temple", "Master Quest",),
+        'tags'    : ("Fire Temple MQ", "Master Quest",),
         'tooltip' : '''\
                     It is possible to light both of the timed torches
                     to unbar the door to the boss key chest's room
@@ -1042,7 +1042,7 @@ logic_tricks = {
                     '''},
     'Fire Temple MQ Climb without Fire Source': {
         'name'    : 'logic_fire_mq_climb',
-        'tags'    : ("Fire Temple", "Master Quest",),
+        'tags'    : ("Fire Temple MQ", "Master Quest",),
         'tooltip' : '''\
                     You can use the Hover Boots to hover around to
                     the climbable wall, skipping the need to use a
@@ -1050,7 +1050,7 @@ logic_tricks = {
                     '''},
     'Fire Temple MQ Lizalfos Maze Side Room without Box': {
         'name'    : 'logic_fire_mq_maze_side_room',
-        'tags'    : ("Fire Temple", "Master Quest",),
+        'tags'    : ("Fire Temple MQ", "Master Quest",),
         'tooltip' : '''\
                     You can walk from the blue switch to the door and
                     quickly open the door before the bars reclose. This
@@ -1059,7 +1059,7 @@ logic_tricks = {
                     '''},
     'Fire Temple MQ Lower to Upper Lizalfos Maze with Hover Boots': {
         'name'    : 'logic_fire_mq_maze_hovers',
-        'tags'    : ("Fire Temple", "Master Quest",),
+        'tags'    : ("Fire Temple MQ", "Master Quest",),
         'tooltip' : '''\
                     Use the Hover Boots off of a crate to
                     climb to the upper maze without needing
@@ -1067,7 +1067,7 @@ logic_tricks = {
                     '''},
     'Fire Temple MQ Lower to Upper Lizalfos Maze with Precise Jump': {
         'name'    : 'logic_fire_mq_maze_jump',
-        'tags'    : ("Fire Temple", "Master Quest",),
+        'tags'    : ("Fire Temple MQ", "Master Quest",),
         'tooltip' : '''\
                     A precise jump off of a crate can be used to
                     climb to the upper maze without needing to spawn
@@ -1078,7 +1078,7 @@ logic_tricks = {
                     '''},
     'Fire Temple MQ Above Flame Wall Maze GS from Below with Longshot': {
         'name'    : 'logic_fire_mq_above_maze_gs',
-        'tags'    : ("Fire Temple", "Gold Skulltulas", "Master Quest",),
+        'tags'    : ("Fire Temple MQ", "Gold Skulltulas", "Master Quest",),
         'tooltip' : '''\
                     The floor of the room that contains this Skulltula
                     is only solid from above. From the maze below, the
@@ -1087,7 +1087,7 @@ logic_tricks = {
                     '''},                    
     'Fire Temple MQ Flame Wall Maze Skip': {
         'name'    : 'logic_fire_mq_flame_maze',
-        'tags'    : ("Fire Temple", "Gold Skulltulas", "Master Quest",),
+        'tags'    : ("Fire Temple MQ", "Gold Skulltulas", "Master Quest",),
         'tooltip' : '''\
                     If you move quickly you can sneak past the edge of
                     a flame wall before it can rise up to block you.
@@ -1100,7 +1100,7 @@ logic_tricks = {
                     '''},
     'Water Temple Torch Longshot': {
         'name'    : 'logic_water_temple_torch_longshot',
-        'tags'    : ("Water Temple",),
+        'tags'    : ("Water Temple", "Vanilla Dungeons",),
         'tooltip' : '''\
                     Stand on the eastern side of the central pillar and longshot
                     the torches on the bottom level. Swim through the corridor
@@ -1112,7 +1112,7 @@ logic_tricks = {
                     '''},
     'Water Temple Cracked Wall with Hover Boots': {
         'name'    : 'logic_water_cracked_wall_hovers',
-        'tags'    : ("Water Temple",),
+        'tags'    : ("Water Temple", "Vanilla Dungeons",),
         'tooltip' : '''\
                     With a midair side-hop while wearing the Hover
                     Boots, you can reach the cracked wall without
@@ -1120,7 +1120,7 @@ logic_tricks = {
                     '''},
     'Water Temple Cracked Wall with No Additional Items': {
         'name'    : 'logic_water_cracked_wall_nothing',
-        'tags'    : ("Water Temple",),
+        'tags'    : ("Water Temple", "Vanilla Dungeons",),
         'tooltip' : '''\
                     A precise jump slash (among other methods) will
                     get you to the cracked wall without needing the
@@ -1130,7 +1130,7 @@ logic_tricks = {
                     '''},
     'Water Temple Boss Key Region with Hover Boots': {
         'name'    : 'logic_water_boss_key_region',
-        'tags'    : ("Water Temple",),
+        'tags'    : ("Water Temple", "Vanilla Dungeons",),
         'tooltip' : '''\
                     With precise Hover Boots movement it is possible
                     to reach the boss key chest's region without
@@ -1141,7 +1141,7 @@ logic_tricks = {
                     '''},
     'Water Temple North Basement Ledge with Precise Jump': {
         'name'    : 'logic_water_north_basement_ledge_jump',
-        'tags'    : ("Water Temple", "Master Quest",),
+        'tags'    : ("Water Temple", "Water Temple MQ", "Master Quest", "Vanilla Dungeons",),
         'tooltip' : '''\
                     In the northern basement there's a ledge from where, in
                     vanilla Water Temple, boulders roll out into the room.
@@ -1152,7 +1152,7 @@ logic_tricks = {
                     '''},
     'Water Temple Boss Key Jump Dive': {
         'name'    : 'logic_water_bk_jump_dive',
-        'tags'    : ("Water Temple",),
+        'tags'    : ("Water Temple", "Vanilla Dungeons",),
         'tooltip' : '''\
                     Stand on the very edge of the raised corridor leading from the
                     push block room to the rolling boulder corridor. Face the
@@ -1163,7 +1163,7 @@ logic_tricks = {
                     '''},
     'Water Temple Central Pillar GS with Farore\'s Wind': {
         'name'    : 'logic_water_central_gs_fw',
-        'tags'    : ("Water Temple", "Gold Skulltulas",),
+        'tags'    : ("Water Temple", "Gold Skulltulas", "Vanilla Dungeons",),
         'tooltip' : '''\
                     If you set Farore's Wind inside the central pillar
                     and then return to that warp point after raising
@@ -1172,7 +1172,7 @@ logic_tricks = {
                     '''},
     'Water Temple Central Pillar GS with Iron Boots': {
         'name'    : 'logic_water_central_gs_irons',
-        'tags'    : ("Water Temple", "Gold Skulltulas",),
+        'tags'    : ("Water Temple", "Gold Skulltulas", "Vanilla Dungeons",),
         'tooltip' : '''\
                     After opening the middle water level door into the
                     central pillar, the door will stay unbarred so long
@@ -1184,7 +1184,7 @@ logic_tricks = {
                     '''},                    
     'Water Temple Central Bow Target without Longshot or Hover Boots': {
         'name'    : 'logic_water_central_bow',
-        'tags'    : ("Water Temple",),
+        'tags'    : ("Water Temple", "Vanilla Dungeons",),
         'tooltip' : '''\
                     A very precise Bow shot can hit the eye
                     switch from the floor above. Then, you
@@ -1195,21 +1195,21 @@ logic_tricks = {
                     '''},
     'Water Temple Falling Platform Room GS with Hookshot': {
         'name'    : 'logic_water_falling_platform_gs_hookshot',
-        'tags'    : ("Water Temple", "Gold Skulltulas",),
+        'tags'    : ("Water Temple", "Gold Skulltulas", "Vanilla Dungeons",),
         'tooltip' : '''\
                     If you stand on the very edge of the platform, this
                     Gold Skulltula can be obtained with only the Hookshot.
                     '''},
     'Water Temple Falling Platform Room GS with Boomerang': {
         'name'    : 'logic_water_falling_platform_gs_boomerang',
-        'tags'    : ("Water Temple", "Gold Skulltulas", "Entrance",),
+        'tags'    : ("Water Temple", "Gold Skulltulas", "Entrance Shuffle", "Vanilla Dungeons",),
         'tooltip' : '''\
                     If you stand on the very edge of the platform, this
                     Gold Skulltula can be obtained with only the Boomerang.
                     '''},
     'Water Temple River GS without Iron Boots': {
         'name'    : 'logic_water_river_gs',
-        'tags'    : ("Water Temple", "Gold Skulltulas",),
+        'tags'    : ("Water Temple", "Gold Skulltulas", "Vanilla Dungeons",),
         'tooltip' : '''\
                     Standing on the exposed ground toward the end of
                     the river, a precise Longshot use can obtain the
@@ -1219,7 +1219,7 @@ logic_tricks = {
                     '''},
     'Water Temple Dragon Statue Jump Dive': {
         'name'    : 'logic_water_dragon_jump_dive',
-        'tags'    : ("Water Temple", "Master Quest",),
+        'tags'    : ("Water Temple", "Water Temple MQ", "Master Quest", "Vanilla Dungeons",),
         'tooltip' : '''\
                     If you come into the dragon statue room from the
                     serpent river, you can jump down from above and get
@@ -1231,7 +1231,7 @@ logic_tricks = {
                     '''},
     'Water Temple Dragon Statue Switch from Above the Water as Adult': {
         'name'    : 'logic_water_dragon_adult',
-        'tags'    : ("Water Temple",),
+        'tags'    : ("Water Temple", "Vanilla Dungeons",),
         'tooltip' : '''\
                     Normally you need both Hookshot and Iron Boots to hit the
                     switch and swim through the tunnel to get to the chest. But
@@ -1245,7 +1245,7 @@ logic_tricks = {
                     '''},
     'Water Temple Dragon Statue Switch from Above the Water as Child': {
         'name'    : 'logic_water_dragon_child',
-        'tags'    : ("Water Temple", "Entrance",),
+        'tags'    : ("Water Temple", "Entrance Shuffle", "Vanilla Dungeons",),
         'tooltip' : '''\
                     It is possible for child to hit the switch from dry land
                     using one of Bombchus, Slingshot or Boomerang. Then, to
@@ -1259,7 +1259,7 @@ logic_tricks = {
                     '''},
     'Water Temple MQ Central Pillar with Fire Arrows': {
         'name'    : 'logic_water_mq_central_pillar',
-        'tags'    : ("Water Temple", "Master Quest",),
+        'tags'    : ("Water Temple MQ", "Master Quest",),
         'tooltip' : '''\
                     Slanted torches have misleading hitboxes. Whenever
                     you see a slanted torch jutting out of the wall,
@@ -1272,7 +1272,7 @@ logic_tricks = {
                     '''},
     'Water Temple MQ North Basement GS without Small Key': {
         'name'    : 'logic_water_mq_locked_gs',
-        'tags'    : ("Water Temple", "Gold Skulltulas", "Master Quest",),
+        'tags'    : ("Water Temple MQ", "Gold Skulltulas", "Master Quest",),
         'tooltip' : '''\
                     There is an invisible Hookshot target that can be used
                     to get over the gate that blocks you from going to this
@@ -1281,7 +1281,7 @@ logic_tricks = {
                     '''},
     'Shadow Temple Stationary Objects without Lens of Truth': {
         'name'    : 'logic_lens_shadow',
-        'tags'    : ("Lens of Truth", "Shadow Temple",),
+        'tags'    : ("Lens of Truth", "Shadow Temple", "Vanilla Dungeons",),
         'tooltip' : '''\
                     Removes the requirements for the Lens of Truth
                     in Shadow Temple for most areas in the dungeon
@@ -1290,7 +1290,7 @@ logic_tricks = {
                     '''},
     'Shadow Temple Invisible Moving Platform without Lens of Truth': {
         'name'    : 'logic_lens_shadow_platform',
-        'tags'    : ("Lens of Truth", "Shadow Temple",),
+        'tags'    : ("Lens of Truth", "Shadow Temple", "Vanilla Dungeons",),
         'tooltip' : '''\
                     Removes the requirements for the Lens of Truth
                     in Shadow Temple to cross the invisible moving
@@ -1298,7 +1298,7 @@ logic_tricks = {
                     '''},
     'Shadow Temple Bongo Bongo without Lens of Truth': {
         'name'    : 'logic_lens_bongo',
-        'tags'    : ("Shadow Temple", "Entrance", "Master Quest",),
+        'tags'    : ("Shadow Temple", "Shadow Temple MQ", "Entrance Shuffle", "Master Quest", "Vanilla Dungeons",),
         'tooltip' : '''\
                     Bongo Bongo can be defeated without the use of
                     Lens of Truth, as the hands give a pretty good
@@ -1306,7 +1306,7 @@ logic_tricks = {
                     '''},
     'Shadow Temple Stone Umbrella Skip': {
         'name'    : 'logic_shadow_umbrella',
-        'tags'    : ("Shadow Temple", "Master Quest",),
+        'tags'    : ("Shadow Temple", "Shadow Temple MQ", "Master Quest", "Vanilla Dungeons",),
         'tooltip' : '''\
                     A very precise Hover Boots movement
                     from off of the lower chest can get you
@@ -1316,7 +1316,7 @@ logic_tricks = {
                     '''},
     'Shadow Temple Falling Spikes GS with Hover Boots': {
         'name'    : 'logic_shadow_umbrella_gs',
-        'tags'    : ("Shadow Temple", "Gold Skulltulas", "Master Quest",),
+        'tags'    : ("Shadow Temple", "Shadow Temple MQ", "Gold Skulltulas", "Master Quest", "Vanilla Dungeons",),
         'tooltip' : '''\
                     After killing the Skulltula, a very precise Hover Boots
                     movement from off of the lower chest can get you on top
@@ -1329,14 +1329,14 @@ logic_tricks = {
                     '''},                    
     'Shadow Temple Freestanding Key with Bombchu': {
         'name'    : 'logic_shadow_freestanding_key',
-        'tags'    : ("Shadow Temple",),
+        'tags'    : ("Shadow Temple", "Vanilla Dungeons",),
         'tooltip' : '''\
                     Release the Bombchu with good timing so that
                     it explodes near the bottom of the pot.
                     '''},
     'Shadow Temple River Statue with Bombchu': {
         'name'    : 'logic_shadow_statue',
-        'tags'    : ("Shadow Temple", "Master Quest",),
+        'tags'    : ("Shadow Temple", "Shadow Temple MQ", "Master Quest", "Vanilla Dungeons",),
         'tooltip' : '''\
                     By sending a Bombchu around the edge of the
                     gorge, you can knock down the statue without
@@ -1345,7 +1345,7 @@ logic_tricks = {
                     '''},
     'Shadow Temple Bongo Bongo without projectiles': {
         'name'    : 'logic_shadow_bongo',
-        'tags'    : ("Shadow Temple", "Entrance",),
+        'tags'    : ("Shadow Temple", "Shadow Temple MQ", "Entrance Shuffle", "Vanilla Dungeons", "Master Quest",),
         'tooltip' : '''\
                     Using precise sword slashes, Bongo Bongo can be
                     defeated without using projectiles. This is
@@ -1354,7 +1354,7 @@ logic_tricks = {
                     '''},
     'Shadow Temple MQ Stationary Objects without Lens of Truth': {
         'name'    : 'logic_lens_shadow_mq',
-        'tags'    : ("Lens of Truth", "Shadow Temple", "Master Quest",),
+        'tags'    : ("Lens of Truth", "Shadow Temple MQ", "Master Quest",),
         'tooltip' : '''\
                     Removes the requirements for the Lens of Truth
                     in Shadow Temple MQ for most areas in the dungeon.
@@ -1367,7 +1367,7 @@ logic_tricks = {
                     '''},
     'Shadow Temple MQ Invisible Blades Silver Rupees without Lens of Truth': {
         'name'    : 'logic_lens_shadow_mq_invisible_blades',
-        'tags'    : ("Lens of Truth", "Shadow Temple", "Master Quest",),
+        'tags'    : ("Lens of Truth", "Shadow Temple MQ", "Master Quest",),
         'tooltip' : '''\
                     Removes the requirement for the Lens of Truth or
                     Nayru's Love in Shadow Temple MQ for the Invisible
@@ -1375,7 +1375,7 @@ logic_tricks = {
                     '''},                    
     'Shadow Temple MQ Invisible Moving Platform without Lens of Truth': {
         'name'    : 'logic_lens_shadow_mq_platform',
-        'tags'    : ("Lens of Truth", "Shadow Temple", "Master Quest",),
+        'tags'    : ("Lens of Truth", "Shadow Temple MQ", "Master Quest",),
         'tooltip' : '''\
                     Removes the requirements for the Lens of Truth
                     in Shadow Temple MQ to cross the invisible moving
@@ -1383,7 +1383,7 @@ logic_tricks = {
                     '''},
     'Shadow Temple MQ 2nd Dead Hand without Lens of Truth': {
         'name'    : 'logic_lens_shadow_mq_dead_hand',
-        'tags'    : ("Lens of Truth", "Shadow Temple", "Master Quest",),
+        'tags'    : ("Lens of Truth", "Shadow Temple MQ", "Master Quest",),
         'tooltip' : '''\
                     Dead Hand spawns in a random spot within the room.
                     Having Lens removes the hassle of having to comb
@@ -1391,7 +1391,7 @@ logic_tricks = {
                     '''},
     'Shadow Temple MQ Truth Spinner Gap with Longshot': {
         'name'    : 'logic_shadow_mq_gap',
-        'tags'    : ("Shadow Temple", "Master Quest",),
+        'tags'    : ("Shadow Temple MQ", "Master Quest",),
         'tooltip' : '''\
                     You can Longshot a torch and jump-slash recoil onto
                     the tongue. It works best if you Longshot the right
@@ -1399,7 +1399,7 @@ logic_tricks = {
                     '''},
     'Shadow Temple MQ Invisible Blades without Song of Time': {
         'name'    : 'logic_shadow_mq_invisible_blades',
-        'tags'    : ("Shadow Temple", "Master Quest",),
+        'tags'    : ("Shadow Temple MQ", "Master Quest",),
         'tooltip' : '''\
                     The Like Like can be used to boost you into the
                     silver rupee or recovery hearts that normally
@@ -1409,7 +1409,7 @@ logic_tricks = {
                     '''},
     'Shadow Temple MQ Lower Huge Pit without Fire Source': {
         'name'    : 'logic_shadow_mq_huge_pit',
-        'tags'    : ("Shadow Temple", "Master Quest",),
+        'tags'    : ("Shadow Temple MQ", "Master Quest",),
         'tooltip' : '''\
                     Normally a frozen eye switch spawns some platforms
                     that you can use to climb down, but there's actually
@@ -1418,7 +1418,7 @@ logic_tricks = {
                     '''},
     'Shadow Temple MQ Windy Walkway Reverse without Hover Boots': {
         'name'    : 'logic_shadow_mq_windy_walkway',
-        'tags'    : ("Shadow Temple", "Master Quest",),
+        'tags'    : ("Shadow Temple MQ", "Master Quest",),
         'tooltip' : '''\
                     With shadow dungeon shortcuts enabled, it is possible
                     to jump from the alcove in the windy hallway to the
@@ -1430,20 +1430,20 @@ logic_tricks = {
                     '''},
     'Spirit Temple without Lens of Truth': {
         'name'    : 'logic_lens_spirit',
-        'tags'    : ("Lens of Truth", "Spirit Temple",),
+        'tags'    : ("Lens of Truth", "Spirit Temple", "Vanilla Dungeons",),
         'tooltip' : '''\
                     Removes the requirements for the Lens of Truth
                     in Spirit Temple.
                     '''},
     'Spirit Temple Child Side Bridge with Bombchu': {
         'name'    : 'logic_spirit_child_bombchu',
-        'tags'    : ("Spirit Temple",),
+        'tags'    : ("Spirit Temple", "Vanilla Dungeons",),
         'tooltip' : '''\
                     A carefully-timed Bombchu can hit the switch.
                     '''},
     'Spirit Temple Main Room GS with Boomerang': {
         'name'    : 'logic_spirit_lobby_gs',
-        'tags'    : ("Spirit Temple", "Gold Skulltulas",),
+        'tags'    : ("Spirit Temple", "Gold Skulltulas", "Vanilla Dungeons",),
         'tooltip' : '''\
                     Standing on the highest part of the arm of the statue, a
                     precise Boomerang throw can kill and obtain this Gold
@@ -1453,7 +1453,7 @@ logic_tricks = {
                     '''},                    
     'Spirit Temple Lower Adult Switch with Bombs': {
         'name'    : 'logic_spirit_lower_adult_switch',
-        'tags'    : ("Spirit Temple",),
+        'tags'    : ("Spirit Temple", "Vanilla Dungeons",),
         'tooltip' : '''\
                     A bomb can be used to hit the switch on the ceiling,
                     but it must be thrown from a particular distance
@@ -1461,7 +1461,7 @@ logic_tricks = {
                     '''},
     'Spirit Temple Main Room Jump from Hands to Upper Ledges': {
         'name'    : 'logic_spirit_lobby_jump',
-        'tags'    : ("Spirit Temple", "Gold Skulltulas", "Master Quest",),
+        'tags'    : ("Spirit Temple", "Spirit Temple MQ", "Gold Skulltulas", "Master Quest", "Vanilla Dungeons",),
         'tooltip' : '''\
                     A precise jump to obtain the following as adult
                     without needing one of Hover Boots, or Hookshot
@@ -1473,7 +1473,7 @@ logic_tricks = {
                     '''},
     'Spirit Temple Main Room Hookshot to Boss Platform': {
         'name'    : 'logic_spirit_platform_hookshot',
-        'tags'    : ("Spirit Temple",),
+        'tags'    : ("Spirit Temple", "Vanilla Dungeons",),
         'tooltip' : '''\
                     Precise hookshot aiming at the platform chains can be
                     used to reach the boss platform from the middle landings.
@@ -1483,7 +1483,7 @@ logic_tricks = {
                     '''},
     'Spirit Temple Map Chest with Bow': {
         'name'    : 'logic_spirit_map_chest',
-        'tags'    : ("Spirit Temple",),
+        'tags'    : ("Spirit Temple", "Vanilla Dungeons",),
         'tooltip' : '''\
                     To get a line of sight from the upper torch to
                     the map chest torches, you must pull an Armos
@@ -1491,7 +1491,7 @@ logic_tricks = {
                     '''},
     'Spirit Temple Sun Block Room Chest with Bow': {
         'name'    : 'logic_spirit_sun_chest',
-        'tags'    : ("Spirit Temple",),
+        'tags'    : ("Spirit Temple", "Vanilla Dungeons",),
         'tooltip' : '''\
                     Using the blocks in the room as platforms you can
                     get lines of sight to all three torches. The timer
@@ -1500,21 +1500,21 @@ logic_tricks = {
                     '''},
     'Spirit Temple Shifting Wall with No Additional Items': {
         'name'    : 'logic_spirit_wall',
-        'tags'    : ("Spirit Temple",),
+        'tags'    : ("Spirit Temple", "Vanilla Dungeons",),
         'tooltip' : '''\
                     Logic normally guarantees a way of dealing with both
                     the Beamos and the Walltula before climbing the wall.
                     '''},
     'Spirit Temple MQ without Lens of Truth': {
         'name'    : 'logic_lens_spirit_mq',
-        'tags'    : ("Lens of Truth", "Spirit Temple", "Master Quest",),
+        'tags'    : ("Lens of Truth", "Spirit Temple MQ", "Master Quest",),
         'tooltip' : '''\
                     Removes the requirements for the Lens of Truth
                     in Spirit Temple MQ.
                     '''},
     'Spirit Temple MQ Sun Block Room as Child without Song of Time': {
         'name'    : 'logic_spirit_mq_sun_block_sot',
-        'tags'    : ("Spirit Temple", "Master Quest",),
+        'tags'    : ("Spirit Temple MQ", "Master Quest",),
         'tooltip' : '''\
                     While adult can easily jump directly to the switch that
                     unbars the door to the sun block room, child Link cannot
@@ -1526,7 +1526,7 @@ logic_tricks = {
                     '''},
     'Spirit Temple MQ Sun Block Room GS with Boomerang': {
         'name'    : 'logic_spirit_mq_sun_block_gs',
-        'tags'    : ("Spirit Temple", "Gold Skulltulas", "Master Quest",),
+        'tags'    : ("Spirit Temple MQ", "Gold Skulltulas", "Master Quest",),
         'tooltip' : '''\
                     Throw the Boomerang in such a way that it
                     curves through the side of the glass block
@@ -1534,7 +1534,7 @@ logic_tricks = {
                     '''},                    
     'Spirit Temple MQ Lower Adult without Fire Arrows': {
         'name'    : 'logic_spirit_mq_lower_adult',
-        'tags'    : ("Spirit Temple", "Master Quest",),
+        'tags'    : ("Spirit Temple MQ", "Master Quest",),
         'tooltip' : '''\
                     By standing in a precise position it is possible to
                     light two of the torches with a single use of Din\'s
@@ -1543,7 +1543,7 @@ logic_tricks = {
                     '''},
     'Spirit Temple MQ Frozen Eye Switch without Fire': {
         'name'    : 'logic_spirit_mq_frozen_eye',
-        'tags'    : ("Spirit Temple", "Master Quest",),
+        'tags'    : ("Spirit Temple MQ", "Master Quest",),
         'tooltip' : '''\
                     You can melt the ice by shooting an arrow through a
                     torch. The only way to find a line of sight for this
@@ -1552,7 +1552,7 @@ logic_tricks = {
                     '''},
     'Ice Cavern Block Room GS with Hover Boots': {
         'name'    : 'logic_ice_block_gs',
-        'tags'    : ("Ice Cavern", "Gold Skulltulas",),
+        'tags'    : ("Ice Cavern", "Gold Skulltulas", "Vanilla Dungeons",),
         'tooltip' : '''\
                     The Hover Boots can be used to get in front of the
                     Skulltula to kill it with a jump slash. Then, the
@@ -1561,7 +1561,7 @@ logic_tricks = {
                     '''},
     'Ice Cavern MQ Red Ice GS without Song of Time': {
         'name'    : 'logic_ice_mq_red_ice_gs',
-        'tags'    : ("Ice Cavern", "Gold Skulltulas", "Master Quest",),
+        'tags'    : ("Ice Cavern MQ", "Gold Skulltulas", "Master Quest",),
         'tooltip' : '''\
                     If you side-hop into the perfect position, you
                     can briefly stand on the platform with the red
@@ -1569,20 +1569,20 @@ logic_tricks = {
                     '''},
     'Ice Cavern MQ Scarecrow GS with No Additional Items': {
         'name'    : 'logic_ice_mq_scarecrow',
-        'tags'    : ("Ice Cavern", "Gold Skulltulas", "Master Quest",),
+        'tags'    : ("Ice Cavern MQ", "Gold Skulltulas", "Master Quest",),
         'tooltip' : '''\
                     A precise jump can be used to reach this alcove.
                     '''},
     'Gerudo Training Ground without Lens of Truth': {
         'name'    : 'logic_lens_gtg',
-        'tags'    : ("Lens of Truth", "Gerudo Training Ground",),
+        'tags'    : ("Lens of Truth", "Gerudo Training Ground", "Vanilla Dungeons",),
         'tooltip' : '''\
                     Removes the requirements for the Lens of Truth
                     in Gerudo Training Ground.
                     '''},
     'Gerudo Training Ground Left Side Silver Rupees without Hookshot': {
         'name'    : 'logic_gtg_without_hookshot',
-        'tags'    : ("Gerudo Training Ground",),
+        'tags'    : ("Gerudo Training Ground", "Vanilla Dungeons",),
         'tooltip' : '''\
                     After collecting the rest of the silver rupees in the room,
                     you can reach the final silver rupee on the ceiling by being
@@ -1594,7 +1594,7 @@ logic_tricks = {
                     '''},
     'Reach Gerudo Training Ground Fake Wall Ledge with Hover Boots': {
         'name'    : 'logic_gtg_fake_wall',
-        'tags'    : ("Gerudo Training Ground", "Master Quest",),
+        'tags'    : ("Gerudo Training Ground", "Gerudo Training Ground MQ", "Master Quest", "Vanilla Dungeons",),
         'tooltip' : '''\
                     A precise Hover Boots use from the top of the chest can allow
                     you to grab the ledge without needing the usual requirements.
@@ -1605,14 +1605,14 @@ logic_tricks = {
                     '''},
     'Gerudo Training Ground MQ without Lens of Truth': {
         'name'    : 'logic_lens_gtg_mq',
-        'tags'    : ("Lens of Truth", "Gerudo Training Ground", "Master Quest",),
+        'tags'    : ("Lens of Truth", "Gerudo Training Ground MQ", "Master Quest",),
         'tooltip' : '''\
                     Removes the requirements for the Lens of Truth
                     in Gerudo Training Ground MQ.
                     '''},
     'Gerudo Training Ground MQ Left Side Silver Rupees with Hookshot': {
         'name'    : 'logic_gtg_mq_with_hookshot',
-        'tags'    : ("Gerudo Training Ground", "Master Quest",),
+        'tags'    : ("Gerudo Training Ground MQ", "Master Quest",),
         'tooltip' : '''\
                     The highest silver rupee can be obtained by
                     hookshotting the target and then immediately jump
@@ -1620,7 +1620,7 @@ logic_tricks = {
                     '''},
     'Gerudo Training Ground MQ Left Side Silver Rupees without Hookshot': {
         'name'    : 'logic_gtg_mq_without_hookshot',
-        'tags'    : ("Gerudo Training Ground", "Master Quest",),
+        'tags'    : ("Gerudo Training Ground MQ", "Master Quest",),
         'tooltip' : '''\
                     After collecting the rest of the silver rupees in the room,
                     you can reach the final silver rupee on the ceiling by being
@@ -1636,28 +1636,28 @@ logic_tricks = {
                     '''},       
     'Ganon\'s Castle without Lens of Truth': {
         'name'    : 'logic_lens_castle',
-        'tags'    : ("Lens of Truth", "Ganon's Castle",),
+        'tags'    : ("Lens of Truth", "Ganon's Castle", "Vanilla Dungeons",),
         'tooltip' : '''\
                     Removes the requirements for the Lens of Truth
                     in Ganon's Castle.
                     '''},
     'Spirit Trial without Hookshot': {
         'name'    : 'logic_spirit_trial_hookshot',
-        'tags'    : ("Ganon's Castle",),
+        'tags'    : ("Ganon's Castle", "Vanilla Dungeons",),
         'tooltip' : '''\
                     A precise jump off of an Armos can
                     collect the highest rupee.
                     '''},
     'Ganon\'s Castle MQ without Lens of Truth': {
         'name'    : 'logic_lens_castle_mq',
-        'tags'    : ("Lens of Truth", "Ganon's Castle", "Master Quest",),
+        'tags'    : ("Lens of Truth", "Ganon's Castle MQ", "Master Quest",),
         'tooltip' : '''\
                     Removes the requirements for the Lens of Truth
                     in Ganon's Castle MQ.
                     '''},
     'Fire Trial MQ with Hookshot': {
         'name'    : 'logic_fire_trial_mq',
-        'tags'    : ("Ganon's Castle", "Master Quest",),
+        'tags'    : ("Ganon's Castle MQ", "Master Quest",),
         'tooltip' : '''\
                     It's possible to hook the target at the end of
                     fire trial with just Hookshot, but it requires
@@ -1667,7 +1667,7 @@ logic_tricks = {
                     '''},
     'Shadow Trial MQ Torch with Bow': {
         'name'    : 'logic_shadow_trial_mq',
-        'tags'    : ("Ganon's Castle", "Master Quest",),
+        'tags'    : ("Ganon's Castle MQ", "Master Quest",),
         'tooltip' : '''\
                     You can light the torch in this room without a fire
                     source by shooting an arrow through the lit torch
@@ -1677,7 +1677,7 @@ logic_tricks = {
                     '''},
     'Light Trial MQ without Hookshot': {
         'name'    : 'logic_light_trial_mq',
-        'tags'    : ("Ganon's Castle", "Master Quest",),
+        'tags'    : ("Ganon's Castle MQ", "Master Quest",),
         'tooltip' : '''\
                     If you move quickly you can sneak past the edge of
                     a flame wall before it can rise up to block you.
