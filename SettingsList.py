@@ -548,7 +548,7 @@ logic_tricks = {
                     '''},
     'Thieves\' Hideout "Kitchen" with No Additional Items': {
         'name'    : 'logic_gerudo_kitchen',
-        'tags'    : ("Thieves' Hideout", "Gerudo's Fortress", "Overworld", "Adult",),
+        'tags'    : ("Thieves' Hideout", "Gerudo's Fortress", "Overworld", "Child", "Adult",),
         'tooltip' : '''\
                     Allows passing through the kitchen by avoiding being
                     seen by the guards. The logic normally guarantees
@@ -1646,8 +1646,8 @@ logic_tricks = {
         'name'    : 'logic_spirit_trial_hookshot',
         'tags'    : ("Ganon's Castle", "Vanilla Dungeons", "Child", "Adult",),
         'tooltip' : '''\
-                    A precise jump off of an Armos can
-                    collect the highest rupee.
+                    The highest rupee can be obtained as either age by performing
+                    a precise jump and a well-timed jumpslash off of an Armos.
                     '''},
     'Ganon\'s Castle MQ without Lens of Truth': {
         'name'    : 'logic_lens_castle_mq',
