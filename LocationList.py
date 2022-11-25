@@ -43,6 +43,8 @@ def shop_address(shop_id, shelf_id):
 
 # Note: for ActorOverride locations, the "Addresses" variable is in the form ([addresses], [bytes]) where addresses is a list of memory locations in ROM to be updated, and bytes is the data that will be written to that location
 
+# When adding "Categories" (aka tags), make sure to add trailing commas to prevent GUI issues (see PR #1802 on TestRunner's fork for info)
+
 #   Location:                                                        Type             Scene  Default Addresses                      Vanilla Item                             Categories
 location_table = OrderedDict([
     ## Dungeon Rewards
