@@ -197,7 +197,7 @@ logic_tricks = {
 
     'Adult Kokiri Forest GS with Hover Boots': {
         'name'    : 'logic_adult_kokiri_gs',
-        'tags'    : ("Kokiri Forest", "Skulltulas",),
+        'tags'    : ("Kokiri Forest", "Gold Skulltulas",),
         'tooltip' : '''\
                     Can be obtained without Hookshot by using the Hover
                     Boots off of one of the roots.
@@ -219,7 +219,7 @@ logic_tricks = {
                     '''},
     'Lost Woods Adult GS without Bean': {
         'name'    : 'logic_lost_woods_gs_bean',
-        'tags'    : ("the Lost Woods", "Skulltulas",),
+        'tags'    : ("the Lost Woods", "Gold Skulltulas",),
         'tooltip' : '''\
                     You can collect the token with a precise
                     Hookshot use, as long as you can kill the
@@ -228,7 +228,7 @@ logic_tricks = {
                     '''},
     'Hyrule Castle Storms Grotto GS with Just Boomerang': {
         'name'    : 'logic_castle_storms_gs',
-        'tags'    : ("Hyrule Castle", "Skulltulas",),
+        'tags'    : ("Hyrule Castle", "Gold Skulltulas",),
         'tooltip' : '''\
                     With precise throws, the Boomerang alone can
                     kill the Skulltula and collect the token,
@@ -245,7 +245,7 @@ logic_tricks = {
                     '''},
     'Kakariko Tower GS with Jump Slash': {
         'name'    : 'logic_kakariko_tower_gs',
-        'tags'    : ("Kakariko Village", "Skulltulas",),
+        'tags'    : ("Kakariko Village", "Gold Skulltulas",),
         'tooltip' : '''\
                     Climb the tower as high as you can without
                     touching the Gold Skulltula, then let go and
@@ -263,7 +263,7 @@ logic_tricks = {
                     '''},
     'Kakariko Rooftop GS with Hover Boots': {
         'name'    : 'logic_kakariko_rooftop_gs',
-        'tags'    : ("Kakariko Village", "Skulltulas",),
+        'tags'    : ("Kakariko Village", "Gold Skulltulas",),
         'tooltip' : '''\
                     Take the Hover Boots from the entrance to Impa's
                     House over to the rooftop of Skulltula House. From
@@ -300,7 +300,7 @@ logic_tricks = {
                     '''},
     'Death Mountain Trail Soil GS without Destroying Boulder': {
         'name'    : 'logic_dmt_soil_gs',
-        'tags'    : ("Death Mountain Trail", "Skulltulas",),
+        'tags'    : ("Death Mountain Trail", "Gold Skulltulas",),
         'tooltip' : '''\
                     Bugs will go into the soft soil even while the boulder is
                     still blocking the entrance.
@@ -318,7 +318,7 @@ logic_tricks = {
                     '''},
     'Death Mountain Trail Lower Red Rock GS with Hookshot': {
         'name'    : 'logic_trail_gs_lower_hookshot',
-        'tags'    : ("Death Mountain Trail", "Skulltulas",),
+        'tags'    : ("Death Mountain Trail", "Gold Skulltulas",),
         'tooltip' : '''\
                     After killing the Skulltula, the token can be fished
                     out of the rock without needing to destroy it, by
@@ -326,7 +326,7 @@ logic_tricks = {
                     '''},
     'Death Mountain Trail Lower Red Rock GS with Hover Boots': {
         'name'    : 'logic_trail_gs_lower_hovers',
-        'tags'    : ("Death Mountain Trail", "Skulltulas",),
+        'tags'    : ("Death Mountain Trail", "Gold Skulltulas",),
         'tooltip' : '''\
                     After killing the Skulltula, the token can be
                     collected without needing to destroy the rock by
@@ -336,7 +336,7 @@ logic_tricks = {
                     '''},
     'Death Mountain Trail Lower Red Rock GS with Magic Bean': {
         'name'    : 'logic_trail_gs_lower_bean',
-        'tags'    : ("Death Mountain Trail", "Skulltulas",),
+        'tags'    : ("Death Mountain Trail", "Gold Skulltulas",),
         'tooltip' : '''\
                     After killing the Skulltula, the token can be
                     collected without needing to destroy the rock by
@@ -353,7 +353,7 @@ logic_tricks = {
                     '''},
     'Death Mountain Trail Upper Red Rock GS without Hammer': {
         'name'    : 'logic_trail_gs_upper',
-        'tags'    : ("Death Mountain Trail", "Skulltulas",),
+        'tags'    : ("Death Mountain Trail", "Gold Skulltulas",),
         'tooltip' : '''\
                     After killing the Skulltula, the token can be collected
                     by backflipping into the rock at the correct angle.
@@ -504,7 +504,7 @@ logic_tricks = {
                     '''},
     'Zora\'s Domain GS with No Additional Items': {
         'name'    : 'logic_domain_gs',
-        'tags'    : ("Zora's Domain", "Skulltulas",),
+        'tags'    : ("Zora's Domain", "Gold Skulltulas",),
         'tooltip' : '''\
                     A precise jump slash can kill the Skulltula and
                     recoil back onto the top of the frozen waterfall.
@@ -513,7 +513,7 @@ logic_tricks = {
                     '''},                    
     'Lake Hylia Lab Wall GS with Jump Slash': {
         'name'    : 'logic_lab_wall_gs',
-        'tags'    : ("Lake Hylia", "Skulltulas",),
+        'tags'    : ("Lake Hylia", "Gold Skulltulas",),
         'tooltip' : '''\
                     The jump slash to actually collect the
                     token is somewhat precise.
@@ -600,7 +600,7 @@ logic_tricks = {
                     '''},
     'Colossus Hill GS with Hookshot': {
         'name'    : 'logic_colossus_gs',
-        'tags'    : ("Desert Colossus", "Skulltulas",),
+        'tags'    : ("Desert Colossus", "Gold Skulltulas",),
         'tooltip' : '''\
                     Somewhat precise. If you kill enough Leevers
                     you can get enough of a break to take some time
@@ -611,7 +611,7 @@ logic_tricks = {
 
     'Deku Tree Basement Vines GS with Jump Slash': {
         'name'    : 'logic_deku_basement_gs',
-        'tags'    : ("Deku Tree", "Skulltulas",),
+        'tags'    : ("Deku Tree", "Gold Skulltulas",),
         'tooltip' : '''\
                     Can be defeated by doing a precise jump slash.
                     '''},
@@ -645,7 +645,7 @@ logic_tricks = {
                     '''},
     'Deku Tree MQ Compass Room GS Boulders with Just Hammer': {
         'name'    : 'logic_deku_mq_compass_gs',
-        'tags'    : ("Deku Tree", "Skulltulas", "Master Quest",),
+        'tags'    : ("Deku Tree", "Gold Skulltulas", "Master Quest",),
         'tooltip' : '''\
                     Climb to the top of the vines, then let go
                     and jump slash immediately to destroy the
@@ -662,7 +662,7 @@ logic_tricks = {
                     '''},
     'Dodongo\'s Cavern Scarecrow GS with Armos Statue': {
         'name'    : 'logic_dc_scarecrow_gs',
-        'tags'    : ("Dodongo's Cavern", "Skulltulas",),
+        'tags'    : ("Dodongo's Cavern", "Gold Skulltulas",),
         'tooltip' : '''\
                     You can jump off an Armos Statue to reach the
                     alcove with the Gold Skulltula. It takes quite
@@ -672,7 +672,7 @@ logic_tricks = {
                     '''},
     'Dodongo\'s Cavern Vines GS from Below with Longshot': {
         'name'    : 'logic_dc_vines_gs',
-        'tags'    : ("Dodongo's Cavern", "Skulltulas",),
+        'tags'    : ("Dodongo's Cavern", "Gold Skulltulas",),
         'tooltip' : '''\
                     The vines upon which this Skulltula rests are one-
                     sided collision. You can use the Longshot to get it
@@ -762,7 +762,7 @@ logic_tricks = {
                     '''},
     'Jabu Near Boss Room with Hover Boots': {
         'name'    : 'logic_jabu_boss_hover',
-        'tags'    : ("Jabu Jabu's Belly", "Skulltulas", "Entrance",),
+        'tags'    : ("Jabu Jabu's Belly", "Gold Skulltulas", "Entrance",),
         'tooltip' : '''\
                     A box for the blue switch can be carried over
                     by backwalking with one while the elevator is
@@ -773,7 +773,7 @@ logic_tricks = {
                     '''},
     'Jabu Near Boss Ceiling Switch/GS without Boomerang or Explosives': {
         'name'    : 'logic_jabu_near_boss_ranged',
-        'tags'    : ("Jabu Jabu's Belly", "Skulltulas", "Entrance", "Master Quest",),
+        'tags'    : ("Jabu Jabu's Belly", "Gold Skulltulas", "Entrance", "Master Quest",),
         'tooltip' : '''\
                     Vanilla Jabu: From near the entrance into the room, you can
                     hit the switch that opens the door to the boss room using a
@@ -817,7 +817,7 @@ logic_tricks = {
                     '''},
     'Jabu MQ Song of Time Block GS with Boomerang': {
         'name'    : 'logic_jabu_mq_sot_gs',
-        'tags'    : ("Jabu Jabu's Belly", "Skulltulas", "Master Quest",),
+        'tags'    : ("Jabu Jabu's Belly", "Gold Skulltulas", "Master Quest",),
         'tooltip' : '''\
                     Allow the Boomerang to return to you through
                     the Song of Time block to grab the token.
@@ -863,7 +863,7 @@ logic_tricks = {
                     '''},
     'Forest Temple First Room GS with Difficult-to-Use Weapons': {
         'name'    : 'logic_forest_first_gs',
-        'tags'    : ("Forest Temple", "Entrance", "Skulltulas",),
+        'tags'    : ("Forest Temple", "Entrance", "Gold Skulltulas",),
         'tooltip' : '''\
                     Allows killing this Skulltula with Sword or Sticks by
                     jump slashing it as you let go from the vines. You can
@@ -874,7 +874,7 @@ logic_tricks = {
                     '''},
     'Forest Temple East Courtyard GS with Boomerang': {
         'name'    : 'logic_forest_outdoor_east_gs',
-        'tags'    : ("Forest Temple", "Entrance", "Skulltulas",),
+        'tags'    : ("Forest Temple", "Entrance", "Gold Skulltulas",),
         'tooltip' : '''\
                     Precise Boomerang throws can allow child to
                     kill the Skulltula and collect the token.
@@ -980,7 +980,7 @@ logic_tricks = {
                     '''},
     'Fire Temple Song of Time Room GS without Song of Time': {
         'name'    : 'logic_fire_song_of_time',
-        'tags'    : ("Fire Temple", "Skulltulas",),
+        'tags'    : ("Fire Temple", "Gold Skulltulas",),
         'tooltip' : '''\
                     A precise jump can be used to reach this room.
                     '''},
@@ -1078,7 +1078,7 @@ logic_tricks = {
                     '''},
     'Fire Temple MQ Above Flame Wall Maze GS from Below with Longshot': {
         'name'    : 'logic_fire_mq_above_maze_gs',
-        'tags'    : ("Fire Temple", "Skulltulas", "Master Quest",),
+        'tags'    : ("Fire Temple", "Gold Skulltulas", "Master Quest",),
         'tooltip' : '''\
                     The floor of the room that contains this Skulltula
                     is only solid from above. From the maze below, the
@@ -1087,7 +1087,7 @@ logic_tricks = {
                     '''},                    
     'Fire Temple MQ Flame Wall Maze Skip': {
         'name'    : 'logic_fire_mq_flame_maze',
-        'tags'    : ("Fire Temple", "Skulltulas", "Master Quest",),
+        'tags'    : ("Fire Temple", "Gold Skulltulas", "Master Quest",),
         'tooltip' : '''\
                     If you move quickly you can sneak past the edge of
                     a flame wall before it can rise up to block you.
@@ -1163,7 +1163,7 @@ logic_tricks = {
                     '''},
     'Water Temple Central Pillar GS with Farore\'s Wind': {
         'name'    : 'logic_water_central_gs_fw',
-        'tags'    : ("Water Temple", "Skulltulas",),
+        'tags'    : ("Water Temple", "Gold Skulltulas",),
         'tooltip' : '''\
                     If you set Farore's Wind inside the central pillar
                     and then return to that warp point after raising
@@ -1172,7 +1172,7 @@ logic_tricks = {
                     '''},
     'Water Temple Central Pillar GS with Iron Boots': {
         'name'    : 'logic_water_central_gs_irons',
-        'tags'    : ("Water Temple", "Skulltulas",),
+        'tags'    : ("Water Temple", "Gold Skulltulas",),
         'tooltip' : '''\
                     After opening the middle water level door into the
                     central pillar, the door will stay unbarred so long
@@ -1195,21 +1195,21 @@ logic_tricks = {
                     '''},
     'Water Temple Falling Platform Room GS with Hookshot': {
         'name'    : 'logic_water_falling_platform_gs_hookshot',
-        'tags'    : ("Water Temple", "Skulltulas",),
+        'tags'    : ("Water Temple", "Gold Skulltulas",),
         'tooltip' : '''\
                     If you stand on the very edge of the platform, this
                     Gold Skulltula can be obtained with only the Hookshot.
                     '''},
     'Water Temple Falling Platform Room GS with Boomerang': {
         'name'    : 'logic_water_falling_platform_gs_boomerang',
-        'tags'    : ("Water Temple", "Skulltulas", "Entrance",),
+        'tags'    : ("Water Temple", "Gold Skulltulas", "Entrance",),
         'tooltip' : '''\
                     If you stand on the very edge of the platform, this
                     Gold Skulltula can be obtained with only the Boomerang.
                     '''},
     'Water Temple River GS without Iron Boots': {
         'name'    : 'logic_water_river_gs',
-        'tags'    : ("Water Temple", "Skulltulas",),
+        'tags'    : ("Water Temple", "Gold Skulltulas",),
         'tooltip' : '''\
                     Standing on the exposed ground toward the end of
                     the river, a precise Longshot use can obtain the
@@ -1272,7 +1272,7 @@ logic_tricks = {
                     '''},
     'Water Temple MQ North Basement GS without Small Key': {
         'name'    : 'logic_water_mq_locked_gs',
-        'tags'    : ("Water Temple", "Skulltulas", "Master Quest",),
+        'tags'    : ("Water Temple", "Gold Skulltulas", "Master Quest",),
         'tooltip' : '''\
                     There is an invisible Hookshot target that can be used
                     to get over the gate that blocks you from going to this
@@ -1316,7 +1316,7 @@ logic_tricks = {
                     '''},
     'Shadow Temple Falling Spikes GS with Hover Boots': {
         'name'    : 'logic_shadow_umbrella_gs',
-        'tags'    : ("Shadow Temple", "Skulltulas", "Master Quest",),
+        'tags'    : ("Shadow Temple", "Gold Skulltulas", "Master Quest",),
         'tooltip' : '''\
                     After killing the Skulltula, a very precise Hover Boots
                     movement from off of the lower chest can get you on top
@@ -1443,7 +1443,7 @@ logic_tricks = {
                     '''},
     'Spirit Temple Main Room GS with Boomerang': {
         'name'    : 'logic_spirit_lobby_gs',
-        'tags'    : ("Spirit Temple", "Skulltulas",),
+        'tags'    : ("Spirit Temple", "Gold Skulltulas",),
         'tooltip' : '''\
                     Standing on the highest part of the arm of the statue, a
                     precise Boomerang throw can kill and obtain this Gold
@@ -1461,7 +1461,7 @@ logic_tricks = {
                     '''},
     'Spirit Temple Main Room Jump from Hands to Upper Ledges': {
         'name'    : 'logic_spirit_lobby_jump',
-        'tags'    : ("Spirit Temple", "Skulltulas", "Master Quest",),
+        'tags'    : ("Spirit Temple", "Gold Skulltulas", "Master Quest",),
         'tooltip' : '''\
                     A precise jump to obtain the following as adult
                     without needing one of Hover Boots, or Hookshot
@@ -1526,7 +1526,7 @@ logic_tricks = {
                     '''},
     'Spirit Temple MQ Sun Block Room GS with Boomerang': {
         'name'    : 'logic_spirit_mq_sun_block_gs',
-        'tags'    : ("Spirit Temple", "Skulltulas", "Master Quest",),
+        'tags'    : ("Spirit Temple", "Gold Skulltulas", "Master Quest",),
         'tooltip' : '''\
                     Throw the Boomerang in such a way that it
                     curves through the side of the glass block
@@ -1552,7 +1552,7 @@ logic_tricks = {
                     '''},
     'Ice Cavern Block Room GS with Hover Boots': {
         'name'    : 'logic_ice_block_gs',
-        'tags'    : ("Ice Cavern", "Skulltulas",),
+        'tags'    : ("Ice Cavern", "Gold Skulltulas",),
         'tooltip' : '''\
                     The Hover Boots can be used to get in front of the
                     Skulltula to kill it with a jump slash. Then, the
@@ -1561,7 +1561,7 @@ logic_tricks = {
                     '''},
     'Ice Cavern MQ Red Ice GS without Song of Time': {
         'name'    : 'logic_ice_mq_red_ice_gs',
-        'tags'    : ("Ice Cavern", "Skulltulas", "Master Quest",),
+        'tags'    : ("Ice Cavern", "Gold Skulltulas", "Master Quest",),
         'tooltip' : '''\
                     If you side-hop into the perfect position, you
                     can briefly stand on the platform with the red
@@ -1569,7 +1569,7 @@ logic_tricks = {
                     '''},
     'Ice Cavern MQ Scarecrow GS with No Additional Items': {
         'name'    : 'logic_ice_mq_scarecrow',
-        'tags'    : ("Ice Cavern", "Skulltulas", "Master Quest",),
+        'tags'    : ("Ice Cavern", "Gold Skulltulas", "Master Quest",),
         'tooltip' : '''\
                     A precise jump can be used to reach this alcove.
                     '''},
