@@ -1346,7 +1346,7 @@ logic_tricks = {
                     '''},
     'Shadow Temple Bongo Bongo without projectiles': {
         'name'    : 'logic_shadow_bongo',
-        'tags'    : ("Shadow Temple", "Shadow Temple MQ", "Entrance Shuffle", "Vanilla Dungeons", "Master Quest", "Adult",),
+        'tags'    : ("Shadow Temple", "Shadow Temple MQ", "Entrance Shuffle", "Vanilla Dungeons", "Master Quest", "Child", "Adult",),
         'tooltip' : '''\
                     Using precise sword slashes, Bongo Bongo can be
                     defeated without using projectiles. This is
@@ -1462,15 +1462,15 @@ logic_tricks = {
                     '''},
     'Spirit Temple Main Room Jump from Hands to Upper Ledges': {
         'name'    : 'logic_spirit_lobby_jump',
-        'tags'    : ("Spirit Temple", "Spirit Temple MQ", "Gold Skulltulas", "Master Quest", "Vanilla Dungeons", "Adult",),
+        'tags'    : ("Spirit Temple", "Spirit Temple MQ", "Gold Skulltulas", "Master Quest", "Vanilla Dungeons", "Child", "Adult",),
         'tooltip' : '''\
                     A precise jump to obtain the following as adult
                     without needing one of Hover Boots, or Hookshot
                     (in vanilla) or Song of Time (in MQ):
                     - Spirit Temple Statue Room Northeast Chest
                     - Spirit Temple GS Lobby
-                    - Spirit Temple MQ Central Chamber Top Left Pot 1
-                    - Spirit Temple MQ Central Chamber Top Left Pot 2
+                    - Spirit Temple MQ Central Chamber Top Left Pot (Left)
+                    - Spirit Temple MQ Central Chamber Top Left Pot (Right)
                     '''},
     'Spirit Temple Main Room Hookshot to Boss Platform': {
         'name'    : 'logic_spirit_platform_hookshot',
@@ -1562,7 +1562,7 @@ logic_tricks = {
                     '''},
     'Ice Cavern MQ Red Ice GS without Song of Time': {
         'name'    : 'logic_ice_mq_red_ice_gs',
-        'tags'    : ("Ice Cavern MQ", "Gold Skulltulas", "Master Quest", "Child", "Adult",),
+        'tags'    : ("Ice Cavern MQ", "Gold Skulltulas", "Master Quest", "Adult",),
         'tooltip' : '''\
                     If you side-hop into the perfect position, you
                     can briefly stand on the platform with the red
