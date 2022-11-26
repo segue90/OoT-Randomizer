@@ -2433,7 +2433,7 @@
             #   Talk to her in Castle Grounds for her item
             #   Wake up Talon
             "Song from Malon": "is_child and Ocarina and at_day and (skip_child_zelda or at('Hyrule Castle Grounds', is_child and (Weird_Egg or Chicken)))",
-            "LLR GS Tree": "is_child and can_bonk_tree",
+            "LLR GS Tree": "is_child and can_bonk",
             "LLR GS Rain Shed": "is_child and at_night",
             "LLR GS House Window": "can_use(Boomerang) and at_night",
             "LLR GS Back Wall": "can_use(Boomerang) and at_night"
