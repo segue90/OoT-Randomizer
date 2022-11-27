@@ -1462,7 +1462,7 @@ logic_tricks = {
                     '''},
     'Spirit Temple Main Room Jump from Hands to Upper Ledges': {
         'name'    : 'logic_spirit_lobby_jump',
-        'tags'    : ("Spirit Temple", "Spirit Temple MQ", "Gold Skulltulas", "Master Quest", "Vanilla Dungeons", "Child", "Adult",),
+        'tags'    : ("Spirit Temple", "Spirit Temple MQ", "Gold Skulltulas", "Master Quest", "Vanilla Dungeons", "Adult",),
         'tooltip' : '''\
                     A precise jump to obtain the following as adult
                     without needing one of Hover Boots, or Hookshot
