@@ -440,7 +440,8 @@ def randomize_music(rom, settings, log):
             del music_mapping[target]
             continue
 
-        source = group = group_name = None
+        source = mapping
+        group = group_name = None
         if isinstance(mapping, list):
             # Try to find a valid source in the defined list
             while len(mapping) > 0:
