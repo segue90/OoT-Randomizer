@@ -464,6 +464,8 @@ def randomize_music(rom, settings, log):
                             source = music_mapping[target] = group.pop()
                             if source in sequences_alias:
                                 break
+                            
+                    log.errors.append(f"Warning: Group '{source}' linked to '{target}' does not have a valid custom sequence. Ignoring!")
                 else:
                     break
                     
