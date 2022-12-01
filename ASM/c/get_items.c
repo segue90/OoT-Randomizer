@@ -232,9 +232,10 @@ void push_outgoing_override(override_t *override) {
 
 void move_outgoing_queue() {
     if (OUTGOING_KEY.all == 0) {
-        OUTGOING_KEY = outgoing_queue[0].key;
         OUTGOING_ITEM = outgoing_queue[0].value.item_id;
         OUTGOING_PLAYER = outgoing_queue[0].value.player;
+        // Set the value first and then the key, so a plugin checking whether the key is present is guaranteed to see the value as well
+        OUTGOING_KEY = outgoing_queue[0].key;
         for (int i = 0; i < 7; i++) {
             outgoing_queue[i] = outgoing_queue[i + 1];
         }
