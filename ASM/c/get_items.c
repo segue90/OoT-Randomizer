@@ -701,6 +701,27 @@ int16_t get_override_drop_id(int16_t dropId) {
     return dropId;
 }
 
+void dispatch_item(uint16_t resolved_item_id, uint8_t player, override_t *override, item_row_t *item_row) {
+    // Give the item to the right place
+    if (resolved_item_id == 0xCA) {
+        // Send triforce to everyone
+        push_outgoing_override(override);
+        z64_GiveItem(&z64_game, item_row->action_id);
+        call_effect_function(item_row);
+    } else if (player != PLAYER_ID) {
+        // Item is for another world. Set outgoing item.
+        push_outgoing_override(override);
+    } else {
+        // Item is for this player
+        if (MW_SEND_OWN_ITEMS) {
+            // Also send to multiworld plugin for informational purposes if requested
+            push_outgoing_override(override);
+        }
+        z64_GiveItem(&z64_game, item_row->action_id);
+        call_effect_function(item_row);
+    }
+}
+
 // Override hack for freestanding collectibles (rupees, recovery hearts, sticks, nuts, seeds, bombs, arrows, magic jars. Pieces of heart, heart containers, small keys handled by the regular get_item function)
 uint8_t item_give_collectible(uint8_t item, z64_link_t *link, z64_actor_t *from_actor) {
     EnItem00 *pItem = (EnItem00 *)from_actor;
@@ -788,26 +809,6 @@ void get_skulltula_token(z64_actor_t *token_actor) {
     PLAYER_NAME_ID = player;
     z64_DisplayTextbox(&z64_game, item_row->text_id, 0);
     dispatch_item(resolved_item_id, player, &override, item_row);
-}
-
-void dispatch_item(uint16_t resolved_item_id, uint8_t player, override_t *override, item_row_t *item_row) {
-    // Give the item to the right place
-    if (resolved_item_id == 0xCA) {
-        // Send triforce to everyone
-        push_outgoing_override(override);
-        z64_GiveItem(&z64_game, item_row->action_id);
-        call_effect_function(item_row);
-    } else if (player != PLAYER_ID) {
-        push_outgoing_override(override);
-    } else {
-        // Item is for this player
-        if (MW_SEND_OWN_ITEMS) {
-            // Also send to multiworld plugin for informational purposes if requested
-            push_outgoing_override(override);
-        }
-        z64_GiveItem(&z64_game, item_row->action_id);
-        call_effect_function(item_row);
-    }
 }
 
 int give_sarias_gift() {
