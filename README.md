@@ -107,6 +107,12 @@ issue. You should always Hard Reset to avoid this issue entirely.
 
 ## Changelog
 
+### Dev
+
+#### Bug Fixes
+* Fix freestanding items not spawning their overrides when an item with a shared base collectable flag is collected.
+* Fix models drawing incorrectly when picking up a duplicated collectible, such as from the Goron City spinning pot.
+
 ### 7.0
 
 #### New Features
