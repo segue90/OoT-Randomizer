@@ -115,6 +115,9 @@ issue. You should always Hard Reset to avoid this issue entirely.
 
 ### Other Changes
 * Removed some unnecessary duplication in spirit temple logic.
+* In Multiworld, outgoing items are now buffered.
+  * Allows players to continue collecting items if the Multiworld plugin crashes.
+  * Multiple freestanding/pot items can be sent on the same frame.
 
 ### 7.0
 
