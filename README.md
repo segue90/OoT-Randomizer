@@ -122,13 +122,14 @@ issue. You should always Hard Reset to avoid this issue entirely.
 
 #### Other Changes
 * Removed some unnecessary duplication in spirit temple logic.
-* In Multiworld, outgoing items are now buffered.
+* In multiworld, outgoing items are now buffered.
   * Allows players to continue collecting items if the Multiworld plugin crashes.
   * Multiple freestanding/pot items can be sent on the same frame.
 * Ice Arrows will now be referred to as Blue Fire Arrows in hints and shop text when `Blue Fire Arrows` is enabled.
 
 #### Plandomizer
 * Due to Ice Arrows and Blue Fire Arrows being separate items in the code now, plandomizer authors must use `Ice_Arrows` or `Blue_Fire_Arrows` depending on if the setting is enabled.
+* In cosmetics plando, empty or non-existant BGM groups will no longer error, instead simply displaying a warning in the cosmetics log.
 
 ### 7.0
 
