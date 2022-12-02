@@ -113,12 +113,16 @@ issue. You should always Hard Reset to avoid this issue entirely.
 * Fix freestanding items not spawning their overrides when an item with a shared base collectable flag is collected.
 * Fix models drawing incorrectly when picking up a duplicated collectible, such as from the Goron City spinning pot.
 
-### Other Changes
+#### GUI
+* `Disable Battle Music` has been moved to the main section of the SFX tab.
+* Nonsense tags in the `Exclude Locations` list were cleaned up.
+* New tags were added in the `Exclude Locations` and `Enable Tricks` lists.
+
+#### Other Changes
 * Removed some unnecessary duplication in spirit temple logic.
 * In Multiworld, outgoing items are now buffered.
   * Allows players to continue collecting items if the Multiworld plugin crashes.
   * Multiple freestanding/pot items can be sent on the same frame.
-* `Disable Battle Music` has been moved to the main section of the SFX tab.
 
 ### 7.0
 
