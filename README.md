@@ -112,6 +112,7 @@ issue. You should always Hard Reset to avoid this issue entirely.
 #### Bug Fixes
 * Fix freestanding items not spawning their overrides when an item with a shared base collectable flag is collected.
 * Fix models drawing incorrectly when picking up a duplicated collectible, such as from the Goron City spinning pot.
+* Fix junk items from pot/freestanding item locations not being sent to the proper player in multiworld.
 
 #### GUI
 * `Disable Battle Music` has been moved to the main section of the SFX tab.
