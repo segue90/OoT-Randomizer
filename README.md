@@ -125,6 +125,10 @@ issue. You should always Hard Reset to avoid this issue entirely.
 * In Multiworld, outgoing items are now buffered.
   * Allows players to continue collecting items if the Multiworld plugin crashes.
   * Multiple freestanding/pot items can be sent on the same frame.
+* Ice Arrows will now be referred to as Blue Fire Arrows in hints and shop text when `Blue Fire Arrows` is enabled.
+
+#### Plandomizer
+* Due to Ice Arrows and Blue Fire Arrows being separate items in the code now, plandomizer authors must use `Ice_Arrows` or `Blue_Fire_Arrows` depending on if the setting is enabled.
 
 ### 7.0
 
