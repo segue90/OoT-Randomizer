@@ -118,6 +118,7 @@ issue. You should always Hard Reset to avoid this issue entirely.
 * In Multiworld, outgoing items are now buffered.
   * Allows players to continue collecting items if the Multiworld plugin crashes.
   * Multiple freestanding/pot items can be sent on the same frame.
+* `Disable Battle Music` has been moved to the main section of the SFX tab.
 
 ### 7.0
 
