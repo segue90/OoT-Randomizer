@@ -1307,14 +1307,17 @@ def patch_rom(spoiler:Spoiler, world:World, rom:Rom):
                 "Cojiro": ["Odd Mushroom"],
                 "Prescription": ["Eyeball Frog", "Eyedrops"]
             }
+            if world.adult_trade_starting_inventory:
+                trade_item = world.adult_trade_starting_inventory
+            else:
+                trade_item = world.selected_adult_trade_item
             for item_name in trade_items:
                 # Break early for reverting items
                 if item_name in reverting_item_map.keys() and not world.disable_trade_revert:
                     for revert_name in reverting_item_map[item_name]:
-                        if revert_name in world.distribution.effective_starting_items:
-                            traded_flags += 0x1 << (trade_items.index(item_name) + 11)
+                        if revert_name == trade_item:
                             return traded_flags
-                if item_name not in world.distribution.effective_starting_items:
+                if item_name != trade_item:
                     traded_flags += 0x1 << (trade_items.index(item_name) + 11)
                 # No need to set traded flags for items coming after the starting trade item
                 # as they will remain accessible.

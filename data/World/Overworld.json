@@ -1297,7 +1297,12 @@
         "region_name": "Market Mask Shop",
         "scene": "Market Mask Shop",
         "events": {
-            "Mask Shop Open": "at('HC Garden Locations', is_child) and 'Kakariko Village Gate Open'",
+            # Mask Shop access is locked behind the Kakariko guard telling you about it.
+            # Zelda's Letter, shuffled or unshuffled, is required to change the guard's
+            # dialogue. The Kakariko gate event is not used as it forces a child check.
+            # This is relevant with open mask shop for adult-only access to shuffled items
+            # with interior entrance randomizer.
+            "Mask Shop Open": "Zeldas_Letter and (at('Kakariko Village', is_child) or open_kakariko == 'open')",
             "Mask of Truth Access": "'Mask Shop Open' and (complete_mask_quest or (Bunny_Hood and at('Hyrule Field', is_child and has_all_stones)))"
         },
         "locations": {

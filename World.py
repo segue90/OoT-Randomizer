@@ -68,7 +68,9 @@ class World(object):
         self.disable_trade_revert = self.shuffle_interior_entrances or settings.shuffle_overworld_entrances or settings.adult_trade_shuffle
         self.skip_child_zelda = 'Zeldas Letter' not in settings.shuffle_child_trade and \
                                 'Zeldas Letter' in self.distribution.starting_items
-        
+        self.selected_adult_trade_item = ''
+        self.adult_trade_starting_inventory = ''
+
         if (
             settings.open_forest == 'closed'
             and (
