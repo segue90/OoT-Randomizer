@@ -128,6 +128,15 @@ override_key_t get_override_search_key(z64_actor_t *actor, uint8_t scene, uint8_
             .type = OVR_GROTTO_SCRUB,
             .flag = item_id,
         };
+    } else if (actor->actor_id == 0x132) {
+        // Turning in Poacher's Saw to Carpenter Boss in Kakariko as child
+        // using equip swap instead of Gerudo Valley as adult. Override is
+        // keyed on Gerudo Valley.
+        return (override_key_t) {
+            .scene = 0x5A,
+            .type = OVR_BASE_ITEM,
+            .flag = item_id,
+        };
     } else {
         return (override_key_t) {
             .scene = scene,
@@ -404,7 +413,7 @@ void get_item(z64_actor_t *from_actor, z64_link_t *link, int8_t incoming_item_id
 
     if (from_actor && incoming_item_id != 0) {
         int8_t item_id = incoming_negative ? -incoming_item_id : incoming_item_id;
-        // Remove turned in trade items from player inventory. The incoming item
+        // Set trade items as traded, but keep in inventory. The incoming item
         // ID will be the next sequential trade item, so use that as a reference.
         item_row_t *row = get_item_row(item_id);
         if (row) {
