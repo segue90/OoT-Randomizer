@@ -4648,11 +4648,10 @@ setting_infos = [
         name           = 'minor_items_as_major_chest',
         gui_text       = 'Minor Items in Big/Gold chests',
         gui_tooltip    = '''\
-            Chests with Hylian Shield, Deku Shield
-            or Bombchus (regardless of the Bombchus
-            In Logic setting), will appear in
-            Big and/or Gold chests, depending on the
-            Chest Appearance Matches Contents setting.
+            Chests with Hylian Shield or Deku Shield
+            will appear in Big and/or Gold chests,
+            depending on the Chest Appearance Matches
+            Contents setting.
         ''',
         shared         = True,
         disabled_default = False,
