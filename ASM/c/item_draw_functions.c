@@ -13,6 +13,7 @@ typedef void (*duplicate_sys_matrix_fn)(void);
 typedef void (*pop_sys_matrix_fn)(void);
 typedef void (*translate_sys_matrix_fn)(float x, float y, float z, int32_t in_place_flag);
 typedef void (*scale_sys_matrix_fn)(float x, float y, float z, int32_t in_place_flag);
+typedef void (*rotate_Z_sys_matrix_fn)(float z, int32_t in_place_flag);
 typedef void (*update_sys_matrix_fn)(float mf[4][4]);
 typedef Mtx *(*append_sys_matrix_fn)(z64_gfx_t *gfx);
 
@@ -25,6 +26,7 @@ typedef Mtx *(*append_sys_matrix_fn)(z64_gfx_t *gfx);
 #define pop_sys_matrix ((pop_sys_matrix_fn)0x800AA724)
 #define translate_sys_matrix ((translate_sys_matrix_fn)0x800AA7F4)
 #define scale_sys_matrix ((scale_sys_matrix_fn)0x800AA8FC)
+#define rotate_Z_sys_matrix ((rotate_Z_sys_matrix_fn)0x800AAD4C)
 #define update_sys_matrix ((update_sys_matrix_fn)0x800ABE54)
 #define append_sys_matrix ((append_sys_matrix_fn)0x800AB900)
 
@@ -387,6 +389,10 @@ void draw_gi_poe_bottles(z64_game_t *game, uint32_t draw_id) {
 void draw_gi_song_notes(z64_game_t *game, uint32_t draw_id) {
     z64_gfx_t *gfx = game->common.gfx;
     colorRGBA8_t env_color = item_draw_table[draw_id].args[1].color;
+
+    if (item_draw_table[draw_id].args[2].dlist) {
+        rotate_Z_sys_matrix(3.14f, 1);
+    }
 
     append_setup_dl_25_to_xlu(gfx);
     gSPMatrix(gfx->poly_xlu.p++, append_sys_matrix(gfx), G_MTX_MODELVIEW | G_MTX_LOAD | G_MTX_NOPUSH);
