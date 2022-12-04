@@ -122,6 +122,7 @@ issue. You should always Hard Reset to avoid this issue entirely.
 * Upgrade to latest Nebular version 10.
 * Upgrade to Angular 14.
 * Minimum NodeJS version is now 14.15.0.
+* Fix visibility issues when using `Randomize Main Rule Settings`.
 
 #### Other Changes
 * Removed some unnecessary duplication in spirit temple logic.
