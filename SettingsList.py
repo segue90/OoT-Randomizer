@@ -5118,7 +5118,7 @@ setting_infos = [
             Tunic colors are excluded from this to prevent not being 
             able to discern freestanding Tunics from each other.
         ''',
-        default        = False,
+        default        = True,
     ),
     Checkbutton(
         name           = 'randomize_all_cosmetics',
