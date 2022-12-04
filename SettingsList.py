@@ -2253,10 +2253,17 @@ setting_infos = [
         default        = False,
         disable        = {
             True : {
-                'sections' : ['open_section', 'shuffle_section', 'shuffle_dungeon_section'],
-                'settings': ['starting_age', 'shuffle_interior_entrances', 'shuffle_grotto_entrances', 'shuffle_dungeon_entrances',
-                             'shuffle_bosses', 'shuffle_overworld_entrances', 'owl_drops', 'warp_songs', 'spawn_positions',
-                             'triforce_hunt', 'triforce_count_per_world', 'triforce_goal_per_world', 'bombchus_in_logic', 'one_item_per_dungeon'],
+                'sections': ['shuffle_section'],
+                'settings': [
+                    'open_forest', 'open_kakariko', 'open_door_of_time', 'zora_fountain', 'gerudo_fortress', 'dungeon_shortcuts_choice',
+                    'dungeon_shortcuts', 'trials_random', 'trials',
+                    'starting_age', 'shuffle_interior_entrances',
+                    'shuffle_grotto_entrances', 'shuffle_dungeon_entrances',
+                    'shuffle_bosses', 'shuffle_overworld_entrances', 'owl_drops', 'warp_songs', 'spawn_positions',
+                    'triforce_hunt', 'triforce_count_per_world', 'triforce_goal_per_world', 'bombchus_in_logic', 'one_item_per_dungeon',
+                    'shuffle_mapcompass', 'shuffle_smallkeys', 'shuffle_hideoutkeys', 'key_rings_choice', 'key_rings',
+                    'shuffle_bosskeys', 'enhance_map_compass'
+                ],
             }
         },
         shared         = True,
