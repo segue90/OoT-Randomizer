@@ -2,6 +2,8 @@
 
 This is a randomizer for _The Legend of Zelda: Ocarina of Time_ for the Nintendo 64.
 
+![ootr_logo](https://ootrandomizer.com/img/ootr_logo.png =400x200)
+
 * [Installation](#installation)
 * [General Description](#general-description)
   * [Getting Stuck](#getting-stuck)
