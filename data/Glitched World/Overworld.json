@@ -751,7 +751,14 @@
     {
         "region_name": "Kak Odd Medicine Building",
         "locations": {
-            "Kak Granny Trade Odd Mushroom": "is_adult and Odd_Mushroom"
+            "Kak Granny Trade Odd Mushroom": "is_adult and Odd_Mushroom",
+            # Granny will not sell her item without turning in odd mushroom
+            # If the adult trade item(s) in the world are all after odd mushroom,
+            # allow any of the later sequence items to satisfy logic. The patcher
+            # sets the flag needed for her to sell stuff if odd mushroom can't be obtained.
+            "Kak Granny Buy Blue Potion": "Progressive_Wallet and is_adult and
+                (Odd_Mushroom or Odd_Potion or Poachers_Saw or Broken_Sword or
+                Prescription or Eyeball_Frog or Eyedrops or Claim_Check)"
         }
     },
     {

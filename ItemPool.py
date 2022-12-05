@@ -383,6 +383,7 @@ def get_pool_core(world):
     placed_items = {}
     remain_shop_items = []
     ruto_bottles = 1
+    blue_potions = 1
 
     if world.settings.zora_fountain == 'open':
         ruto_bottles = 0
@@ -505,7 +506,7 @@ def get_pool_core(world):
 
         # Giant's Knife
         elif location.vanilla_item == 'Giants Knife':
-            shuffle_item = world.settings.shuffle_medigoron_carpet_salesman
+            shuffle_item = world.settings.shuffle_expensive_merchants
 
         # Bombchu Bowling 3rd and 4th prizes (must be checked before Bombchu vanilla items!)
         elif location.name in ['Market Bombchu Bowling Bombchus', 'Market Bombchu Bowling Bomb']:
@@ -513,7 +514,17 @@ def get_pool_core(world):
 
         # Bombchus
         elif location.vanilla_item in ['Bombchus', 'Bombchus (5)', 'Bombchus (10)', 'Bombchus (20)']:
-            shuffle_item = location.name != 'Wasteland Bombchu Salesman' or world.settings.shuffle_medigoron_carpet_salesman
+            shuffle_item = location.name != 'Wasteland Bombchu Salesman' or world.settings.shuffle_expensive_merchants
+
+        # Blue Potion from Granny's Potion Shop
+        elif location.vanilla_item == 'Blue Potion':
+            if world.settings.shuffle_expensive_merchants:
+                shuffle_item = True
+                # Don't shuffle the shop item. One of the bottles is forced to be a blue potion
+                # to simulate shuffling.
+                item = get_junk_item()[0]
+            else:
+                shuffle_item = False
 
         # Cows
         elif location.vanilla_item == 'Milk':
@@ -533,6 +544,10 @@ def get_pool_core(world):
             if ruto_bottles:
                 item = 'Rutos Letter'
                 ruto_bottles -= 1
+            # Add one blue potion to world if Granny's Potion Shop is shuffled
+            elif world.settings.shuffle_expensive_merchants and blue_potions:
+                item = "Bottle with Blue Potion"
+                blue_potions -= 1
             else:
                 item = random.choice(normal_bottles)
             shuffle_item = True

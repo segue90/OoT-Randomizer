@@ -42,7 +42,7 @@
     "shuffle_song_items":                      "song",
     "shuffle_cows":                            false,
     "shuffle_beans":                           false,
-    "shuffle_medigoron_carpet_salesman":       false,
+    "shuffle_expensive_merchants":       false,
     "shuffle_interior_entrances":              "off",
     "shuffle_grotto_entrances":                false,
     "shuffle_dungeon_entrances":               "off",

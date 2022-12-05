@@ -27,12 +27,6 @@ check_fado_spawn_flags:
     ori     t5, $zero, 0x0000          ; don't spawn
     ori     t5, $zero, 0x0031          ; spawn
 
-    ;lh      t4, (SAVE_CONTEXT + 0xEF6) ; item_get_inf[3]
-    ;andi    t4, t4, 0x0002             ; Item obtained from Fado
-    ;bnez    t4, @@return_fado
-    ;ori     t5, $zero, 0x0000          ; don't spawn
-    ;ori     t5, $zero, 0x0031          ; spawn
-
 @@return_fado:
     ; reset v1 in case it was modified
     or      v1, $zero, $zero

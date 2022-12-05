@@ -359,6 +359,7 @@ location_table = OrderedDict([
     ("Kak Anju as Adult",                                            ("NPC",          0x52,  0x1D, None,                            'Pocket Egg',                            ("Kakariko Village", "NPCs",))),
     ("Kak Anju Trade Pocket Cucco",                                  ("NPC",          0x52,  0x0E, None,                            'Cojiro',                                ("Kakariko Village", "Kakariko",))),
     ("Kak Granny Trade Odd Mushroom",                                ("NPC",          0x4E,  0x20, None,                            'Odd Potion',                            ("Kakariko Village", "Kakariko",))),
+    ("Kak Granny Buy Blue Potion",                                   ("NPC",          0x4E,  0x12, None,                            'Blue Potion',                           ("Kakariko Village", "Kakariko",))),
     ("Kak Impas House Freestanding PoH",                             ("Collectable",  0x37,  0x01, None,                            'Piece of Heart',                        ("Kakariko Village", "Freestandings",))),
     ("Kak Windmill Freestanding PoH",                                ("Collectable",  0x48,  0x01, None,                            'Piece of Heart',                        ("Kakariko Village", "Freestandings",))),
     ("Kak Man on Roof",                                              ("NPC",          0x52,  0x3E, None,                            'Piece of Heart',                        ("Kakariko Village", "NPCs",))),

@@ -1777,6 +1777,13 @@ skip_bombchu_bowling_prize_switch:
     jal     potion_shop_fix
     addiu   v0, v0, 0xA5D0 ; displaced
 
+.orga 0xE2BE10
+    jal     potion_shop_buy_hook
+    nop
+
+.orga 0xE2BDDC
+    jal     potion_shop_check_empty_bottle
+
 ;==================================================================================================
 ; Jabu Jabu Elevator
 ;==================================================================================================

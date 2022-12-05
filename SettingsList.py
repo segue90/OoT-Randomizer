@@ -4232,13 +4232,13 @@ setting_infos = [
         },
     ),
     Checkbutton(
-        name           = 'shuffle_medigoron_carpet_salesman',
-        gui_text       = 'Shuffle Medigoron & Carpet Salesman',
+        name           = 'shuffle_expensive_merchants',
+        gui_text       = 'Shuffle Expensive Merchants',
         gui_tooltip    = '''\
-            Enabling this adds a Giant's Knife and a pack of Bombchus
-            to the item pool and changes both Medigoron and the
-            Haunted Wasteland Carpet Salesman to sell a random item
-            once at the price of 200 Rupees.
+            Enabling this adds a Giant's Knife and a pack of Bombchus 
+            to the item pool and changes Medigoron, Granny's Potion Shop,
+            and the Haunted Wasteland Carpet Salesman to sell a random
+            item once at the same price as their vanilla items.
         ''',
         default        = False,
         shared         = True,

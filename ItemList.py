@@ -12,6 +12,7 @@ item_table = {
     'Megaton Hammer':                                  ('Item',     True,  0x0D, None),
     'Cojiro':                                          ('Item',     True,  0x0E, {'trade': True}),
     'Bottle':                                          ('Item',     True,  0x0F, {'bottle': float('Inf')}),
+    'Blue Potion':                                     ('Item',     True,  0x12, None), # distinct from shop item
     'Bottle with Milk':                                ('Item',     True,  0x14, {'bottle': float('Inf')}),
     'Rutos Letter':                                    ('Item',     True,  0x15, None),
     'Deliver Letter':                                  ('Item',     True,  None, {'bottle': float('Inf')}),

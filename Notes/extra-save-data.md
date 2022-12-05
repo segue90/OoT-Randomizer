@@ -19,6 +19,7 @@ The unused field (offset 0x10) of the permanent scene flags (save context + 0xd4
 * Pending ice traps: Scene 0x49
 * Trade Quest Items Owned: Scene 0x60
 * Trade Quest Items Traded: Scene 0x61
+* Expensive Merchants (Granny's Potion Shop only): Scene 4E
 
 ## Collectibles field
 
@@ -35,7 +36,7 @@ With `shuffle_cows`, the flags representing which cows have been talked to are s
 * LLR Tower Right Cow: scene 0x4c, bit 0100_0000
 * GV Cow: scene 0x5a, bit 0100_0000
 
-With `shuffle_beans` or `shuffle_medigoron_carpet_salesman`, flags for the bean salesman or Medigoron and the carpet salesman, respectively, are similarly stored in collectibles fields:
+With `shuffle_beans` or `shuffle_expensive_merchants`, flags for the bean salesman or Medigoron and the carpet salesman, respectively, are similarly stored in collectibles fields:
 
 * ZR Magic Bean Salesman: scene 0x54, bit 0000_0002
 * Wasteland Bombchu Salesman: scene 0x5e, bit 0000_0002
