@@ -391,7 +391,7 @@ void draw_gi_song_notes(z64_game_t *game, uint32_t draw_id) {
     colorRGBA8_t env_color = item_draw_table[draw_id].args[1].color;
 
     if (item_draw_table[draw_id].args[2].dlist) {
-        rotate_Z_sys_matrix(3.14f, 1);
+        scale_sys_matrix(1.5f, 1.5f, 1.5f, 1);
     }
 
     append_setup_dl_25_to_xlu(gfx);
