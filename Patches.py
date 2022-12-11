@@ -93,6 +93,17 @@ def patch_rom(spoiler:Spoiler, world:World, rom:Rom):
     # Add it to the extended object table
     add_to_extended_object_table(rom, 0x195, keyring_obj_file)
 
+    # Load Key Ring model into a file
+    warpsong_obj_file = File({ 'Name': 'object_gi_warpsong' })
+    warpsong_obj_file.copy(rom)
+    with open(data_path('Note.zobj'), 'rb') as stream:
+        obj_data = stream.read()
+        rom.write_bytes(warpsong_obj_file.start, obj_data)
+        warpsong_obj_file.end = warpsong_obj_file.start + len(obj_data)
+    update_dmadata(rom, warpsong_obj_file)
+    # Add it to the extended object table
+    add_to_extended_object_table(rom, 0x196, warpsong_obj_file)
+
     # Create the textures for pots/crates. Note: No copyrighted material can be distributed w/ the randomizer. Because of this, patch files are used to create the new textures from the original texture in ROM.
     # Apply patches for custom textures for pots and crates and add as new files in rom
     # Crates are ci4 textures in the normal ROM but for pot/crate textures match contents were upgraded to ci8 to support more colors
