@@ -904,14 +904,16 @@ class World(object):
                 gbk.minimum_goals = 1
             if (self.settings.ganon_bosskey_hearts > self.settings.starting_hearts
                 and self.settings.shuffle_ganon_bosskey == 'hearts'
-                and (self.settings.bridge != 'hearts'
+                and (self.shuffle_special_dungeon_entrances
+                        or self.settings.bridge != 'hearts'
                         or self.settings.bridge_hearts < self.settings.ganon_bosskey_hearts)):
                 gbk.add_goal(Goal(self, 'hearts', 'path of #hearts#', 'Red', items=[{'name': 'Piece of Heart', 'quantity': (20 - self.settings.starting_hearts) * 4, 'minimum': (self.settings.ganon_bosskey_hearts - self.settings.starting_hearts) * 4, 'hintable': False}]))
                 gbk.goal_count = round((self.settings.ganon_bosskey_hearts - 3) / 2)
                 gbk.minimum_goals = 1
             if (self.settings.lacs_hearts > self.settings.starting_hearts
                 and self.settings.shuffle_ganon_bosskey == 'on_lacs' and self.settings.lacs_condition == 'hearts'
-                and (self.settings.bridge != 'hearts'
+                and (self.shuffle_special_dungeon_entrances
+                        or self.settings.bridge != 'hearts'
                         or self.settings.bridge_hearts < self.settings.lacs_hearts)):
                 gbk.add_goal(Goal(self, 'hearts', 'path of #hearts#', 'Red', items=[{'name': 'Piece of Heart', 'quantity': (20 - self.settings.starting_hearts) * 4, 'minimum': (self.settings.lacs_hearts - self.settings.starting_hearts) * 4, 'hintable': False}]))
                 gbk.goal_count = round((self.settings.lacs_hearts - 3) / 2)
