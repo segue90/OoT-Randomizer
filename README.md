@@ -110,6 +110,9 @@ issue. You should always Hard Reset to avoid this issue entirely.
 
 ### Dev
 
+#### Other Changes
+* `Closed Forest` is no longer changed to `Closed Deku` when `Shuffle Boss Entrances` is enabled.
+
 ### 7.1
 
 #### Bug Fixes
