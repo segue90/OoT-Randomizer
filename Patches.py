@@ -2305,6 +2305,31 @@ def patch_rom(spoiler:Spoiler, world:World, rom:Rom):
         torch_count = world.settings.fae_torch_count
         rom.write_byte(0xCA61E3, torch_count)
 
+    if world.settings.shuffle_loach_reward:
+        symbol = rom.sym('SHUFFLE_LOACH')
+        rom.write_byte(symbol, 0x01)
+
+        # Make the loach always spawn
+        rom.write_int32(0xDBF1E4, 0x00000000) 
+        
+        # Make sinking lure available
+        rom.write_int32(0xDC2F00, 0x00000000)
+        rom.write_int32(0xDC2F10, 0x00000000)
+
+        # Give the child/adult fishing prizes even if using the sinking lure
+        rom.write_int32(0xDCBEBC, 0x00000000)
+        rom.write_int32(0xDCBEC0, 0x00000000)
+        rom.write_int32(0xDCBF1C, 0x00000000)
+        rom.write_int32(0xDCBF20, 0x00000000)
+
+        # In case 1: of Fishing_UpdateFish, set unk_1A2 = 200 instead of 20000
+        rom.write_int32(0xDC652C, 0x240100c8) # replace 'mtc1 zero, f10' with 'addiu at, zero, 0x00c8'
+        rom.write_int32(0xDC6540, 0xa6010192) # replace 'sh v0, 0x0192(s0)' with 'sh at, 0x0192(s0)'
+        rom.write_int32(0xDC6550, 0xE60601AC) # replace 'swc1 f10, 0x01ac(s0)' with 'swc1 f6, 0x01ac(s0)'
+
+        # For testing, don't spawn non-loach fish
+        rom.write_int32(0xDBF1E8, 0x3411000F)
+
     # actually write the save table to rom
     world.distribution.give_items(world, save_context)
     if world.settings.starting_age == 'adult':

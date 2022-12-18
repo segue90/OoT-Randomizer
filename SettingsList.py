@@ -4261,6 +4261,21 @@ setting_infos = [
             'randomize_key': 'randomize_settings',
         },
     ),
+    Checkbutton(
+        name           = 'shuffle_loach_reward',
+        gui_text       = 'Shuffle Hyrule Loach Reward',
+        gui_tooltip    = '''\
+            Enabling this shuffles the reward for catching the 
+            Hyrule Loach at the fishing pond into the item pool
+            
+
+        ''',
+        default        = False,
+        shared         = True,
+        gui_params     = {
+            'randomize_key': 'randomize_settings',
+        },
+    ),
 
     # Detailed Logic (except "Guarantee Reachable Locations")
 

@@ -3185,3 +3185,37 @@ skip_GS_BGS_text:
 ; Replaces: addiu   t9, $zero, 0x3033
 .orga 0xED31B8
     addiu   t9, $zero, 0x3036
+
+;==================================================================================================
+; Shuffle Reward for Catching Hyrule Loach
+;==================================================================================================
+; Randomize the loach reward
+; replaces mtc1 zero, f18
+.orga 0xDCC138
+    jal     give_loach_reward
+
+; update sinking lure location
+.orga 0xDCC7E4
+    jal     increment_sSinkingLureLocation
+    addiu   v1, v1, 1
+; replace
+;subu t2, v1, 2
+;sll t2, t2, 1
+
+.orga 0xdc689c
+    jal     make_loach_not_suck
+    nop
+; replace
+; addiu   $at, $zero, 0xFFFE         # $at = FFFFFFFE
+; and     t1, t8, at
+
+.orga 0xDC6AF0
+    jal     make_loach_not_suck
+    nop
+    .skip 4
+    sw      t1, 0x0004(s0)
+; replace
+; addiu     at, zero, 0xFFFE
+; and       t7, t9, at
+; <skip>
+; sw        t7, 0x0004(s0)

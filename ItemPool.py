@@ -503,6 +503,10 @@ def get_pool_core(world):
         # Frogs Purple Rupees
         elif location.scene == 0x54 and location.vanilla_item == 'Rupees (50)':
             shuffle_item = world.settings.shuffle_frog_song_rupees
+        
+        # Hyrule Loach Reward
+        elif location.scene == 0x49 and location.vanilla_item == 'Rupees (50)':
+            shuffle_item = world.settings.shuffle_loach_reward
 
         # Adult Trade Item
         elif location.vanilla_item == 'Pocket Egg':
