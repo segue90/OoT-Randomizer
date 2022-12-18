@@ -93,7 +93,7 @@ def patch_rom(spoiler:Spoiler, world:World, rom:Rom):
     # Add it to the extended object table
     add_to_extended_object_table(rom, 0x195, keyring_obj_file)
 
-    # Load Key Ring model into a file
+    # Load Warp Song model into a file
     warpsong_obj_file = File({ 'Name': 'object_gi_warpsong' })
     warpsong_obj_file.copy(rom)
     with open(data_path('Note.zobj'), 'rb') as stream:
