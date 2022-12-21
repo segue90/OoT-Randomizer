@@ -122,6 +122,21 @@ void draw_gi_various_opa0_xlu1(z64_game_t *game, uint32_t draw_id) {
     gSPDisplayList(gfx->poly_xlu.p++, item_draw_table[draw_id].args[1].dlist);
 }
 
+void draw_rutos_letter(z64_game_t *game, uint32_t draw_id) {
+    z64_gfx_t *gfx = game->common.gfx;
+
+    // Turn the model sideways
+    rotate_Z_sys_matrix(1.57f, 1);
+
+    append_setup_dl_25_to_opa(gfx);
+    gSPMatrix(gfx->poly_opa.p++, append_sys_matrix(gfx), G_MTX_MODELVIEW | G_MTX_LOAD | G_MTX_NOPUSH);
+    gSPDisplayList(gfx->poly_opa.p++, item_draw_table[draw_id].args[0].dlist);
+
+    append_setup_dl_25_to_xlu(gfx);
+    gSPMatrix(gfx->poly_xlu.p++, append_sys_matrix(gfx), G_MTX_MODELVIEW | G_MTX_LOAD | G_MTX_NOPUSH);
+    gSPDisplayList(gfx->poly_xlu.p++, item_draw_table[draw_id].args[1].dlist);
+}
+
 void draw_gi_coins_and_cuccos(z64_game_t *game, uint32_t draw_id) {
     z64_gfx_t *gfx = game->common.gfx;
 

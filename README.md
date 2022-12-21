@@ -113,6 +113,7 @@ issue. You should always Hard Reset to avoid this issue entirely.
 #### Other Changes
 * `Closed Forest` is no longer changed to `Closed Deku` when `Shuffle Boss Entrances` is enabled.
 * A new model is now used for warp songs to differentiate from non-warp songs.
+* The model used for Ruto's Letter is now rotated onto its side to better differentiate from other bottles.
 
 ### 7.1
 
