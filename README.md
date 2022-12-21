@@ -110,6 +110,9 @@ issue. You should always Hard Reset to avoid this issue entirely.
 
 ### Dev
 
+#### Bug Fixes
+* Fix an issue where the `path of hearts` goal wasn't enabled in certain circumstances with a Ganon's Boss Key or LACS `Hearts` goal.
+
 #### Other Changes
 * `Closed Forest` is no longer changed to `Closed Deku` when `Shuffle Boss Entrances` is enabled.
 * A new model is now used for warp songs to differentiate from non-warp songs.
