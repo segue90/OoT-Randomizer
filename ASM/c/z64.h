@@ -943,7 +943,7 @@ typedef struct
   z64_mem_obj_t objects[19];
 } z64_obj_ctxt_t;
 
-typedef struct 
+typedef struct
 {
   uint8_t       code;
   uint8_t       data1;
@@ -1058,11 +1058,11 @@ typedef void (*z64_light_handler_t)(z64_gbi_lights_t*, z64_lightn_t*,
 
 typedef struct
 {
-  uint8_t          freeze_flash_timer; /* 0x0000 */ 
-  char             unk_01_[0x01];      /* 0x0001 */ 
-  uint8_t          unk_02;             /* 0x0002 */ 
-  uint8_t          lens_active;        /* 0x0003 */ 
-  char             unk_04_[0x04];      /* 0x0004 */ 
+  uint8_t          freeze_flash_timer; /* 0x0000 */
+  char             unk_01_[0x01];      /* 0x0001 */
+  uint8_t          unk_02;             /* 0x0002 */
+  uint8_t          lens_active;        /* 0x0003 */
+  char             unk_04_[0x04];      /* 0x0004 */
 } z64_actor_ctxt_t;
 
 /* game context */
