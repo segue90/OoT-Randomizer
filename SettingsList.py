@@ -4268,7 +4268,11 @@ setting_infos = [
             Enabling this shuffles the reward for catching the 
             Hyrule Loach at the fishing pond into the item pool
             
-
+            When enabled the loach will always spawn at the 
+            fishing pond, the sinking lure will be available 
+            immediately at all four possible positions, and
+            the child/adult fishing prizes are still obtainable
+            if you use the sinking lure.
         ''',
         default        = False,
         shared         = True,
