@@ -1,38 +1,36 @@
 {
-<<<<<<< refs/remotes/origin/Dev
     "ADULT_INIT_ITEMS": "03482178",
     "ADULT_VALID_ITEMS": "03482180",
+<<<<<<< Dev
     "APPLY_BONK_DAMAGE": "0348334C",
     "AUDIO_THREAD_INFO": "03483700",
     "AUDIO_THREAD_INFO_MEM_SIZE": "0348371C",
     "AUDIO_THREAD_INFO_MEM_START": "03483718",
+<<<<<<< Dev
     "AUDIO_THREAD_MEM_START": "0349FA90",
     "AUTO_TRACKER_CONTEXT": "03480D6C",
     "AUTO_TRACKER_VERSION": "03480D6C",
     "BOMBCHUS_IN_LOGIC": "03480D4C",
     "BONK_LAST_FRAME": "03483298",
 =======
-    "ADULT_INIT_ITEMS": "03482138",
-    "ADULT_VALID_ITEMS": "03482140",
-    "APPLY_BONK_DAMAGE": "034833C4",
-    "AUDIO_THREAD_INFO": "03483774",
-    "AUDIO_THREAD_INFO_MEM_SIZE": "03483794",
-    "AUDIO_THREAD_INFO_MEM_START": "03483790",
-    "AUDIO_THREAD_MEM_START": "0349F3E0",
+    "AUDIO_THREAD_MEM_START": "0349FA30",
+>>>>>>> Rebase to dev
+=======
+    "APPLY_BONK_DAMAGE": "03483404",
+    "AUDIO_THREAD_INFO": "034837B4",
+    "AUDIO_THREAD_INFO_MEM_SIZE": "034837D4",
+    "AUDIO_THREAD_INFO_MEM_START": "034837D0",
+    "AUDIO_THREAD_MEM_START": "0349FA00",
+>>>>>>> Rebase to dev
     "AUTO_TRACKER_CONTEXT": "03480D6C",
     "AUTO_TRACKER_VERSION": "03480D6C",
     "BOMBCHUS_IN_LOGIC": "03480D4C",
-    "BONK_LAST_FRAME": "03483310",
->>>>>>> Loach
+    "BONK_LAST_FRAME": "03483350",
     "CFG_A_BUTTON_COLOR": "0348084C",
     "CFG_A_NOTE_COLOR": "0348086A",
     "CFG_BOMBCHU_TRAIL_INNER_COLOR": "0348087C",
     "CFG_BOMBCHU_TRAIL_OUTER_COLOR": "0348087F",
-<<<<<<< refs/remotes/origin/Dev
-    "CFG_BONK_DAMAGE": "03483294",
-=======
-    "CFG_BONK_DAMAGE": "03483308",
->>>>>>> Loach
+    "CFG_BONK_DAMAGE": "03483348",
     "CFG_BOOM_TRAIL_INNER_COLOR": "03480876",
     "CFG_BOOM_TRAIL_OUTER_COLOR": "03480879",
     "CFG_B_BUTTON_COLOR": "03480852",
@@ -40,13 +38,8 @@
     "CFG_CUSTOM_MESSAGE_2": "034808B3",
     "CFG_C_BUTTON_COLOR": "03480858",
     "CFG_C_NOTE_COLOR": "03480870",
-<<<<<<< refs/remotes/origin/Dev
-    "CFG_DAMAGE_MULTIPLYER": "03483224",
-    "CFG_DEADLY_BONKS": "03483290",
-=======
-    "CFG_DAMAGE_MULTIPLYER": "03483298",
-    "CFG_DEADLY_BONKS": "03483304",
->>>>>>> Loach
+    "CFG_DAMAGE_MULTIPLYER": "034832D8",
+    "CFG_DEADLY_BONKS": "03483344",
     "CFG_DISPLAY_DPAD": "03480882",
     "CFG_DPAD_DUNGEON_INFO_ENABLE": "03480891",
     "CFG_DUNGEON_INFO_ENABLE": "03480D70",
@@ -79,6 +72,7 @@
     "CFG_SHOP_CURSOR_COLOR": "03480864",
     "CFG_SHOW_SETTING_INFO": "03480892",
     "CFG_TEXT_CURSOR_COLOR": "0348085E",
+<<<<<<< Dev
 <<<<<<< refs/remotes/origin/Dev
     "CHAIN_HBA_REWARDS": "03484090",
     "CHECK_FOR_BONK_CANCEL": "034832FC",
@@ -111,11 +105,25 @@
     "COMPLETE_MASK_QUEST": "034949A4",
 >>>>>>> Loach
 >>>>>>> Loach
+<<<<<<< Dev
 >>>>>>> Loach
+=======
+=======
+    "CHAIN_HBA_REWARDS": "03484148",
+    "CHECK_FOR_BONK_CANCEL": "034833B4",
+    "CHECK_ROOM_MESH_TYPE": "034834D4",
+    "CHEST_LENS_ONLY": "03482C04",
+    "CHEST_SIZE_MATCH_CONTENTS": "03494F30",
+    "CHEST_SIZE_TEXTURE": "03494F2C",
+    "CHEST_TEXTURE_MATCH_CONTENTS": "03494F34",
+    "COMPLETE_MASK_QUEST": "03494F84",
+>>>>>>> Rebase to dev
+>>>>>>> Rebase to dev
     "COOP_CONTEXT": "03480020",
     "COOP_VERSION": "03480020",
     "COSMETIC_CONTEXT": "0348083C",
     "COSMETIC_FORMAT_VERSION": "0348083C",
+<<<<<<< Dev
 <<<<<<< Dev
     "CURRENT_GROTTO_ID": "034835C2",
 =======
@@ -125,14 +133,30 @@
     "CURR_ACTOR_SPAWN_INDEX": "0348448C",
     "DEBUG_OFFSET": "03482E14",
     "DISABLE_TIMERS": "03480D61",
+<<<<<<< Dev
     "DPAD_TEXTURE": "03499A90",
+=======
+    "DPAD_TEXTURE": "03499A28",
+=======
+    "CURRENT_GROTTO_ID": "03483676",
+    "CURR_ACTOR_SPAWN_INDEX": "03484544",
+    "DEBUG_OFFSET": "03482EC8",
+    "DISABLE_TIMERS": "03480D61",
+    "DPAD_TEXTURE": "03499A00",
+>>>>>>> Rebase to dev
+>>>>>>> Rebase to dev
     "DUNGEONS_SHUFFLED": "03480D62",
     "EXTENDED_OBJECT_TABLE": "03480D2C",
-    "EXTERN_DAMAGE_MULTIPLYER": "03483225",
+    "EXTERN_DAMAGE_MULTIPLYER": "034832D9",
     "FAST_BUNNY_HOOD_ENABLED": "03480D64",
     "FAST_CHESTS": "03480D5B",
     "FIX_BROKEN_DROPS": "03480D65",
+<<<<<<< Dev
     "FONT_TEXTURE": "034985C8",
+=======
+<<<<<<< Dev
+    "FONT_TEXTURE": "03498560",
+>>>>>>> Rebase to dev
     "FREE_SCARECROW_ENABLED": "03480D54",
     "GANON_BOSS_KEY_CONDITION": "03494FCC",
     "GANON_BOSS_KEY_CONDITION_COUNT": "03494FCA",
@@ -164,19 +188,31 @@
     "GET_ITEM_TRIGGERED": "03481800",
     "GILDED_CHEST_BASE_TEXTURE": "0349BBE0",
     "GILDED_CHEST_FRONT_TEXTURE": "0349ABE0",
+=======
+    "FONT_TEXTURE": "03498538",
+    "FREE_SCARECROW_ENABLED": "03480D54",
+    "GANON_BOSS_KEY_CONDITION": "03494F3C",
+    "GANON_BOSS_KEY_CONDITION_COUNT": "03494F3A",
+    "GET_CHEST_OVERRIDE_WRAPPER": "03482C08",
+    "GET_ITEM_TRIGGERED": "03481840",
+    "GILDED_CHEST_BASE_TEXTURE": "0349C200",
+    "GILDED_CHEST_FRONT_TEXTURE": "0349B200",
+>>>>>>> Rebase to dev
     "GOSSIP_HINT_CONDITION": "03480D50",
-    "GROTTO_EXIT_LIST": "034835F4",
-    "GROTTO_LOAD_TABLE": "03483570",
-    "HIDE_CHEST_WITH_INVERTED_LENS": "03482C10",
->>>>>>> Loach
+    "GROTTO_EXIT_LIST": "03483634",
+    "GROTTO_LOAD_TABLE": "034835B0",
+    "HIDE_CHEST_WITH_INVERTED_LENS": "03482C50",
     "INCOMING_ITEM": "03480028",
     "INCOMING_PLAYER": "03480026",
     "INITIAL_SAVE_DATA": "0348092C",
     "JABU_ELEVATOR_ENABLE": "03480D58",
 <<<<<<< Dev
+<<<<<<< Dev
     "KAKARIKO_WEATHER_FORECAST": "03495040",
     "KEYRING_BOSSKEY_CONDITION": "03495016",
 =======
+=======
+>>>>>>> Rebase to dev
 <<<<<<< Dev
     "KAKARIKO_WEATHER_FORECAST": "03494FD8",
     "KEYRING_BOSSKEY_CONDITION": "03494FAE",
@@ -186,11 +222,20 @@
 >>>>>>> Loach
 >>>>>>> Loach
     "KING_DODONGO_BONKS": "034833E8",
+=======
+    "KAKARIKO_WEATHER_FORECAST": "03494FB0",
+    "KING_DODONGO_BONKS": "034834A0",
+>>>>>>> Rebase to dev
     "LACS_CONDITION": "03480DAC",
     "LACS_CONDITION_COUNT": "03480DB2",
-    "MALON_GAVE_ICETRAP": "03483DCC",
+    "MALON_GAVE_ICETRAP": "03483E84",
     "MALON_TEXT_ID": "03480D60",
+<<<<<<< Dev
     "MAX_RUPEES": "03495017",
+=======
+<<<<<<< Dev
+    "MAX_RUPEES": "03494FAF",
+>>>>>>> Rebase to dev
     "MOVED_ADULT_KING_ZORA": "0348373C",
     "MW_SEND_OWN_ITEMS": "0348002A",
     "NO_COLLECTIBLE_HEARTS": "03480D5A",
@@ -219,7 +264,19 @@
     "OPEN_KAKARIKO": "034949A5",
 >>>>>>> Loach
 >>>>>>> Loach
+<<<<<<< Dev
 >>>>>>> Loach
+=======
+=======
+    "MAX_RUPEES": "03494F86",
+    "MOVED_ADULT_KING_ZORA": "034837F4",
+    "MW_SEND_OWN_ITEMS": "0348002A",
+    "NO_COLLECTIBLE_HEARTS": "03480D5A",
+    "NO_ESCAPE_SEQUENCE": "03494F39",
+    "OCARINAS_SHUFFLED": "03480D59",
+    "OPEN_KAKARIKO": "03494F85",
+>>>>>>> Rebase to dev
+>>>>>>> Rebase to dev
     "OUTGOING_ITEM": "03480030",
     "OUTGOING_KEY": "0348002C",
     "OUTGOING_PLAYER": "03480032",
@@ -234,8 +291,11 @@
     "RAINBOW_BRIDGE_CONDITION": "03480DA8",
     "RAINBOW_BRIDGE_COUNT": "03480DB0",
 <<<<<<< Dev
+<<<<<<< Dev
     "RANDOMIZER_RNG_SEED": "03495024",
 =======
+=======
+>>>>>>> Rebase to dev
 <<<<<<< Dev
     "RANDOMIZER_RNG_SEED": "03494FBC",
 =======
@@ -269,13 +329,17 @@
     "SKULL_CHEST_FRONT_TEXTURE": "0349E150",
 =======
     "RANDOMIZER_RNG_SEED": "034949B4",
+=======
+    "RANDOMIZER_RNG_SEED": "03494F94",
+>>>>>>> Rebase to dev
     "RANDO_CONTEXT": "03480000",
-    "RNG_SEED_INT": "03494944",
-    "SET_BONK_FLAG": "03483348",
-    "SHOW_CHEST_WITH_INVERTED_LENS": "03482C88",
-    "SHUFFLE_BEANS": "034834CC",
-    "SHUFFLE_CARPET_SALESMAN": "034841C0",
+    "RNG_SEED_INT": "03494F24",
+    "SET_BONK_FLAG": "03483388",
+    "SHOW_CHEST_WITH_INVERTED_LENS": "03482CC8",
+    "SHUFFLE_BEANS": "0348350C",
+    "SHUFFLE_CARPET_SALESMAN": "03484200",
     "SHUFFLE_COWS": "03480D5C",
+<<<<<<< Dev
     "SHUFFLE_MEDIGORON": "0348421C",
     "SILVER_CHEST_BASE_TEXTURE": "0349D3E0",
     "SILVER_CHEST_FRONT_TEXTURE": "0349C3E0",
@@ -283,13 +347,23 @@
     "SKULL_CHEST_FRONT_TEXTURE": "0349DBE0",
 >>>>>>> Loach
 >>>>>>> Loach
+<<<<<<< Dev
 >>>>>>> Loach
+=======
+=======
+    "SHUFFLE_MEDIGORON": "0348425C",
+    "SILVER_CHEST_BASE_TEXTURE": "0349DA00",
+    "SILVER_CHEST_FRONT_TEXTURE": "0349CA00",
+    "SKULL_CHEST_BASE_TEXTURE": "0349F200",
+    "SKULL_CHEST_FRONT_TEXTURE": "0349E200",
+>>>>>>> Rebase to dev
+>>>>>>> Rebase to dev
     "SONGS_AS_ITEMS": "03480D5D",
     "SOS_ITEM_GIVEN": "0348190C",
     "SPECIAL_DEAL_COUNTS": "03480DB8",
-<<<<<<< refs/remotes/origin/Dev
-    "SPEED_MULTIPLIER": "03482CD4",
+    "SPEED_MULTIPLIER": "03482D88",
     "SPOILER_AVAILABLE": "03480D66",
+<<<<<<< Dev
     "START_TWINROVA_FIGHT": "034837BC",
 <<<<<<< Dev
     "Sram_InitNewSave": "03494FB8",
@@ -323,13 +397,21 @@
     "TWINROVA_ACTION_TIMER": "034837C0",
 =======
     "TRIFORCE_ICON_TEXTURE": "03499BE0",
+=======
+    "START_TWINROVA_FIGHT": "03483874",
+    "Sram_InitNewSave": "03494F28",
+    "TIME_STRING_TXT": "03480908",
+    "TIME_TRAVEL_SAVED_EQUIPS": "03481E9C",
+    "TRIFORCE_HUNT_ENABLED": "03480DB4",
+    "TRIFORCE_ICON_TEXTURE": "0349A200",
+>>>>>>> Rebase to dev
     "TRIFORCE_PIECES_REQUIRED": "03480DB6",
-    "TWINROVA_ACTION_TIMER": "03483838",
->>>>>>> Loach
+    "TWINROVA_ACTION_TIMER": "03483878",
     "VERSION_STRING_TXT": "034808D4",
     "WINDMILL_SONG_ID": "03480D5E",
     "WINDMILL_TEXT_ID": "03480D5F",
     "WORLD_STRING_TXT": "034808F8",
+<<<<<<< Dev
 <<<<<<< Dev
     "a_button": "03494F88",
     "a_note_b": "03494F74",
@@ -422,6 +504,8 @@
     "texture_table": "03494DD8",
     "triforce_sprite": "034925B8"
 =======
+=======
+>>>>>>> Rebase to dev
 <<<<<<< Dev
     "a_button": "03494F20",
     "a_note_b": "03494F0C",
@@ -697,5 +781,100 @@
     "triforce_sprite": "03492020"
 >>>>>>> Loach
 >>>>>>> Loach
+<<<<<<< Dev
 >>>>>>> Loach
+=======
+=======
+    "a_button": "03494EF8",
+    "a_note_b": "03494EE4",
+    "a_note_font_glow_base": "03494ECC",
+    "a_note_font_glow_max": "03494EC8",
+    "a_note_g": "03494EE8",
+    "a_note_glow_base": "03494ED4",
+    "a_note_glow_max": "03494ED0",
+    "a_note_r": "03494EEC",
+    "active_item_action_id": "03494F64",
+    "active_item_fast_chest": "03494F54",
+    "active_item_graphic_id": "03494F58",
+    "active_item_object_id": "03494F5C",
+    "active_item_row": "03494F68",
+    "active_item_text_id": "03494F60",
+    "active_override": "03494F70",
+    "active_override_is_outgoing": "03494F6C",
+    "adultSkeleton": "03494C4C",
+    "adult_safe": "03494F8E",
+    "alt_overrides": "03495020",
+    "b_button": "03494EF4",
+    "beating_dd": "03494F00",
+    "beating_no_dd": "03494F08",
+    "c_button": "03494EF0",
+    "c_note_b": "03494ED8",
+    "c_note_font_glow_base": "03494EBC",
+    "c_note_font_glow_max": "03494EB8",
+    "c_note_g": "03494EDC",
+    "c_note_glow_base": "03494EC4",
+    "c_note_glow_max": "03494EC0",
+    "c_note_r": "03494EE0",
+    "cfg_item_overrides": "03495478",
+    "childSkeleton": "03494B50",
+    "child_safe": "03494F8D",
+    "collectible_mutex": "03494F48",
+    "collectible_override": "03494F40",
+    "collectible_override_flags": "03494F4C",
+    "collectible_scene_flags_table": "03495220",
+    "curr_scene_setup": "03494F98",
+    "defaultDDHeart": "03494F0C",
+    "defaultHeart": "03494F14",
+    "dpad_sprite": "03492538",
+    "drop_collectible_override_flag": "03494F78",
+    "dummy_actor": "03494F7C",
+    "dungeon_count": "03494E88",
+    "dungeons": "03492380",
+    "empty_dlist": "03494EA0",
+    "extern_ctxt": "0349242C",
+    "font_sprite": "03492548",
+    "freecam_modes": "03491FD4",
+    "hash_sprites": "03494E94",
+    "hash_symbols": "03492440",
+    "heap_next": "03494FAC",
+    "heart_sprite": "034924D8",
+    "icon_sprites": "03492198",
+    "illegal_model": "03494F90",
+    "item_digit_sprite": "034924F8",
+    "item_draw_table": "034925C0",
+    "item_overrides_count": "03494F80",
+    "item_table": "03493770",
+    "items": "034924C0",
+    "items_sprite": "03492568",
+    "key_counts": "03493754",
+    "key_rupee_clock_sprite": "03492508",
+    "last_fog_distance": "03494E8C",
+    "linkhead_skull_sprite": "034924E8",
+    "medals": "03492368",
+    "medals_sprite": "03492578",
+    "missing_dlist": "03494F8C",
+    "normal_dd": "03494EFC",
+    "normal_no_dd": "03494F04",
+    "num_override_flags": "03494F50",
+    "num_to_bits": "03492480",
+    "object_slots": "03498478",
+    "outgoing_queue": "03494FE0",
+    "quest_items_sprite": "03492558",
+    "reward_rows": "0349235C",
+    "rupee_colors": "034921BC",
+    "satisified_pending_frames": "03494F52",
+    "scene_fog_distance": "03494E90",
+    "setup_db": "03492598",
+    "song_note_sprite": "03492518",
+    "stones_sprite": "03492588",
+    "text_cursor_border_base": "03494EAC",
+    "text_cursor_border_max": "03494EA8",
+    "text_cursor_inner_base": "03494EB4",
+    "text_cursor_inner_max": "03494EB0",
+    "text_height": "03494F1C",
+    "text_width": "03494F20",
+    "texture_table": "03494D48",
+    "triforce_sprite": "03492528"
+>>>>>>> Rebase to dev
+>>>>>>> Rebase to dev
 }
