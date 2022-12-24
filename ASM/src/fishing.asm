@@ -56,7 +56,6 @@ give_loach_reward:
     addiu   at, at, 0xA5D0
     lw      v1, 0x0EC0(at)  ; HIGH_SCORE(HS_FISHING)
     andi    t4, v1, 0x8000
-    ;sltiu   t9, t4, 0x8000
     sltiu   t9, t4, 1
     addiu   t9, t9, 0x55    ; set item id for loach reward
     
@@ -67,10 +66,11 @@ give_loach_reward:
     mtc1    zero, f18       ; replaced code
 
 increment_sSinkingLureLocation:
-    lbu     t2, SHUFFLE_LOACH      
-    beq     t2, zero, @@return
+    lbu     t2, 0x5E27(t2)      ; loads unused byte in fishing overlay
+    beq     t2, zero, @@return  ; loach setting uses this as a flag to indicate setting is enabled
     nop
 
+    addiu   v1, v1, 1
     addiu   t2, zero, 0x0004
     sltu    t2, t2, v1      ; if sSinkingLureLocation > 4
     sll     t2, t2, 1       ; set sSinkingLureLocation = 1
@@ -83,19 +83,20 @@ increment_sSinkingLureLocation:
     jr      ra
     sll     t2, t2, 1  ; replaced code
 
-make_loach_not_suck:
+make_loach_follow_lure:
     addiu   sp, sp, 0xFFEC
     sw      ra, 0x0010 (sp)
 
-    lui     t1, 0x801F
-    lbu     t1, 0x5E26(t1) ; D_80B7E0B6
+    lui     t1, 0x801F      ; load value of D_80B7E0B6
+    lbu     t1, 0x5E26(t1)  ; which has a value of 2 if sinking lure is equipped
     addiu   at, zero, 0x0002
-    bne     t1, at, @@return
-    addiu   at, zero, 0xFFFE
+    bne     t1, at, @@return    ; if not using sinking lure
+    addiu   at, zero, 0xFFFE    ; unset ACTOR_FLAG_0
 
-    lbu     t1, SHUFFLE_LOACH   
+    lui     t1, 0x801F          ; loads unused byte in fishing overlay
+    lbu     t1, 0x5E27(t1)      ; loach setting uses this as a flag to indicate setting is enabled
     beq     t1, zero, @@return
-    addiu   at, zero, 0xFFFE
+    addiu   at, zero, 0xFFFE    ; unset ACTOR_FLAG_0
 
     or      a0, s0, zero 
     lui     t1, 0x801e
@@ -103,7 +104,7 @@ make_loach_not_suck:
     jalr    t1              ; func_80B70ED4
     addiu   a1, s1, 0x0014
 
-    addiu   at, zero, 0xFFFF
+    addiu   at, zero, 0xFFFF    ; preserve current actor flags
 @@return:
     lw      t1, 0x0004(s0)
     and     t1, t1, at

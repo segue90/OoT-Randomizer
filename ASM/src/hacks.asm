@@ -3194,28 +3194,31 @@ skip_GS_BGS_text:
 .orga 0xDCC138
     jal     give_loach_reward
 
-; update sinking lure location
+; update sinking lure location so that it is available in any of the four positions
+; replaces
+; subu t2, v1, 2
+; sll t2, t2, 1
 .orga 0xDCC7E4
     jal     increment_sSinkingLureLocation
-    addiu   v1, v1, 1
-; replace
-;subu t2, v1, 2
-;sll t2, t2, 1
+    lui     t2, 0x801F
 
-.orga 0xdc689c
-    jal     make_loach_not_suck
-    nop
-; replace
-; addiu   $at, $zero, 0xFFFE         # $at = FFFFFFFE
+; Modify loach behavior to pay attention to the sinking lure
+; First call handles when loach is sitting on the bottom of the pond
+; replaces
+; addiu   $at, $zero, 0xFFFE
 ; and     t1, t8, at
-
-.orga 0xDC6AF0
-    jal     make_loach_not_suck
+.orga 0xdc689c
+    jal     make_loach_follow_lure
     nop
-    .skip 4
-    sw      t1, 0x0004(s0)
-; replace
+
+; Second call handles when loach periodically surfaces
+; replaces
 ; addiu     at, zero, 0xFFFE
 ; and       t7, t9, at
 ; <skip>
 ; sw        t7, 0x0004(s0)
+.orga 0xDC6AF0
+    jal     make_loach_follow_lure
+    nop
+    .skip 4
+    sw      t1, 0x0004(s0)
