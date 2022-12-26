@@ -2,6 +2,7 @@
     "ADULT_INIT_ITEMS": "03482178",
     "ADULT_VALID_ITEMS": "03482180",
 <<<<<<< Dev
+<<<<<<< Dev
     "APPLY_BONK_DAMAGE": "0348334C",
     "AUDIO_THREAD_INFO": "03483700",
     "AUDIO_THREAD_INFO_MEM_SIZE": "0348371C",
@@ -22,15 +23,22 @@
     "AUDIO_THREAD_INFO_MEM_START": "034837D0",
     "AUDIO_THREAD_MEM_START": "0349FA00",
 >>>>>>> Rebase to dev
+=======
+    "APPLY_BONK_DAMAGE": "034833F4",
+    "AUDIO_THREAD_INFO": "034837A4",
+    "AUDIO_THREAD_INFO_MEM_SIZE": "034837C4",
+    "AUDIO_THREAD_INFO_MEM_START": "034837C0",
+    "AUDIO_THREAD_MEM_START": "0349F9F0",
+>>>>>>> Fixed VC crash and removed static address references
     "AUTO_TRACKER_CONTEXT": "03480D6C",
     "AUTO_TRACKER_VERSION": "03480D6C",
     "BOMBCHUS_IN_LOGIC": "03480D4C",
-    "BONK_LAST_FRAME": "03483350",
+    "BONK_LAST_FRAME": "03483340",
     "CFG_A_BUTTON_COLOR": "0348084C",
     "CFG_A_NOTE_COLOR": "0348086A",
     "CFG_BOMBCHU_TRAIL_INNER_COLOR": "0348087C",
     "CFG_BOMBCHU_TRAIL_OUTER_COLOR": "0348087F",
-    "CFG_BONK_DAMAGE": "03483348",
+    "CFG_BONK_DAMAGE": "03483338",
     "CFG_BOOM_TRAIL_INNER_COLOR": "03480876",
     "CFG_BOOM_TRAIL_OUTER_COLOR": "03480879",
     "CFG_B_BUTTON_COLOR": "03480852",
@@ -38,8 +46,8 @@
     "CFG_CUSTOM_MESSAGE_2": "034808B3",
     "CFG_C_BUTTON_COLOR": "03480858",
     "CFG_C_NOTE_COLOR": "03480870",
-    "CFG_DAMAGE_MULTIPLYER": "034832D8",
-    "CFG_DEADLY_BONKS": "03483344",
+    "CFG_DAMAGE_MULTIPLYER": "034832C8",
+    "CFG_DEADLY_BONKS": "03483334",
     "CFG_DISPLAY_DPAD": "03480882",
     "CFG_DPAD_DUNGEON_INFO_ENABLE": "03480891",
     "CFG_DUNGEON_INFO_ENABLE": "03480D70",
@@ -72,6 +80,7 @@
     "CFG_SHOP_CURSOR_COLOR": "03480864",
     "CFG_SHOW_SETTING_INFO": "03480892",
     "CFG_TEXT_CURSOR_COLOR": "0348085E",
+<<<<<<< Dev
 <<<<<<< Dev
 <<<<<<< refs/remotes/origin/Dev
     "CHAIN_HBA_REWARDS": "03484090",
@@ -118,11 +127,25 @@
     "CHEST_TEXTURE_MATCH_CONTENTS": "03494F34",
     "COMPLETE_MASK_QUEST": "03494F84",
 >>>>>>> Rebase to dev
+<<<<<<< Dev
 >>>>>>> Rebase to dev
+=======
+=======
+    "CHAIN_HBA_REWARDS": "03484138",
+    "CHECK_FOR_BONK_CANCEL": "034833A4",
+    "CHECK_ROOM_MESH_TYPE": "034834C4",
+    "CHEST_LENS_ONLY": "03482BF4",
+    "CHEST_SIZE_MATCH_CONTENTS": "03494F20",
+    "CHEST_SIZE_TEXTURE": "03494F1C",
+    "CHEST_TEXTURE_MATCH_CONTENTS": "03494F24",
+    "COMPLETE_MASK_QUEST": "03494F74",
+>>>>>>> Fixed VC crash and removed static address references
+>>>>>>> Fixed VC crash and removed static address references
     "COOP_CONTEXT": "03480020",
     "COOP_VERSION": "03480020",
     "COSMETIC_CONTEXT": "0348083C",
     "COSMETIC_FORMAT_VERSION": "0348083C",
+<<<<<<< Dev
 <<<<<<< Dev
 <<<<<<< Dev
     "CURRENT_GROTTO_ID": "034835C2",
@@ -144,16 +167,29 @@
     "DISABLE_TIMERS": "03480D61",
     "DPAD_TEXTURE": "03499A00",
 >>>>>>> Rebase to dev
+<<<<<<< Dev
 >>>>>>> Rebase to dev
+=======
+=======
+    "CURRENT_GROTTO_ID": "03483666",
+    "CURR_ACTOR_SPAWN_INDEX": "03484534",
+    "DEBUG_OFFSET": "03482EB8",
+    "DISABLE_TIMERS": "03480D61",
+    "DPAD_TEXTURE": "034999F0",
+>>>>>>> Fixed VC crash and removed static address references
+>>>>>>> Fixed VC crash and removed static address references
     "DUNGEONS_SHUFFLED": "03480D62",
     "EXTENDED_OBJECT_TABLE": "03480D2C",
-    "EXTERN_DAMAGE_MULTIPLYER": "034832D9",
+    "EXTERN_DAMAGE_MULTIPLYER": "034832C9",
     "FAST_BUNNY_HOOD_ENABLED": "03480D64",
     "FAST_CHESTS": "03480D5B",
     "FIX_BROKEN_DROPS": "03480D65",
 <<<<<<< Dev
+<<<<<<< Dev
     "FONT_TEXTURE": "034985C8",
 =======
+=======
+>>>>>>> Fixed VC crash and removed static address references
 <<<<<<< Dev
     "FONT_TEXTURE": "03498560",
 >>>>>>> Rebase to dev
@@ -190,22 +226,31 @@
     "GILDED_CHEST_FRONT_TEXTURE": "0349ABE0",
 =======
     "FONT_TEXTURE": "03498538",
+=======
+    "FONT_TEXTURE": "03498528",
+>>>>>>> Fixed VC crash and removed static address references
     "FREE_SCARECROW_ENABLED": "03480D54",
-    "GANON_BOSS_KEY_CONDITION": "03494F3C",
-    "GANON_BOSS_KEY_CONDITION_COUNT": "03494F3A",
-    "GET_CHEST_OVERRIDE_WRAPPER": "03482C08",
+    "GANON_BOSS_KEY_CONDITION": "03494F2C",
+    "GANON_BOSS_KEY_CONDITION_COUNT": "03494F2A",
+    "GET_CHEST_OVERRIDE_WRAPPER": "03482BF8",
     "GET_ITEM_TRIGGERED": "03481840",
+<<<<<<< Dev
     "GILDED_CHEST_BASE_TEXTURE": "0349C200",
     "GILDED_CHEST_FRONT_TEXTURE": "0349B200",
 >>>>>>> Rebase to dev
+=======
+    "GILDED_CHEST_BASE_TEXTURE": "0349C1F0",
+    "GILDED_CHEST_FRONT_TEXTURE": "0349B1F0",
+>>>>>>> Fixed VC crash and removed static address references
     "GOSSIP_HINT_CONDITION": "03480D50",
-    "GROTTO_EXIT_LIST": "03483634",
-    "GROTTO_LOAD_TABLE": "034835B0",
-    "HIDE_CHEST_WITH_INVERTED_LENS": "03482C50",
+    "GROTTO_EXIT_LIST": "03483624",
+    "GROTTO_LOAD_TABLE": "034835A0",
+    "HIDE_CHEST_WITH_INVERTED_LENS": "03482C40",
     "INCOMING_ITEM": "03480028",
     "INCOMING_PLAYER": "03480026",
     "INITIAL_SAVE_DATA": "0348092C",
     "JABU_ELEVATOR_ENABLE": "03480D58",
+<<<<<<< Dev
 <<<<<<< Dev
 <<<<<<< Dev
     "KAKARIKO_WEATHER_FORECAST": "03495040",
@@ -213,6 +258,8 @@
 =======
 =======
 >>>>>>> Rebase to dev
+=======
+>>>>>>> Fixed VC crash and removed static address references
 <<<<<<< Dev
     "KAKARIKO_WEATHER_FORECAST": "03494FD8",
     "KEYRING_BOSSKEY_CONDITION": "03494FAE",
@@ -226,13 +273,20 @@
     "KAKARIKO_WEATHER_FORECAST": "03494FB0",
     "KING_DODONGO_BONKS": "034834A0",
 >>>>>>> Rebase to dev
+=======
+    "KAKARIKO_WEATHER_FORECAST": "03494FA0",
+    "KING_DODONGO_BONKS": "03483490",
+>>>>>>> Fixed VC crash and removed static address references
     "LACS_CONDITION": "03480DAC",
     "LACS_CONDITION_COUNT": "03480DB2",
-    "MALON_GAVE_ICETRAP": "03483E84",
+    "MALON_GAVE_ICETRAP": "03483E74",
     "MALON_TEXT_ID": "03480D60",
+<<<<<<< Dev
 <<<<<<< Dev
     "MAX_RUPEES": "03495017",
 =======
+=======
+>>>>>>> Fixed VC crash and removed static address references
 <<<<<<< Dev
     "MAX_RUPEES": "03494FAF",
 >>>>>>> Rebase to dev
@@ -270,13 +324,24 @@
 =======
     "MAX_RUPEES": "03494F86",
     "MOVED_ADULT_KING_ZORA": "034837F4",
+=======
+    "MAX_RUPEES": "03494F76",
+    "MOVED_ADULT_KING_ZORA": "034837E4",
+>>>>>>> Fixed VC crash and removed static address references
     "MW_SEND_OWN_ITEMS": "0348002A",
     "NO_COLLECTIBLE_HEARTS": "03480D5A",
-    "NO_ESCAPE_SEQUENCE": "03494F39",
+    "NO_ESCAPE_SEQUENCE": "03494F29",
     "OCARINAS_SHUFFLED": "03480D59",
+<<<<<<< Dev
     "OPEN_KAKARIKO": "03494F85",
 >>>>>>> Rebase to dev
+<<<<<<< Dev
 >>>>>>> Rebase to dev
+=======
+=======
+    "OPEN_KAKARIKO": "03494F75",
+>>>>>>> Fixed VC crash and removed static address references
+>>>>>>> Fixed VC crash and removed static address references
     "OUTGOING_ITEM": "03480030",
     "OUTGOING_KEY": "0348002C",
     "OUTGOING_PLAYER": "03480032",
@@ -292,10 +357,13 @@
     "RAINBOW_BRIDGE_COUNT": "03480DB0",
 <<<<<<< Dev
 <<<<<<< Dev
+<<<<<<< Dev
     "RANDOMIZER_RNG_SEED": "03495024",
 =======
 =======
 >>>>>>> Rebase to dev
+=======
+>>>>>>> Fixed VC crash and removed static address references
 <<<<<<< Dev
     "RANDOMIZER_RNG_SEED": "03494FBC",
 =======
@@ -332,13 +400,17 @@
 =======
     "RANDOMIZER_RNG_SEED": "03494F94",
 >>>>>>> Rebase to dev
+=======
+    "RANDOMIZER_RNG_SEED": "03494F84",
+>>>>>>> Fixed VC crash and removed static address references
     "RANDO_CONTEXT": "03480000",
-    "RNG_SEED_INT": "03494F24",
-    "SET_BONK_FLAG": "03483388",
-    "SHOW_CHEST_WITH_INVERTED_LENS": "03482CC8",
-    "SHUFFLE_BEANS": "0348350C",
-    "SHUFFLE_CARPET_SALESMAN": "03484200",
+    "RNG_SEED_INT": "03494F14",
+    "SET_BONK_FLAG": "03483378",
+    "SHOW_CHEST_WITH_INVERTED_LENS": "03482CB8",
+    "SHUFFLE_BEANS": "034834FC",
+    "SHUFFLE_CARPET_SALESMAN": "034841F0",
     "SHUFFLE_COWS": "03480D5C",
+<<<<<<< Dev
 <<<<<<< Dev
     "SHUFFLE_MEDIGORON": "0348421C",
     "SILVER_CHEST_BASE_TEXTURE": "0349D3E0",
@@ -357,12 +429,23 @@
     "SKULL_CHEST_BASE_TEXTURE": "0349F200",
     "SKULL_CHEST_FRONT_TEXTURE": "0349E200",
 >>>>>>> Rebase to dev
+<<<<<<< Dev
 >>>>>>> Rebase to dev
+=======
+=======
+    "SHUFFLE_MEDIGORON": "0348424C",
+    "SILVER_CHEST_BASE_TEXTURE": "0349D9F0",
+    "SILVER_CHEST_FRONT_TEXTURE": "0349C9F0",
+    "SKULL_CHEST_BASE_TEXTURE": "0349F1F0",
+    "SKULL_CHEST_FRONT_TEXTURE": "0349E1F0",
+>>>>>>> Fixed VC crash and removed static address references
+>>>>>>> Fixed VC crash and removed static address references
     "SONGS_AS_ITEMS": "03480D5D",
     "SOS_ITEM_GIVEN": "0348190C",
     "SPECIAL_DEAL_COUNTS": "03480DB8",
-    "SPEED_MULTIPLIER": "03482D88",
+    "SPEED_MULTIPLIER": "03482D78",
     "SPOILER_AVAILABLE": "03480D66",
+<<<<<<< Dev
 <<<<<<< Dev
     "START_TWINROVA_FIGHT": "034837BC",
 <<<<<<< Dev
@@ -405,12 +488,21 @@
     "TRIFORCE_HUNT_ENABLED": "03480DB4",
     "TRIFORCE_ICON_TEXTURE": "0349A200",
 >>>>>>> Rebase to dev
+=======
+    "START_TWINROVA_FIGHT": "03483864",
+    "Sram_InitNewSave": "03494F18",
+    "TIME_STRING_TXT": "03480908",
+    "TIME_TRAVEL_SAVED_EQUIPS": "03481E9C",
+    "TRIFORCE_HUNT_ENABLED": "03480DB4",
+    "TRIFORCE_ICON_TEXTURE": "0349A1F0",
+>>>>>>> Fixed VC crash and removed static address references
     "TRIFORCE_PIECES_REQUIRED": "03480DB6",
-    "TWINROVA_ACTION_TIMER": "03483878",
+    "TWINROVA_ACTION_TIMER": "03483868",
     "VERSION_STRING_TXT": "034808D4",
     "WINDMILL_SONG_ID": "03480D5E",
     "WINDMILL_TEXT_ID": "03480D5F",
     "WORLD_STRING_TXT": "034808F8",
+<<<<<<< Dev
 <<<<<<< Dev
 <<<<<<< Dev
     "a_button": "03494F88",
@@ -506,6 +598,8 @@
 =======
 =======
 >>>>>>> Rebase to dev
+=======
+>>>>>>> Fixed VC crash and removed static address references
 <<<<<<< Dev
     "a_button": "03494F20",
     "a_note_b": "03494F0C",
@@ -876,5 +970,100 @@
     "texture_table": "03494D48",
     "triforce_sprite": "03492528"
 >>>>>>> Rebase to dev
+<<<<<<< Dev
 >>>>>>> Rebase to dev
+=======
+=======
+    "a_button": "03494EE8",
+    "a_note_b": "03494ED4",
+    "a_note_font_glow_base": "03494EBC",
+    "a_note_font_glow_max": "03494EB8",
+    "a_note_g": "03494ED8",
+    "a_note_glow_base": "03494EC4",
+    "a_note_glow_max": "03494EC0",
+    "a_note_r": "03494EDC",
+    "active_item_action_id": "03494F54",
+    "active_item_fast_chest": "03494F44",
+    "active_item_graphic_id": "03494F48",
+    "active_item_object_id": "03494F4C",
+    "active_item_row": "03494F58",
+    "active_item_text_id": "03494F50",
+    "active_override": "03494F60",
+    "active_override_is_outgoing": "03494F5C",
+    "adultSkeleton": "03494C3C",
+    "adult_safe": "03494F7E",
+    "alt_overrides": "03495010",
+    "b_button": "03494EE4",
+    "beating_dd": "03494EF0",
+    "beating_no_dd": "03494EF8",
+    "c_button": "03494EE0",
+    "c_note_b": "03494EC8",
+    "c_note_font_glow_base": "03494EAC",
+    "c_note_font_glow_max": "03494EA8",
+    "c_note_g": "03494ECC",
+    "c_note_glow_base": "03494EB4",
+    "c_note_glow_max": "03494EB0",
+    "c_note_r": "03494ED0",
+    "cfg_item_overrides": "03495468",
+    "childSkeleton": "03494B40",
+    "child_safe": "03494F7D",
+    "collectible_mutex": "03494F38",
+    "collectible_override": "03494F30",
+    "collectible_override_flags": "03494F3C",
+    "collectible_scene_flags_table": "03495210",
+    "curr_scene_setup": "03494F88",
+    "defaultDDHeart": "03494EFC",
+    "defaultHeart": "03494F04",
+    "dpad_sprite": "03492528",
+    "drop_collectible_override_flag": "03494F68",
+    "dummy_actor": "03494F6C",
+    "dungeon_count": "03494E78",
+    "dungeons": "03492370",
+    "empty_dlist": "03494E90",
+    "extern_ctxt": "0349241C",
+    "font_sprite": "03492538",
+    "freecam_modes": "03491FC4",
+    "hash_sprites": "03494E84",
+    "hash_symbols": "03492430",
+    "heap_next": "03494F9C",
+    "heart_sprite": "034924C8",
+    "icon_sprites": "03492188",
+    "illegal_model": "03494F80",
+    "item_digit_sprite": "034924E8",
+    "item_draw_table": "034925B0",
+    "item_overrides_count": "03494F70",
+    "item_table": "03493760",
+    "items": "034924B0",
+    "items_sprite": "03492558",
+    "key_counts": "03493744",
+    "key_rupee_clock_sprite": "034924F8",
+    "last_fog_distance": "03494E7C",
+    "linkhead_skull_sprite": "034924D8",
+    "medals": "03492358",
+    "medals_sprite": "03492568",
+    "missing_dlist": "03494F7C",
+    "normal_dd": "03494EEC",
+    "normal_no_dd": "03494EF4",
+    "num_override_flags": "03494F40",
+    "num_to_bits": "03492470",
+    "object_slots": "03498468",
+    "outgoing_queue": "03494FD0",
+    "quest_items_sprite": "03492548",
+    "reward_rows": "0349234C",
+    "rupee_colors": "034921AC",
+    "satisified_pending_frames": "03494F42",
+    "scene_fog_distance": "03494E80",
+    "setup_db": "03492588",
+    "song_note_sprite": "03492508",
+    "stones_sprite": "03492578",
+    "text_cursor_border_base": "03494E9C",
+    "text_cursor_border_max": "03494E98",
+    "text_cursor_inner_base": "03494EA4",
+    "text_cursor_inner_max": "03494EA0",
+    "text_height": "03494F0C",
+    "text_width": "03494F10",
+    "texture_table": "03494D38",
+    "triforce_sprite": "03492518"
+>>>>>>> Fixed VC crash and removed static address references
+>>>>>>> Fixed VC crash and removed static address references
 }

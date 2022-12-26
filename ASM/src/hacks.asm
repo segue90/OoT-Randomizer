@@ -3200,7 +3200,7 @@ skip_GS_BGS_text:
 ; sll t2, t2, 1
 .orga 0xDCC7E4
     jal     increment_sSinkingLureLocation
-    lui     t2, 0x801F
+    lbu     t2, 0x34DB(a0)
 
 ; Modify loach behavior to pay attention to the sinking lure
 ; First call handles when loach is sitting on the bottom of the pond
@@ -3209,7 +3209,7 @@ skip_GS_BGS_text:
 ; and     t1, t8, at
 .orga 0xdc689c
     jal     make_loach_follow_lure
-    nop
+    lw      t8, 0x0134(s0)
 
 ; Second call handles when loach periodically surfaces
 ; replaces
@@ -3219,6 +3219,6 @@ skip_GS_BGS_text:
 ; sw        t7, 0x0004(s0)
 .orga 0xDC6AF0
     jal     make_loach_follow_lure
-    nop
-    .skip 4
+    lw      t8, 0x0134(s0)
+.skip 4
     sw      t1, 0x0004(s0)

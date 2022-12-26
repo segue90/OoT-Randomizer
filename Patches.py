@@ -2316,7 +2316,9 @@ def patch_rom(spoiler:Spoiler, world:World, rom:Rom):
         rom.write_int32(0xDC2F00, 0x00000000)
         rom.write_int32(0xDC2F10, 0x00000000)
         # Don't set sinking lure position after recieving child/adult fishing prizes
+        rom.write_int32(0xDCC064, 0x00000000)
         rom.write_int32(0xDCC06C, 0x00000000)
+        rom.write_int32(0xDCC12C, 0x00000000)
         rom.write_int32(0xDCC134, 0x00000000)
 
         # Give the child/adult fishing prizes even if using the sinking lure
