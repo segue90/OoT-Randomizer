@@ -798,10 +798,9 @@ class WorldDistribution(object):
             world.push_item(boss, reward, True)
         return count
 
-    def fill(self, window, worlds, location_pools, item_pools):
+    def fill(self, worlds, location_pools, item_pools):
         """Fills the world with restrictions defined in a plandomizer JSON distribution file.
 
-        :param window:
         :param worlds: A list of the world objects that define the rules of each game world.
         :param location_pools: A list containing all of the location pools.
             0: Shop Locations
@@ -895,8 +894,6 @@ class WorldDistribution(object):
                 search = Search.max_explore([world.state for world in worlds], itertools.chain.from_iterable(item_pools))
                 if not search.can_beat_game(False):
                     raise FillError('%s in world %d is not reachable without %s in world %d!' % (location.name, self.id + 1, item.name, player_id + 1))
-            window.fillcount += 1
-            window.update_progress(5 + ((window.fillcount / window.locationcount) * 30))
 
     def get_item(self, ignore_pools, item_pools, location, player_id, record, worlds):
         """Get or create the item specified by the record and replace something in the item pool with it
@@ -1172,13 +1169,13 @@ class Distribution(object):
                 print('Cannot place item at excluded location because it already has an item defined in the Distribution.')
 
 
-    def fill(self, window, worlds, location_pools, item_pools):
+    def fill(self, worlds, location_pools, item_pools):
         search = Search.max_explore([world.state for world in worlds], itertools.chain.from_iterable(item_pools))
         if not search.can_beat_game(False):
             raise FillError('Item pool does not contain items required to beat game!')
 
         for world_dist in self.world_dists:
-            world_dist.fill(window, worlds, location_pools, item_pools)
+            world_dist.fill(worlds, location_pools, item_pools)
 
 
     def cloak(self, worlds, location_pools, model_pools):

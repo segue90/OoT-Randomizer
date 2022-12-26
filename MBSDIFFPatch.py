@@ -11,7 +11,7 @@ from ntype import BigStream
 
 
 # Handle 3.0 website patches.
-def apply_ootr_3_web_patch(settings, rom: Rom, window):
+def apply_ootr_3_web_patch(settings, rom: Rom):
     logger = logging.getLogger('')
     minibsdiff_path = "./" if is_bundled() else "bin/minibsdiff/"
     minibsdiff_python = False
@@ -56,7 +56,7 @@ def apply_ootr_3_web_patch(settings, rom: Rom, window):
 
         # Patch the base ROM.
         decompressed_patched_rom_file = output_path + "_patched.z64"
-        run_process(window, logger, [minibsdiff_path, "app", local_path('ZOOTDEC.z64'), decompressed_patch_file, decompressed_patched_rom_file])
+        run_process(logger, [minibsdiff_path, "app", local_path('ZOOTDEC.z64'), decompressed_patch_file, decompressed_patched_rom_file])
         os.remove(decompressed_patch_file)
 
         # Read the ROM back in and check for changes.

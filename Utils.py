@@ -201,7 +201,7 @@ def subprocess_args(include_stdout=True):
     return ret
 
 
-def run_process(window, logger, args, stdin=None):
+def run_process(logger, args, stdin=None):
     process = subprocess.Popen(args, bufsize=1, stdout=subprocess.PIPE, stdin=subprocess.PIPE)
     filecount = None
     if stdin is not None:
@@ -215,7 +215,6 @@ def run_process(window, logger, args, stdin=None):
                     files = int(line[:find_index].strip())
                     if filecount is None:
                         filecount = files
-                    window.update_progress(65 + 30*(1 - files/filecount))
                 logger.info(line.decode('utf-8').strip('\n'))
             else:
                 break
