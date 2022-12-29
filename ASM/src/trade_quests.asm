@@ -437,7 +437,7 @@ set_bunny_hood_traded_flag:
     jal     SaveFile_SetTradeItemAsTraded
     ori     a0, $zero, 0x0027
     
-    ; displaced code
+    ; displaced rando code, always fill wallet on turn in
     li      a0, 999
 
     lw      v0, 0x10(sp)
@@ -481,13 +481,13 @@ check_zelda_cutscene_watched:
     sw      ra, 0x1C(sp)
 
     jal     SaveFile_TradeItemIsTraded
-    ori     a0, $zero, 0x0023           ; ITEM_LETTER_ZELDA
+    ori     a0, $zero, 0x0022           ; ITEM_CHICKEN
     bnez    v0, @@skip_letter
     nop
 
 @@give_letter:
     jal     SaveFile_SetTradeItemAsTraded
-    ori     a0, $zero, 0x0023           ; ITEM_LETTER_ZELDA
+    ori     a0, $zero, 0x0022           ; ITEM_CHICKEN
 
     ; displaced code
     or      a1, s1, $zero
