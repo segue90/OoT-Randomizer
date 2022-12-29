@@ -159,7 +159,7 @@ uint32_t SaveFile_MaskIsPaid(uint8_t itemId) {
 }
 
 uint8_t SaveFile_NextOwnedTradeItem(uint8_t itemId) {
-    if (IsTradeItem(itemId)) { 
+    if (IsTradeItem(itemId)) {
         uint8_t minItem = GetTradeItemMin(itemId);
         uint8_t maxItem = GetTradeItemMax(itemId);
         uint8_t potentialItem = (itemId + 1) > maxItem ? minItem : itemId + 1;
@@ -230,7 +230,7 @@ z64_actor_t* IsTradeItemTraded(int8_t itemActionParam, z64_actor_t *targetActor)
                 return NULL;
             }
         }
-    } 
+    }
     return targetActor;
 }
 
@@ -289,12 +289,12 @@ int32_t SetBiggoronAnimationState() {
 int32_t ShouldSkullKidSpawn() {
     if (SaveFile_TradeItemIsOwned(Z64_ITEM_COJIRO)) {
         if (!SaveFile_TradeItemIsTraded(Z64_ITEM_COJIRO)) {
-            return Z64_ITEM_POCKET_EGG; 
+            return Z64_ITEM_POCKET_EGG;
         }
     }
     if (SaveFile_TradeItemIsOwned(Z64_ITEM_ODD_POTION)) {
         if (!SaveFile_TradeItemIsTraded(Z64_ITEM_ODD_POTION)) {
-            return Z64_ITEM_POCKET_EGG; 
+            return Z64_ITEM_POCKET_EGG;
         }
     }
     return Z64_ITEM_CLAIM_CHECK;
@@ -384,7 +384,7 @@ void TryPaybackMaskOverride(EnOssan* maskShop, z64_game_t* play) {
             SET_EVENTCHKINF(EVENTCHKINF_8F);
             SaveFile_SetMaskAsPaid(Z64_ITEM_BUNNY_HOOD);
         }
-        
+
         uint16_t paid = (z64_file.scene_flags[0x61].unk_00_ >> 0x07) & 0xF;
         uint16_t traded = (z64_file.scene_flags[0x61].unk_00_ >> 0x03) & 0xF;
 

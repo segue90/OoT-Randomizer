@@ -1763,7 +1763,7 @@ def patch_rom(spoiler:Spoiler, world:World, rom:Rom):
 
     # build misc. location hints
     buildMiscLocationHints(world, messages)
-    
+
     if 'mask_shop' in world.settings.misc_hints:
         rom.write_int32(rom.sym('CFG_MASK_SHOP_HINT'), 1)
 

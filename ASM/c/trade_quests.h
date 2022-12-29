@@ -28,7 +28,7 @@ typedef struct {
 
 extern const exchange_item_t trade_quest_items[22];
 
-typedef struct 
+typedef struct
 {
     z64_actor_t  actor;                     /* 0x0000 */
     char         unk_00_[0x009F];           /* 0x013C */

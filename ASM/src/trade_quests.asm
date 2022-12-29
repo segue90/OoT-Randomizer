@@ -276,7 +276,7 @@ update_shiftable_trade_item_egg_hook:
 ;==================================================================================================
 
 check_if_mask_sells_out:
-    
+
     ; displaced code
     lui     t0, 0x8012
     addiu   t0, t0, 0xA5D0
@@ -374,10 +374,10 @@ set_keaton_mask_traded_flag:
     sw      v1, 0x14(sp)
     sw      a0, 0x18(sp)
     sw      ra, 0x1C(sp)
-    
+
     jal     SaveFile_SetTradeItemAsTraded
     ori     a0, $zero, 0x0024
-    
+
     ; displaced code
     lbu     t1, 0x02FA(s0)
 
@@ -395,10 +395,10 @@ set_skull_mask_traded_flag:
     sw      v1, 0x14(sp)
     sw      a0, 0x18(sp)
     sw      ra, 0x1C(sp)
-    
+
     jal     SaveFile_SetTradeItemAsTraded
     ori     a0, $zero, 0x0025
-    
+
     lw      v0, 0x10(sp)
     lw      v1, 0x14(sp)
     lw      a0, 0x18(sp)
@@ -413,10 +413,10 @@ set_spooky_mask_traded_flag:
     sw      v1, 0x14(sp)
     sw      a0, 0x18(sp)
     sw      ra, 0x1C(sp)
-    
+
     jal     SaveFile_SetTradeItemAsTraded
     ori     a0, $zero, 0x0026
-    
+
     ; displaced code
     addiu   a0, $zero, 0x001E
 
@@ -433,10 +433,10 @@ set_bunny_hood_traded_flag:
     sw      v1, 0x14(sp)
     sw      a0, 0x18(sp)
     sw      ra, 0x1C(sp)
-    
+
     jal     SaveFile_SetTradeItemAsTraded
     ori     a0, $zero, 0x0027
-    
+
     ; displaced rando code, always fill wallet on turn in
     li      a0, 999
 

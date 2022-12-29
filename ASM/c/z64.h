@@ -378,7 +378,7 @@ typedef enum {
 } z64_action_parameter_t;
 
 typedef enum
-{   
+{
   SI_DEKU_NUTS_5,
   SI_ARROWS_30,
   SI_ARROWS_50,

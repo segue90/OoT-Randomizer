@@ -4235,7 +4235,7 @@ setting_infos = [
         name           = 'shuffle_expensive_merchants',
         gui_text       = 'Shuffle Expensive Merchants',
         gui_tooltip    = '''\
-            Enabling this adds a Giant's Knife and a pack of Bombchus 
+            Enabling this adds a Giant's Knife and a pack of Bombchus
             to the item pool and changes Medigoron, Granny's Potion Shop,
             and the Haunted Wasteland Carpet Salesman to sell a random
             item once at the same price as their vanilla items.

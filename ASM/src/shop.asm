@@ -270,7 +270,7 @@ set_mask_text_hook:
     beqz    v0, @@return_mask_text
     or      t7, $zero, $zero
     or      t7, t9, $zero
-    
+
 @@return_mask_text:
     lw      a0, 0x10(sp)
     lw      v1, 0x14(sp)
