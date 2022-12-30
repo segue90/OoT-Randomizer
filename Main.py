@@ -1,15 +1,11 @@
 from collections import OrderedDict
 import copy
 import hashlib
-import io
-import itertools
 import logging
 import os
 import platform
 import random
 import shutil
-import subprocess
-import sys
 import struct
 import time
 import zipfile
@@ -29,9 +25,8 @@ from Utils import default_output_path, is_bundled, run_process, data_path
 from Models import patch_model_adult, patch_model_child
 from N64Patch import create_patch_file, apply_patch_file
 from MBSDIFFPatch import apply_ootr_3_web_patch
-from SettingsList import setting_infos, logic_tricks
+from SettingsList import logic_tricks
 from Rules import set_rules, set_shop_rules
-from Plandomizer import Distribution
 from Search import Search, RewindableSearch
 from EntranceShuffle import set_entrances
 from LocationList import set_drop_location_names
@@ -789,8 +784,9 @@ def create_playthrough(spoiler):
 
     # Regenerate the spheres as we might not reach places the same way anymore.
     search.reset() # search state has no items, okay to reuse sphere 0 cache
-    collection_spheres = []
-    collection_spheres.append(list(filter(lambda loc: loc.item.advancement and loc.item.world.max_progressions[loc.item.name] > 0, search.iter_pseudo_starting_locations())))
+    collection_spheres = [list(
+        filter(lambda loc: loc.item.advancement and loc.item.world.max_progressions[loc.item.name] > 0,
+               search.iter_pseudo_starting_locations()))]
     entrance_spheres = []
     remaining_entrances = set(required_entrances)
     collected = set()
@@ -798,7 +794,8 @@ def create_playthrough(spoiler):
         # Not collecting while the generator runs means we only get one sphere at a time
         # Otherwise, an item we collect could influence later item collection in the same sphere
         collected.update(search.iter_reachable_locations(required_locations))
-        if not collected: break
+        if not collected:
+            break
         internal = collected & internal_locations
         if internal:
             # collect only the internal events but don't record them in a sphere

@@ -1,3 +1,7 @@
+import random
+from itertools import chain
+from Fill import ShuffleError
+
 PLAYBACK_START = 0xB781DC
 PLAYBACK_LENGTH = 0xA0
 ACTIVATION_START = 0xB78E5C
@@ -61,10 +65,6 @@ SONG_TABLE = {
     'Prelude of Light':   ( 5, True,  '^>^><^'),
 }
 
-import random
-from itertools import chain
-from Fill import ShuffleError
-from Utils import random_choices
 
 # checks if one list is a sublist of the other (in either direction)
 # python is magic.....
@@ -116,7 +116,7 @@ def identity(x):
     return x
 
 def random_piece(count, allowed=range(0,5)):
-    return random_choices(allowed, k=count)
+    return random.choices(allowed, k=count)
 
 def invert_piece(piece):
     return [4 - note for note in piece]
@@ -243,7 +243,7 @@ class Song():
             self.activation = activation
         elif rand_song:
             self.length = random.randint(4, 8)
-            self.activation = random_choices(range(0,5), k=self.length)
+            self.activation = random.choices(range(0,5), k=self.length)
         else:
             if extra_position != 'none':
                 piece_size = 3
@@ -274,28 +274,28 @@ class Song():
 # randomly choose song parameters
 def get_random_song():
 
-    rand_song = random_choices([True, False], [1, 9])[0]
-    piece_size = random_choices([3, 4], [5, 2])[0]
-    extra_position = random_choices(['none', 'start', 'middle', 'end'], [12, 1, 1, 1])[0]
+    rand_song = random.choices([True, False], [1, 9])[0]
+    piece_size = random.choices([3, 4], [5, 2])[0]
+    extra_position = random.choices(['none', 'start', 'middle', 'end'], [12, 1, 1, 1])[0]
     activation_transform = identity
     playback_transform = identity
     weight_damage = 0
-    should_transpose = random_choices([True, False], [1, 4])[0]
+    should_transpose = random.choices([True, False], [1, 4])[0]
     starting_range=range(0,5)
     if should_transpose:
         weight_damage = 2
-        direction = random_choices(['up', 'down'], [1, 1])[0]
+        direction = random.choices(['up', 'down'], [1, 1])[0]
         if direction == 'up':
             starting_range=range(0,4)
             activation_transform = transpose_piece(1)
         elif direction == 'down':
             starting_range=range(1,5)
             activation_transform = transpose_piece(-1)
-    should_invert = random_choices([True, False], [3 - weight_damage, 6])[0]
+    should_invert = random.choices([True, False], [3 - weight_damage, 6])[0]
     if should_invert:
         weight_damage += 1
         activation_transform = compose(invert_piece, activation_transform)
-    should_reflect = random_choices([True, False], [5 - weight_damage, 4])[0]
+    should_reflect = random.choices([True, False], [5 - weight_damage, 4])[0]
     if should_reflect:
         activation_transform = compose(reverse_piece, activation_transform)
         playback_transform = reverse_piece

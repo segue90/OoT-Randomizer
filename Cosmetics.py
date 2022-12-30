@@ -584,10 +584,10 @@ def patch_heart_colors(rom, settings, log, symbols):
         else:
             color = hex_to_color(heart_option)
             heart_option = 'Custom'
-        rom.write_int16s(symbol, color) # symbol for ingame HUD
-        rom.write_int16s(file_select_address, color) # file select normal hearts
+        rom.write_int16s(symbol, color)  # symbol for ingame HUD
+        rom.write_int16s(file_select_address, color)  # file select normal hearts
         if heart_option != 'Red':
-            rom.write_int16s(file_select_address + 6, color) # file select DD hearts
+            rom.write_int16s(file_select_address + 6, color)  # file select DD hearts
         else:
             original_dd_color = rom.original.read_bytes(file_select_address + 6, 6)
             rom.write_bytes(file_select_address + 6, original_dd_color)

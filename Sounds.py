@@ -30,7 +30,7 @@ import sys
 from Utils import data_path
 
 # Python 3.6 support. We can drop the conditional usage of namedtuple if we decide to no longer support Python 3.6.
-dataclass_supported = sys.version_info[0] >= 3 and sys.version_info[1] >= 7
+dataclass_supported = sys.version_info >= (3, 7)
 if dataclass_supported:
     from dataclasses import dataclass
 else:

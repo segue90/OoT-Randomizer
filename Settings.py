@@ -5,18 +5,20 @@ import hashlib
 import json
 import logging
 import os
+import random
 import re
 import string
 import sys
 import textwrap
 
 from version import __version__
-from Utils import random_choices, local_path, data_path
+from Utils import local_path, data_path
 from SettingsList import setting_infos, get_setting_info, validate_settings
 from Plandomizer import Distribution
 import StartingItems
 
 LEGACY_STARTING_ITEM_SETTINGS = {'starting_equipment': StartingItems.equipment, 'starting_items': StartingItems.inventory, 'starting_songs': StartingItems.songs}
+
 
 class ArgumentDefaultsHelpFormatter(argparse.RawTextHelpFormatter):
 
@@ -206,7 +208,7 @@ class Settings:
     def update_seed(self, seed):
         if seed is None or seed == '':
             # https://stackoverflow.com/questions/2257441/random-string-generation-with-upper-case-letters-and-digits-in-python
-            self.seed = ''.join(random_choices(string.ascii_uppercase + string.digits, k=10))
+            self.seed = ''.join(random.choices(string.ascii_uppercase + string.digits, k=10))
         else:
             self.seed = seed
         self.sanitize_seed()
@@ -299,7 +301,7 @@ class Settings:
             if self.__dict__[info.gui_params['randomize_key']] and not_in_dist:
                 randomize_keys_enabled.add(info.gui_params['randomize_key'])
                 choices, weights = zip(*info.gui_params['distribution'])
-                self.__dict__[info.name] = random_choices(choices, weights=weights)[0]
+                self.__dict__[info.name] = random.choices(choices, weights=weights)[0]
 
         # Second pass to make sure disabled settings are set properly.
         # Stupid hack: disable randomize keys, then re-enable.

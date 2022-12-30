@@ -1,26 +1,26 @@
 #!/usr/bin/env python3
+import sys
+if sys.version_info < (3, 6, 0):
+    print("OoT Randomizer requires Python version 3.6 or newer and you are using %s" % '.'.join([str(i) for i in sys.version_info[0:3]]))
+    sys.exit(1)
+
 import argparse
 import os
 import logging
 import textwrap
 import time
 import datetime
-import sys
-
-from Gui import guiMain
-from Main import main, from_patch_file, cosmetic_patch, diff_roms
-from Utils import check_version, VersionError, check_python_version, local_path
-from Settings import get_settings_from_command_line_args
 
 
 class ArgumentDefaultsHelpFormatter(argparse.RawTextHelpFormatter):
-
     def _get_help_string(self, action):
         return textwrap.dedent(action.help)
 
 
 def start():
-
+    from Main import main, from_patch_file, cosmetic_patch, diff_roms
+    from Settings import get_settings_from_command_line_args
+    from Utils import check_version, VersionError, local_path
     settings, gui, args_loglevel, no_log_file, diff_rom = get_settings_from_command_line_args()
 
     # set up logger
@@ -48,14 +48,15 @@ def start():
 
     try:
         if gui:
-            guiMain()
+            from Gui import gui_main
+            gui_main()
         elif diff_rom:
             diff_roms(settings, diff_rom)
         elif settings.cosmetics_only:
             cosmetic_patch(settings)
         elif settings.patch_file != '':
             from_patch_file(settings)
-        elif settings.count != None and settings.count > 1:
+        elif settings.count is not None and settings.count > 1:
             orig_seed = settings.seed
             for i in range(settings.count):
                 settings.update_seed(orig_seed + '-' + str(i))
@@ -68,5 +69,4 @@ def start():
 
 
 if __name__ == '__main__':
-    check_python_version()
     start()

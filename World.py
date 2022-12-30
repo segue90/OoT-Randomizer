@@ -19,9 +19,9 @@ from SettingsList import get_setting_info, get_settings_from_section
 from State import State
 from Utils import read_logic_file
 
-class World(object):
 
-    def __init__(self, id, settings, resolveRandomizedSettings=True):
+class World(object):
+    def __init__(self, id, settings, resolve_randomized_settings=True):
         self.id = id
         self.dungeons = []
         self.regions = []
@@ -147,7 +147,7 @@ class World(object):
             'Ganons Castle': False
         }
 
-        if resolveRandomizedSettings:
+        if resolve_randomized_settings:
             self.resolve_random_settings()
 
         if len(settings.hint_dist_user) == 0:

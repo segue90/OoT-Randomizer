@@ -1,6 +1,6 @@
 import io
 import json
-import os, os.path
+import os
 import subprocess
 import sys
 import urllib.request
@@ -12,10 +12,15 @@ import itertools
 import bisect
 import logging
 
+
 def is_bundled():
     return getattr(sys, 'frozen', False)
 
+
 def local_path(path=''):
+    if not hasattr(local_path, "cached_path"):
+        local_path.cached_path = None
+
     if local_path.cached_path is not None:
         return os.path.join(local_path.cached_path, path)
 
@@ -28,10 +33,11 @@ def local_path(path=''):
 
     return os.path.join(local_path.cached_path, path)
 
-local_path.cached_path = None
-
 
 def data_path(path=''):
+    if not hasattr(data_path, "cached_path"):
+        data_path.cached_path = None
+
     if data_path.cached_path is not None:
         return os.path.join(data_path.cached_path, path)
 
@@ -41,8 +47,6 @@ def data_path(path=''):
     data_path.cached_path = os.path.join(os.path.dirname(os.path.realpath(__file__)), "data")
 
     return os.path.join(data_path.cached_path, path)
-
-data_path.cached_path = None
 
 
 def default_output_path(path):
@@ -75,6 +79,7 @@ def open_file(filename):
         open_command = 'open' if sys.platform == 'darwin' else 'xdg-open'
         subprocess.call([open_command, filename])
 
+
 def close_console():
     if sys.platform == 'win32':
         #windows
@@ -83,6 +88,7 @@ def close_console():
             win32gui.ShowWindow(win32gui.GetForegroundWindow(), win32con.SW_HIDE)
         except Exception:
             pass
+
 
 def get_version_bytes(a, b=0x00, c=0x00):
     version_bytes = [0x00, 0x00, 0x00, b, c]
@@ -120,8 +126,10 @@ def compare_version(a, b):
             return -1
     return 0
 
+
 class VersionError(Exception):
     pass
+
 
 def check_version(checked_version):
     if compare_version(checked_version, __version__) < 0:
@@ -153,23 +161,6 @@ def check_version(checked_version):
         except (URLError, HTTPError) as e:
             logger = logging.getLogger('')
             logger.warning("Could not fetch latest version: " + str(e))
-
-# Shim for the sole purpose of maintaining compatibility with older versions of Python 3.
-def random_choices(population, weights=None, k=1):
-    pop_size = len(population)
-    if (weights is None):
-        weights = [1] * pop_size
-    else:
-        assert (pop_size == len(weights)), "population and weights mismatch"
-
-    CDF = list(itertools.accumulate(weights))
-
-    result = []
-    for i in range(k):
-        x = random.random() * CDF[-1]
-        result.append(population[bisect.bisect(CDF, x)])
-
-    return result
 
 
 # From the pyinstaller Wiki: https://github.com/pyinstaller/pyinstaller/wiki/Recipe-subprocess
@@ -210,12 +201,6 @@ def subprocess_args(include_stdout=True):
     return ret
 
 
-def check_python_version():
-    python_version = '.'.join([str(num) for num in sys.version_info[0:3]])
-    if compare_version(python_version, '3.6.0') < 0:
-        raise VersionError('Randomizer requires at least version 3.6 and you are using %s' % python_version, "https://www.python.org/downloads/")
-
-
 def run_process(window, logger, args, stdin=None):
     process = subprocess.Popen(args, bufsize=1, stdout=subprocess.PIPE, stdin=subprocess.PIPE)
     filecount = None
@@ -228,7 +213,7 @@ def run_process(window, logger, args, stdin=None):
                 find_index = line.find(b'files remaining')
                 if find_index > -1:
                     files = int(line[:find_index].strip())
-                    if filecount == None:
+                    if filecount is None:
                         filecount = files
                     window.update_progress(65 + 30*(1 - files/filecount))
                 logger.info(line.decode('utf-8').strip('\n'))

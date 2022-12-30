@@ -1,10 +1,8 @@
 import random
 from decimal import Decimal, ROUND_UP
-from Hints import HintArea
 
 from Item import ItemFactory, ItemInfo
-from Location import DisableType, Location
-from Utils import random_choices
+from Location import DisableType
 
 
 # Generates item pools and places fixed items based on settings.
@@ -382,7 +380,7 @@ def get_junk_item(count=1, pool=None, plando_pool=None):
             raise RuntimeError("Not enough junk is available in the item pool to replace removed items.")
     else:
         junk_items, junk_weights = zip(*junk_pool)
-    return_pool.extend(random_choices(junk_items, weights=junk_weights, k=count))
+    return_pool.extend(random.choices(junk_items, weights=junk_weights, k=count))
 
     return return_pool
 

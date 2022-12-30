@@ -20,11 +20,8 @@ import random
 #       ZF      Zora's Fountain
 #       ZR      Zora's River
 
-class Hint(object):
-    name = ""
-    text = ""
-    type = []
 
+class Hint(object):
     def __init__(self, name, text, type, choice=None):
         self.name = name
         self.type = [type] if not isinstance(type, list) else type
@@ -37,13 +34,12 @@ class Hint(object):
             else:
                 self.text = text[choice]
 
-class Multi(object):
-    name = ""
-    locations = []
 
+class Multi(object):
     def __init__(self, name, locations):
         self.name = name
         self.locations = locations
+
 
 def getHint(name, clearer_hint=False):
     textOptions, clearText, type = hintTable[name]
@@ -54,9 +50,11 @@ def getHint(name, clearer_hint=False):
     else:
         return Hint(name, textOptions, type)
 
+
 def getMulti(name):
     locations = multiTable[name]
     return Multi(name, locations)
+
 
 def getHintGroup(group, world):
     ret = []
@@ -122,6 +120,7 @@ def getRequiredHints(world):
             ret.append(hint)
     return ret
 
+
 # Get the multi hints containing the list of locations for a possible hint upgrade.
 def getUpgradeHintList(world, locations):
     ret = []
@@ -154,6 +153,7 @@ def getUpgradeHintList(world, locations):
                 if accepted_type:
                     ret.append(hint)
     return ret
+
 
 # Helpers for conditional always hints
 def stones_required_by_settings(world):

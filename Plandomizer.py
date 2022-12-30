@@ -12,15 +12,14 @@ from EntranceShuffle import EntranceShuffleError, change_connections, confirm_re
 from Hints import HintArea, gossipLocations, GossipText
 from Item import ItemFactory, ItemInfo, ItemIterator, IsItem
 from ItemPool import item_groups, get_junk_item, song_list, trade_items, child_trade_items
-from Location import LocationIterator, LocationFactory, IsLocation
+from Location import LocationIterator, LocationFactory
 from LocationList import location_groups, location_table
 from Search import Search
 from Spoiler import HASH_ICONS
 from version import __version__
-from Utils import random_choices
 from JSONDump import dump_obj, CollapseList, CollapseDict, AlignedDict, SortedDict
 import StartingItems
-from SettingsList import build_close_match, validate_settings, setting_infos
+from SettingsList import build_close_match, validate_settings
 
 
 class InvalidFileException(Exception):
@@ -477,7 +476,7 @@ class WorldDistribution(object):
             ]  # Only allow items to be candidates if they haven't been set to 0
             if len(candidates) == 0:
                 raise RuntimeError("Unknown item, or item set to 0 in the item pool could not be added: " + repr(item_name) + ". " + build_close_match(item_name, 'item'))
-            added_items = random_choices(candidates, k=count)
+            added_items = random.choices(candidates, k=count)
         else:
             if not IsItem(item_name):
                 raise RuntimeError("Unknown item could not be added: " + repr(item_name) + ". " + build_close_match(item_name, 'item'))
@@ -783,7 +782,7 @@ class WorldDistribution(object):
 
             valid_items = self.get_valid_items_from_record(prizepool, used_items, record)
             if valid_items:  # Choices still available in the item pool, choose one, mark it as a used item
-                record.item = random_choices(valid_items)[0]
+                record.item = random.choices(valid_items)[0]
                 if used_items is not None:
                     used_items.append(record.item)
 
@@ -856,9 +855,9 @@ class WorldDistribution(object):
                         if item in limited_items or item in item_groups['Bottle'] or item in item_groups['AdultTrade'] or item in item_groups['ChildTrade']:
                             continue
                         allowed_choices.append(item)
-                    record.item = random_choices(allowed_choices)[0]
+                    record.item = random.choices(allowed_choices)[0]
             else:  # Choices still available in item pool, choose one, mark it as a used item
-                record.item = random_choices(valid_items)[0]
+                record.item = random.choices(valid_items)[0]
                 if used_items is not None and record.item[0] != '#':
                     used_items.append(record.item)
 

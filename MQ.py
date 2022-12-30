@@ -480,8 +480,7 @@ def patch_spirit_temple_mq_room_6(rom:Rom, room_addr):
     # write alternate header data
     # the first 3 words are mandatory. the last 3 are just to make the binary
     # cleaner to read
-    rom.write_int32s(room_addr + alt_data_off,
-                    [0, get_segment_address(3, alt_header_off), 0, 0, 0, 0])
+    rom.write_int32s(room_addr + alt_data_off, [0, get_segment_address(3, alt_header_off), 0, 0, 0, 0])
 
     # clone header
     a_start = room_addr
