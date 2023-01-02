@@ -3031,6 +3031,13 @@ skip_GS_BGS_text:
     jal     set_message_file_to_search
     nop
 
+; The message lookup function uses a fixed reference to the first entry's segment to strip it from
+; the combined segment/offset word. Since we have mixed segments in the table now, this is no
+; longer safe. Load the correct segment into register a2 from the current message.
+.orga 0xB4C980
+    j       load_correct_message_segment
+    nop
+
 ; Since message lookup already occurs in the above hook, remove the lookup from both the JP and EN
 ; branches.
 .orga 0xB52AD0 ; JP branch

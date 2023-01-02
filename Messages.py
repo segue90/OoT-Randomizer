@@ -502,7 +502,7 @@ class Message:
 
     # check if this is an unused message that just contains it's own id as text
     def is_id_message(self):
-        if self.unpadded_length != 5:
+        if self.unpadded_length != 5 or self.id == 0xFFFC:
             return False
         for i in range(4):
             code = self.text_codes[i].code
@@ -948,7 +948,7 @@ def read_fffc_message(rom):
         id = bytes_to_int(entry[0:2])
 
         if id == 0xFFFC:
-            message = Message.from_rom(rom, index)
+            message = Message.from_rom(rom, index, eng=False)
             break
 
         index += 1
@@ -989,7 +989,7 @@ def repack_messages(rom, messages, permutation=None, always_allow_skip=True, spe
 
         # check if there is space to write the message
         message_size = new_message.size()
-        if message_size + offset > JPN_TEXT_SIZE_LIMIT:
+        if message_size + offset > JPN_TEXT_SIZE_LIMIT and text_start == JPN_TEXT_START:
             # Add a dummy entry to the table for the last entry in the
             # JP file. This is used by the game to calculate message
             # length. Since the next entry in the English table has an
