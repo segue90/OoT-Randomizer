@@ -3033,7 +3033,7 @@ setting_infos = [
         ''',
         shared         = True,
         disable={
-            'off': {'settings' : ['key_rings']},
+            'off': {'settings' : ['key_rings', 'keyring_give_bk']},
             'all': {'settings' : ['key_rings']},
             'random': {'settings' : ['key_rings']},
         },
@@ -3061,6 +3061,21 @@ setting_infos = [
             Select areas with keyring instead of multiple keys
         ''',
         shared          = True,
+    ),
+    Checkbutton(
+        name           = 'keyring_give_bk',
+        gui_text       = 'Key Rings give Boss Keys',
+        gui_tooltip    = '''\
+            Boss Keys will be included in the Key Ring for the specific dungeon.
+        ''',
+        default        = False,
+        shared         = True,
+        gui_params     = {
+            "hide_when_disabled": True,
+        },
+        disable={
+            True: {'settings' : ['shuffle_bosskeys']},
+        },
     ),
     Combobox(
         name           = 'shuffle_mapcompass',
