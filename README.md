@@ -110,6 +110,10 @@ issue. You should always Hard Reset to avoid this issue entirely.
 
 ### Dev
 
+#### New Features
+* **Hints**
+  * New `Important Checks` hint type which hints at how many major items are in a given region.
+
 #### Bug Fixes
 * Fix an issue where the `path of hearts` goal wasn't enabled in certain circumstances with a Ganon's Boss Key or LACS `Hearts` goal.
 
