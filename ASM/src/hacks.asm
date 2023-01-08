@@ -3123,3 +3123,55 @@ skip_GS_BGS_text:
 ;   jal     func_800CDCCC
 .orga 0xDB9E14
     jal     rand_seed_truth_spinner
+
+;==================================================================================================
+; Save current mask on scene change
+;==================================================================================================
+; Player_Destroy (0x80848BB4) - Its easier to just re-write the function than make a hook.
+.orga 0xBE6564
+    addiu   sp, sp, -0x10
+    sw      ra, 0xC($sp)
+    sw      s1, 0x8($sp)
+    sw      s0, 0x4($sp)
+    move    s0, a0
+    move    s1, a1
+    la      t0, SAVE_CONTEXT
+    lui     t1, 0x0001
+    addu    t1, t1, a1 ; PlayState + 0x10000
+    lbu     t2, 0x1DE8(t1) ; playState->linkAgeOnLoad
+    lbu     t3, 0x014F(a0) ; player->currentMask
+    sw      t2, 0x0004(t0) ; saveContext->linkAge
+    sb      t3, 0x003B(t0) ; this seems to be an empty slot
+    move    a0, a1
+    jal     0x8001AE04 ; Effect_Delete
+    lw      a1, 0x660(s0) ; player->meleeWeaponEffectIndex
+    jal     0x80072548 ; Magic_Reset
+    move    a0, s1
+    lw      ra, 0xC(sp)
+    lw      s1, 0x8(sp)
+    lw      s0, 0x4(sp)
+    jr      ra
+    addiu   sp, sp, 0x10
+    ;Remove the rest of the old function
+    nop
+    nop
+    nop
+    nop
+    nop
+    nop
+    nop
+    nop
+    nop
+
+;==================================================================================================
+; Load current mask on scene change
+;==================================================================================================
+;Player_Init (0x80844DE8)
+;Replaces:
+;jal     func_80834000              
+.orga 0xBE28EC
+    jal     player_save_mask
+
+; Dumb hack to not relocate the function call to player_save_mask
+.orga 0xBF2C14
+    nop
