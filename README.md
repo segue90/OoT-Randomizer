@@ -119,6 +119,7 @@ issue. You should always Hard Reset to avoid this issue entirely.
 
 #### Bug Fixes
 * Fix an issue where the `path of hearts` goal wasn't enabled in certain circumstances with a Ganon's Boss Key or LACS `Hearts` goal.
+* Fix an issue where CSMC chests containing ice traps were not moved correctly.
 
 #### Other Changes
 * `Closed Forest` is no longer changed to `Closed Deku` when `Shuffle Boss Entrances` is enabled.
