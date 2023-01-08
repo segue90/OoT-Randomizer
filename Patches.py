@@ -1044,9 +1044,6 @@ def patch_rom(spoiler:Spoiler, world:World, rom:Rom):
         # Connect lake hylia fill exit to revisit exit
         rom.write_int16(0xAC995A, 0x060C)
 
-        # Tell the well water we are always a child.
-        rom.write_int32(0xDD5BF4, 0x00000000)
-
         # Make the Adult well blocking stone dissappear if the well has been drained by
         # checking the well drain event flag instead of links age. This actor doesn't need a
         # code check for links age as the stone is absent for child via the scene alternate
