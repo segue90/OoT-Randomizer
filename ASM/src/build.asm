@@ -111,6 +111,7 @@ RANDO_CONTEXT:
 .include "drop_overrides/obj_comb.asm"
 .include "drop_overrides/actor.asm"
 .include "rand_seed.asm"
+.include "messages.asm"
 
 .align 0x10
 .importobj "../build/bundle.o"

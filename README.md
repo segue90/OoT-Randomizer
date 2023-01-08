@@ -128,6 +128,7 @@ issue. You should always Hard Reset to avoid this issue entirely.
 * The model used for Ruto's Letter is now rotated onto its side to better differentiate from other bottles.
 * The dummy boss key chest on the wall of Forest Temple's twisted hallway now matches the real version of the chest in the straightened version of the room.
 * The Kakariko Well water will no longer be up as adult to facilitate a glitch strategy for entering the well.
+* The message table has been extended to allow further developments which require more added textboxes.
 
 #### Plandomizer
 * Plandomizer now allows you to specify locations that are valid but do not exist in your current seed, for example, an MQ-specific location when that dungeon is Vanilla.

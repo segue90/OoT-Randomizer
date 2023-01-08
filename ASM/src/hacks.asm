@@ -2999,6 +2999,32 @@ skip_GS_BGS_text:
 .orga 0xB575C8
     sw      t6, 0x00(a1)
 
+; Dynamically load the en/jp message files for text lookup. Both files are utilized to make room
+; for additional text. The jp file is filled first. The segment value for the requested text ID
+; is used to manipulate the language bit to tell Message_OpenText (func_800DC838) which file
+; to load and search. Hook at VRAM 0x800DCB60 in message.s
+.orga 0xB52AC0
+    jal     set_message_file_to_search
+    nop
+
+; The message lookup function uses a fixed reference to the first entry's segment to strip it from
+; the combined segment/offset word. Since we have mixed segments in the table now, this is no
+; longer safe. Load the correct segment into register a2 from the current message.
+.orga 0xB4C980
+    j       load_correct_message_segment
+    nop
+
+; Since message lookup already occurs in the above hook, remove the lookup from both the JP and EN
+; branches.
+.orga 0xB52AD0 ; JP branch
+    nop
+    nop
+    nop
+    nop
+.orga 0xB52B64 ; EN branch
+    nop
+    nop
+
 ;==================================================================================================
 ; Null Boomerang Pointer in Links Instance
 ;==================================================================================================
