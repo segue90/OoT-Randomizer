@@ -2259,7 +2259,7 @@ setting_infos = [
                     'dungeon_shortcuts', 'trials_random', 'trials',
                     'starting_age', 'shuffle_interior_entrances',
                     'shuffle_grotto_entrances', 'shuffle_dungeon_entrances',
-                    'shuffle_bosses', 'shuffle_overworld_entrances', 'owl_drops', 'warp_songs', 'spawn_positions',
+                    'shuffle_bosses', 'shuffle_overworld_entrances', 'shuffle_gerudo_valley_river_exit', 'owl_drops', 'warp_songs', 'spawn_positions',
                     'triforce_hunt', 'triforce_count_per_world', 'triforce_goal_per_world', 'bombchus_in_logic', 'one_item_per_dungeon',
                     'shuffle_mapcompass', 'shuffle_smallkeys', 'shuffle_hideoutkeys', 'key_rings_choice', 'key_rings',
                     'shuffle_bosskeys', 'enhance_map_compass'
@@ -2295,7 +2295,7 @@ setting_infos = [
         disable        = {
             'glitchless': {'settings' : ['tricks_list_msg']},
             'glitched'  : {'settings' : ['allowed_tricks', 'shuffle_interior_entrances', 'shuffle_grotto_entrances',
-                                         'shuffle_dungeon_entrances', 'shuffle_overworld_entrances', 'owl_drops',
+                                         'shuffle_dungeon_entrances', 'shuffle_overworld_entrances', 'shuffle_gerudo_valley_river_exit', 'owl_drops',
                                          'warp_songs', 'spawn_positions', 'mq_dungeons_mode', 'mq_dungeons_specific',
                                          'mq_dungeons_count', 'shuffle_bosses', 'dungeon_shortcuts', 'deadly_bonks',
                                          'shuffle_freestanding_items', 'shuffle_pots', 'shuffle_crates', 'shuffle_beehives']},
@@ -3672,11 +3672,26 @@ setting_infos = [
             Some entrances are kept unshuffled to avoid issues:
             - Hyrule Castle Courtyard and Garden entrances
             - Both Market Back Alley entrances
-            - Gerudo Valley to Lake Hylia
+
+            The entrance from Gerudo Valley to Lake Hylia is a one-way
+            entrance and has its own setting below.
 
             Just like when shuffling interior entrances, shuffling overworld
             entrances disables trade timers and trade items never revert,
             even when dying or loading a save.
+        ''',
+        default        = False,
+        shared         = True,
+        gui_params     = {
+            'randomize_key': 'randomize_settings',
+        },
+    ),
+    Checkbutton(
+        name           = 'shuffle_gerudo_valley_river_exit',
+        gui_text       = 'Shuffle Gerudo Valley River Exit',
+        gui_tooltip    = '''\
+            Randomize where the the one-way entrance
+            down the river in Gerudo Valley leads to.
         ''',
         default        = False,
         shared         = True,

@@ -113,6 +113,7 @@ issue. You should always Hard Reset to avoid this issue entirely.
 #### New Features
 * **Settings**
   * New setting `Key Rings give Boss Keys` makes it so when picking up a key ring for a certain dungeon, you will also get the boss key for that dungeon, if applicable.
+  * New ER setting `Shuffle Gerudo Valley River Exit` allows you to shuffle the one-way exit going down the river in Gerudo Valley.
 * **Hints**
   * New `Important Checks` hint type which hints at how many major items are in a given region.
 
