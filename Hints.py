@@ -1267,10 +1267,10 @@ def buildWorldGossipHints(spoiler, world, checkedLocations=None):
     if world.settings.hint_dist == "bingo":
         with open(data_path('Bingo/generic_bingo_hints.json'), 'r') as bingoFile:
             bingoDefaults = json.load(bingoFile)
-        if world.bingosync_url is not None and world.bingosync_url.startswith("https://bingosync.com/"): # Verify that user actually entered a bingosync URL
+        if world.settings.bingosync_url and world.settings.bingosync_url.startswith("https://bingosync.com/"): # Verify that user actually entered a bingosync URL
             logger = logging.getLogger('')
             logger.info("Got Bingosync URL. Building board-specific goals.")
-            world.item_hints = buildBingoHintList(world.bingosync_url)
+            world.item_hints = buildBingoHintList(world.settings.bingosync_url)
         else:
             world.item_hints = bingoDefaults['settings']['item_hints']
 
