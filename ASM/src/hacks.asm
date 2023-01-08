@@ -3168,7 +3168,7 @@ skip_GS_BGS_text:
 ;==================================================================================================
 ;Player_Init (0x80844DE8)
 ;Replaces:
-;jal     func_80834000              
+;jal     func_80834000
 .orga 0xBE28EC
     jal     player_save_mask
 
