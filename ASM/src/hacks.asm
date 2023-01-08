@@ -1417,33 +1417,9 @@ skip_GS_BGS_text:
 ; Set player health to zero on last frame of bonk animation
 ; z_player func_80844708, conditional where this->unk_850 != 0 and temp >= 0 || sp44
 ; Replaces:
-;   or      a0, s0, $zero
-;   jal     func_80838178
-;   lw      a1, 0x0054($sp)
 ;   b       lbl_80842AE8
-;   lw      $ra, 0x0024($sp)
-;   lwc1    $f4, 0x0828(s0)
-;   mtc1    $at, $f6
-;   nop
-.orga 0xBE0228
-; Load APPLY_BONK_DAMAGE address as throwaway instructions. Replacing the jump call causes
-; problems when overlay relocation is applied, breaking both replacement jump calls and nop'ing
-; the instruction. By chance, these two instructions (equivalent to `la APPLY_BONK_DAMAGE`) do
-; not crash after relocation, and so are kept here even though they do nothing.
-    lui     t8, 0x8040
-    addiu   t8, t8, 0x2D04
-; Replace original function call with hook to apply damage if the setting is on.
-; The original function is called in the new function before applying damage.
-; Since the player actor always ends up in the same location in RAM, the jump
-; address there is hardcoded.
-    jal     BONK_LAST_FRAME
-    lw      a1, 0x0054($sp)
-; The branch address is shifted to an alternate location where lw $ra... is run.
-; Required as la t8, APPLY_BONK_DAMAGE gets expanded to two commands.
-    b       0xBE0494
-    lw      $ra, 0x0024($sp)
-    lwc1    $f4, 0x0828(s0)
-    mtc1    $at, $f6
+.orga 0xBE0234
+    j       BONK_LAST_FRAME
 
 ; Prevent set and reset of player state3 flag 4, which is re-used for storing bonk state if the
 ; player manages to cancel the roll/bonk animation before the last frame.
