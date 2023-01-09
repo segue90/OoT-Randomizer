@@ -4871,7 +4871,7 @@ setting_infos = [
 
             Placing yourself on the log at Zora River
             where you play the songs for the frogs will
-            tell you what the reward is for playing all 
+            tell you what the reward is for playing all
             six non warp songs.
         ''',
         shared         = True,
