@@ -846,7 +846,9 @@ typedef struct
   char         unk_04_[0x0004];      /* 0x0674 */
   z64_actor_t *boomerang_actor;      /* 0x0678 */
   z64_actor_t *navi_actor;           /* 0x067C */
-  char         unk_05_[0x01A8];      /* 0x0680 */
+  uint16_t     naviTextId;           /* 0x0680 */
+  uint8_t      state_flags_3;        /* 0x0682 */
+  char         unk_05_[0x01A5];      /* 0x0683 */
   float        linear_vel;           /* 0x0828 */
   char         unk_06_[0x0002];      /* 0x082C */
   uint16_t     target_yaw;           /* 0x082E */
