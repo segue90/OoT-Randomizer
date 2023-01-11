@@ -5,7 +5,7 @@
 #include "z64.h"
 
 // PLAYER_STATE1_0 : Scene transition
-// PLAYER_STATE1_SWINGING_BOTTLE 
+// PLAYER_STATE1_SWINGING_BOTTLE
 // PLAYER_STATE1_7 : Death
 // PLAYER_STATE1_10 : Get an item
 // PLAYER_STATE1_28 : Using Non-Weapon Item
