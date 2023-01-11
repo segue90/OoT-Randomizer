@@ -1195,7 +1195,9 @@ typedef struct
   int8_t           scene_load_flag;        /* 0x11E15 */
   char             unk_23_[0x0004];        /* 0x11E16 */
   int16_t          entrance_index;         /* 0x11E1A */
-  char             unk_24_[0x0042];        /* 0x11E1C */
+  char             unk_24_[0x0040];        /* 0x11E1C */
+  uint8_t          shootingGalleryStatus;  /* 0x11E5C */
+  uint8_t          bombchuBowlingStatus;   /* 0x11E5D */
   uint8_t          fadeout_transition;     /* 0x11E5E */
                                            /* 0x11E5F */
 } z64_game_t;
