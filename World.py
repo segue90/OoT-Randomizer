@@ -15,7 +15,7 @@ from LocationList import business_scrubs, location_groups
 from Plandomizer import InvalidFileException
 from Region import Region, TimeOfDay
 from RuleParser import Rule_AST_Transformer
-from SettingsList import get_setting_info, get_settings_from_section
+from SettingsList import SettingInfos, get_settings_from_section
 from State import State
 from Utils import read_logic_file
 
@@ -381,11 +381,11 @@ class World(object):
     def resolve_random_settings(self):
         # evaluate settings (important for logic, nice for spoiler)
         self.randomized_list = []
-        dist_keys = []
+        dist_keys = set()
         if '_settings' in self.distribution.distribution.src_dict:
             dist_keys = self.distribution.distribution.src_dict['_settings'].keys()
         if self.settings.randomize_settings:
-            setting_info = get_setting_info('randomize_settings')
+            setting_info = SettingInfos.setting_infos['randomize_settings']
             self.randomized_list.extend(setting_info.disable[True]['settings'])
             for section in setting_info.disable[True]['sections']:
                 self.randomized_list.extend(get_settings_from_section(section))
@@ -415,7 +415,7 @@ class World(object):
         if (self.settings.starting_tod == 'random'
             and ('starting_tod' not in dist_keys
              or self.distribution.distribution.src_dict['_settings']['starting_tod'] == 'random')):
-            setting_info = get_setting_info('starting_tod')
+            setting_info = SettingInfos.setting_infos['starting_tod']
             choices = [ch for ch in setting_info.choices if ch not in ['default', 'random']]
             self.settings.starting_tod = random.choice(choices)
             self.randomized_list.append('starting_tod')
@@ -1244,7 +1244,7 @@ class World(object):
             self.settings.shuffle_scrubs == 'off' and not self.settings.shuffle_grotto_entrances):
             # nayru's love may be required to prevent forced damage
             exclude_item_list.append('Nayrus Love')
-        if self.settings.logic_grottos_without_agony and self.settings.hints != 'agony':
+        if 'logic_grottos_without_agony' in self.settings.allowed_tricks and self.settings.hints != 'agony':
             # Stone of Agony skippable if not used for hints or grottos
             exclude_item_list.append('Stone of Agony')
         if not self.shuffle_special_interior_entrances and not self.settings.shuffle_overworld_entrances and not self.settings.warp_songs:
@@ -1263,7 +1263,7 @@ class World(object):
         if not self.settings.blue_fire_arrows:
             # Ice Arrows can only be required when the Blue Fire Arrows setting is enabled
             exclude_item_list.append('Ice Arrows')
-        if self.settings.logic_lens_botw or self.settings.shuffle_pots in ('off', 'overworld'):
+        if 'logic_lens_botw' in self.settings.allowed_tricks or self.settings.shuffle_pots in ('off', 'overworld'):
             # These silver rupees unlock a door to an area that's also reachable with lens
             exclude_item_list.append('Silver Rupee (Bottom of the Well Basement)')
             exclude_item_list.append('Silver Rupee Pouch (Bottom of the Well Basement)')
@@ -1271,7 +1271,7 @@ class World(object):
             # These silver rupees only unlock the map chest
             exclude_item_list.append('Silver Rupee (Shadow Temple Scythe Shortcut)')
             exclude_item_list.append('Silver Rupee Pouch (Shadow Temple Scythe Shortcut)')
-        if self.settings.logic_spirit_sun_chest_no_rupees and not self.settings.logic_spirit_sun_chest_bow:
+        if 'logic_spirit_sun_chest_no_rupees' in self.settings.allowed_tricks and 'logic_spirit_sun_chest_bow' not in self.settings.allowed_tricks:
             # With this trickset, these silver rupees are logically irrelevant
             exclude_item_list.append('Silver Rupee (Spirit Temple Sun Block)')
             exclude_item_list.append('Silver Rupee Pouch (Spirit Temple Sun Block)')

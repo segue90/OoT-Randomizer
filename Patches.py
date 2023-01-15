@@ -25,7 +25,6 @@ from version import __version__
 from ItemPool import song_list, trade_items, child_trade_items
 from SceneFlags import get_alt_list_bytes, get_collectible_flag_table, get_collectible_flag_table_bytes
 from texture_util import ci4_rgba16patch_to_ci8, rgba16_patch
-from SettingsList import setting_infos
 
 
 def patch_rom(spoiler: Spoiler, world: World, rom: Rom) -> None:

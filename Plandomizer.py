@@ -1143,7 +1143,13 @@ class Distribution(object):
             '_settings': self.src_dict.get('settings', {}),
         }
 
-        self.settings.__dict__.update(update_dict['_settings'])
+        # If the plando is using the GUI-based ("legacy") starting items settings, start with a fresh starting_items dict.
+        if not update_dict['_settings'].get('starting_items', None):
+            if (update_dict['_settings'].get('starting_equipment', None) or update_dict['_settings'].get('starting_inventory', None)
+                    or update_dict['_settings'].get('starting_songs', None)):
+                update_dict['_settings']['starting_items'] = {}
+
+        self.settings.settings_dict.update(update_dict['_settings'])
         if 'settings' in self.src_dict:
             validate_settings(self.src_dict['settings'])
             self.src_dict['_settings'] = self.src_dict['settings']
@@ -1221,7 +1227,7 @@ class Distribution(object):
                         world.update({k: self.src_dict[k]})
 
         # normalize starting items to use the dictionary format
-        starting_items = itertools.chain(self.settings.starting_equipment, self.settings.starting_songs)
+        starting_items = itertools.chain(self.settings.starting_equipment, self.settings.starting_songs, self.settings.starting_inventory)
         data = defaultdict(lambda: StarterRecord(0))
         if isinstance(self.settings.starting_items, dict) and self.settings.starting_items:
             world_names = ['World %d' % (i + 1) for i in range(len(self.world_dists))]
@@ -1232,8 +1238,6 @@ class Distribution(object):
                 else:
                     data[name] = record if isinstance(record, StarterRecord) else StarterRecord(record)
             add_starting_ammo(data)
-        else:
-            starting_items = itertools.chain(self.settings.starting_equipment, self.settings.starting_items, self.settings.starting_songs)
         for itemsetting in starting_items:
             if itemsetting in StartingItems.everything:
                 item = StartingItems.everything[itemsetting]
@@ -1250,6 +1254,7 @@ class Distribution(object):
                 raise KeyError("invalid starting item: {}".format(itemsetting))
         self.settings.starting_equipment = []
         self.settings.starting_songs = []
+        self.settings.starting_inventory = []
         # add hearts
         if self.settings.starting_hearts > 3 and 'Piece of Heart' not in self.settings.starting_items and 'Heart Container' not in self.settings.starting_items:
             num_hearts_to_collect = self.settings.starting_hearts - 3

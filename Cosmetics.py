@@ -7,7 +7,6 @@ import Music as music
 import Sounds as sfx
 import IconManip as icon
 from JSONDump import dump_obj, CollapseList, CollapseDict, AlignedDict, SortedDict
-from SettingsList import setting_infos
 from Plandomizer import InvalidFileException
 import json
 from itertools import chain
@@ -90,8 +89,6 @@ def patch_tunic_icon(rom, tunic, color, rainbow=False):
 
 
 def patch_tunic_colors(rom, settings, log, symbols):
-    # patch tunic colors
-
     # Need to check for the existence of the CFG_TUNIC_COLORS symbol.
     # This was added with rainbow tunic but custom tunic colors should still support older patch versions.
     tunic_address = symbols.get('CFG_TUNIC_COLORS', 0x00B6DA38) # Use new tunic color ROM address. Fall back to vanilla tunic color ROM address.
@@ -102,10 +99,10 @@ def patch_tunic_colors(rom, settings, log, symbols):
     ]
 
     tunic_color_list = get_tunic_colors()
+    rainbow_error = None
 
     for tunic, tunic_setting, address in tunics:
-        tunic_option = settings.__dict__[tunic_setting]
-        rainbow_error = None
+        tunic_option = settings.settings_dict[tunic_setting]
 
         # Handle Plando
         if log.src_dict.get('equipment_colors', {}).get(tunic, {}).get('color', '') and log.src_dict['equipment_colors'][tunic][':option'] != 'Rainbow':
@@ -184,8 +181,8 @@ def patch_navi_colors(rom, settings, log, symbols):
     rainbow_error = None
 
     for navi_action, navi_setting, navi_addresses, rainbow_inner_symbol, rainbow_outer_symbol in navi:
-        navi_option_inner = settings.__dict__[navi_setting+'_inner']
-        navi_option_outer = settings.__dict__[navi_setting+'_outer']
+        navi_option_inner = settings.settings_dict[navi_setting+'_inner']
+        navi_option_outer = settings.settings_dict[navi_setting+'_outer']
         plando_colors = log.src_dict.get('misc_colors', {}).get(navi_action, {}).get('colors', [])
 
         # choose a random choice for the whole group
@@ -281,8 +278,8 @@ def patch_sword_trails(rom, settings, log, symbols):
     rainbow_error = None
 
     for trail_name, trail_setting, trail_addresses, rainbow_inner_symbol, rainbow_outer_symbol in sword_trails:
-        option_inner = settings.__dict__[trail_setting+'_inner']
-        option_outer = settings.__dict__[trail_setting+'_outer']
+        option_inner = settings.settings_dict[trail_setting+'_inner']
+        option_outer = settings.settings_dict[trail_setting+'_outer']
         plando_colors = log.src_dict.get('misc_colors', {}).get(trail_name, {}).get('colors', [])
 
         # handle random choice
@@ -395,8 +392,8 @@ def patch_boomerang_trails(rom, settings, log, symbols):
 def patch_trails(rom, settings, log, trails):
     for trail_name, trail_setting, trail_color_list, trail_color_dict, trail_symbols in trails:
         color_inner_symbol, color_outer_symbol, rainbow_inner_symbol, rainbow_outer_symbol = trail_symbols
-        option_inner = settings.__dict__[trail_setting+'_inner']
-        option_outer = settings.__dict__[trail_setting+'_outer']
+        option_inner = settings.settings_dict[trail_setting+'_inner']
+        option_outer = settings.settings_dict[trail_setting+'_outer']
         plando_colors = log.src_dict.get('misc_colors', {}).get(trail_name, {}).get('colors', [])
 
         # handle random choice
@@ -482,7 +479,7 @@ def patch_gauntlet_colors(rom, settings, log, symbols):
     gauntlet_color_list = get_gauntlet_colors()
 
     for gauntlet, gauntlet_setting, address, model_addresses in gauntlets:
-        gauntlet_option = settings.__dict__[gauntlet_setting]
+        gauntlet_option = settings.settings_dict[gauntlet_setting]
 
         # Handle Plando
         if log.src_dict.get('equipment_colors', {}).get(gauntlet, {}).get('color', ''):
@@ -521,7 +518,7 @@ def patch_shield_frame_colors(rom, settings, log, symbols):
     shield_frame_color_list = get_shield_frame_colors()
 
     for shield_frame, shield_frame_setting, addresses, model_addresses in shield_frames:
-        shield_frame_option = settings.__dict__[shield_frame_setting]
+        shield_frame_option = settings.settings_dict[shield_frame_setting]
 
         # Handle Plando
         if log.src_dict.get('equipment_colors', {}).get(shield_frame, {}).get('color', ''):
@@ -565,7 +562,7 @@ def patch_heart_colors(rom, settings, log, symbols):
     heart_color_list = get_heart_colors()
 
     for heart, heart_setting, symbol, file_select_address, model_addresses in hearts:
-        heart_option = settings.__dict__[heart_setting]
+        heart_option = settings.settings_dict[heart_setting]
 
         # Handle Plando
         if log.src_dict.get('ui_colors', {}).get(heart, {}).get('color', ''):
@@ -613,7 +610,7 @@ def patch_magic_colors(rom, settings, log, symbols):
     magic_color_list = get_magic_colors()
 
     for magic_color, magic_setting, symbol, model_addresses in magic:
-        magic_option = settings.__dict__[magic_setting]
+        magic_option = settings.settings_dict[magic_setting]
 
         # Handle Plando
         if log.src_dict.get('ui_colors', {}).get(magic_color, {}).get('color', ''):
@@ -682,7 +679,7 @@ def patch_button_colors(rom, settings, log, symbols):
     ]
 
     for button, button_setting, button_colors, patches in buttons:
-        button_option = settings.__dict__[button_setting]
+        button_option = settings.settings_dict[button_setting]
         color_set = None
         colors = {}
         log_dict = CollapseDict({':option': button_option, 'colors': {}})
@@ -761,7 +758,7 @@ def patch_sfx(rom, settings, log, symbols):
     sounds_label_keyword = {sound.value.label: sound.value.keyword for sound in sfx.Sounds}
 
     for setting, hook in sfx_config:
-        selection = settings.__dict__[setting]
+        selection = settings.settings_dict[setting]
 
         # Handle Plando
         if log.src_dict.get('sfx', {}).get(hook.value.name, ''):
@@ -809,7 +806,7 @@ def patch_instrument(rom, settings, log, symbols):
             'flute':           0x06,
            #'another_ocarina': 0x07,
     }
-    ocarina_options = [setting.choices for setting in setting_infos if setting.name == 'sfx_ocarina'][0]
+    ocarina_options = settings.setting_infos['sfx_ocarina'].choices
     ocarina_options_inv = {v: k for k, v in ocarina_options.items()}
 
     choice = settings.sfx_ocarina
@@ -1194,10 +1191,10 @@ class CosmeticsLog(object):
 
         if self.src_dict.get('settings', {}):
             valid_settings = []
-            for setting in setting_infos:
+            for setting in self.settings.setting_infos.values():
                 if setting.name not in self.src_dict['settings'] or not setting.cosmetic:
                     continue
-                self.settings.__dict__[setting.name] = self.src_dict['settings'][setting.name]
+                self.settings.settings_dict[setting.name] = self.src_dict['settings'][setting.name]
                 valid_settings.append(setting.name)
             for setting in list(self.src_dict['settings'].keys()):
                 if setting not in valid_settings:

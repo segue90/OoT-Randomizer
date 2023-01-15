@@ -14,7 +14,7 @@ import subprocess
 import shutil
 import webbrowser
 from Utils import local_path, data_path, compare_version, VersionError
-from SettingsToJson import CreateJSON
+from SettingsToJson import create_settings_list_json
 
 
 def gui_main():
@@ -28,7 +28,7 @@ def gui_main():
 
     web_version = '--web' in sys.argv
     if '--skip-settingslist' not in sys.argv:
-        CreateJSON(data_path('generated/settings_list.json'), web_version)
+        create_settings_list_json(data_path('generated/settings_list.json'), web_version)
 
     if web_version:
         args = ["node", "run.js", "web"]

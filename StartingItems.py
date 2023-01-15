@@ -3,6 +3,8 @@ from itertools import chain
 
 
 _Entry = namedtuple("_Entry", ['settingname', 'itemname', 'available', 'guitext', 'special', 'ammo', 'i'])
+
+
 def _entry(settingname, itemname=None, available=1, guitext=None, special=False, ammo=None):
     if itemname is None:
         itemname = settingname.capitalize()
@@ -13,9 +15,10 @@ def _entry(settingname, itemname=None, available=1, guitext=None, special=False,
         if i == 0:
             name = settingname
         else:
-            name = "{}{}".format(settingname, i+1)
+            name = f"{settingname}{i+1}"
         result.append((name, _Entry(name, itemname, available, guitext, special, ammo, i)))
     return result
+
 
 # Ammo items must be declared in ItemList.py.
 inventory = dict(chain(
@@ -27,13 +30,13 @@ inventory = dict(chain(
     _entry('dins_fire', 'Dins Fire', guitext="Din's Fire"),
     _entry('slingshot', available=3, ammo={'Deku Seeds': (30, 40, 50)}),
     _entry('ocarina', available=2),
-    _entry('bombchus', ammo={'Bombchus': (20,)}), # start with additional bombchus
+    _entry('bombchus', ammo={'Bombchus': (20,)}),  # start with additional bombchus
     _entry('hookshot', 'Progressive Hookshot', available=2),
     _entry('ice_arrow', 'Ice Arrows'),
     _entry('farores_wind', 'Farores Wind', guitext="Farore's Wind"),
     _entry('boomerang'),
     _entry('lens', 'Lens of Truth'),
-    _entry('beans', 'Magic Bean', ammo={'Magic Bean': (10,)}), # start with additional beans
+    _entry('beans', 'Magic Bean', ammo={'Magic Bean': (10,)}),  # start with additional beans
     _entry('megaton_hammer', 'Megaton Hammer', guitext = 'Megaton Hammer'),
     _entry('light_arrow', 'Light Arrows'),
     _entry('nayrus_love', 'Nayrus Love', guitext="Nayru's Love"),

@@ -13,11 +13,11 @@ import textwrap
 
 from version import __version__
 from Utils import local_path, data_path
-from SettingsList import setting_infos, get_setting_info, validate_settings
+from SettingsList import SettingInfos, validate_settings
 from Plandomizer import Distribution
 import StartingItems
 
-LEGACY_STARTING_ITEM_SETTINGS = {'starting_equipment': StartingItems.equipment, 'starting_items': StartingItems.inventory, 'starting_songs': StartingItems.songs}
+LEGACY_STARTING_ITEM_SETTINGS = {'starting_equipment': StartingItems.equipment, 'starting_inventory': StartingItems.inventory, 'starting_songs': StartingItems.songs}
 
 
 class ArgumentDefaultsHelpFormatter(argparse.RawTextHelpFormatter):
@@ -64,28 +64,26 @@ def get_preset_files():
 
 
 # holds the particular choices for a run's settings
-class Settings:
-
+class Settings(SettingInfos):
     def get_settings_display(self):
         padding = 0
-        for setting in filter(lambda s: s.shared, setting_infos):
-            padding = max( len(setting.name), padding )
+        for setting in filter(lambda s: s.shared, self.setting_infos.values()):
+            padding = max(len(setting.name), padding)
         padding += 2
         output = ''
-        for setting in filter(lambda s: s.shared, setting_infos):
+        for setting in filter(lambda s: s.shared, self.setting_infos.values()):
             name = setting.name + ': ' + ' ' * (padding - len(setting.name))
             if setting.type == list:
-                val = ('\n' + (' ' * (padding + 2))).join(self.__dict__[setting.name])
+                val = ('\n' + (' ' * (padding + 2))).join(self.settings_dict[setting.name])
             else:
-                val = str(self.__dict__[setting.name])
+                val = str(self.settings_dict[setting.name])
             output += name + val + '\n'
         return output
 
-
     def get_settings_string(self):
         bits = []
-        for setting in filter(lambda s: s.shared and s.bitwidth > 0, setting_infos):
-            value = self.__dict__[setting.name]
+        for setting in filter(lambda s: s.shared and s.bitwidth > 0, self.setting_infos.values()):
+            value = self.settings_dict[setting.name]
             i_bits = []
             if setting.name in LEGACY_STARTING_ITEM_SETTINGS:
                 items = LEGACY_STARTING_ITEM_SETTINGS[setting.name]
@@ -145,11 +143,10 @@ class Settings:
             bits += i_bits
         return bit_string_to_text(bits)
 
-
     def update_with_settings_string(self, text):
         bits = text_to_bit_string(text)
 
-        for setting in filter(lambda s: s.shared and s.bitwidth > 0, setting_infos):
+        for setting in filter(lambda s: s.shared and s.bitwidth > 0, self.setting_infos.values()):
             cur_bits = bits[:setting.bitwidth]
             bits = bits[setting.bitwidth:]
             value = None
@@ -186,12 +183,11 @@ class Settings:
             else:
                 raise TypeError(f'Cannot decode type {setting.type} from settings string')
 
-            self.__dict__[setting.name] = value
+            self.settings_dict[setting.name] = value
 
-        self.distribution.reset() # convert starting_items
+        self.distribution.reset()  # convert starting_items
         self.settings_string = self.get_settings_string()
         self.numeric_seed = self.get_numeric_seed()
-
 
     def get_numeric_seed(self):
         # salt seed with the settings, and hash to get a numeric seed
@@ -199,11 +195,9 @@ class Settings:
         full_string = self.settings_string + distribution + __version__ + self.seed
         return int(hashlib.sha256(full_string.encode('utf-8')).hexdigest(), 16)
 
-
     def sanitize_seed(self):
         # leave only alphanumeric and some punctuation
         self.seed = re.sub(r'[^a-zA-Z0-9_-]', '', self.seed, re.UNICODE)
-
 
     def update_seed(self, seed):
         if seed is None or seed == '':
@@ -213,7 +207,6 @@ class Settings:
             self.seed = seed
         self.sanitize_seed()
         self.numeric_seed = self.get_numeric_seed()
-
 
     def update(self):
         self.settings_string = self.get_settings_string()
@@ -249,34 +242,31 @@ class Settings:
 
 
     def check_dependency(self, setting_name, check_random=True):
-        return self.get_dependency(setting_name, check_random) == None
-
+        return self.get_dependency(setting_name, check_random) is None
 
     def get_dependency(self, setting_name, check_random=True):
-        info = get_setting_info(setting_name)
+        info = SettingInfos.setting_infos[setting_name]
         not_in_dist = '_settings' not in self.distribution.src_dict or info.name not in self.distribution.src_dict['_settings'].keys()
-        if check_random and 'randomize_key' in info.gui_params and self.__dict__[info.gui_params['randomize_key']] and not_in_dist:
+        if check_random and 'randomize_key' in info.gui_params and self.settings_dict[info.gui_params['randomize_key']] and not_in_dist:
             return info.disabled_default
-        elif info.dependency != None:
+        elif info.dependency is not None:
             return info.disabled_default if info.dependency(self) and not_in_dist else None
         else:
             return None
 
-
     def remove_disabled(self):
-        for info in setting_infos:
-            if info.dependency != None:
+        for info in self.setting_infos.values():
+            if info.dependency is not None:
                 new_value = self.get_dependency(info.name)
-                if new_value != None:
-                    self.__dict__[info.name] = new_value
+                if new_value is not None:
+                    self.settings_dict[info.name] = new_value
                     self._disabled.add(info.name)
 
         self.settings_string = self.get_settings_string()
         self.numeric_seed = self.get_numeric_seed()
 
-
     def resolve_random_settings(self, cosmetic, randomize_key=None):
-        sorted_infos = list(setting_infos)
+        sorted_infos = list(self.setting_infos.values())
         sort_key = lambda info: 0 if info.dependency is None else 1
         sorted_infos.sort(key=sort_key)
         randomize_keys_enabled = set()
@@ -298,28 +288,29 @@ class Settings:
             # Make sure the setting is meant to be randomized and not specified in distribution
             # We that check it's not specified in the distribution so that plando can override randomized settings
             not_in_dist = '_settings' not in self.distribution.src_dict or info.name not in self.distribution.src_dict['_settings'].keys()
-            if self.__dict__[info.gui_params['randomize_key']] and not_in_dist:
+            if self.settings_dict[info.gui_params['randomize_key']] and not_in_dist:
                 randomize_keys_enabled.add(info.gui_params['randomize_key'])
                 choices, weights = zip(*info.gui_params['distribution'])
-                self.__dict__[info.name] = random.choices(choices, weights=weights)[0]
+                self.settings_dict[info.name] = random.choices(choices, weights=weights)[0]
 
         # Second pass to make sure disabled settings are set properly.
         # Stupid hack: disable randomize keys, then re-enable.
         for randomize_keys in randomize_keys_enabled:
-            self.__dict__[randomize_keys] = False
+            self.settings_dict[randomize_keys] = False
         for info in sorted_infos:
             if cosmetic == info.shared:
                 continue
             dependency = self.get_dependency(info.name, check_random=False)
             if dependency is None:
                 continue
-            self.__dict__[info.name] = dependency
+            self.settings_dict[info.name] = dependency
         for randomize_keys in randomize_keys_enabled:
-            self.__dict__[randomize_keys] = True
-
+            self.settings_dict[randomize_keys] = True
 
     # add the settings as fields, and calculate information based on them
     def __init__(self, settings_dict, strict=False):
+        super().__init__()
+        self.numeric_seed = None
         if settings_dict.get('compress_rom', None):
             # Old compress_rom setting is set, so set the individual output settings using it.
             settings_dict['create_patch_file'] = settings_dict['compress_rom'] == 'Patch' or settings_dict.get('create_patch_file', False)
@@ -328,10 +319,10 @@ class Settings:
             del settings_dict['compress_rom']
         if strict:
             validate_settings(settings_dict)
-        self.__dict__.update(settings_dict)
-        for info in setting_infos:
-            if info.name not in self.__dict__:
-                self.__dict__[info.name] = info.default
+        self.settings_dict.update(settings_dict)
+        for info in self.setting_infos.values():
+            if info.name not in self.settings_dict:
+                self.settings_dict[info.name] = info.default
 
         if self.world_count < 1:
             self.world_count = 1
@@ -344,41 +335,45 @@ class Settings:
         self.update_seed(self.seed)
         self.custom_seed = False
 
+    def copy(self) -> 'Settings':
+        settings = copy.copy(self)
+        settings.settings_dict = copy.deepcopy(settings.settings_dict)
+        return settings
 
     def to_json(self, *, legacy_starting_items=False):
         if legacy_starting_items:
-            settings = copy.copy(self)
+            settings = self.copy()
             for setting_name, items in LEGACY_STARTING_ITEM_SETTINGS.items():
-                settings.__dict__[setting_name] = []
+                settings.settings_dict[setting_name] = []
                 for entry in items.values():
                     if entry.itemname in self.starting_items:
                         count = self.starting_items[entry.itemname]
                         if not isinstance(count, int):
                             count = count.count
                         if count > entry.i:
-                            settings.__dict__[setting_name].append(entry.settingname)
+                            settings.settings_dict[setting_name].append(entry.settingname)
         else:
             settings = self
         return {
             setting.name: (
                 {name: (
                     {name: record.to_json() for name, record in record.items()} if isinstance(record, dict) else record.to_json()
-                ) for name, record in settings.__dict__[setting.name].items()}
+                ) for name, record in settings.settings_dict[setting.name].items()}
                 if setting.name == 'starting_items' and not legacy_starting_items else
-                settings.__dict__[setting.name]
+                settings.settings_dict[setting.name]
             )
-            for setting in setting_infos
+            for setting in self.setting_infos.values()
             if setting.shared and (
                 setting.name not in self._disabled or
                 # We want to still include settings disabled by randomized settings options if they're specified in distribution
                 ('_settings' in self.distribution.src_dict and setting.name in self.distribution.src_dict['_settings'].keys())
             )
             # Don't want to include list starting equipment and songs, these are consolidated into starting_items
-            and (legacy_starting_items or not (setting.name == "starting_equipment" or setting.name == "starting_songs"))
+            and (legacy_starting_items or not (setting.name in LEGACY_STARTING_ITEM_SETTINGS))
         }
 
     def to_json_cosmetics(self):
-        return {setting.name: self.__dict__[setting.name] for setting in setting_infos if setting.cosmetic}
+        return {setting.name: self.settings_dict[setting.name] for setting in self.setting_infos.values() if setting.cosmetic}
 
 
 # gets the randomizer settings, whether to open the gui, and the logger level from command line arguments

@@ -84,9 +84,9 @@ class Rule_AST_Transformer(ast.NodeTransformer):
                 keywords=[])
         elif node.id in self.world.__dict__:
             return ast.parse('%r' % self.world.__dict__[node.id], mode='eval').body
-        elif node.id in self.world.settings.__dict__:
+        elif node.id in self.world.settings.settings_dict:
             # Settings are constant
-            return ast.parse('%r' % self.world.settings.__dict__[node.id], mode='eval').body
+            return ast.parse('%r' % self.world.settings.settings_dict[node.id], mode='eval').body
         elif node.id in State.__dict__:
             return self.make_call(node, node.id, [], [])
         elif node.id in kwarg_defaults or node.id in special_globals:
@@ -142,7 +142,7 @@ class Rule_AST_Transformer(ast.NodeTransformer):
 
         if isinstance(count, ast.Name):
             # Must be a settings constant
-            count = ast.parse('%r' % self.world.settings.__dict__[count.id], mode='eval').body
+            count = ast.parse('%r' % self.world.settings.settings_dict[count.id], mode='eval').body
 
         if item.id not in ItemInfo.solver_ids:
             self.events.add(item.id.replace('_', ' '))
@@ -192,7 +192,7 @@ class Rule_AST_Transformer(ast.NodeTransformer):
                             ctx=ast.Load()),
                         attr=child.id,
                         ctx=ast.Load())
-                elif child.id in self.world.settings.__dict__:
+                elif child.id in self.world.settings.settings_dict:
                     child = ast.Attribute(
                         value=ast.Attribute(
                             value=ast.Attribute(
@@ -247,7 +247,7 @@ class Rule_AST_Transformer(ast.NodeTransformer):
         if (len(node.ops) == 1 and isinstance(node.ops[0], ast.Eq)
                 and isinstance(node.left, ast.Name) and isinstance(node.comparators[0], ast.Name)
                 and node.left.id not in self.world.__dict__ and node.comparators[0].id not in self.world.__dict__
-                and node.left.id not in self.world.settings.__dict__ and node.comparators[0].id not in self.world.settings.__dict__):
+                and node.left.id not in self.world.settings.settings_dict and node.comparators[0].id not in self.world.settings.settings_dict):
             return ast.NameConstant(node.left.id == node.comparators[0].id)
 
         node.left = escape_or_string(node.left)
@@ -299,7 +299,7 @@ class Rule_AST_Transformer(ast.NodeTransformer):
                 items.add(escape_name(elt.s))
             elif (isinstance(elt, ast.Name) and elt.id not in rule_aliases
                     and elt.id not in self.world.__dict__
-                    and elt.id not in self.world.settings.__dict__
+                    and elt.id not in self.world.settings.settings_dict
                     and elt.id not in dir(self)
                     and elt.id not in State.__dict__):
                 items.add(elt.id)

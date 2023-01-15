@@ -363,7 +363,7 @@ class TestPlandomizer(unittest.TestCase):
             distribution_file, spoiler = generate_with_plandomizer(filename)
             pool_set = {i for i, c in spoiler['item_pool'].items()}
             self.assertEqual(
-                set(['Rupees (5)']),
+                {'Rupees (5)'},
                 pool_set - ludicrous_set,
                 'Ludicrous pool missing forced location junk items')
 
@@ -838,7 +838,7 @@ class TestValidSpoilers(unittest.TestCase):
                 except Exception as e:
                     # output the settings file in case of any failure
                     with open(settings_file, 'w') as f:
-                        d = {k: settings.__dict__[k] for k in out_keys}
+                        d = {k: settings.settings_dict[k] for k in out_keys}
                         json.dump(d, f, indent=0)
                     logging.getLogger('').exception(f'Failed to generate with these settings:\n{settings.get_settings_display()}\n')
                     raise

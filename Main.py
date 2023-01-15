@@ -71,7 +71,7 @@ def resolve_settings(settings):
         logger.error('Tricks are set in two places! Using only the tricks from the distribution file.')
 
     for trick in logic_tricks.values():
-        settings.__dict__[trick['name']] = trick['name'] in settings.allowed_tricks
+        settings.settings_dict[trick['name']] = trick['name'] in settings.allowed_tricks
 
     # we load the rom before creating the seed so that errors get caught early
     outputting_specific_world = settings.create_uncompressed_rom or settings.create_compressed_rom or settings.create_wad_file
@@ -124,7 +124,7 @@ def build_world_graphs(settings):
     logger = logging.getLogger('')
     worlds = []
     for i in range(0, settings.world_count):
-        worlds.append(World(i, copy.copy(settings)))
+        worlds.append(World(i, settings.copy()))
 
     savewarps_to_connect = []
     for id, world in enumerate(worlds):
