@@ -13,12 +13,6 @@ class State(object):
         self._won = self.won_triforce_hunt if self.world.settings.triforce_hunt else self.won_normal
 
 
-    ## Ensure that this will always have a value
-    @property
-    def is_glitched(self):
-        return self.world.settings.logic_rules != 'glitchless'
-
-
     def copy(self, new_world=None):
         if not new_world:
             new_world = self.world
