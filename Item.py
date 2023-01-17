@@ -189,7 +189,7 @@ def ItemFactory(items, world=None, event=False):
 
 def MakeEventItem(name, location, item=None):
     if item is None:
-        item = ItemFactory(name, location.world, event=True)
+        item = Item(name, location.world, event=True)
     location.world.push_item(location, item)
     location.locked = True
     if name not in item_table:
