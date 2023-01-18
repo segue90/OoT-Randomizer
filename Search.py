@@ -291,6 +291,8 @@ class Search(object):
     def iter_pseudo_starting_locations(self):
         for state in self.state_list:
             for location in state.world.distribution.skipped_locations:
+                # We need to use the locations in the current world
+                location = state.world.get_location(location.name)
                 self._cache['visited_locations'].add(location)
                 yield location
 

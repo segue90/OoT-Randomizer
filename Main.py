@@ -682,6 +682,7 @@ def find_misc_hint_items(spoiler):
 
 
 def create_playthrough(spoiler):
+    logger = logging.getLogger('')
     worlds = spoiler.worlds
     if worlds[0].check_beatable_only and not Search([world.state for world in worlds]).can_beat_game():
         raise RuntimeError('Game unbeatable after placing all items.')
@@ -694,6 +695,7 @@ def create_playthrough(spoiler):
         raise RuntimeError('Uncopied world beatable but copied world is not.')
 
     search = RewindableSearch([world.state for world in worlds])
+    logger.debug('Initial search: %s', search.state_list[0].get_prog_items())
     # Get all item locations in the worlds
     item_locations = search.progression_locations()
     # Omit certain items from the playthrough
@@ -701,7 +703,6 @@ def create_playthrough(spoiler):
     # Generate a list of spheres by iterating over reachable locations without collecting as we go.
     # Collecting every item in one sphere means that every item
     # in the next sphere is collectable. Will contain every reachable item this way.
-    logger = logging.getLogger('')
     logger.debug('Building up collection spheres.')
     collection_spheres = []
     entrance_spheres = []
@@ -709,6 +710,7 @@ def create_playthrough(spoiler):
 
     search.checkpoint()
     search.collect_pseudo_starting_items()
+    logger.debug('With pseudo starting items: %s', search.state_list[0].get_prog_items())
 
     while True:
         search.checkpoint()
@@ -752,7 +754,7 @@ def create_playthrough(spoiler):
             location.item = None
 
             # An item can only be required if it isn't already obtained or if it's progressive
-            if search.state_list[old_item.world.id].item_count(old_item.name) < old_item.world.max_progressions[old_item.name]:
+            if search.state_list[old_item.world.id].item_count(old_item.solver_id) < old_item.world.max_progressions[old_item.name]:
                 # Test whether the game is still beatable from here.
                 logger.debug('Checking if %s is required to beat the game.', old_item.name)
                 if not search.can_beat_game():
@@ -807,6 +809,10 @@ def create_playthrough(spoiler):
             search.state_list[location.item.world.id].collect(location.item)
         collected.clear()
     logger.info('Collected %d final spheres', len(collection_spheres))
+
+    if not search.can_beat_game():
+        logger.error("Didn't beat game after all!")
+        logger.debug('Missing these locations: %s', ', '.join(loc.name for loc in set(required_locations) - search._cache['visited_locations'] - internal_locations))
 
     # Then we can finally output our playthrough
     spoiler.playthrough = OrderedDict((str(i), {location: location.item for location in sphere}) for i, sphere in enumerate(collection_spheres))
