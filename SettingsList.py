@@ -4833,6 +4833,7 @@ setting_infos = [
             '30_skulltulas':  'House of Skulltula: 30',
             '40_skulltulas':  'House of Skulltula: 40',
             '50_skulltulas':  'House of Skulltula: 50',
+            'frogs2':         'Frogs Ocarina Game',
         },
         gui_tooltip    = '''\
             This setting adds some hints at locations
@@ -4867,6 +4868,11 @@ setting_infos = [
             Talking to a cursed House of Skulltula
             resident will tell you the reward they will
             give you for removing their curse.
+
+            Placing yourself on the log at Zora River
+            where you play the songs for the frogs will
+            tell you what the reward is for playing all
+            six non warp songs.
         ''',
         shared         = True,
         default        = ['altar', 'ganondorf', 'warp_songs'],

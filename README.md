@@ -116,6 +116,7 @@ issue. You should always Hard Reset to avoid this issue entirely.
   * New ER setting `Shuffle Gerudo Valley River Exit` allows you to shuffle the one-way exit going down the river in Gerudo Valley.
 * **Hints**
   * New `Important Checks` hint type which hints at how many major items are in a given region.
+  * New Misc. Hint `Frogs Ocarina Game` which tells you what item you'll get from the Zora's River frog minigame. The hint appears in the dialog box that's printed before they jump onto the log.
 
 #### Bug Fixes
 * Fix an issue where the `path of hearts` goal wasn't enabled in certain circumstances with a Ganon's Boss Key or LACS `Hearts` goal.
