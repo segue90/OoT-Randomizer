@@ -260,9 +260,31 @@ def patch_rom(spoiler:Spoiler, world:World, rom:Rom):
         rom.write_bytes(symbol, part_bytes)
 
     # Change graveyard graves to not allow grabbing on to the ledge
-    rom.write_byte(0x0202039D, 0x20)
-    rom.write_byte(0x0202043C, 0x24)
 
+    # new floor type definition in the Graveyard
+    # first byte 0x24 causes you to fall off instead of jumping or grabbing the ledge
+    # otherwise identical to the originally used one
+    # overwrites zero-padding far past the end of the collision type array
+    rom.write_int32s(0x2026C04, [0x24000004, 0x00000FC8])
+    # indices from the array of polygons
+    floors_surrounding_graves = (range(494, 502),  # fairy fountain
+                                 range(502, 510),  # HP grave
+                                 range(487, 494),  # Dampé's grave
+                                 range(651, 659))  # royal tomb
+    for grave in floors_surrounding_graves:
+        for poly in grave:
+            # use the new floor type
+            rom.write_int16(0x2020494 + poly * 0x10, 0x0D0D)  # replaces 0x0014
+
+    grave_walls = (range(613, 621),  # fairy fountain
+                   range(623, 631),  # HP grave
+                   range(633, 641),  # Dampé's grave
+                   range(643, 651))  # royal tomb
+    for grave in grave_walls:
+        for poly in grave:
+            # use existing wall type that prevents grabbing ledges from midair
+            # otherwise identical to the originally used one
+            rom.write_int16(0x2020494 + poly * 0x10, 0x000F)  # replaces 0x0000
 
     # Fix Castle Courtyard to check for meeting Zelda, not Zelda fleeing, to block you
     rom.write_bytes(0xCD5E76, [0x0E, 0xDC])
