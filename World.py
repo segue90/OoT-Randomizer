@@ -303,9 +303,12 @@ class World(object):
         # over again after the first round through the categories.
         if len(self.goal_categories) > 0:
             self.one_hint_per_goal = True
-            goal_list1 = [goal.name for goal in list(self.goal_categories.values())[0].goals]
+            goal_list1 = []
             for category in self.goal_categories.values():
-                if goal_list1 != [goal.name for goal in category.goals]:
+                if category.name != 'door_of_time':
+                    goal_list1 = [goal.name for goal in category.goals]
+            for category in self.goal_categories.values():
+                if goal_list1 != [goal.name for goal in category.goals] and category.name != 'door_of_time':
                     self.one_hint_per_goal = False
 
         # initialize category check for first rounds of goal hints
@@ -726,6 +729,7 @@ class World(object):
         # and Skull conditions, there is only one goal in the category
         # requesting X copies within the goal, so minimum goals has to
         # be 1 for these.
+        dot = GoalCategory('door_of_time', 5, lock_entrances=['Temple of Time -> Beyond Door of Time'], minimum_goals=1)
         b = GoalCategory('rainbow_bridge', 10, lock_entrances=['Ganons Castle Grounds -> Ganons Castle Lobby'])
         gbk = GoalCategory('ganon_bosskey', 20)
         trials = GoalCategory('trials', 30, minimum_goals=1)
@@ -755,6 +759,15 @@ class World(object):
         # wording is used to distinguish the hint type even though the hintable location
         # set is identical to WOTH.
         if not self.settings.triforce_hunt:
+            if self.settings.starting_age == 'child':
+                dot_items = [{'name': 'Temple of Time Access', 'quantity': 1, 'minimum': 1, 'hintable': True}]
+                if not self.settings.open_door_of_time:
+                    dot_items.append({'name': 'Song of Time', 'quantity': 2 if self.settings.shuffle_song_items == 'any' and self.settings.item_pool_value == 'plentiful' else 1, 'minimum': 1, 'hintable': True})
+                    if self.settings.shuffle_ocarinas:
+                        dot_items.append({'name': 'Ocarina', 'quantity': 3 if self.settings.item_pool_value == 'plentiful' else 2, 'minimum': 1, 'hintable': True})
+                dot.add_goal(Goal(self, 'Door of Time', 'path of time', 'Light Blue', items=dot_items))
+                self.goal_categories[dot.name] = dot
+
             # Bridge goals will always be defined as they have the most immediate priority
             if self.settings.bridge != 'open' and not self.shuffle_special_dungeon_entrances:
                 # "Replace" hint text dictionaries are used to reference the
