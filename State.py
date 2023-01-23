@@ -2,7 +2,8 @@ from collections import Counter
 import copy
 import logging
 
-from Item import ItemInfo, escape_name
+from Item import ItemInfo
+from RulesCommon import escape_name
 
 Triforce_Piece = ItemInfo.solver_ids['Triforce_Piece']
 Triforce = ItemInfo.solver_ids['Triforce']

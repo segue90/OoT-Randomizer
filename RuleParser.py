@@ -3,10 +3,10 @@ from collections import defaultdict
 import logging
 import re
 
-from Item import ItemInfo, Item, MakeEventItem, escape_name
+from Item import ItemInfo, Item, MakeEventItem
 from Location import Location
 from Region import TimeOfDay
-from RulesCommon import allowed_globals
+from RulesCommon import allowed_globals, escape_name
 from State import State
 from Utils import data_path, read_logic_file
 

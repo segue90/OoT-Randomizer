@@ -810,9 +810,9 @@ def create_playthrough(spoiler):
         collected.clear()
     logger.info('Collected %d final spheres', len(collection_spheres))
 
-    if not search.can_beat_game():
-        logger.error("Didn't beat game after all!")
-        logger.debug('Missing these locations: %s', ', '.join(loc.name for loc in set(required_locations) - search._cache['visited_locations'] - internal_locations))
+    if not search.can_beat_game(False):
+        logger.error('Playthrough could not beat the game!')
+        # Add temporary debugging info or breakpoint here if this happens
 
     # Then we can finally output our playthrough
     spoiler.playthrough = OrderedDict((str(i), {location: location.item for location in sphere}) for i, sphere in enumerate(collection_spheres))

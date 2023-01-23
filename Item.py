@@ -1,11 +1,7 @@
 import re
 
 from ItemList import item_table
-from RulesCommon import allowed_globals
-
-_escape = re.compile(r'[\'()[\]-]')
-def escape_name(name):
-    return _escape.sub('', name.replace(' ', '_'))
+from RulesCommon import allowed_globals, escape_name
 
 
 class ItemInfo(object):
