@@ -57,7 +57,7 @@ def check_presets_formatting(fix_errors=False):
         if fix_errors:
             with open(data_path('presets_default.json'), 'w', encoding='utf-8', newline='') as file:
                 json.dump(presets, file, indent=4)
-                print(file=f)
+                print(file=file)
 
 def check_hell_mode_tricks(fix_errors=False):
     # Check for tricks missing from Hell Mode preset.
@@ -76,7 +76,7 @@ def check_hell_mode_tricks(fix_errors=False):
         presets['Hell Mode']['allowed_tricks'] = [trick['name'] for trick in logic_tricks.values()]
         with open(data_path('presets_default.json'), 'w', encoding='utf-8', newline='') as file:
             json.dump(presets, file, indent=4)
-            print(file=f)
+            print(file=file)
 
 
 def check_code_style(fix_errors=False):
