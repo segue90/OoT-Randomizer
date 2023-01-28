@@ -59,14 +59,20 @@ def check_presets_formatting(fix_errors=False):
                 json.dump(presets, file, indent=4)
                 print(file=f)
 
-def check_hell_mode_tricks():
+def check_hell_mode_tricks(fix_errors=False):
     # Check for tricks missing from Hell Mode preset.
     with open(data_path('presets_default.json'), encoding='utf-8') as f:
         presets = json.load(f)
 
     for trick in logic_tricks.values():
         if trick['name'] not in presets['Hell Mode']['allowed_tricks']:
-            error(f'Logic trick {trick["name"]!r} missing from Hell Mode preset.', False)
+            error(f'Logic trick {trick["name"]!r} missing from Hell Mode preset.', True)
+
+    if fix_errors:
+        presets['Hell Mode']['allowed_tricks'] = [trick['name'] for trick in logic_tricks.values()]
+        with open(data_path('presets_default.json'), 'w', encoding='utf-8', newline='') as file:
+            json.dump(presets, file, indent=4)
+            print(file=f)
 
 
 def check_code_style(fix_errors=False):
@@ -125,7 +131,7 @@ def run_ci_checks():
         run_unit_tests()
 
     if not args.only_unit_tests:
-        check_hell_mode_tricks()
+        check_hell_mode_tricks(args.fix)
         check_code_style(args.fix)
         check_presets_formatting(args.fix)
 
