@@ -14,11 +14,15 @@ from SettingsList import logic_tricks
 from Utils import data_path
 
 
-def error(msg):
+def error(msg, can_fix):
     if not hasattr(error, "count"):
         error.count = 0
     print(msg, file=sys.stderr)
     error.count += 1
+    if can_fix:
+        error.can_fix = True
+    else:
+        error.cannot_fix = True
 
 
 def run_unit_tests():
@@ -31,7 +35,7 @@ def run_unit_tests():
     stream.seek(0)
     print(f'Test output:\n{stream.read()}')
     if result.errors:
-        error('Unit Tests had an error, see output above.')
+        error('Unit Tests had an error, see output above.', False)
 
 
 def check_hell_mode_tricks():
@@ -40,7 +44,7 @@ def check_hell_mode_tricks():
         presets = json.load(f)
         for trick in logic_tricks.values():
             if trick['name'] not in presets['Hell Mode']['allowed_tricks']:
-                error(f'Logic trick {trick["name"]!r} missing from Hell Mode preset.')
+                error(f'Logic trick {trick["name"]!r} missing from Hell Mode preset.', False)
 
 
 def check_code_style(fix_errors=False):
@@ -53,11 +57,11 @@ def check_code_style(fix_errors=False):
             path = path.relative_to(repo_dir)
             for i, line in enumerate(file, start=1):
                 if not line.endswith('\n'):
-                    error(f'Missing line break at end of {path}')
+                    error(f'Missing line break at end of {path}', True)
                     line += '\n'
                 line = line.rstrip('\n')
                 if '\t' in line:
-                    error(f'Hard tab on line {i} of {path}')
+                    error(f'Hard tab on line {i} of {path}', True)
                     fixed_line = ''
                     for c in line:
                         if c == '\t':
@@ -66,7 +70,7 @@ def check_code_style(fix_errors=False):
                             fixed_line += c
                     line = fixed_line
                 if line.endswith(' '):
-                    error(f'Trailing whitespace on line {i} of {path}')
+                    error(f'Trailing whitespace on line {i} of {path}', True)
                     line = line.rstrip(' ')
                 fixed += line + '\n'
         if fix_errors:
@@ -94,21 +98,33 @@ def run_ci_checks():
     parser.add_argument('--fix', help='Automatically apply fixes where possible', action='store_true')
     args = parser.parse_args()
 
-    if args.only_unit_tests:
-        run_unit_tests()
-        exit_ci()
-
     if not args.no_unit_tests:
         run_unit_tests()
-    check_hell_mode_tricks()
-    check_code_style(args.fix)
-    exit_ci()
+
+    if not args.only_unit_tests:
+        check_hell_mode_tricks()
+        check_code_style(args.fix)
+
+    exit_ci(args.fix)
 
 
-def exit_ci():
+def exit_ci(fix_errors=False):
     if hasattr(error, "count") and error.count:
         print(f'CI failed with {error.count} errors.', file=sys.stderr)
-        sys.exit(1)
+        if fix_errors:
+            if getattr(error, 'cannot_fix', False):
+                print('Some errors could not be fixed automatically.', file=sys.stderr)
+                sys.exit(1)
+            else:
+                print('All errors fixed.', file=sys.stderr)
+                sys.exit(0)
+        else:
+            if getattr(error, 'can_fix', False):
+                if getattr(error, 'cannot_fix', False):
+                    print('Run `CI.py --fix` to automatically fix some of these errors.', file=sys.stderr)
+                else:
+                    print('Run `CI.py --fix` to automatically fix these errors.', file=sys.stderr)
+            sys.exit(1)
     else:
         print(f'CI checks successful.')
         sys.exit(0)
