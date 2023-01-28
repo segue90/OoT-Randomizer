@@ -10,7 +10,7 @@ import pathlib
 import argparse
 
 import Unittest as Tests
-from SettingsList import logic_tricks
+from SettingsList import logic_tricks, validate_settings
 from Utils import data_path
 
 
@@ -38,13 +38,35 @@ def run_unit_tests():
         error('Unit Tests had an error, see output above.', False)
 
 
+def check_presets_formatting(fix_errors=False):
+    # Check the code style of presets_default.json
+    with open(data_path('presets_default.json'), encoding='utf-8') as f:
+        presets = json.load(f)
+
+    for preset_name, preset in presets.items():
+        try:
+            validate_settings(preset, check_conflicts=False)
+        except Exception as e:
+            error(f'Error in {preset_name} preset: {e}', False)
+
+    with open(data_path('presets_default.json'), encoding='utf-8') as f:
+        presets_str = f.read()
+
+    if presets_str != json.dumps(presets, indent=4) + '\n':
+        error('presets not formatted correctly', True)
+        if fix_errors:
+            with open(data_path('presets_default.json'), 'w', encoding='utf-8', newline='') as file:
+                json.dump(presets, file, indent=4)
+                print(file=f)
+
 def check_hell_mode_tricks():
     # Check for tricks missing from Hell Mode preset.
     with open(data_path('presets_default.json'), encoding='utf-8') as f:
         presets = json.load(f)
-        for trick in logic_tricks.values():
-            if trick['name'] not in presets['Hell Mode']['allowed_tricks']:
-                error(f'Logic trick {trick["name"]!r} missing from Hell Mode preset.', False)
+
+    for trick in logic_tricks.values():
+        if trick['name'] not in presets['Hell Mode']['allowed_tricks']:
+            error(f'Logic trick {trick["name"]!r} missing from Hell Mode preset.', False)
 
 
 def check_code_style(fix_errors=False):
@@ -89,6 +111,7 @@ def check_code_style(fix_errors=False):
     for path in (repo_dir / 'ASM' / 'src').iterdir():
         if path.suffix == '.asm':
             check_file_format(path)
+    check_file_format(repo_dir / 'data' / 'presets_default.json')
 
 
 def run_ci_checks():
@@ -104,6 +127,7 @@ def run_ci_checks():
     if not args.only_unit_tests:
         check_hell_mode_tricks()
         check_code_style(args.fix)
+        check_presets_formatting(args.fix)
 
     exit_ci(args.fix)
 
