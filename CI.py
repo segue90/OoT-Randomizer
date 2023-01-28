@@ -68,6 +68,10 @@ def check_hell_mode_tricks(fix_errors=False):
         if trick['name'] not in presets['Hell Mode']['allowed_tricks']:
             error(f'Logic trick {trick["name"]!r} missing from Hell Mode preset.', True)
 
+    if set(presets['Hell Mode']['allowed_tricks']) == {trick['name'] for trick in logic_tricks.values()}:
+        if presets['Hell Mode']['allowed_tricks'] != [trick['name'] for trick in logic_tricks.values()]:
+            error(f'Order of logic tricks in Hell Mode preset does not match definition order in SettingsList.py', True)
+
     if fix_errors:
         presets['Hell Mode']['allowed_tricks'] = [trick['name'] for trick in logic_tricks.values()]
         with open(data_path('presets_default.json'), 'w', encoding='utf-8', newline='') as file:
