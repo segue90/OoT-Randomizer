@@ -471,7 +471,10 @@ def shuffle_random_entrances(worlds):
                 wincons = [worlds[0].settings.bridge, worlds[0].settings.shuffle_ganon_bosskey]
                 if worlds[0].settings.shuffle_ganon_bosskey == 'on_lacs':
                     wincons.append(worlds[0].settings.lacs_condition)
-                if worlds[0].settings.reachable_locations == 'all': # only required for the bean patch skulltula
+                if (
+                    worlds[0].settings.reachable_locations == 'all'
+                    or ('tokens' in wincons and worlds[0].settings.tokensanity in ('off', 'dungeons'))
+                ):
                     one_way_priorities['Bolero'] = priority_entrance_table['Bolero']
                 if (
                     worlds[0].settings.reachable_locations == 'all'
