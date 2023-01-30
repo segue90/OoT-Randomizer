@@ -468,15 +468,16 @@ def shuffle_random_entrances(worlds):
             one_way_entrance_pools['WarpSong'] = world.get_shufflable_entrances(type='WarpSong')
             if worlds[0].settings.reachable_locations != 'beatable' and worlds[0].settings.logic_rules == 'glitchless':
                 # In glitchless, there aren't any other ways to access these areas
+                wincons = [worlds[0].settings.bridge, worlds[0].settings.shuffle_ganon_bosskey]
+                if worlds[0].settings.shuffle_ganon_bosskey == 'on_lacs':
+                    wincons.append(worlds[0].settings.lacs_condition)
                 if worlds[0].settings.reachable_locations == 'all': # only required for the bean patch skulltula
                     one_way_priorities['Bolero'] = priority_entrance_table['Bolero']
                 if (
                     worlds[0].settings.reachable_locations == 'all'
-                    or worlds[0].settings.bridge in ('stones', 'medallions', 'dungeons')
-                    or worlds[0].settings.shuffle_ganon_bosskey in ('stones', 'medallions', 'dungeons')
-                    or (worlds[0].settings.tokensanity in ('off', 'overworld') and 'tokens' in (worlds[0].settings.bridge, worlds[0].settings.shuffle_ganon_bosskey))
-                    or (worlds[0].settings.shuffle_ganon_bosskey == 'on_lacs' and worlds[0].settings.lacs_condition in ('stones', 'medallions', 'dungeons'))
-                    or (worlds[0].settings.shuffle_ganon_bosskey == 'on_lacs' and worlds[0].settins.lacs_condition == 'tokens' and worlds[0].settings.tokensanity in ('off', 'overworld'))
+                    or 'dungeons' in wincons
+                    or ('stones' in wincons and 'medallions' in wincons)
+                    or ('tokens' in wincons and worlds[0].settings.tokensanity in ('off', 'overworld'))
                 ):
                     one_way_priorities['Nocturne'] = priority_entrance_table['Nocturne']
                 if (
@@ -485,11 +486,9 @@ def shuffle_random_entrances(worlds):
                     and not worlds[0].shuffle_special_interior_entrances
                     and (
                         worlds[0].settings.reachable_locations == 'all'
-                        or worlds[0].settings.bridge in ('stones', 'medallions', 'dungeons')
-                        or worlds[0].settings.shuffle_ganon_bosskey in ('stones', 'medallions', 'dungeons')
-                        or (worlds[0].settings.tokensanity != 'all' and 'tokens' in (worlds[0].settings.bridge, worlds[0].settings.shuffle_ganon_bosskey))
-                        or (worlds[0].settings.shuffle_ganon_bosskey == 'on_lacs' and worlds[0].settings.lacs_condition in ('stones', 'medallions', 'dungeons'))
-                        or (worlds[0].settings.shuffle_ganon_bosskey == 'on_lacs' and worlds[0].settins.lacs_condition == 'tokens' and worlds[0].settings.tokensanity != 'all')
+                        or 'dungeons' in wincons
+                        or ('stones' in wincons and 'medallions' in wincons)
+                        or ('tokens' in wincons and worlds[0].settings.tokensanity != 'all')
                     )
                 ):
                     one_way_priorities['Requiem'] = priority_entrance_table['Requiem']
