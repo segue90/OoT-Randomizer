@@ -1040,6 +1040,8 @@ def get_important_check_hint(spoiler, world, checked):
                 or location.item.name == 'Ocarina' and not world.settings.shuffle_ocarinas
                 or 'Bean' in location.item.name and not world.settings.shuffle_beans
                 or location.item.name == 'Weird Egg' and not world.settings.shuffle_child_trade == 'shuffle')
+                or location.item.name == 'Biggoron Sword'
+                or location.item.name == 'Double Defense'
                 or (location.item.type == 'SmallKey' and not (world.settings.shuffle_smallkeys == 'dungeon' or world.settings.shuffle_smallkeys == 'vanilla'))
                 or (location.item.type == 'HideoutSmallKey' and not world.settings.shuffle_hideoutkeys == 'vanilla')
                 or (location.item.type == 'BossKey' and not (world.settings.shuffle_bosskeys == 'dungeon' or world.settings.shuffle_bosskeys == 'vanilla'))
