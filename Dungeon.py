@@ -1,27 +1,30 @@
-import os
+from typing import TYPE_CHECKING, List
 
 from Hints import HintArea
-from Utils import data_path
+
+if TYPE_CHECKING:
+    from Item import Item
+    from Region import Region
+    from World import World
 
 
 class Dungeon:
-    def __init__(self, world, name, hint):
-        self.world = world
-        self.name = name
-        self.hint = hint
-        self.regions = []
-        self.boss_key = []
-        self.small_keys = []
-        self.dungeon_items = []
-        self.silver_rupees = []
+    def __init__(self, world: "World", name: str, hint: HintArea) -> None:
+        self.world: "World" = world
+        self.name: str = name
+        self.hint: HintArea = hint
+        self.regions: "List[Region]" = []
+        self.boss_key: "List[Item]" = []
+        self.small_keys: "List[Item]" = []
+        self.dungeon_items: "List[Item]" = []
+        self.silver_rupees: "List[Item]" = []
 
         for region in world.regions:
             if region.dungeon == self.name:
                 region.dungeon = self
                 self.regions.append(region)
 
-
-    def copy(self, new_world):
+    def copy(self, new_world: "World") -> 'Dungeon':
         new_dungeon = Dungeon(new_world, self.name, self.hint)
 
         new_dungeon.boss_key = [item.copy(new_world) for item in self.boss_key]
@@ -31,50 +34,22 @@ class Dungeon:
 
         return new_dungeon
 
-
     @property
-    def keys(self):
+    def keys(self) -> "List[Item]":
         return self.small_keys + self.boss_key
 
-
     @property
-    def all_items(self):
+    def all_items(self) -> "List[Item]":
         return self.dungeon_items + self.keys + self.silver_rupees
 
-
-    def item_name(self, text):
+    def item_name(self, text: str) -> str:
         return f"{text} ({self.name})"
 
-
-    def is_dungeon_item(self, item):
+    def is_dungeon_item(self, item: "Item") -> bool:
         return item.name in [dungeon_item.name for dungeon_item in self.all_items]
 
-
-    def __str__(self):
+    def __str__(self) -> str:
         return str(self.__unicode__())
 
-
-    def __unicode__(self):
+    def __unicode__(self) -> str:
         return '%s' % self.name
-
-
-def create_dungeons(world):
-    savewarps_to_connect = []
-    for hint_area in HintArea:
-        if hint_area.is_dungeon:
-            name = hint_area.dungeon_name
-
-            if world.settings.logic_rules == 'glitched':
-                if not world.dungeon_mq[name]:
-                    dungeon_json = os.path.join(data_path('Glitched World'), name + '.json')
-                else:
-                    dungeon_json = os.path.join(data_path('Glitched World'), name + ' MQ.json')
-            else:
-                if not world.dungeon_mq[name]:
-                    dungeon_json = os.path.join(data_path('World'), name + '.json')
-                else:
-                    dungeon_json = os.path.join(data_path('World'), name + ' MQ.json')
-
-            savewarps_to_connect += world.load_regions_from_json(dungeon_json)
-            world.dungeons.append(Dungeon(world, name, hint_area))
-    return savewarps_to_connect

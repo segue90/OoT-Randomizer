@@ -1,53 +1,56 @@
 from enum import Enum, unique
+from typing import TYPE_CHECKING, List, Optional
+
+if TYPE_CHECKING:
+    from Dungeon import Dungeon
+    from Entrance import Entrance
+    from Hints import HintArea
+    from Item import Item
+    from Location import Location
+    from World import World
 
 
 @unique
 class RegionType(Enum):
-
     Overworld = 1
     Interior = 2
     Dungeon = 3
     Grotto = 4
 
-
     @property
-    def is_indoors(self):
+    def is_indoors(self) -> bool:
         """Shorthand for checking if Interior or Dungeon"""
         return self in (RegionType.Interior, RegionType.Dungeon, RegionType.Grotto)
 
 
 # Pretends to be an enum, but when the values are raw ints, it's much faster
-class TimeOfDay(object):
-    NONE = 0
-    DAY = 1
-    DAMPE = 2
-    ALL = DAY | DAMPE
+class TimeOfDay:
+    NONE: int = 0
+    DAY: int = 1
+    DAMPE: int = 2
+    ALL: int = DAY | DAMPE
 
 
-class Region(object):
+class Region:
+    def __init__(self, world: "World", name: str, region_type: RegionType = RegionType.Overworld) -> None:
+        self.world: "World" = world
+        self.name: str = name
+        self.type: RegionType = region_type
+        self.entrances: "List[Entrance]" = []
+        self.exits: "List[Entrance]" = []
+        self.locations: "List[Location]" = []
+        self.dungeon: "Optional[Dungeon]" = None
+        self.hint_name: Optional[str] = None
+        self.alt_hint_name: Optional[str] = None
+        self.price: Optional[int] = None
+        self.time_passes: bool = False
+        self.provides_time: int = TimeOfDay.NONE
+        self.scene: Optional[str] = None
+        self.is_boss_room: bool = False
+        self.savewarp: "Optional[Entrance]" = None
 
-    def __init__(self, name, type=RegionType.Overworld):
-        self.name = name
-        self.type = type
-        self.entrances = []
-        self.exits = []
-        self.locations = []
-        self.dungeon = None
-        self.world = None
-        self.hint_name = None
-        self.alt_hint_name = None
-        self.price = None
-        self.world = None
-        self.time_passes = False
-        self.provides_time = TimeOfDay.NONE
-        self.scene = None
-        self.is_boss_room = False
-        self.savewarp = None
-
-
-    def copy(self, new_world):
-        new_region = Region(self.name, self.type)
-        new_region.world = new_world
+    def copy(self, new_world: "World") -> 'Region':
+        new_region = Region(new_world, self.name, self.type)
         new_region.price = self.price
         new_region.hint_name = self.hint_name
         new_region.alt_hint_name = self.alt_hint_name
@@ -63,9 +66,8 @@ class Region(object):
 
         return new_region
 
-
     @property
-    def hint(self):
+    def hint(self) -> "HintArea":
         from Hints import HintArea
 
         if self.hint_name is not None:
@@ -74,14 +76,13 @@ class Region(object):
             return self.dungeon.hint
 
     @property
-    def alt_hint(self):
+    def alt_hint(self) -> "HintArea":
         from Hints import HintArea
 
         if self.alt_hint_name is not None:
             return HintArea[self.alt_hint_name]
 
-
-    def can_fill(self, item, manual=False):
+    def can_fill(self, item: "Item", manual: bool = False) -> bool:
         if not manual and self.world.settings.empty_dungeons_mode != 'none' and item.dungeonitem:
             # An empty dungeon can only store its own dungeon items
             if self.dungeon and self.dungeon.world.empty_dungeons[self.dungeon.name].empty:
@@ -135,8 +136,7 @@ class Region(object):
 
         return True
 
-
-    def get_scene(self):
+    def get_scene(self) -> Optional[str]:
         if self.scene:
             return self.scene
         elif self.dungeon:
@@ -144,11 +144,8 @@ class Region(object):
         else:
             return None
 
-
-    def __str__(self):
+    def __str__(self) -> str:
         return str(self.__unicode__())
 
-
-    def __unicode__(self):
+    def __unicode__(self) -> str:
         return '%s' % self.name
-

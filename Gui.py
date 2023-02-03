@@ -10,14 +10,15 @@ if sys.version_info < (3, 6, 0):
     input("Press enter to exit...")
     sys.exit(1)
 
-import subprocess
 import shutil
+import subprocess
 import webbrowser
-from Utils import local_path, data_path, compare_version, VersionError
+
 from SettingsToJson import create_settings_list_json
+from Utils import local_path, data_path, compare_version, VersionError
 
 
-def gui_main():
+def gui_main() -> None:
     try:
         version_check("Node", "14.15.0", "https://nodejs.org/en/download/")
         version_check("NPM", "6.12.0", "https://nodejs.org/en/download/")
@@ -37,18 +38,18 @@ def gui_main():
     subprocess.run(args, shell=False, cwd=local_path("GUI"), check=True)
 
 
-def version_check(name, version, URL):
+def version_check(name: str, version: str, url: str) -> None:
     try:
         process = subprocess.Popen([shutil.which(name.lower()), "--version"], stdout=subprocess.PIPE)
     except Exception as ex:
-        raise VersionError('{name} is not installed. Please install {name} {version} or later'.format(name=name, version=version), URL)
+        raise VersionError('{name} is not installed. Please install {name} {version} or later'.format(name=name, version=version), url)
 
     while True:
         line = str(process.stdout.readline().strip(), 'UTF-8')
         if line == '':
             break
         if compare_version(line, version) < 0:
-            raise VersionError('{name} {version} or later is required but you are using {line}'.format(name=name, version=version, line=line), URL)
+            raise VersionError('{name} {version} or later is required but you are using {line}'.format(name=name, version=version, line=line), url)
         print('Using {name} {line}'.format(name=name, line=line))
 
 

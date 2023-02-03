@@ -1,4 +1,3 @@
-from collections import OrderedDict
 import copy
 import hashlib
 import logging
@@ -8,34 +7,32 @@ import random
 import shutil
 import struct
 import time
+from typing import List
 import zipfile
 
-from World import World
-from Spoiler import Spoiler
-from Rom import Rom
-from Patches import patch_rom
-from Cosmetics import patch_cosmetics
-from Dungeon import create_dungeons
+from Cosmetics import CosmeticsLog, patch_cosmetics
+from EntranceShuffle import set_entrances
 from Fill import distribute_items_restrictive, ShuffleError
-from Item import Item
+from Goals import update_goal_items, replace_goal_names
+from Hints import build_gossip_hints
+from HintList import clear_hint_exclusion_cache, misc_item_hint_table, misc_location_hint_table
 from ItemPool import generate_itempool
-from Hints import buildGossipHints
-from HintList import clearHintExclusionCache, misc_item_hint_table, misc_location_hint_table
-from Utils import default_output_path, is_bundled, run_process, data_path
+from MBSDIFFPatch import apply_ootr_3_web_patch
 from Models import patch_model_adult, patch_model_child
 from N64Patch import create_patch_file, apply_patch_file
-from MBSDIFFPatch import apply_ootr_3_web_patch
-from SettingsList import logic_tricks
+from Patches import patch_rom
+from Rom import Rom
 from Rules import set_rules, set_shop_rules
-from Search import Search, RewindableSearch
-from EntranceShuffle import set_entrances
-from LocationList import set_drop_location_names
-from Goals import update_goal_items, maybe_set_misc_item_hints, replace_goal_names
+from Settings import Settings
+from SettingsList import logic_tricks
+from Spoiler import Spoiler
+from Utils import default_output_path, is_bundled, run_process, data_path
+from World import World
 from version import __version__
 
 
-def main(settings, max_attempts=10):
-    clearHintExclusionCache()
+def main(settings: Settings, max_attempts: int = 10) -> Spoiler:
+    clear_hint_exclusion_cache()
     logger = logging.getLogger('')
     start = time.process_time()
 
@@ -59,7 +56,7 @@ def main(settings, max_attempts=10):
     return spoiler
 
 
-def resolve_settings(settings):
+def resolve_settings(settings: Settings) -> Rom:
     logger = logging.getLogger('')
 
     old_tricks = settings.allowed_tricks
@@ -110,9 +107,9 @@ def resolve_settings(settings):
     return rom
 
 
-def generate(settings):
+def generate(settings: Settings) -> Spoiler:
     worlds = build_world_graphs(settings)
-    place_items(settings, worlds)
+    place_items(worlds)
     for world in worlds:
         world.distribution.configure_effective_starting_items(worlds, world)
     if worlds[0].enable_goal_hints:
@@ -120,7 +117,7 @@ def generate(settings):
     return make_spoiler(settings, worlds)
 
 
-def build_world_graphs(settings):
+def build_world_graphs(settings: Settings) -> List[World]:
     logger = logging.getLogger('')
     worlds = []
     for i in range(0, settings.world_count):
@@ -142,7 +139,7 @@ def build_world_graphs(settings):
             savewarps_to_connect += world.load_regions_from_json(os.path.join(path, filename))
 
         # Compile the json rules based on settings
-        savewarps_to_connect += create_dungeons(world)
+        savewarps_to_connect += world.create_dungeons()
         world.create_internal_locations()
 
         if settings.shopsanity != 'off':
@@ -155,7 +152,7 @@ def build_world_graphs(settings):
         logger.info('Generating Item Pool.')
         generate_itempool(world)
         set_shop_rules(world)
-        set_drop_location_names(world)
+        world.set_drop_location_names()
         world.fill_bosses()
 
     if settings.triforce_hunt:
@@ -166,29 +163,29 @@ def build_world_graphs(settings):
     return worlds
 
 
-def place_items(settings, worlds):
+def place_items(worlds: List[World]) -> None:
     logger = logging.getLogger('')
     logger.info('Fill the world.')
     distribute_items_restrictive(worlds)
 
 
-def make_spoiler(settings, worlds):
+def make_spoiler(settings: Settings, worlds: List[World]) -> Spoiler:
     logger = logging.getLogger('')
     spoiler = Spoiler(worlds)
     if settings.create_spoiler:
         logger.info('Calculating playthrough.')
-        create_playthrough(spoiler)
+        spoiler.create_playthrough()
     if settings.create_spoiler or settings.hints != 'none':
         logger.info('Calculating hint data.')
         update_goal_items(spoiler)
-        buildGossipHints(spoiler, worlds)
+        build_gossip_hints(spoiler, worlds)
     elif any(world.dungeon_rewards_hinted for world in worlds) or any(hint_type in settings.misc_hints for hint_type in misc_item_hint_table) or any(hint_type in settings.misc_hints for hint_type in misc_location_hint_table):
-        find_misc_hint_items(spoiler)
+        spoiler.find_misc_hint_items()
     spoiler.build_file_hash()
     return spoiler
 
 
-def prepare_rom(spoiler, world, rom, settings, rng_state=None, restore=True):
+def prepare_rom(spoiler: Spoiler, world: World, rom: Rom, settings: Settings, rng_state: tuple = None, restore: bool = True) -> CosmeticsLog:
     if rng_state:
         random.setstate(rng_state)
         # Use different seeds for each world when patching.
@@ -210,7 +207,7 @@ def prepare_rom(spoiler, world, rom, settings, rng_state=None, restore=True):
     return cosmetics_log
 
 
-def compress_rom(input_file, output_file, delete_input=False):
+def compress_rom(input_file: str, output_file: str, delete_input: bool = False) -> None:
     logger = logging.getLogger('')
     compressor_path = "./" if is_bundled() else "bin/Compress/"
     if platform.system() == 'Windows':
@@ -241,9 +238,9 @@ def compress_rom(input_file, output_file, delete_input=False):
         os.remove(input_file)
 
 
-def generate_wad(wad_file, rom_file, output_file, channel_title, channel_id, delete_input=False):
+def generate_wad(wad_file: str, rom_file: str, output_file: str, channel_title: str, channel_id: str, delete_input: bool = False) -> None:
     logger = logging.getLogger('')
-    if wad_file == "" or wad_file == None:
+    if wad_file == "" or wad_file is None:
         raise Exception("Unspecified base WAD file.")
     if not os.path.isfile(wad_file):
         raise Exception("Cannot open base WAD file.")
@@ -275,14 +272,14 @@ def generate_wad(wad_file, rom_file, output_file, channel_title, channel_id, del
 
     run_process(logger, [gzinject_path, "-a", "genkey"], b'45e')
     run_process(logger, [gzinject_path, "-a", "inject", "--rom", rom_file, "--wad", wad_file,
-                                 "-o", output_file, "-i", channel_id, "-t", channel_title,
-                                 "-p", gzinject_patch_path, "--cleanup"])
+                         "-o", output_file, "-i", channel_id, "-t", channel_title,
+                         "-p", gzinject_patch_path, "--cleanup"])
     os.remove("common-key.bin")
     if delete_input:
         os.remove(rom_file)
 
 
-def patch_and_output(settings, spoiler, rom):
+def patch_and_output(settings: Settings, spoiler: Spoiler, rom: Rom) -> None:
     logger = logging.getLogger('')
     worlds = spoiler.worlds
     cosmetics_log = None
@@ -423,7 +420,7 @@ def patch_and_output(settings, spoiler, rom):
         logger.info('Success: Rom patched successfully')
 
 
-def from_patch_file(settings):
+def from_patch_file(settings: Settings) -> None:
     start = time.process_time()
     logger = logging.getLogger('')
 
@@ -503,10 +500,8 @@ def from_patch_file(settings):
 
     logger.debug('Total Time: %s', time.process_time() - start)
 
-    return True
 
-
-def cosmetic_patch(settings):
+def cosmetic_patch(settings: Settings) -> None:
     start = time.process_time()
     logger = logging.getLogger('')
 
@@ -571,10 +566,8 @@ def cosmetic_patch(settings):
 
     logger.debug('Total Time: %s', time.process_time() - start)
 
-    return True
 
-
-def diff_roms(settings, diff_rom_file):
+def diff_roms(settings: Settings, diff_rom_file: str) -> None:
     start = time.process_time()
     logger = logging.getLogger('')
 
@@ -604,174 +597,3 @@ def diff_roms(settings, diff_rom_file):
     logger.info(f"Created patchfile at: {output_path}.zpf")
     logger.info('Done. Enjoy.')
     logger.debug('Total Time: %s', time.process_time() - start)
-
-
-def copy_worlds(worlds):
-    worlds = [world.copy() for world in worlds]
-    Item.fix_worlds_after_copy(worlds)
-    return worlds
-
-
-def find_misc_hint_items(spoiler):
-    search = Search([world.state for world in spoiler.worlds])
-    all_locations = [location for world in spoiler.worlds for location in world.get_filled_locations()]
-    for location in search.iter_reachable_locations(all_locations[:]):
-        search.collect(location.item)
-        # include locations that are reachable but not part of the spoiler log playthrough in misc. item hints
-        maybe_set_misc_item_hints(location)
-        all_locations.remove(location)
-    for location in all_locations:
-        # finally, collect unreachable locations for misc. item hints
-        maybe_set_misc_item_hints(location)
-
-
-def create_playthrough(spoiler):
-    logger = logging.getLogger('')
-    worlds = spoiler.worlds
-    if worlds[0].check_beatable_only and not Search([world.state for world in worlds]).can_beat_game():
-        raise RuntimeError('Game unbeatable after placing all items.')
-    # create a copy as we will modify it
-    old_worlds = worlds
-    worlds = copy_worlds(worlds)
-
-    # if we only check for beatable, we can do this sanity check first before writing down spheres
-    if worlds[0].check_beatable_only and not Search([world.state for world in worlds]).can_beat_game():
-        raise RuntimeError('Uncopied world beatable but copied world is not.')
-
-    search = RewindableSearch([world.state for world in worlds])
-    logger.debug('Initial search: %s', search.state_list[0].get_prog_items())
-    # Get all item locations in the worlds
-    item_locations = search.progression_locations()
-    # Omit certain items from the playthrough
-    internal_locations = {location for location in item_locations if location.internal}
-    # Generate a list of spheres by iterating over reachable locations without collecting as we go.
-    # Collecting every item in one sphere means that every item
-    # in the next sphere is collectable. Will contain every reachable item this way.
-    logger.debug('Building up collection spheres.')
-    collection_spheres = []
-    entrance_spheres = []
-    remaining_entrances = set(entrance for world in worlds for entrance in world.get_shuffled_entrances())
-
-    search.checkpoint()
-    search.collect_pseudo_starting_items()
-    logger.debug('With pseudo starting items: %s', search.state_list[0].get_prog_items())
-
-    while True:
-        search.checkpoint()
-        # Not collecting while the generator runs means we only get one sphere at a time
-        # Otherwise, an item we collect could influence later item collection in the same sphere
-        collected = list(search.iter_reachable_locations(item_locations))
-        if not collected: break
-        random.shuffle(collected)
-        # Gather the new entrances before collecting items.
-        collection_spheres.append(collected)
-        accessed_entrances = set(filter(search.spot_access, remaining_entrances))
-        entrance_spheres.append(list(accessed_entrances))
-        remaining_entrances -= accessed_entrances
-        for location in collected:
-            # Collect the item for the state world it is for
-            search.state_list[location.item.world.id].collect(location.item)
-            maybe_set_misc_item_hints(location)
-    logger.info('Collected %d spheres', len(collection_spheres))
-    spoiler.full_playthrough = dict((location.name, i + 1) for i, sphere in enumerate(collection_spheres) for location in sphere)
-    spoiler.max_sphere = len(collection_spheres)
-
-    # Reduce each sphere in reverse order, by checking if the game is beatable
-    # when we remove the item. We do this to make sure that progressive items
-    # like bow and slingshot appear as early as possible rather than as late as possible.
-    required_locations = []
-    for sphere in reversed(collection_spheres):
-        random.shuffle(sphere)
-        for location in sphere:
-            # we remove the item at location and check if the game is still beatable in case the item could be required
-            old_item = location.item
-
-            # Uncollect the item and location.
-            search.state_list[old_item.world.id].remove(old_item)
-            search.unvisit(location)
-
-            # Generic events might show up or not, as usual, but since we don't
-            # show them in the final output, might as well skip over them. We'll
-            # still need them in the final pass, so make sure to include them.
-            if location.internal:
-                required_locations.append(location)
-                continue
-
-            location.item = None
-
-            # An item can only be required if it isn't already obtained or if it's progressive
-            if search.state_list[old_item.world.id].item_count(old_item.solver_id) < old_item.world.max_progressions[old_item.name]:
-                # Test whether the game is still beatable from here.
-                logger.debug('Checking if %s is required to beat the game.', old_item.name)
-                if not search.can_beat_game():
-                    # still required, so reset the item
-                    location.item = old_item
-                    required_locations.append(location)
-
-    # Reduce each entrance sphere in reverse order, by checking if the game is beatable when we disconnect the entrance.
-    required_entrances = []
-    for sphere in reversed(entrance_spheres):
-        random.shuffle(sphere)
-        for entrance in sphere:
-            # we disconnect the entrance and check if the game is still beatable
-            old_connected_region = entrance.disconnect()
-
-            # we use a new search to ensure the disconnected entrance is no longer used
-            sub_search = Search([world.state for world in worlds])
-
-            # Test whether the game is still beatable from here.
-            logger.debug('Checking if reaching %s, through %s, is required to beat the game.', old_connected_region.name, entrance.name)
-            if not sub_search.can_beat_game():
-                # still required, so reconnect the entrance
-                entrance.connect(old_connected_region)
-                required_entrances.append(entrance)
-
-    # Regenerate the spheres as we might not reach places the same way anymore.
-    search.reset() # search state has no items, okay to reuse sphere 0 cache
-    collection_spheres = [list(
-        filter(lambda loc: loc.item.advancement and loc.item.world.max_progressions[loc.item.name] > 0,
-               search.iter_pseudo_starting_locations()))]
-    entrance_spheres = []
-    remaining_entrances = set(required_entrances)
-    collected = set()
-    while True:
-        # Not collecting while the generator runs means we only get one sphere at a time
-        # Otherwise, an item we collect could influence later item collection in the same sphere
-        collected.update(search.iter_reachable_locations(required_locations))
-        if not collected:
-            break
-        internal = collected & internal_locations
-        if internal:
-            # collect only the internal events but don't record them in a sphere
-            for location in internal:
-                search.state_list[location.item.world.id].collect(location.item)
-            # Remaining locations need to be saved to be collected later
-            collected -= internal
-            continue
-        # Gather the new entrances before collecting items.
-        collection_spheres.append(list(collected))
-        accessed_entrances = set(filter(search.spot_access, remaining_entrances))
-        entrance_spheres.append(accessed_entrances)
-        remaining_entrances -= accessed_entrances
-        for location in collected:
-            # Collect the item for the state world it is for
-            search.state_list[location.item.world.id].collect(location.item)
-        collected.clear()
-    logger.info('Collected %d final spheres', len(collection_spheres))
-
-    if not search.can_beat_game(False):
-        logger.error('Playthrough could not beat the game!')
-        # Add temporary debugging info or breakpoint here if this happens
-
-    # Then we can finally output our playthrough
-    spoiler.playthrough = OrderedDict((str(i), {location: location.item for location in sphere}) for i, sphere in enumerate(collection_spheres))
-    # Copy our misc. hint items, since we set them in the world copy
-    for w, sw in zip(worlds, spoiler.worlds):
-        # But the actual location saved here may be in a different world
-        for item_name, item_location in w.hinted_dungeon_reward_locations.items():
-            sw.hinted_dungeon_reward_locations[item_name] = spoiler.worlds[item_location.world.id].get_location(item_location.name)
-        for hint_type, item_location in w.misc_hint_item_locations.items():
-            sw.misc_hint_item_locations[hint_type] = spoiler.worlds[item_location.world.id].get_location(item_location.name)
-
-    if worlds[0].entrance_shuffle:
-        spoiler.entrance_playthrough = OrderedDict((str(i + 1), list(sphere)) for i, sphere in enumerate(entrance_spheres))

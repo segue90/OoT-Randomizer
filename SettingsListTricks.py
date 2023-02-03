@@ -2,7 +2,7 @@
 # The order they are listed in is also the order in which
 # they appear to the user in the GUI, so a sensible order was chosen
 
-logic_tricks = {
+logic_tricks: dict = {
 
     # General tricks
 

@@ -1,23 +1,30 @@
 import io
 import json
+import logging
 import os
+import re
 import subprocess
 import sys
 import urllib.request
+from typing import Dict, List, Sequence, Optional, AnyStr, Any
 from urllib.error import URLError, HTTPError
-import re
+
 from version import __version__, base_version, supplementary_version, branch_url
-import random
-import itertools
-import bisect
-import logging
 
 
-def is_bundled():
+# For easy import of TypeAlias that won't break older versions of Python.
+if sys.version_info >= (3, 10):
+    # noinspection PyUnresolvedReferences
+    from typing import TypeAlias
+else:
+    TypeAlias = str
+
+
+def is_bundled() -> bool:
     return getattr(sys, 'frozen', False)
 
 
-def local_path(path=''):
+def local_path(path: str = '') -> str:
     if not hasattr(local_path, "cached_path"):
         local_path.cached_path = None
 
@@ -34,7 +41,7 @@ def local_path(path=''):
     return os.path.join(local_path.cached_path, path)
 
 
-def data_path(path=''):
+def data_path(path: str = '') -> str:
     if not hasattr(data_path, "cached_path"):
         data_path.cached_path = None
 
@@ -49,7 +56,7 @@ def data_path(path=''):
     return os.path.join(data_path.cached_path, path)
 
 
-def default_output_path(path):
+def default_output_path(path: str) -> str:
     if path == '':
         path = local_path('Output')
 
@@ -58,7 +65,7 @@ def default_output_path(path):
     return path
 
 
-def read_logic_file(file_path):
+def read_logic_file(file_path: str):
     json_string = ""
     with io.open(file_path, 'r') as file:
         for line in file.readlines():
@@ -72,7 +79,7 @@ def read_logic_file(file_path):
                         "                                   ^^\n")
 
 
-def open_file(filename):
+def open_file(filename: str) -> None:
     if sys.platform == 'win32':
         os.startfile(filename)
     else:
@@ -80,9 +87,9 @@ def open_file(filename):
         subprocess.call([open_command, filename])
 
 
-def close_console():
+def close_console() -> None:
     if sys.platform == 'win32':
-        #windows
+        # windows
         import win32gui, win32con
         try:
             win32gui.ShowWindow(win32gui.GetForegroundWindow(), win32con.SW_HIDE)
@@ -90,7 +97,7 @@ def close_console():
             pass
 
 
-def get_version_bytes(a, b=0x00, c=0x00):
+def get_version_bytes(a: str, b: int = 0x00, c: int = 0x00) -> List[int]:
     version_bytes = [0x00, 0x00, 0x00, b, c]
 
     if not a:
@@ -98,7 +105,7 @@ def get_version_bytes(a, b=0x00, c=0x00):
 
     sa = a.replace('v', '').replace(' ', '.').split('.')
 
-    for i in range(0,3):
+    for i in range(0, 3):
         try:
             version_byte = int(sa[i])
         except ValueError:
@@ -108,7 +115,7 @@ def get_version_bytes(a, b=0x00, c=0x00):
     return version_bytes
 
 
-def compare_version(a, b):
+def compare_version(a: str, b: str) -> int:
     if not a and not b:
         return 0
     elif a and not b:
@@ -131,16 +138,22 @@ class VersionError(Exception):
     pass
 
 
-def check_version(checked_version):
+def check_version(checked_version: str) -> None:
+    if not hasattr(check_version, "base_regex"):
+        check_version.base_regex = re.compile("""^[ \t]*__version__ = ['"](.+)['"]""", re.MULTILINE)
+        check_version.supplementary_regex = re.compile(r"^[ \t]*supplementary_version = (\d+)$", re.MULTILINE)
+        check_version.full_regex = re.compile("""^[ \t]*__version__ = f['"]*(.+)['"]""", re.MULTILINE)
+        check_version.url_regex = re.compile("""^[ \t]*branch_url = ['"](.+)['"]""", re.MULTILINE)
+
     if compare_version(checked_version, __version__) < 0:
         try:
             with urllib.request.urlopen(f'{branch_url.replace("https://github.com", "https://raw.githubusercontent.com").replace("tree/", "")}/version.py') as versionurl:
                 version_file = versionurl.read().decode("utf-8")
 
-                base_match = re.search("""^[ \t]*__version__ = ['"](.+)['"]""", version_file, re.MULTILINE)
-                supplementary_match = re.search(r"^[ \t]*supplementary_version = (\d+)$", version_file, re.MULTILINE)
-                full_match = re.search("""^[ \t]*__version__ = f['"]*(.+)['"]""", version_file, re.MULTILINE)
-                url_match = re.search("""^[ \t]*branch_url = ['"](.+)['"]""", version_file, re.MULTILINE)
+                base_match = check_version.base_regex.search(version_file, re.MULTILINE)
+                supplementary_match = check_version.supplementary_regex.search(version_file, re.MULTILINE)
+                full_match = check_version.full_regex.search(version_file, re.MULTILINE)
+                url_match = check_version.url_regex.search(version_file, re.MULTILINE)
 
                 remote_base_version = base_match.group(1) if base_match else ""
                 remote_supplementary_version = int(supplementary_match.group(1)) if supplementary_match else 0
@@ -168,7 +181,7 @@ def check_version(checked_version):
 # variants) call work with or without Pyinstaller, ``--noconsole`` or
 # not, on Windows and Linux. Typical use::
 #   subprocess.call(['program_to_run', 'arg_1'], **subprocess_args())
-def subprocess_args(include_stdout=True):
+def subprocess_args(include_stdout: bool = True) -> Dict[str, Any]:
     # The following is true only on Windows.
     if hasattr(subprocess, 'STARTUPINFO'):
         # On Windows, subprocess calls will pop up a command window by default
@@ -197,11 +210,11 @@ def subprocess_args(include_stdout=True):
     ret.update({'stdin': subprocess.PIPE,
                 'stderr': subprocess.PIPE,
                 'startupinfo': si,
-                'env': env })
+                'env': env})
     return ret
 
 
-def run_process(logger, args, stdin=None):
+def run_process(logger: logging.Logger, args: Sequence[str], stdin: Optional[AnyStr] = None) -> None:
     process = subprocess.Popen(args, bufsize=1, stdout=subprocess.PIPE, stdin=subprocess.PIPE)
     filecount = None
     if stdin is not None:
@@ -221,7 +234,8 @@ def run_process(logger, args, stdin=None):
 
 
 # https://stackoverflow.com/a/23146126
-def find_last(source_list, sought_element):
+def find_last(source_list: Sequence[Any], sought_element: Any) -> Optional[int]:
     for reverse_index, element in enumerate(reversed(source_list)):
         if element == sought_element:
             return len(source_list) - 1 - reverse_index
+    return None

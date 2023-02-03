@@ -10,9 +10,9 @@ class uint16:
     def write(buffer: bytearray, address: int, value: int) -> None:
         struct.pack_into('>H', buffer, address, value)
 
-    @staticmethod
-    def read(buffer: bytearray, address: int = 0) -> int:
-        return uint16._struct.unpack_from(buffer, address)[0]
+    @classmethod
+    def read(cls, buffer: bytearray, address: int = 0) -> int:
+        return cls._struct.unpack_from(buffer, address)[0]
 
     @staticmethod
     def bytes(value: int) -> bytearray:
@@ -31,9 +31,9 @@ class uint32:
     def write(buffer: bytearray, address: int, value: int) -> None:
         struct.pack_into('>I', buffer, address, value)
 
-    @staticmethod
-    def read(buffer: bytearray, address: int = 0) -> int:
-        return uint32._struct.unpack_from(buffer, address)[0]
+    @classmethod
+    def read(cls, buffer: bytearray, address: int = 0) -> int:
+        return cls._struct.unpack_from(buffer, address)[0]
 
     @staticmethod
     def bytes(value: int) -> bytearray:
@@ -52,9 +52,9 @@ class int32:
     def write(buffer: bytearray, address: int, value: int) -> None:
         struct.pack_into('>i', buffer, address, value)
 
-    @staticmethod
-    def read(buffer: bytearray, address: int = 0) -> int:
-        return int32._struct.unpack_from(buffer, address)[0]
+    @classmethod
+    def read(cls, buffer: bytearray, address: int = 0) -> int:
+        return cls._struct.unpack_from(buffer, address)[0]
 
     @staticmethod
     def bytes(value: int) -> bytearray:

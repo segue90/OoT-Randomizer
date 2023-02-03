@@ -1,4 +1,5 @@
 import itertools
+
 from ntype import uint32, BigStream
 
 

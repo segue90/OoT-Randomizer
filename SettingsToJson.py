@@ -1,19 +1,21 @@
 #!/usr/bin/env python3
-from Hints import HintDistFiles
+import copy
+import json
+import sys
+from typing import Dict, List, Any, Optional
+
+from Hints import hint_dist_files
 from SettingsList import SettingInfos, get_settings_from_section, get_settings_from_tab
 from Utils import data_path
-import sys
-import json
-import copy
 
 
-tab_keys     = ['text', 'app_type', 'footer']
-section_keys = ['text', 'app_type', 'is_colors', 'is_sfx', 'col_span', 'row_span', 'subheader']
-setting_keys = ['hide_when_disabled', 'min', 'max', 'size', 'max_length', 'file_types', 'no_line_break', 'function', 'option_remove', 'dynamic']
-types_with_options = ['Checkbutton', 'Radiobutton', 'Combobox', 'SearchBox', 'MultipleSelect']
+tab_keys: List[str] = ['text', 'app_type', 'footer']
+section_keys: List[str] = ['text', 'app_type', 'is_colors', 'is_sfx', 'col_span', 'row_span', 'subheader']
+setting_keys: List[str] = ['hide_when_disabled', 'min', 'max', 'size', 'max_length', 'file_types', 'no_line_break', 'function', 'option_remove', 'dynamic']
+types_with_options: List[str] = ['Checkbutton', 'Radiobutton', 'Combobox', 'SearchBox', 'MultipleSelect']
 
 
-def remove_trailing_lines(text):
+def remove_trailing_lines(text: str) -> str:
     while text.endswith('<br>'):
         text = text[:-4]
     while text.startswith('<br>'):
@@ -21,7 +23,7 @@ def remove_trailing_lines(text):
     return text
 
 
-def deep_update(source, new_dict):
+def deep_update(source: dict, new_dict: dict) -> dict:
     for k, v in new_dict.items():
         if isinstance(v, dict):
             source[k] = deep_update(source.get(k, { }), v)
@@ -32,7 +34,7 @@ def deep_update(source, new_dict):
     return source
 
 
-def add_disable_option_to_json(disable_option, option_json):
+def add_disable_option_to_json(disable_option: Dict[str, Any], option_json: Dict[str, Any]) -> None:
     if disable_option.get('settings') is not None:
         if 'controls_visibility_setting' not in option_json:
             option_json['controls_visibility_setting'] = ','.join(disable_option['settings'])
@@ -50,7 +52,7 @@ def add_disable_option_to_json(disable_option, option_json):
             option_json['controls_visibility_tab'] += ',' + ','.join(disable_option['tabs'])
 
 
-def get_setting_json(setting, web_version, as_array=False):
+def get_setting_json(setting: str, web_version: bool, as_array: bool = False) -> Optional[Dict[str, Any]]:
     try:
         setting_info = SettingInfos.setting_infos[setting]
     except KeyError:
@@ -62,7 +64,7 @@ def get_setting_json(setting, web_version, as_array=False):
     if setting_info.gui_text is None:
         return None
 
-    setting_json = {
+    setting_json: Dict[str, Any] = {
         'options':       [],
         'default':       setting_info.default,
         'text':          setting_info.gui_text,
@@ -102,7 +104,7 @@ def get_setting_json(setting, web_version, as_array=False):
         if key in setting_keys and (key not in version_specific_keys or version_specific):
             setting_json[key] = value
         if key == 'disable':
-            for option,types in value.items():
+            for option, types in value.items():
                 for s in types.get('settings', []):
                     if SettingInfos.setting_infos[s].shared:
                         raise ValueError(f'Cannot disable setting {s}. Disabling "shared" settings in the gui_params is forbidden. Use the non gui_param version of disable instead.')
@@ -170,7 +172,6 @@ def get_setting_json(setting, web_version, as_array=False):
                         if name != option_name[1:]:
                             add_disable_option_to_json(setting_disable[option_name], option)
 
-
         if tags_list:
             tags_list.sort()
             setting_json['tags'] = ['(all)'] + tags_list
@@ -179,7 +180,7 @@ def get_setting_json(setting, web_version, as_array=False):
     return setting_json
 
 
-def get_section_json(section, web_version, as_array=False):
+def get_section_json(section: Dict[str, Any], web_version: bool, as_array: bool = False) -> Dict[str, Any]:
     if as_array:
         section_json = {
             'name'     : section['name'],
@@ -204,7 +205,7 @@ def get_section_json(section, web_version, as_array=False):
     return section_json
 
 
-def get_tab_json(tab, web_version, as_array=False):
+def get_tab_json(tab: Dict[str, Any], web_version: bool, as_array: bool = False) -> Dict[str, Any]:
     if as_array:
         tab_json = {
             'name'     : tab['name'],
@@ -234,7 +235,7 @@ def get_tab_json(tab, web_version, as_array=False):
     return tab_json
 
 
-def create_settings_list_json(path, web_version=False):
+def create_settings_list_json(path: str, web_version: bool = False) -> None:
     output_json = {
         'settingsObj'   : {},
         'settingsArray' : [],
@@ -258,7 +259,7 @@ def create_settings_list_json(path, web_version=False):
             output_json['cosmeticsObj'][tab['name']] = tab_json_object
             output_json['cosmeticsArray'].append(tab_json_array)
 
-    for d in HintDistFiles():
+    for d in hint_dist_files():
         with open(d, 'r') as dist_file:
             dist = json.load(dist_file)
         if ('distribution' in dist and
@@ -271,7 +272,7 @@ def create_settings_list_json(path, web_version=False):
         json.dump(output_json, f)
 
 
-def get_setting_details(setting_key, web_version):
+def get_setting_details(setting_key: str, web_version: bool) -> None:
     setting_json_object = get_setting_json(setting_key, web_version, as_array=False)
     setting_json_array = get_setting_json(setting_key, web_version, as_array=True)
 
@@ -279,7 +280,7 @@ def get_setting_details(setting_key, web_version):
     print(json.dumps(setting_output))
 
 
-def main():
+def main() -> None:
     args = sys.argv[1:]
     web_version = '--web' in args
 

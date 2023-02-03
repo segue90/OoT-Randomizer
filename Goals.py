@@ -1,12 +1,21 @@
-from collections import OrderedDict, defaultdict
-import logging
+from collections import defaultdict
+from typing import TYPE_CHECKING, List, Union, Dict, Optional, Any, Tuple, Iterable, Callable, Collection
 
-from HintList import goalTable, getHintGroup, hintExclusions, misc_item_hint_table, misc_location_hint_table
+from HintList import goalTable, get_hint_group, hint_exclusions
 from ItemList import item_table
-from Search import Search
+from Search import Search, ValidGoals
+from Utils import TypeAlias
 
+if TYPE_CHECKING:
+    from Location import Location
+    from Spoiler import Spoiler
+    from State import State
+    from World import World
 
-validColors = [
+RequiredLocations: TypeAlias = "Dict[str, Union[Dict[str, Dict[int, List[Tuple[Location, int, int]]]], List[Location]]]"
+GoalItem: TypeAlias = Dict[str, Union[str, int, bool]]
+
+validColors: List[str] = [
     'White',
     'Red',
     'Green',
@@ -18,33 +27,34 @@ validColors = [
 ]
 
 
-class Goal(object):
-
-    def __init__(self, world, name, hint_text, color, items=None, locations=None, lock_locations=None, lock_entrances=None, required_locations=None, create_empty=False):
+class Goal:
+    def __init__(self, world: "World", name: str, hint_text: Union[str, Dict[str, str]], color: str, items: Optional[List[Dict[str, Any]]] = None,
+                 locations=None, lock_locations=None, lock_entrances: List[str] = None, required_locations=None, create_empty: bool = False) -> None:
         # early exit if goal initialized incorrectly
         if not items and not locations and not create_empty:
             raise Exception('Invalid goal: no items or destinations set')
-        self.world = world
-        self.name = name
-        self.hint_text = hint_text
-        if color in validColors:
-            self.color = color
-        else:
-            raise Exception('Invalid goal: Color %r not supported' % color)
-        self.items = items
-        self.locations = locations
-        self.lock_locations = lock_locations
-        self.lock_entrances = lock_entrances
-        self.required_locations = required_locations or []
-        self.weight = 0
-        self.category = None
-        self._item_cache = {}
+        if color not in validColors:
+            raise Exception(f'Invalid goal: Color {color} not supported')
 
-    def copy(self):
-        new_goal = Goal(self.world, self.name, self.hint_text, self.color, self.items, self.locations, self.lock_locations, self.lock_entrances, self.required_locations, True)
+        self.world: "World" = world
+        self.name: str = name
+        self.hint_text: Union[str, Dict[str, str]] = hint_text
+        self.color: str = color
+        self.items: List[GoalItem] = items or []
+        self.locations = locations  # Unused?
+        self.lock_locations = lock_locations  # Unused?
+        self.lock_entrances: List[str] = lock_entrances
+        self.required_locations: "List[Tuple[Location, int, int, List[int]]]" = required_locations or []
+        self.weight: int = 0
+        self.category: 'Optional[GoalCategory]' = None
+        self._item_cache: Dict[str, GoalItem] = {}
+
+    def copy(self) -> 'Goal':
+        new_goal = Goal(self.world, self.name, self.hint_text, self.color, self.items, self.locations, self.lock_locations,
+                        self.lock_entrances, self.required_locations, True)
         return new_goal
 
-    def get_item(self, item):
+    def get_item(self, item: str) -> GoalItem:
         try:
             return self._item_cache[item]
         except KeyError:
@@ -54,7 +64,7 @@ class Goal(object):
                     return i
         raise KeyError('No such item %r for goal %r' % (item, self.name))
 
-    def requires(self, item):
+    def requires(self, item: str) -> bool:
         # Prevent direct hints for certain items that can have many duplicates, such as tokens and Triforce Pieces
         names = [item]
         if item_table[item][3] is not None and 'alias' in item_table[item][3]:
@@ -62,31 +72,29 @@ class Goal(object):
         return any(i['name'] in names and not i['hintable'] for i in self.items)
 
 
-class GoalCategory(object):
+class GoalCategory:
+    def __init__(self, name: str, priority: int, goal_count: int = 0, minimum_goals: int = 0,
+                 lock_locations=None, lock_entrances: List[str] = None) -> None:
+        self.name: str = name
+        self.priority: int = priority
+        self.lock_locations = lock_locations  # Unused?
+        self.lock_entrances: List[str] = lock_entrances
+        self.goals: List[Goal] = []
+        self.goal_count: int = goal_count
+        self.minimum_goals: int = minimum_goals
+        self.weight: int = 0
+        self._goal_cache: Dict[str, Goal] = {}
 
-    def __init__(self, name, priority, goal_count=0, minimum_goals=0, lock_locations=None, lock_entrances=None):
-        self.name = name
-        self.priority = priority
-        self.lock_locations = lock_locations
-        self.lock_entrances = lock_entrances
-        self.goals = []
-        self.goal_count = goal_count
-        self.minimum_goals = minimum_goals
-        self.weight = 0
-        self._goal_cache = {}
-
-
-    def copy(self):
+    def copy(self) -> 'GoalCategory':
         new_category = GoalCategory(self.name, self.priority, self.goal_count, self.minimum_goals, self.lock_locations, self.lock_entrances)
         new_category.goals = list(goal.copy() for goal in self.goals)
         return new_category
 
-    def add_goal(self, goal):
+    def add_goal(self, goal) -> None:
         goal.category = self
         self.goals.append(goal)
 
-
-    def get_goal(self, goal):
+    def get_goal(self, goal) -> Goal:
         if isinstance(goal, Goal):
             return goal
         try:
@@ -98,15 +106,13 @@ class GoalCategory(object):
                     return g
         raise KeyError('No such goal %r' % goal)
 
-
-    def is_beaten(self, search):
+    def is_beaten(self, search: Search) -> bool:
         # if the category requirements are already satisfied by starting items (such as Links Pocket),
         # do not generate hints for other goals in the category
         starting_goals = search.beatable_goals_fast({ self.name: self })
         return all(map(lambda s: len(starting_goals[self.name]['stateReverse'][s.world.id]) >= self.minimum_goals, search.state_list))
 
-
-    def update_reachable_goals(self, starting_search, full_search):
+    def update_reachable_goals(self, starting_search: Search, full_search: Search) -> None:
         # Only reduce goal item quantity if minimum goal requirements are reachable,
         # but not the full goal quantity. Primary use is to identify reachable
         # skull tokens, triforce pieces, and plentiful item duplicates with
@@ -129,7 +135,7 @@ class GoalCategory(object):
                             i['quantity'] = min(full_search.state_list[index].item_name_count(i['name']), i['quantity'])
 
 
-def replace_goal_names(worlds):
+def replace_goal_names(worlds: "List[World]") -> None:
     for world in worlds:
         bosses = [location for location in world.get_filled_locations() if location.item.type == 'DungeonReward']
         for cat_name, category in world.goal_categories.items():
@@ -146,10 +152,10 @@ def replace_goal_names(worlds):
                             break
 
 
-def update_goal_items(spoiler):
+def update_goal_items(spoiler: "Spoiler") -> None:
     worlds = spoiler.worlds
 
-    # get list of all of the progressive items that can appear in hints
+    # get list of all the progressive items that can appear in hints
     # all_locations: all progressive items. have to collect from these
     # item_locations: only the ones that should appear as "required"/WotH
     all_locations = [location for world in worlds for location in world.get_filled_locations()]
@@ -157,15 +163,15 @@ def update_goal_items(spoiler):
     item_locations = {location for location in all_locations if location.item.majoritem and not location.locked}
 
     # required_locations[category.name][goal.name][world_id] = [...]
-    required_locations = defaultdict(lambda: defaultdict(lambda: defaultdict(list)))
-    priority_locations = {(world.id): {} for world in worlds}
+    required_locations: RequiredLocations = defaultdict(lambda: defaultdict(lambda: defaultdict(list)))
+    priority_locations = {world.id: {} for world in worlds}
 
     # rebuild hint exclusion list
     for world in worlds:
-        hintExclusions(world, clear_cache=True)
+        hint_exclusions(world, clear_cache=True)
 
     # getHintGroup relies on hint exclusion list
-    always_locations = [location.name for world in worlds for location in getHintGroup('always', world)]
+    always_locations = [location.name for world in worlds for location in get_hint_group('always', world)]
 
     if worlds[0].enable_goal_hints:
         # References first world for goal categories only
@@ -268,7 +274,7 @@ def update_goal_items(spoiler):
     spoiler.goal_locations = required_locations_dict
 
 
-def lock_category_entrances(category, state_list):
+def lock_category_entrances(category: GoalCategory, state_list: "Iterable[State]") -> "Dict[int, Dict[str, Callable[[State, ...], bool]]]":
     # Disable access rules for specified entrances
     category_locks = {}
     if category.lock_entrances is not None:
@@ -281,7 +287,8 @@ def lock_category_entrances(category, state_list):
     return category_locks
 
 
-def unlock_category_entrances(category_locks, state_list):
+def unlock_category_entrances(category_locks: "Dict[int, Dict[str, Callable[[State, ...], bool]]]",
+                              state_list: "List[State]") -> None:
     # Restore access rules
     for state_id, exits in category_locks.items():
         for exit_name, access_rule in exits.items():
@@ -289,9 +296,11 @@ def unlock_category_entrances(category_locks, state_list):
             exit.access_rule = access_rule
 
 
-def search_goals(categories, reachable_goals, search, priority_locations, all_locations, item_locations, always_locations, search_woth=False):
+def search_goals(categories: Dict[str, GoalCategory], reachable_goals: ValidGoals, search: Search, priority_locations: Dict[int, Dict[str, str]],
+                 all_locations: "List[Location]", item_locations: "Collection[Location]", always_locations: Collection[str],
+                 search_woth: bool = False) -> RequiredLocations:
     # required_locations[category.name][goal.name][world_id] = [...]
-    required_locations = defaultdict(lambda: defaultdict(lambda: defaultdict(list)))
+    required_locations: RequiredLocations = defaultdict(lambda: defaultdict(lambda: defaultdict(list)))
     world_ids = [state.world.id for state in search.state_list]
     if search_woth:
         required_locations['way of the hero'] = []
@@ -336,29 +345,10 @@ def search_goals(categories, reachable_goals, search, priority_locations, all_lo
             if search_woth and not valid_goals['way of the hero']:
                 required_locations['way of the hero'].append(location)
             location.item = old_item
-        maybe_set_misc_item_hints(location)
+        location.maybe_set_misc_item_hints()
         remaining_locations.remove(location)
         search.state_list[location.item.world.id].collect(location.item)
     for location in remaining_locations:
         # finally, collect unreachable locations for misc. item hints
-        maybe_set_misc_item_hints(location)
+        location.maybe_set_misc_item_hints()
     return required_locations
-
-
-def maybe_set_misc_item_hints(location):
-    if not location.item:
-        return
-    if location.item.world.dungeon_rewards_hinted and location.item.name in location.item.world.rewardlist:
-        if location.item.name not in location.item.world.hinted_dungeon_reward_locations:
-            location.item.world.hinted_dungeon_reward_locations[location.item.name] = location
-            logging.getLogger('').debug(f'{location.item.name} [{location.item.world.id}] set to [{location.name}]')
-    for hint_type in misc_item_hint_table:
-        item = location.item.world.misc_hint_items[hint_type]
-        if hint_type not in location.item.world.misc_hint_item_locations and location.item.name == item:
-            location.item.world.misc_hint_item_locations[hint_type] = location
-            logging.getLogger('').debug(f'{item} [{location.item.world.id}] set to [{location.name}]')
-    for hint_type in misc_location_hint_table:
-        the_location = location.world.misc_hint_locations[hint_type]
-        if hint_type not in location.world.misc_hint_location_items and location.name == the_location:
-            location.world.misc_hint_location_items[hint_type] = location.item
-            logging.getLogger('').debug(f'{the_location} [{location.world.id}] set to [{location.item.name}]')

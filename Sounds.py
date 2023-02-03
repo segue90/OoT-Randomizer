@@ -24,9 +24,11 @@
 # hook would contain a bunch of addresses, whether they share the same default
 # value or not.
 
-from enum import Enum
 import os
 import sys
+from enum import Enum
+from typing import Dict, List
+
 from Utils import data_path
 
 # Python 3.6 support. We can drop the conditional usage of namedtuple if we decide to no longer support Python 3.6.
@@ -61,7 +63,7 @@ if dataclass_supported:
         id: int
         keyword: str
         label: str
-        tags: list
+        tags: List[Tags]
 else:
     Sound = namedtuple('Sound', 'id    keyword                  label                        tags')
 
@@ -174,8 +176,8 @@ if dataclass_supported:
     @dataclass(frozen=True)
     class SoundHook:
         name: str
-        pool: list
-        locations: list
+        pool: List[Sounds]
+        locations: List[int]
         sfx_flag: bool
 else:
     SoundHook = namedtuple('SoundHook', 'name pool locations sfx_flag')
@@ -235,33 +237,33 @@ class SoundHooks(Enum):
 #   SWORD_SLASH     = SoundHook('Sword Slash',      standard,         [0xAC2942])
 
 
-def get_patch_dict():
+def get_patch_dict() -> Dict[str, int]:
     return {s.value.keyword: s.value.id for s in Sounds}
 
 
-def get_hook_pool(sound_hook, earsafeonly = "FALSE"):
-    if earsafeonly == "TRUE":
+def get_hook_pool(sound_hook: SoundHooks, earsafeonly: bool = False) -> List[Sounds]:
+    if earsafeonly:
         list = [s for s in sound_hook.value.pool if Tags.PAINFUL not in s.value.tags]
         return list
     else:
         return sound_hook.value.pool
 
 
-def get_setting_choices(sound_hook):
-    pool     = sound_hook.value.pool
-    choices  = {s.value.keyword: s.value.label for s in sorted(pool, key=lambda s: s.value.label)}
-    result   = {
+def get_setting_choices(sound_hook: SoundHooks) -> Dict[str, str]:
+    pool = sound_hook.value.pool
+    choices = {s.value.keyword: s.value.label for s in sorted(pool, key=lambda s: s.value.label)}
+    result = {
         'default':           'Default',
         'completely-random': 'Completely Random',
         'random-ear-safe':   'Random Ear-Safe',
         'random-choice':     'Random Choice',
         'none':              'None',
         **choices,
-        }
+    }
     return result
 
 
-def get_voice_sfx_choices(age, include_random=True):
+def get_voice_sfx_choices(age: int, include_random: bool = True) -> List[str]:
     # Dynamically populate the SettingsList entry for the voice effects
     # Voice packs should be a folder of .bin files in the Voices/{age} directory
     names = ['Default', 'Silent']

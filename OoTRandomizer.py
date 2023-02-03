@@ -5,11 +5,11 @@ if sys.version_info < (3, 6, 0):
     sys.exit(1)
 
 import argparse
-import os
+import datetime
 import logging
+import os
 import textwrap
 import time
-import datetime
 
 
 class ArgumentDefaultsHelpFormatter(argparse.RawTextHelpFormatter):
@@ -17,7 +17,7 @@ class ArgumentDefaultsHelpFormatter(argparse.RawTextHelpFormatter):
         return textwrap.dedent(action.help)
 
 
-def start():
+def start() -> None:
     from Main import main, from_patch_file, cosmetic_patch, diff_roms
     from Settings import get_settings_from_command_line_args
     from Utils import check_version, VersionError, local_path

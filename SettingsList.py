@@ -1,272 +1,23 @@
 import difflib
 import json
-import math
-import operator
-from typing import Any, Optional, Dict
+from typing import TYPE_CHECKING, Dict, List, Iterable, Union, Optional, Any
 
 import Colors
-from Hints import HintDistList, HintDistTips, gossipLocations
+from Hints import hint_dist_list, hint_dist_tips, gossipLocations
 from Item import ItemInfo
 from Location import LocationIterator
 from LocationList import location_table
 from Models import get_model_choices
 from SettingsListTricks import logic_tricks
+from SettingTypes import SettingInfo, SettingInfoStr, SettingInfoList, SettingInfoDict, Textbox, Button, Checkbutton, \
+    Combobox, Radiobutton, Fileinput, Directoryinput, Textinput, ComboboxInt, Scale, Numberinput, MultipleSelect, \
+    SearchBox
 import Sounds
 import StartingItems
 from Utils import data_path
 
-
-# holds the info for a single setting
-class SettingInfo:
-    def __init__(self, setting_type: type, gui_text: Optional[str], gui_type: Optional[str], shared: bool, choices=None, default=None, disabled_default=None, disable=None, gui_tooltip=None, gui_params=None, cosmetic: bool = False) -> None:
-        self.type: type = setting_type  # type of the setting's value, used to properly convert types to setting strings
-        self.shared: bool = shared  # whether the setting is one that should be shared, used in converting settings to a string
-        self.cosmetic: bool = cosmetic  # whether the setting should be included in the cosmetic log
-        self.gui_text: Optional[str] = gui_text
-        self.gui_type: Optional[str] = gui_type
-        self.gui_tooltip: Optional[str] = "" if gui_tooltip is None else gui_tooltip
-        self.gui_params: dict = {} if gui_params is None else gui_params  # additional parameters that the randomizer uses for the gui
-        self.disable: dict = disable  # dictionary of settings this setting disabled
-        self.dependency = None  # lambda that determines if this is disabled. Generated later
-
-        # dictionary of options to their text names
-        choices = {} if choices is None else choices
-        if isinstance(choices, list):
-            self.choices: dict = {k: k for k in choices}
-            self.choice_list: list = list(choices)
-        else:
-            self.choices: dict = dict(choices)
-            self.choice_list: list = list(choices.keys())
-        self.reverse_choices: dict = {v: k for k, v in self.choices.items()}
-
-        # number of bits needed to store the setting, used in converting settings to a string
-        if shared:
-            if self.gui_params.get('min') and self.gui_params.get('max') and not choices:
-                self.bitwidth = math.ceil(math.log(self.gui_params.get('max') - self.gui_params.get('min') + 1, 2))
-            else:
-                self.bitwidth = self.calc_bitwidth(choices)
-        else:
-            self.bitwidth = 0
-
-        # default value if undefined/unset
-        self.default = default
-        if self.default is None:
-            if self.type == bool:
-                self.default = False
-            elif self.type == str:
-                self.default = ""
-            elif self.type == int:
-                self.default = 0
-            elif self.type == list:
-                self.default = []
-            elif self.type == dict:
-                self.default = {}
-
-        # default value if disabled
-        self.disabled_default = self.default if disabled_default is None else disabled_default
-
-        # used to when random options are set for this setting
-        if 'distribution' not in self.gui_params:
-            self.gui_params['distribution'] = [(choice, 1) for choice in self.choice_list]
-
-    def __set_name__(self, owner, name):
-        self.name = name
-
-    def __get__(self, obj, obj_type=None) -> Any:
-        return obj.settings_dict.get(self.name, self.default)
-
-    def __set__(self, obj, value: Any) -> None:
-        obj.settings_dict[self.name] = value
-
-    def __delete__(self, obj):
-        del obj.settings_dict[self.name]
-
-    def calc_bitwidth(self, choices):
-        count = len(choices)
-        if count > 0:
-            if self.type == list:
-                # Need two special values for terminating additive and subtractive lists
-                count = count + 2
-            return math.ceil(math.log(count, 2))
-        return 0
-
-
-class SettingInfoNone(SettingInfo):
-    def __init__(self, gui_text: Optional[str], gui_type: Optional[str], gui_tooltip=None, gui_params=None) -> None:
-        super().__init__(type(None), gui_text, gui_type, False, None, None, None, None, gui_tooltip, gui_params, False)
-
-    def __get__(self, obj, obj_type=None) -> None:
-        raise Exception(f"{self.name} is not a setting and cannot be retrieved.")
-
-    def __set__(self, obj, value: str) -> None:
-        raise Exception(f"{self.name} is not a setting and cannot be set.")
-
-
-class SettingInfoBool(SettingInfo):
-    def __init__(self, gui_text: Optional[str], gui_type: Optional[str], shared: bool, default=None, disabled_default=None, disable=None, gui_tooltip=None, gui_params=None, cosmetic: bool = False) -> None:
-        choices = {
-            True:  'checked',
-            False: 'unchecked',
-        }
-
-        super().__init__(bool, gui_text, gui_type, shared, choices, default, disabled_default, disable, gui_tooltip, gui_params, cosmetic)
-
-    def __get__(self, obj, obj_type=None) -> bool:
-        value = super().__get__(obj, obj_type)
-        if not isinstance(value, bool):
-            value = bool(value)
-        return value
-
-    def __set__(self, obj, value: bool) -> None:
-        if not isinstance(value, bool):
-            value = bool(value)
-        super().__set__(obj, value)
-
-
-class SettingInfoStr(SettingInfo):
-    def __init__(self, gui_text: Optional[str], gui_type: Optional[str], shared: bool = False, choices=None, default=None, disabled_default=None, disable=None, gui_tooltip=None, gui_params=None, cosmetic: bool = False) -> None:
-        super().__init__(str, gui_text, gui_type, shared, choices, default, disabled_default, disable, gui_tooltip, gui_params, cosmetic)
-
-    def __get__(self, obj, obj_type=None) -> str:
-        value = super().__get__(obj, obj_type)
-        if not isinstance(value, str):
-            value = str(value)
-        return value
-
-    def __set__(self, obj, value: str) -> None:
-        if not isinstance(value, str):
-            value = str(value)
-        super().__set__(obj, value)
-
-
-class SettingInfoInt(SettingInfo):
-    def __init__(self, gui_text: Optional[str], gui_type: Optional[str], shared: bool, choices=None, default=None, disabled_default=None, disable=None, gui_tooltip=None, gui_params=None, cosmetic: bool = False) -> None:
-        super().__init__(int, gui_text, gui_type, shared, choices, default, disabled_default, disable, gui_tooltip, gui_params, cosmetic)
-
-    def __get__(self, obj, obj_type=None) -> int:
-        value = super().__get__(obj, obj_type)
-        if not isinstance(value, int):
-            value = int(value)
-        return value
-
-    def __set__(self, obj, value: int) -> None:
-        if not isinstance(value, int):
-            value = int(value)
-        super().__set__(obj, value)
-
-
-class SettingInfoList(SettingInfo):
-    def __init__(self, gui_text: Optional[str], gui_type: Optional[str], shared: bool, choices=None, default=None, disabled_default=None, disable=None, gui_tooltip=None, gui_params=None, cosmetic: bool = False) -> None:
-        super().__init__(list, gui_text, gui_type, shared, choices, default, disabled_default, disable, gui_tooltip, gui_params, cosmetic)
-
-    def __get__(self, obj, obj_type=None) -> list:
-        value = super().__get__(obj, obj_type)
-        if not isinstance(value, list):
-            value = list(value)
-        return value
-
-    def __set__(self, obj, value: list) -> None:
-        if not isinstance(value, list):
-            value = list(value)
-        super().__set__(obj, value)
-
-
-class SettingInfoDict(SettingInfo):
-    def __init__(self, gui_text: Optional[str], gui_type: Optional[str], shared: bool, choices=None, default=None, disabled_default=None, disable=None, gui_tooltip=None, gui_params=None, cosmetic: bool = False) -> None:
-        super().__init__(dict, gui_text, gui_type, shared, choices, default, disabled_default, disable, gui_tooltip, gui_params, cosmetic)
-
-    def __get__(self, obj, obj_type=None) -> dict:
-        value = super().__get__(obj, obj_type)
-        if not isinstance(value, dict):
-            value = dict(value)
-        return value
-
-    def __set__(self, obj, value: dict) -> None:
-        if not isinstance(value, dict):
-            value = dict(value)
-        super().__set__(obj, value)
-
-
-class Button(SettingInfoNone):
-    def __init__(self, gui_text: Optional[str], gui_tooltip=None, gui_params=None) -> None:
-        super().__init__(gui_text, "Button", gui_tooltip, gui_params)
-
-
-class Textbox(SettingInfoNone):
-    def __init__(self, gui_text: Optional[str], gui_tooltip=None, gui_params=None) -> None:
-        super().__init__(gui_text, "Textbox", gui_tooltip, gui_params)
-
-
-class Checkbutton(SettingInfoBool):
-    def __init__(self, gui_text: Optional[str], gui_tooltip: Optional[str] = None, disable=None, disabled_default=None, default=False, shared=False, gui_params=None, cosmetic=False):
-        super().__init__(gui_text, 'Checkbutton', shared, default, disabled_default, disable, gui_tooltip, gui_params, cosmetic)
-
-
-class Combobox(SettingInfoStr):
-    def __init__(self, gui_text, choices, default, gui_tooltip=None, disable=None, disabled_default=None, shared=False, gui_params=None, cosmetic=False):
-        super().__init__(gui_text, 'Combobox', shared, choices, default, disabled_default, disable, gui_tooltip, gui_params, cosmetic)
-
-
-class Radiobutton(SettingInfoStr):
-    def __init__(self, gui_text, choices, default, gui_tooltip=None, disable=None, disabled_default=None, shared=False, gui_params=None, cosmetic=False):
-        super().__init__(gui_text, 'Radiobutton', shared, choices, default, disabled_default, disable, gui_tooltip, gui_params, cosmetic)
-
-
-class Fileinput(SettingInfoStr):
-    def __init__(self, gui_text, choices=None, default=None, gui_tooltip=None, disable=None, disabled_default=None, shared=False, gui_params=None, cosmetic=False):
-        super().__init__(gui_text, 'Fileinput', shared, choices, default, disabled_default, disable, gui_tooltip, gui_params, cosmetic)
-
-
-class Directoryinput(SettingInfoStr):
-    def __init__(self, gui_text, choices=None, default=None, gui_tooltip=None, disable=None, disabled_default=None, shared=False, gui_params=None, cosmetic=False):
-        super().__init__(gui_text, 'Directoryinput', shared, choices, default, disabled_default, disable, gui_tooltip, gui_params, cosmetic)
-
-
-class Textinput(SettingInfoStr):
-    def __init__(self, gui_text, choices=None, default=None, gui_tooltip=None, disable=None, disabled_default=None, shared=False, gui_params=None, cosmetic=False):
-        super().__init__(gui_text, 'Textinput', shared, choices, default, disabled_default, disable, gui_tooltip, gui_params, cosmetic)
-
-
-class ComboboxInt(SettingInfoInt):
-    def __init__(self, gui_text, choices, default, gui_tooltip=None, disable=None, disabled_default=None, shared=False, gui_params=None, cosmetic=False):
-        super().__init__(gui_text, 'Combobox', shared, choices, default, disabled_default, disable, gui_tooltip, gui_params, cosmetic)
-
-
-class Scale(SettingInfoInt):
-    def __init__(self, gui_text, default, minimum, maximum, step=1, gui_tooltip=None, disable=None, disabled_default=None, shared=False, gui_params=None, cosmetic=False):
-        choices = {
-            i: str(i) for i in range(minimum, maximum+1, step)
-        }
-
-        if gui_params is None:
-            gui_params = {}
-        gui_params['min'] = minimum
-        gui_params['max'] = maximum
-        gui_params['step'] = step
-
-        super().__init__(gui_text, 'Scale', shared, choices, default, disabled_default, disable, gui_tooltip, gui_params, cosmetic)
-
-
-class Numberinput(SettingInfoInt):
-    def __init__(self, gui_text, default, minimum=None, maximum=None, gui_tooltip=None, disable=None, disabled_default=None, shared=False, gui_params=None, cosmetic=False):
-        if gui_params is None:
-            gui_params = {}
-        if minimum is not None:
-            gui_params['min'] = minimum
-        if maximum is not None:
-            gui_params['max'] = maximum
-
-        super().__init__(gui_text, 'Numberinput', shared, None, default, disabled_default, disable, gui_tooltip, gui_params, cosmetic)
-
-
-class MultipleSelect(SettingInfoList):
-    def __init__(self, gui_text, choices, default, gui_tooltip=None, disable=None, disabled_default=None, shared=False, gui_params=None, cosmetic=False):
-        super().__init__(gui_text, 'MultipleSelect', shared, choices, default, disabled_default, disable, gui_tooltip, gui_params, cosmetic)
-
-
-class SearchBox(SettingInfoList):
-    def __init__(self, gui_text, choices, default, gui_tooltip=None, disable=None, disabled_default=None, shared=False, gui_params=None, cosmetic=False):
-        super().__init__(gui_text, 'SearchBox', shared, choices, default, disabled_default, disable, gui_tooltip, gui_params, cosmetic)
+if TYPE_CHECKING:
+    from Entrance import Entrance
 
 
 class SettingInfos:
@@ -1227,7 +978,7 @@ class SettingInfos:
     )
 
     trials_random = Checkbutton(
-        gui_text       = 'Random Number of Ganon\'s Trials',
+        gui_text       = "Random Number of Ganon's Trials",
         gui_tooltip    = '''\
             Sets a random number of trials to enter Ganon's Tower.
         ''',
@@ -1258,10 +1009,10 @@ class SettingInfos:
     )
 
     shuffle_ganon_bosskey = Combobox(
-        gui_text       = 'Ganon\'s Boss Key',
-        default        = 'dungeon',
+        gui_text         = "Ganon's Boss Key",
+        default          = 'dungeon',
         disabled_default = 'triforce',
-        choices        = {
+        choices          = {
             'remove':          "Remove (Keysy)",
             'vanilla':         "Vanilla Location",
             'dungeon':         "Own Dungeon",
@@ -1276,7 +1027,7 @@ class SettingInfos:
             'tokens':          "Tokens",
             'hearts':          "Hearts",
         },
-        gui_tooltip    = '''\
+        gui_tooltip      = '''\
             'Remove': Ganon's Castle Boss Key is removed
             and the boss door in Ganon's Tower starts unlocked.
 
@@ -1317,15 +1068,15 @@ class SettingInfos:
             'Hearts': Ganon's Castle Boss Key will be awarded
             when reaching the target number of hearts.
         ''',
-        shared         = True,
-        disable        = {
-            '!stones':  {'settings': ['ganon_bosskey_stones']},
+        shared           = True,
+        disable          = {
+            '!stones':      {'settings': ['ganon_bosskey_stones']},
             '!medallions':  {'settings': ['ganon_bosskey_medallions']},
-            '!dungeons':  {'settings': ['ganon_bosskey_rewards']},
-            '!tokens':  {'settings': ['ganon_bosskey_tokens']},
-            '!hearts':  {'settings': ['ganon_bosskey_hearts']},
+            '!dungeons':    {'settings': ['ganon_bosskey_rewards']},
+            '!tokens':      {'settings': ['ganon_bosskey_tokens']},
+            '!hearts':      {'settings': ['ganon_bosskey_hearts']},
         },
-        gui_params     = {
+        gui_params       = {
             'randomize_key': 'randomize_settings',
             'distribution': [
                 ('remove',          4),
@@ -2084,9 +1835,7 @@ class SettingInfos:
         ''',
         shared         = True,
         disable        = {
-            'off':    {'settings': ['dungeon_shortcuts']},
-            'all':    {'settings': ['dungeon_shortcuts']},
-            'random': {'settings': ['dungeon_shortcuts']},
+            '!choice': {'settings': ['dungeon_shortcuts']},
         },
     )
 
@@ -2157,11 +1906,8 @@ class SettingInfos:
         ''',
         shared         = True,
         disable        = {
-            'vanilla':  {'settings': ['mq_dungeons_count', 'mq_dungeons_specific']},
-            'mq':       {'settings': ['mq_dungeons_count', 'mq_dungeons_specific']},
-            'specific': {'settings': ['mq_dungeons_count']},
-            'count':    {'settings': ['mq_dungeons_specific']},
-            'random':   {'settings': ['mq_dungeons_count', 'mq_dungeons_specific']},
+            '!specific': {'settings': ['mq_dungeons_specific']},
+            '!count':    {'settings': ['mq_dungeons_count']},
         },
         gui_params     = {
             'distribution': [
@@ -3120,7 +2866,7 @@ class SettingInfos:
         gui_text       = "Starting Equipment",
         shared         = True,
         choices        = {
-            key: value.guitext for key, value in StartingItems.equipment.items()
+            key: value.gui_text for key, value in StartingItems.equipment.items()
         },
         default        = [],
         gui_tooltip    = '''\
@@ -3132,7 +2878,7 @@ class SettingInfos:
         gui_text       = "Starting Songs",
         shared         = True,
         choices        = {
-            key: value.guitext for key, value in StartingItems.songs.items()
+            key: value.gui_text for key, value in StartingItems.songs.items()
         },
         default        = [],
         gui_tooltip    = '''\
@@ -3144,7 +2890,7 @@ class SettingInfos:
         gui_text       = "Starting Items",
         shared         = True,
         choices        = {
-            key: value.guitext for key, value in StartingItems.inventory.items()
+            key: value.gui_text for key, value in StartingItems.inventory.items()
         },
         default        = [],
         gui_tooltip    = '''\
@@ -3533,8 +3279,8 @@ class SettingInfos:
     hint_dist = Combobox(
         gui_text       = 'Hint Distribution',
         default        = 'balanced',
-        choices        = HintDistList(),
-        gui_tooltip    = HintDistTips(),
+        choices        =hint_dist_list(),
+        gui_tooltip    =hint_dist_tips(),
         gui_params     = {
             "dynamic": True,
         },
@@ -5155,20 +4901,10 @@ class SettingInfos:
     setting_map: dict = {}
 
     def __init__(self) -> None:
-        self.settings_dict = {}
+        self.settings_dict: Dict[str, Any] = {}
 
 
-def create_dependency(setting, disabling_setting, option, negative=False):
-    disabled_info = SettingInfos.setting_infos[setting]
-    op = operator.__ne__ if negative else operator.__eq__
-    if disabled_info.dependency is None:
-        disabled_info.dependency = lambda settings: op(getattr(settings, disabling_setting.name), option)
-    else:
-        old_dependency = disabled_info.dependency
-        disabled_info.dependency = lambda settings: op(getattr(settings, disabling_setting.name), option) or old_dependency(settings)
-
-
-def get_settings_from_section(section_name):
+def get_settings_from_section(section_name: str) -> Iterable[str]:
     for tab in SettingInfos.setting_map['Tabs']:
         for section in tab['sections']:
             if section['name'] == section_name:
@@ -5177,7 +4913,7 @@ def get_settings_from_section(section_name):
                 return
 
 
-def get_settings_from_tab(tab_name):
+def get_settings_from_tab(tab_name: str) -> Iterable[str]:
     for tab in SettingInfos.setting_map['Tabs']:
         if tab['name'] == tab_name:
             for section in tab['sections']:
@@ -5186,7 +4922,7 @@ def get_settings_from_tab(tab_name):
             return
 
 
-def is_mapped(setting_name):
+def is_mapped(setting_name: str) -> bool:
     for tab in SettingInfos.setting_map['Tabs']:
         for section in tab['sections']:
             if setting_name in section['settings']:
@@ -5194,9 +4930,9 @@ def is_mapped(setting_name):
     return False
 
 
-# When a string isn't found in the source list, attempt to get closest match from the list
+# When a string isn't found in the source list, attempt to get the closest match from the list
 # ex. Given "Recovery Hart" returns "Did you mean 'Recovery Heart'?"
-def build_close_match(name, value_type, source_list=None):
+def build_close_match(name: str, value_type: str, source_list: "Optional[Union[List[str]], Dict[str, List[Entrance]]]" = None) -> str:
     source = []
     if value_type == 'item':
         source = ItemInfo.items.keys()
@@ -5219,7 +4955,7 @@ def build_close_match(name, value_type, source_list=None):
     return ""  # No matches
 
 
-def validate_settings(settings_dict, *, check_conflicts=True):
+def validate_settings(settings_dict: Dict[str, Any], *, check_conflicts: bool = True) -> None:
     for setting, choice in settings_dict.items():
         # Ensure the supplied setting name is a real setting
         if setting not in SettingInfos.setting_infos:
@@ -5227,8 +4963,7 @@ def validate_settings(settings_dict, *, check_conflicts=True):
         info = SettingInfos.setting_infos[setting]
         # Ensure the type of the supplied choice is correct
         if type(choice) != info.type:
-            if setting != 'starting_items' or type(choice) != dict: # allow dict (plando syntax) for starting items in addition to the list syntax used by the GUI
-                raise TypeError('Supplied choice %r for setting %r is of type %r, expecting %r' % (choice, setting, type(choice).__name__, info.type.__name__))
+            raise TypeError('Supplied choice %r for setting %r is of type %r, expecting %r' % (choice, setting, type(choice).__name__, info.type.__name__))
         # If setting is a list, must check each element
         if isinstance(choice, list):
             for element in choice:
@@ -5258,7 +4993,7 @@ def validate_settings(settings_dict, *, check_conflicts=True):
                             validate_disabled_setting(settings_dict, setting, choice, other_setting)
 
 
-def validate_disabled_setting(settings_dict, setting, choice, other_setting):
+def validate_disabled_setting(settings_dict: Dict[str, Any], setting: str, choice, other_setting: str) -> None:
     if other_setting in settings_dict:
         if settings_dict[other_setting] != SettingInfos.setting_infos[other_setting].disabled_default:
             raise ValueError(f'The {other_setting!r} setting cannot be used since {setting!r} is set to {choice!r}')
@@ -5282,11 +5017,11 @@ for info in SettingInfos.setting_infos.values():
             if isinstance(option, str) and option[0] == '!':
                 negative = True
                 option = option[1:]
-            for setting in disabling.get('settings', []):
-                create_dependency(setting, info, option, negative)
+            for setting_name in disabling.get('settings', []):
+                SettingInfos.setting_infos[setting_name].create_dependency(info, option, negative)
             for section in disabling.get('sections', []):
-                for setting in get_settings_from_section(section):
-                    create_dependency(setting, info, option, negative)
+                for setting_name in get_settings_from_section(section):
+                    SettingInfos.setting_infos[setting_name].create_dependency(info, option, negative)
             for tab in disabling.get('tabs', []):
-                for setting in get_settings_from_tab(tab):
-                    create_dependency(setting, info, option, negative)
+                for setting_name in get_settings_from_tab(tab):
+                    SettingInfos.setting_infos[setting_name].create_dependency(info, option, negative)
