@@ -147,6 +147,7 @@ issue. You should always Hard Reset to avoid this issue entirely.
 * The price of the shield discount after selling the Kakariko guard the Keaton mask is now set at patch time and thus consistent between different players of a seed.
 * Add binaries to support Windows on ARM64.
 * Priority placement of certain warp songs is now conditional if `Guarantee Reachable Locations` is set to `All Goals` or `Required Only`.
+* Improve speed generation time.
 
 #### Plandomizer
 * Plandomizer now allows you to specify locations that are valid but do not exist in your current seed, for example, an MQ-specific location when that dungeon is Vanilla.
