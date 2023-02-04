@@ -120,12 +120,15 @@ issue. You should always Hard Reset to avoid this issue entirely.
   * Add a goal category for the items required to open the Door of Time, if it's closed.
 
 #### Bug Fixes
-* Fix an issue where the `path of hearts` goal wasn't enabled in certain circumstances with a Ganon's Boss Key or LACS `Hearts` goal.
-* Fix an issue where CSMC chests containing ice traps were not moved correctly.
-* Fix the bingosync URL not being referenced correctly.
-* The ocarina can no longer be pulled out mid-hookshot via the D-Pad to cancel the hookshot pull.
-* Fix the change which makes graveyard grave hole ledges un-grabbable incorrectly applied to other ledges in the graveyard area.
-* Fix the file path for custom music on some Linux machines.
+* **Misc.**
+  * Fix an issue where the `path of hearts` goal wasn't enabled in certain circumstances with a Ganon's Boss Key or LACS `Hearts` goal.
+  * Fix an issue where CSMC chests containing ice traps were not moved correctly.
+  * Fix the bingosync URL not being referenced correctly.
+  * The ocarina can no longer be pulled out mid-hookshot via the D-Pad to cancel the hookshot pull.
+  * Fix the change which makes graveyard grave hole ledges un-grabbable incorrectly applied to other ledges in the graveyard area.
+  * Fix the file path for custom music on some Linux machines.
+* **Hints**
+  * Fix the cryptic hint for Ganon's Castle Boss Key.
 
 #### Other Changes
 * `Closed Forest` is no longer changed to `Closed Deku` when `Shuffle Boss Entrances` is enabled.
