@@ -129,6 +129,7 @@ issue. You should always Hard Reset to avoid this issue entirely.
   * Fix the file path for custom music on some Linux machines.
 * **Hints**
   * Fix the cryptic hint for Ganon's Castle Boss Key.
+  * Fix missing punctuation in dual hints.
 
 #### Other Changes
 * `Closed Forest` is no longer changed to `Closed Deku` when `Shuffle Boss Entrances` is enabled.
