@@ -118,6 +118,8 @@ issue. You should always Hard Reset to avoid this issue entirely.
   * New `Important Checks` hint type which hints at how many major items are in a given region.
   * New Misc. Hint `Frogs Ocarina Game` which tells you what item you'll get from the Zora's River frog minigame. The hint appears in the dialog box that's printed before they jump onto the log.
   * Add a goal category for the items required to open the Door of Time, if it's closed.
+* **Other**
+  * When picking up a small key after the first, the text box will now inform you how many you've found total.
 
 #### Bug Fixes
 * **Misc.**
