@@ -245,8 +245,10 @@ def compress_rom(input_file, output_file, window=dummy_window(), delete_input=Fa
     logger = logging.getLogger('')
     compressor_path = "./" if is_bundled() else "bin/Compress/"
     if platform.system() == 'Windows':
-        if 8 * struct.calcsize("P") == 64:
+        if platform.machine() == 'AMD64':
             compressor_path += "Compress.exe"
+        elif platform.machine() == 'ARM64':
+            compressor_path += "Compress_ARM64.exe"
         else:
             compressor_path += "Compress32.exe"
     elif platform.system() == 'Linux':
@@ -280,8 +282,10 @@ def generate_wad(wad_file, rom_file, output_file, channel_title, channel_id, win
     gzinject_path = "./" if is_bundled() else "bin/gzinject/"
     gzinject_patch_path = gzinject_path + "ootr.gzi"
     if platform.system() == 'Windows':
-        if 8 * struct.calcsize("P") == 64:
+        if platform.machine() == 'AMD64':
             gzinject_path += "gzinject.exe"
+        elif platform.machine() == 'ARM64':
+            gzinject_path += "gzinject_ARM64.exe"
         else:
             gzinject_path += "gzinject32.exe"
     elif platform.system() == 'Linux':
