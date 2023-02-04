@@ -1658,6 +1658,28 @@ skip_GS_BGS_text:
     nop
     nop
 
+; en_bom_bowl_man actor changes to prize selection using new flags
+; Replaces:
+;   jr      t7
+.orga 0xE2E070
+    jal     select_bombchu_bowling_prize
+    lhu     a0, 0x0232(s0)
+
+; set new bombchu bowling flags in scene collectible flags, skipping
+; inf_table flags
+; Replaces:
+;   lh      v0, 0x014A(a2)
+;   addiu   $at, $zero, 0x0001
+;   beq     v0, $zero, lbl_80AAEFA4
+;   nop
+;   beq     v0, $at, lbl_80AAEFBC
+.orga 0xE2EDD4
+    jal     set_bombchu_bowling_prize_flag
+    lh      a0, 0x014A(a2)
+    nop
+    nop
+    nop
+
 ; en_js actor changes to prevent buying bombchus before finding a shuffled source
 .orga 0xE5B5C8
     jal     logic_chus__carpet_dude_1

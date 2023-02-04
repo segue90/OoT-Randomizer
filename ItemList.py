@@ -73,6 +73,7 @@ item_table = {
     'Nayrus Love':                                     ('Item',     True,  0x5E, None),
     'Farores Wind':                                    ('Item',     True,  0x5D, None),
     'Deku Nuts (10)':                                  ('Item',     None,  0x64, {'junk': 0}),
+    'Bomb (1)':                                        ('Item',     None,  0x65, {'junk': -1}),
     'Bombs (10)':                                      ('Item',     None,  0x66, {'junk': 2}),
     'Bombs (20)':                                      ('Item',     None,  0x67, {'junk': 0}),
     'Deku Seeds (30)':                                 ('Item',     None,  0x69, {'junk': 5}),

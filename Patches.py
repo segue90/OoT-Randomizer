@@ -829,8 +829,6 @@ def patch_rom(spoiler:Spoiler, world:World, rom:Rom):
     rom.write_bytes(0xED4498, [0x00, 0x00, 0x00, 0x00])
 
     # Fixed reward order for Bombchu Bowling
-    rom.write_bytes(0xE2E698, [0x80, 0xAA, 0xE2, 0x64])
-    rom.write_bytes(0xE2E6A0, [0x80, 0xAA, 0xE2, 0x4C])
     rom.write_bytes(0xE2D440, [0x24, 0x19, 0x00, 0x00])
 
     # Offset kakariko carpenter starting position
@@ -1935,6 +1933,10 @@ def patch_rom(spoiler:Spoiler, world:World, rom:Rom):
     rom.write_byte(0x2DD8029, len(shop_objs))
     rom.write_int32(0x2DD802C, 0x03006A40)
     rom.write_int16s(0x2DDEA40, list(shop_objs))
+
+    # Bombchu Bowling 3rd and 4th prizes
+    if world.settings.shuffle_extra_bowling_prizes:
+        rom.write_int32(rom.sym('EXTRA_BOWLING_SHUFFLE'), 0x00000001)
 
     # Scrub text stuff.
     def update_scrub_text(message, text_replacement, default_price, price, item_name=None):

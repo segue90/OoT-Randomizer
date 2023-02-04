@@ -4231,6 +4231,21 @@ setting_infos = [
             'randomize_key': 'randomize_settings',
         },
     ),
+    Checkbutton(
+        name           = 'shuffle_extra_bowling_prizes',
+        gui_text       = 'Shuffle Extra Bombchu Bowling Prizes',
+        gui_tooltip    = '''\
+            Enabling this adds a Bombchu 10 pack and a single Bomb
+            refill to the item pool and shuffles the 3rd and 4th rewards
+            from playing Bombchu Bowling. The minigame can be played
+            after finding either a Bomb Bag or Bombchu Bag.
+        ''',
+        default        = False,
+        shared         = True,
+        gui_params     = {
+            'randomize_key': 'randomize_settings',
+        },
+    ),
 
     # Detailed Logic (except "Guarantee Reachable Locations")
 
