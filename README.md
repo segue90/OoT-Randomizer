@@ -125,6 +125,7 @@ issue. You should always Hard Reset to avoid this issue entirely.
 * Fix the bingosync URL not being referenced correctly.
 * The ocarina can no longer be pulled out mid-hookshot via the D-Pad to cancel the hookshot pull.
 * Fix the change which makes graveyard grave hole ledges un-grabbable incorrectly applied to other ledges in the graveyard area.
+* Fix the file path for custom music on some Linux machines.
 
 #### Other Changes
 * `Closed Forest` is no longer changed to `Closed Deku` when `Shuffle Boss Entrances` is enabled.
