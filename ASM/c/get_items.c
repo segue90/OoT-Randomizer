@@ -9,6 +9,7 @@
 extern uint8_t FAST_CHESTS;
 extern uint8_t OCARINAS_SHUFFLED;
 extern uint8_t NO_COLLECTIBLE_HEARTS;
+extern uint32_t BOMBCHUS_IN_LOGIC;
 override_t cfg_item_overrides[1536] = { 0 };
 int item_overrides_count = 0;
 
@@ -703,7 +704,7 @@ int16_t get_override_drop_id(int16_t dropId) {
     }
 
     // Chus in logic drops, convert bomb drop to bombchu drop under certain circumstances
-    if ((dropId == ITEM00_BOMBS_A) || (dropId == ITEM00_BOMBS_SPECIAL) || (dropId == ITEM00_BOMBS_B)) {
+    if (BOMBCHUS_IN_LOGIC && ((dropId == ITEM00_BOMBS_A) || (dropId == ITEM00_BOMBS_SPECIAL) || (dropId == ITEM00_BOMBS_B))) {
         if ((z64_file.items[Z64_SLOT_BOMB] != -1) && (z64_file.items[Z64_SLOT_BOMBCHU] != -1)) { // we have bombs and chus
             return drop_bombs_or_chus(dropId);
         } else if (z64_file.items[Z64_SLOT_BOMB] != -1) { // only have bombs
