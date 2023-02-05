@@ -1664,6 +1664,12 @@ skip_GS_BGS_text:
 .orga 0xE2E070
     jal     select_bombchu_bowling_prize
     lhu     a0, 0x0232(s0)
+    or      v1, v0, $zero
+    b       skip_bombchu_bowling_prize_switch
+    sh      v1, 0x004E($sp)
+
+.orga 0xE2E0E0
+skip_bombchu_bowling_prize_switch:
 
 ; set new bombchu bowling flags in scene collectible flags, skipping
 ; inf_table flags

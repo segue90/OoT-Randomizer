@@ -20,7 +20,7 @@ int16_t select_bombchu_bowling_prize(int16_t prizeSelect) {
 
     uint32_t prizeFlag = (1 << prizeSelect);
 
-    if (z64_file.scene_flags[0x4B].collect & prizeFlag) {
+    if (!(z64_file.scene_flags[0x4B].unk_00_ & prizeFlag)) {
         switch(prizeSelect) {
             case 0:
                 prizeTemp = EXITEM_BOMB_BAG_BOWLING;
@@ -55,7 +55,30 @@ int16_t select_bombchu_bowling_prize(int16_t prizeSelect) {
                 break;
         }
     } else {
-        prizeTemp = EXITEM_PURPLE_RUPEE_BOWLING;
+        // maintain renewable bombchus/bombs if extra shuffle is disabled
+        if (!EXTRA_BOWLING_SHUFFLE) {
+            switch(prizeSelect) {
+                case 2:
+                    if (z64_file.items[Z64_SLOT_BOMBCHU] == -1) {
+                        prizeTemp = z64_file.bomb_bag ? EXITEM_BOMBS_BOWLING : EXITEM_PURPLE_RUPEE_BOWLING;
+                    } else {
+                        prizeTemp = EXITEM_BOMBCHUS_BOWLING;
+                    }
+                    break;
+                case 3:
+                    if (!z64_file.bomb_bag) {
+                        prizeTemp = EXITEM_PURPLE_RUPEE_BOWLING;
+                    } else {
+                        prizeTemp = EXITEM_BOMBS_BOWLING;
+                    }
+                    break;
+                default:
+                    prizeTemp = EXITEM_PURPLE_RUPEE_BOWLING;
+                    break;
+            }
+        } else {
+            prizeTemp = EXITEM_PURPLE_RUPEE_BOWLING;
+        }
     }
 
     return prizeTemp;
@@ -66,6 +89,6 @@ void set_bombchu_bowling_prize_flag(int16_t prizeIndex) {
     // the purple rupee prize is ever shuffled
     if (prizeIndex != EXITEM_PURPLE_RUPEE_BOWLING ||
             (!EXTRA_BOWLING_SHUFFLE && prizeIndex <= EXITEM_HEART_PIECE_BOWLING)) {
-        z64_file.scene_flags[0x4B].collect |= (1 << prizeIndex);
+        z64_file.scene_flags[0x4B].unk_00_ |= (1 << prizeIndex);
     }
 }
