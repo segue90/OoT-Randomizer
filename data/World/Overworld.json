@@ -1321,7 +1321,7 @@
             "Market Bombchu Bowling First Prize": "has_explosives",
             "Market Bombchu Bowling Second Prize": "has_explosives",
             "Market Bombchu Bowling Bombchus": "has_explosives",
-            "Market Bombchu Bowling Bomb": "has_explosives and Progressive_Wallet"
+            "Market Bombchu Bowling Bomb": "has_explosives"
         },
         "exits": {
             "Market": "True"

@@ -464,7 +464,7 @@ def get_pool_core(world):
 
         # Bombchu Bowling 3rd and 4th prizes (must be checked before Bombchu vanilla items!)
         elif location.name in ['Market Bombchu Bowling Bombchus', 'Market Bombchu Bowling Bomb']:
-            shuffle_item = world.settings.shuffle_extra_bowling_prizes
+            shuffle_item = False
 
         # Bombchus
         elif location.vanilla_item in ['Bombchus', 'Bombchus (5)', 'Bombchus (10)', 'Bombchus (20)']:
