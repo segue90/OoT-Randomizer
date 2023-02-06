@@ -4,25 +4,25 @@
 #include "util.h"
 #include "z64.h"
 
-uint8_t SaveFile_NextOwnedTradeItem(uint8_t itemId);
-uint8_t SaveFile_PrevOwnedTradeItem(uint8_t itemId);
+uint16_t SaveFile_NextOwnedTradeItem(uint16_t itemId);
+uint16_t SaveFile_PrevOwnedTradeItem(uint16_t itemId);
 
-void SaveFile_SetTradeItemAsOwned(uint8_t itemId);
-void SaveFile_UnsetTradeItemAsOwned(uint8_t itemId);
+void SaveFile_SetTradeItemAsOwned(uint16_t itemId);
+void SaveFile_UnsetTradeItemAsOwned(uint16_t itemId);
 
-uint8_t IsTradeItem(uint8_t itemId);
-uint8_t IsAdultTradeItem(uint8_t itemId);
-uint8_t GetTradeItemIndex(uint8_t itemId);
+uint16_t IsTradeItem(uint16_t itemId);
+uint16_t IsAdultTradeItem(uint16_t itemId);
+uint16_t GetTradeItemIndex(uint16_t itemId);
 
-int16_t GetTradeSlot(uint8_t itemId);
-void UpdateTradeEquips(uint8_t itemId, int16_t trade_slot);
-void TurnInTradeItem(uint8_t itemId);
+int16_t GetTradeSlot(uint16_t itemId);
+void UpdateTradeEquips(uint16_t itemId, int16_t trade_slot);
+void TurnInTradeItem(uint16_t itemId);
 
 typedef struct {
-    uint8_t index;
-    uint8_t item_id;
-    uint8_t exchange_item_id;
-    int8_t action_parameter;
+    uint16_t index;
+    uint16_t item_id;
+    uint16_t exchange_item_id;
+    int16_t action_parameter;
     char name[20];
 } exchange_item_t;
 

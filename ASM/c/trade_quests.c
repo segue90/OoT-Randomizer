@@ -28,7 +28,7 @@ const exchange_item_t trade_quest_items[] = {
 // Rupees to pay back to Happy Mask Shop
 static int16_t sMaskPaymentPrice[] = { 10, 30, 20, 50 };
 
-uint8_t GetTradeItemIndex(uint8_t itemId) {
+uint16_t GetTradeItemIndex(uint16_t itemId) {
     if (itemId <= Z64_ITEM_MASK_OF_TRUTH) {
         return itemId - Z64_ITEM_WEIRD_EGG;
     } else {
@@ -37,7 +37,7 @@ uint8_t GetTradeItemIndex(uint8_t itemId) {
     }
 }
 
-uint8_t GetTradeItemByAP(int8_t actionParam) {
+uint16_t GetTradeItemByAP(int16_t actionParam) {
     for (int i = 0; i < 22; i++) {
         exchange_item_t entry = trade_quest_items[i];
         if (actionParam == entry.action_parameter) {
@@ -48,7 +48,7 @@ uint8_t GetTradeItemByAP(int8_t actionParam) {
     return 0;
 }
 
-int16_t GetTradeSlot(uint8_t itemId) {
+int16_t GetTradeSlot(uint16_t itemId) {
     if (itemId >= Z64_ITEM_WEIRD_EGG && itemId <= Z64_ITEM_MASK_OF_TRUTH) {
         return Z64_SLOT_CHILD_TRADE;
     } else if (itemId >= Z64_ITEM_POCKET_EGG && itemId <= Z64_ITEM_CLAIM_CHECK) {
@@ -58,7 +58,7 @@ int16_t GetTradeSlot(uint8_t itemId) {
     }
 }
 
-uint8_t GetTradeItemMin(uint8_t itemId) {
+uint16_t GetTradeItemMin(uint16_t itemId) {
     if (itemId <= Z64_ITEM_MASK_OF_TRUTH) {
         return Z64_ITEM_WEIRD_EGG;
     } else {
@@ -66,7 +66,7 @@ uint8_t GetTradeItemMin(uint8_t itemId) {
     }
 }
 
-uint8_t GetTradeItemMax(uint8_t itemId) {
+uint16_t GetTradeItemMax(uint16_t itemId) {
     if (itemId <= Z64_ITEM_MASK_OF_TRUTH) {
         return Z64_ITEM_MASK_OF_TRUTH;
     } else {
@@ -74,7 +74,7 @@ uint8_t GetTradeItemMax(uint8_t itemId) {
     }
 }
 
-uint8_t IsTradeItem(uint8_t itemId) {
+uint16_t IsTradeItem(uint16_t itemId) {
     if ((itemId >= Z64_ITEM_WEIRD_EGG && itemId <= Z64_ITEM_MASK_OF_TRUTH) || \
         (itemId >= Z64_ITEM_POCKET_EGG && itemId <= Z64_ITEM_CLAIM_CHECK)) {
         return 1;
@@ -82,7 +82,7 @@ uint8_t IsTradeItem(uint8_t itemId) {
     return 0;
 }
 
-uint8_t IsAdultTradeItem(uint8_t itemId) {
+uint16_t IsAdultTradeItem(uint16_t itemId) {
     if ((itemId > Z64_ITEM_POCKET_EGG && itemId <= Z64_ITEM_CLAIM_CHECK) || \
          itemId == Z64_ITEM_BIGGORON_SWORD) {
         return 1;
@@ -91,25 +91,25 @@ uint8_t IsAdultTradeItem(uint8_t itemId) {
 }
 
 // Use the "unk" flags in DMT to represent trade item ownership
-void SaveFile_SetTradeItemAsOwned(uint8_t itemId) {
-    uint8_t tradeItemNum = GetTradeItemIndex(itemId);
+void SaveFile_SetTradeItemAsOwned(uint16_t itemId) {
+    uint16_t tradeItemNum = GetTradeItemIndex(itemId);
     z64_file.scene_flags[0x60].unk_00_ |= (0x1 << tradeItemNum);
 }
 
-void SaveFile_UnsetTradeItemAsOwned(uint8_t itemId) {
-    uint8_t tradeItemNum = GetTradeItemIndex(itemId);
+void SaveFile_UnsetTradeItemAsOwned(uint16_t itemId) {
+    uint16_t tradeItemNum = GetTradeItemIndex(itemId);
     z64_file.scene_flags[0x60].unk_00_ &= ~(0x1 << tradeItemNum);
 }
 
-uint32_t SaveFile_TradeItemIsOwned(uint8_t itemId) {
-    uint8_t tradeItemNum = GetTradeItemIndex(itemId);
+uint32_t SaveFile_TradeItemIsOwned(uint16_t itemId) {
+    uint16_t tradeItemNum = GetTradeItemIndex(itemId);
     return (z64_file.scene_flags[0x60].unk_00_ & (0x1 << tradeItemNum)) != 0;
 }
 
 // Update trade item owned flags if the game updates the item.
 // Currently only called for hatching chickens. Will eventually
 // be used for timers.
-int32_t SaveFile_UpdateShiftableItem(uint8_t oldItemId, uint8_t newItemId) {
+int32_t SaveFile_UpdateShiftableItem(uint16_t oldItemId, uint16_t newItemId) {
     if (IsTradeItem(newItemId)) {
         switch(newItemId) {
             case Z64_ITEM_CHICKEN:
@@ -129,18 +129,18 @@ int32_t SaveFile_UpdateShiftableItem(uint8_t oldItemId, uint8_t newItemId) {
 }
 
 // Use the "unk" flags in DMC to represent trade item trade-in status
-void SaveFile_SetTradeItemAsTraded(uint8_t itemId) {
-    uint8_t tradeItemNum = GetTradeItemIndex(itemId);
+void SaveFile_SetTradeItemAsTraded(uint16_t itemId) {
+    uint16_t tradeItemNum = GetTradeItemIndex(itemId);
     z64_file.scene_flags[0x61].unk_00_ |= (0x1 << tradeItemNum);
 }
 
-void SaveFile_UnsetTradeItemAsTraded(uint8_t itemId) {
-    uint8_t tradeItemNum = GetTradeItemIndex(itemId);
+void SaveFile_UnsetTradeItemAsTraded(uint16_t itemId) {
+    uint16_t tradeItemNum = GetTradeItemIndex(itemId);
     z64_file.scene_flags[0x61].unk_00_ &= ~(0x1 << tradeItemNum);
 }
 
-uint32_t SaveFile_TradeItemIsTraded(uint8_t itemId) {
-    uint8_t tradeItemNum = GetTradeItemIndex(itemId);
+uint32_t SaveFile_TradeItemIsTraded(uint16_t itemId) {
+    uint16_t tradeItemNum = GetTradeItemIndex(itemId);
     return (z64_file.scene_flags[0x61].unk_00_ & (0x1 << tradeItemNum)) != 0;
 }
 
@@ -148,21 +148,21 @@ uint32_t SaveFile_TradeItemIsTraded(uint8_t itemId) {
 // Use them as paid flags for the left-side masks. In vanilla the mask
 // salesman can only handle paying one mask at a time but would give access
 // to everything after each payment.
-void SaveFile_SetMaskAsPaid(uint8_t itemId) {
-    uint8_t tradeItemNum = GetTradeItemIndex(itemId) + 4;
+void SaveFile_SetMaskAsPaid(uint16_t itemId) {
+    uint16_t tradeItemNum = GetTradeItemIndex(itemId) + 4;
     z64_file.scene_flags[0x61].unk_00_ |= (0x1 << tradeItemNum);
 }
 
-uint32_t SaveFile_MaskIsPaid(uint8_t itemId) {
-    uint8_t tradeItemNum = GetTradeItemIndex(itemId) + 4;
+uint32_t SaveFile_MaskIsPaid(uint16_t itemId) {
+    uint16_t tradeItemNum = GetTradeItemIndex(itemId) + 4;
     return (z64_file.scene_flags[0x61].unk_00_ & (0x1 << tradeItemNum)) != 0;
 }
 
-uint8_t SaveFile_NextOwnedTradeItem(uint8_t itemId) {
+uint16_t SaveFile_NextOwnedTradeItem(uint16_t itemId) {
     if (IsTradeItem(itemId)) {
-        uint8_t minItem = GetTradeItemMin(itemId);
-        uint8_t maxItem = GetTradeItemMax(itemId);
-        uint8_t potentialItem = (itemId + 1) > maxItem ? minItem : itemId + 1;
+        uint16_t minItem = GetTradeItemMin(itemId);
+        uint16_t maxItem = GetTradeItemMax(itemId);
+        uint16_t potentialItem = (itemId + 1) > maxItem ? minItem : itemId + 1;
         while ((potentialItem != itemId) && !SaveFile_TradeItemIsOwned(potentialItem)) {
             potentialItem++;
             if (potentialItem > maxItem) {
@@ -175,11 +175,11 @@ uint8_t SaveFile_NextOwnedTradeItem(uint8_t itemId) {
     }
 }
 
-uint8_t SaveFile_PrevOwnedTradeItem(uint8_t itemId) {
+uint16_t SaveFile_PrevOwnedTradeItem(uint16_t itemId) {
     if (IsTradeItem(itemId)) {
-        uint8_t minItem = GetTradeItemMin(itemId);
-        uint8_t maxItem = GetTradeItemMax(itemId);
-        uint8_t potentialItem = (itemId - 1) < minItem ? maxItem : itemId - 1;
+        uint16_t minItem = GetTradeItemMin(itemId);
+        uint16_t maxItem = GetTradeItemMax(itemId);
+        uint16_t potentialItem = (itemId - 1) < minItem ? maxItem : itemId - 1;
         while ((potentialItem != itemId) && !SaveFile_TradeItemIsOwned(potentialItem)) {
             potentialItem--;
             if (potentialItem < minItem) {
@@ -192,7 +192,7 @@ uint8_t SaveFile_PrevOwnedTradeItem(uint8_t itemId) {
     }
 }
 
-void UpdateTradeEquips(uint8_t itemId, int16_t tradeSlot) {
+void UpdateTradeEquips(uint16_t itemId, int16_t tradeSlot) {
     // Update inventory slot
     z64_file.items[tradeSlot] = itemId;
     // Update player trade progression for other actors
@@ -211,7 +211,7 @@ void UpdateTradeEquips(uint8_t itemId, int16_t tradeSlot) {
     }
 }
 
-void TurnInTradeItem(uint8_t itemId) {
+void TurnInTradeItem(uint16_t itemId) {
     if (SaveFile_TradeItemIsOwned(itemId) && !SaveFile_TradeItemIsTraded(itemId)) {
         SaveFile_SetTradeItemAsTraded(itemId);
     }
@@ -221,10 +221,10 @@ uint32_t IsClaimCheckTraded() {
     return SaveFile_TradeItemIsTraded(Z64_ITEM_CLAIM_CHECK);
 }
 
-z64_actor_t* IsTradeItemTraded(int8_t itemActionParam, z64_actor_t *targetActor) {
+z64_actor_t* IsTradeItemTraded(int16_t itemActionParam, z64_actor_t *targetActor) {
     if ((itemActionParam >= PLAYER_AP_LETTER_ZELDA && itemActionParam <= PLAYER_AP_CHICKEN) ||
         (itemActionParam >= PLAYER_AP_POCKET_EGG && itemActionParam < PLAYER_AP_CLAIM_CHECK)) {
-        uint8_t itemId = GetTradeItemByAP(itemActionParam);
+        uint16_t itemId = GetTradeItemByAP(itemActionParam);
         if (itemId != 0) {
             if (SaveFile_TradeItemIsTraded(itemId)) {
                 return NULL;
