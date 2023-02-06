@@ -108,6 +108,7 @@
         "item_pool_value": "balanced",
         "junk_ice_traps": "normal",
         "ice_trap_appearance": "junk_only",
+        "adult_trade_shuffle": false,
         "adult_trade_start": [
             "Prescription",
             "Eyeball Frog",
@@ -243,6 +244,7 @@
         "item_pool_value": "balanced",
         "junk_ice_traps": "off",
         "ice_trap_appearance": "junk_only",
+        "adult_trade_shuffle": false,
         "adult_trade_start": [
             "Prescription",
             "Eyeball Frog",
@@ -381,6 +383,7 @@
         "item_pool_value": "balanced",
         "junk_ice_traps": "off",
         "ice_trap_appearance": "junk_only",
+        "adult_trade_shuffle": false,
         "adult_trade_start": [
             "Prescription",
             "Eyeball Frog",
@@ -423,7 +426,7 @@
         "shopsanity": "off",
         "tokensanity": "off",
         "shuffle_scrubs": "off",
-        "shuffle_child_trade": "vanilla",
+        "shuffle_child_trade": [],
         "shuffle_freestanding_items": "off",
         "shuffle_pots": "off",
         "shuffle_crates": "off",
@@ -509,6 +512,7 @@
         "item_pool_value": "balanced",
         "junk_ice_traps": "normal",
         "ice_trap_appearance": "junk_only",
+        "adult_trade_shuffle": false,
         "adult_trade_start": [
             "Prescription",
             "Eyeball Frog",
@@ -649,6 +653,7 @@
         "item_pool_value": "balanced",
         "junk_ice_traps": "off",
         "ice_trap_appearance": "junk_only",
+        "adult_trade_shuffle": false,
         "adult_trade_start": [
             "Claim Check"
         ]
@@ -801,6 +806,7 @@
         "item_pool_value": "balanced",
         "junk_ice_traps": "off",
         "ice_trap_appearance": "junk_only",
+        "adult_trade_shuffle": false,
         "adult_trade_start": [
             "Claim Check"
         ]
@@ -844,7 +850,19 @@
         "shopsanity_prices": "random",
         "tokensanity": "all",
         "shuffle_scrubs": "random",
-        "shuffle_child_trade": "shuffle",
+        "shuffle_child_trade": [
+            "Weird Egg",
+            "Chicken",
+            "Zeldas Letter",
+            "Keaton Mask",
+            "Skull Mask",
+            "Spooky Mask",
+            "Bunny Hood",
+            "Goron Mask",
+            "Zora Mask",
+            "Gerudo Mask",
+            "Mask of Truth"
+        ],
         "shuffle_freestanding_items": "all",
         "shuffle_pots": "all",
         "shuffle_crates": "all",
@@ -1073,8 +1091,19 @@
         "item_pool_value": "minimal",
         "junk_ice_traps": "onslaught",
         "ice_trap_appearance": "anything",
+        "adult_trade_shuffle": true,
         "adult_trade_start": [
-            "Pocket Egg"
+            "Pocket Egg",
+            "Pocket Cucco",
+            "Cojiro",
+            "Odd Mushroom",
+            "Odd Potion",
+            "Poachers Saw",
+            "Broken Sword",
+            "Prescription",
+            "Eyeball Frog",
+            "Eyedrops",
+            "Claim Check"
         ]
     },
     "Bingo": {
@@ -1111,7 +1140,7 @@
         "shopsanity": "off",
         "tokensanity": "off",
         "shuffle_scrubs": "off",
-        "shuffle_child_trade": "vanilla",
+        "shuffle_child_trade": [],
         "shuffle_freestanding_items": "off",
         "shuffle_pots": "off",
         "shuffle_crates": "off",
@@ -1191,6 +1220,7 @@
         "item_pool_value": "balanced",
         "junk_ice_traps": "normal",
         "ice_trap_appearance": "junk_only",
+        "adult_trade_shuffle": false,
         "adult_trade_start": [
             "Prescription",
             "Eyeball Frog",
@@ -1326,6 +1356,7 @@
         "item_pool_value": "balanced",
         "junk_ice_traps": "off",
         "ice_trap_appearance": "junk_only",
+        "adult_trade_shuffle": false,
         "adult_trade_start": [
             "Prescription",
             "Eyeball Frog",
@@ -1459,6 +1490,7 @@
         "item_pool_value": "balanced",
         "junk_ice_traps": "off",
         "ice_trap_appearance": "junk_only",
+        "adult_trade_shuffle": false,
         "adult_trade_start": [
             "Prescription",
             "Eyeball Frog",
