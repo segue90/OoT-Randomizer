@@ -202,8 +202,8 @@ def patch_rom(spoiler:Spoiler, world:World, rom:Rom):
     if not world.dungeon_mq['Water Temple']:
         rom.write_byte(0x25B8197, 0x3F)
 
-    if world.settings.bombchus_in_logic:
-        rom.write_int32(rom.sym('BOMBCHUS_IN_LOGIC'), 1)
+    if world.settings.free_bombchu_drops:
+        rom.write_int32(rom.sym('FREE_BOMBCHU_DROPS'), 1)
 
     # show seed info on file select screen
     def makebytes(txt, size):
@@ -2048,7 +2048,7 @@ def patch_rom(spoiler:Spoiler, world:World, rom:Rom):
     SILVER_CHEST = 13
     SKULL_CHEST_SMALL = 14
     SKULL_CHEST_BIG =  15
-    if world.settings.bombchus_in_logic or world.settings.minor_items_as_major_chest:
+    if world.settings.free_bombchu_drops or world.settings.minor_items_as_major_chest:
         bombchu_ids = [0x6A, 0x03, 0x6B]
         for i in bombchu_ids:
             item = read_rom_item(rom, i)

@@ -3,7 +3,7 @@
 logic_chus__bowling_lady_1:
 ; Change Bowling Alley check to Bombchus or Bomb Bag (Part 1)
 
-    lw      at, BOMBCHUS_IN_LOGIC
+    lw      at, FREE_BOMBCHU_DROPS
     beq     at, r0, @@has_chus_false
     nop
 
@@ -26,7 +26,7 @@ logic_chus__bowling_lady_1:
 logic_chus__bowling_lady_2:
 ; Change Bowling Alley check to bombchus or Bomb Bag (Part 2)
 
-    lw      at, BOMBCHUS_IN_LOGIC
+    lw      at, FREE_BOMBCHU_DROPS
     beq     at, r0, @@has_chus_false
     nop
 
@@ -48,7 +48,7 @@ logic_chus__bowling_lady_2:
 logic_chus__shopkeeper:
 ; Cannot buy bombchu refills without Bomb Bag
 
-    lw      at, BOMBCHUS_IN_LOGIC
+    lw      at, FREE_BOMBCHU_DROPS
     beq     at, r0, @@logic_chus_false
     nop
 
@@ -84,7 +84,7 @@ logic_chus__carpet_dude_1:
     bgtz    t7, @@return    ; allow purchase if bombchu slot isn't empty
     nop
 
-    lw      at, BOMBCHUS_IN_LOGIC
+    lw      at, FREE_BOMBCHU_DROPS
     beq     at, r0, @@return    ; allow purchase if bombchu bag is disabled
     nop
 
@@ -109,7 +109,7 @@ logic_chus__carpet_dude_2:
     bgtz    t7, @@not_enough_rupees   ; bombchu inventory slot isn't empty
     nop
 
-    lw      at, BOMBCHUS_IN_LOGIC
+    lw      at, FREE_BOMBCHU_DROPS
     beq     at, r0, @@not_enough_rupees    ; bombchu inventory slot is empty
     nop                                    ; but bombchu bag is disabled
 

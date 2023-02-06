@@ -221,7 +221,6 @@ SYMBOL TABLE:
 00008838 g     F .text	000001d0 draw_gi_blue_fire_candle
 0000d640 g     F .text	00000018 get_texture
 000092c8 g     F .text	00000008 no_effect
-00000000         *UND*	00000000 BOMBCHUS_IN_LOGIC
 0000d610 g     F .text	00000030 text_flush
 00000000         *UND*	00000000 CFG_RAINBOW_SWORD_INNER_ENABLED
 0000d3d8 g     F .text	000000a8 text_print_size
@@ -450,6 +449,7 @@ SYMBOL TABLE:
 0000ca18 g     F .text	000005b8 Sram_VerifyAndLoadAllSaves
 000095ec g     F .text	00000018 give_song
 00000004 g     O .sdata	00000004 last_fog_distance
+00000000         *UND*	00000000 FREE_BOMBCHU_DROPS
 00009b00 g     F .text	00000058 bombchus_to_bag
 0000008c g     O .sdata	00000006 defaultHeart
 00000060 g     O .sdata	00000004 a_note_g
