@@ -347,6 +347,8 @@ uint16_t SetupMaskShopHelloDialogOverride(EnOssan* maskShop) {
                 return 0x70A1;
             } else {
                 // Haven't sold the Keaton Mask
+                // Commented line is from decomp, removed to prevent softlock taking
+                // the Keaton Mask item without being able to turn the mask in.
                 //maskShop->happyMaskShopState = OSSAN_HAPPY_STATE_BORROWED_FIRST_MASK;
                 return 0x70A6;
             }
@@ -417,4 +419,12 @@ void TryPaybackMaskOverride(EnOssan* maskShop, z64_game_t* play) {
         }
     }
     maskShop->stateFlag = OSSAN_STATE_START_CONVERSATION;
+}
+
+int32_t CanBuy_RightSideMask() {
+    if (GET_ITEMGETINF(ITEMGETINF_3F)) {
+        return CANBUY_RESULT_SUCCESS_FANFARE;
+    } else {
+        return CANBUY_RESULT_CANT_GET_NOW;
+    }
 }

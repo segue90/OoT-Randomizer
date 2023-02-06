@@ -81,4 +81,13 @@ typedef enum {
     OSSAN_HAPPY_STATE_NONE = 8        // No Action / Payment received!
 } EnOssanHappyMaskState;
 
+typedef enum {
+    /* 0 */ CANBUY_RESULT_SUCCESS_FANFARE,
+    /* 1 */ CANBUY_RESULT_SUCCESS,
+    /* 2 */ CANBUY_RESULT_CANT_GET_NOW,
+    /* 3 */ CANBUY_RESULT_NEED_BOTTLE,
+    /* 4 */ CANBUY_RESULT_NEED_RUPEES,
+    /* 5 */ CANBUY_RESULT_CANT_GET_NOW_5
+} EnGirlACanBuyResult;
+
 #endif

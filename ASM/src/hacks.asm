@@ -2433,6 +2433,21 @@ claim_check_not_traded:
 .orga 0xAE734C
 return_null_item_id:
 
+; Custom CanBuy shop function for right side masks to
+; always check for all masks traded. Overwrites unused
+; functions EnGirlA_CanBuy_Unk19 and EnGirlA_CanBuy_Unk20
+.orga 0xC00FF4
+    addiu   $sp, $sp, -0x18
+    sw      $ra, 0x0014($sp)
+    jal     CanBuy_RightSideMask
+    nop
+    lw      $ra, 0x0014($sp)
+    jr      $ra
+    addiu   $sp, $sp, 0x18
+    nop
+    nop
+    nop
+
 ; Prevent reverting Zelda's Letter to Chicken when
 ; save warping from Zelda's courtyard before talking
 ; to Impa. Only applied if trade shuffle is on.

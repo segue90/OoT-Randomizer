@@ -2801,11 +2801,11 @@ def place_shop_items(rom, world, shop_items, messages, locations, init_shop_id=F
             # give it and set this as sold out.
             # With complete mask quest, it's free to take normally
             if not world.settings.complete_mask_quest and \
-               (location.vanilla_item == 'Mask of Truth' and 'Mask of Truth' in world.settings.shuffle_child_trade) or \
+              ((location.vanilla_item == 'Mask of Truth' and 'Mask of Truth' in world.settings.shuffle_child_trade) or \
                ('mask_shop' in world.settings.misc_hints and location.vanilla_item == 'Goron Mask' and 'Goron Mask' in world.settings.shuffle_child_trade) or \
                ('mask_shop' in world.settings.misc_hints and location.vanilla_item == 'Zora Mask' and 'Zora Mask' in world.settings.shuffle_child_trade) or \
-               ('mask_shop' in world.settings.misc_hints and location.vanilla_item == 'Gerudo Mask' and 'Gerudo Mask' in world.settings.shuffle_child_trade):
-                shop_item.func2 = 0x80863870  # override to EnGirlA_CanBuy_SoldOut to prevent purchase
+               ('mask_shop' in world.settings.misc_hints and location.vanilla_item == 'Gerudo Mask' and 'Gerudo Mask' in world.settings.shuffle_child_trade)):
+                shop_item.func2 = 0x80863714  # override to custom CanBuy function to prevent purchase before trade quest complete
 
             message_id = (shop_id - 0x32) * 2
             shop_item.description_message = 0x8100 + message_id
