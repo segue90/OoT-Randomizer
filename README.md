@@ -130,6 +130,7 @@ issue. You should always Hard Reset to avoid this issue entirely.
   * The ocarina can no longer be pulled out mid-hookshot via the D-Pad to cancel the hookshot pull.
   * Fix the change which makes graveyard grave hole ledges un-grabbable incorrectly applied to other ledges in the graveyard area.
   * Fix the file path for custom music on some Linux machines.
+  * Fix "Spirit Temple MQ Beamos Room Chest" having an incorrect vanilla item.
 * **Hints**
   * Fix the cryptic hint for Ganon's Castle Boss Key.
   * Fix missing punctuation in dual hints.
