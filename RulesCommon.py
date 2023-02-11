@@ -10,11 +10,10 @@ if sys.version_info >= (3, 8):
     from typing import Protocol
 
     class AccessRule(Protocol):
-        def __call__(self, state: "State", **kwargs):
+        def __call__(self, state: "State", **kwargs) -> bool:
             ...
 else:
-    from Utils import TypeAlias
-    AccessRule: TypeAlias = Callable[["State"], bool]
+    AccessRule = Callable[["State"], bool]
 
 
 # Variable names and values used by rule execution,

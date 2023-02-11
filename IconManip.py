@@ -1,6 +1,12 @@
+import sys
 from typing import TYPE_CHECKING, Sequence, MutableSequence, Optional
 
-from Utils import data_path, TypeAlias
+from Utils import data_path
+
+if sys.version_info >= (3, 10):
+    from typing import TypeAlias
+else:
+    TypeAlias = str
 
 if TYPE_CHECKING:
     from Rom import Rom

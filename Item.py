@@ -1,4 +1,4 @@
-from typing import TYPE_CHECKING, Optional, Tuple, List, Dict, Union, Iterable, Set, Any, Callable
+from typing import TYPE_CHECKING, Optional, Tuple, List, Dict, Union, Iterable, Set, Any, Callable, overload
 
 from ItemList import item_table
 from RulesCommon import allowed_globals, escape_name
@@ -14,7 +14,7 @@ class ItemInfo:
     bottles: Set[str] = set()
     medallions: Set[str] = set()
     stones: Set[str] = set()
-    junk: Dict[str, int] = {}
+    junk_weight: Dict[str, int] = {}
 
     solver_ids: Dict[str, int] = {}
     bottle_ids: Set[int] = set()
@@ -44,7 +44,7 @@ class ItemInfo:
         self.junk: Optional[int] = self.special.get('junk', None)
         self.trade: bool = self.special.get('trade', False)
 
-        self.solver_id = None
+        self.solver_id: Optional[int] = None
         if name and self.junk is None:
             esc = escape_name(name)
             if esc not in ItemInfo.solver_ids:
@@ -53,18 +53,18 @@ class ItemInfo:
 
 
 for item_name in item_table:
-    ItemInfo.items[item_name] = ItemInfo(item_name)
-    if ItemInfo.items[item_name].bottle:
+    iteminfo = ItemInfo.items[item_name] = ItemInfo(item_name)
+    if iteminfo.bottle:
         ItemInfo.bottles.add(item_name)
         ItemInfo.bottle_ids.add(ItemInfo.solver_ids[escape_name(item_name)])
-    if ItemInfo.items[item_name].medallion:
+    if iteminfo.medallion:
         ItemInfo.medallions.add(item_name)
         ItemInfo.medallion_ids.add(ItemInfo.solver_ids[escape_name(item_name)])
-    if ItemInfo.items[item_name].stone:
+    if iteminfo.stone:
         ItemInfo.stones.add(item_name)
         ItemInfo.stone_ids.add(ItemInfo.solver_ids[escape_name(item_name)])
-    if ItemInfo.items[item_name].junk is not None:
-        ItemInfo.junk[item_name] = ItemInfo.items[item_name].junk
+    if iteminfo.junk is not None:
+        ItemInfo.junk_weight[item_name] = iteminfo.junk
 
 
 class Item:
@@ -79,7 +79,7 @@ class Item:
         else:
             self.info: ItemInfo = ItemInfo.items[name]
         self.price: Optional[int] = self.info.special.get('price', None)
-        self.world: "World" = world
+        self.world: "Optional[World]" = world
         self.looks_like_item: 'Optional[Item]' = None
         self.advancement: bool = self.info.advancement
         self.priority: bool = self.info.priority
@@ -88,9 +88,9 @@ class Item:
         self.index: Optional[int] = self.info.index
         self.alias: Optional[Tuple[str, int]] = self.info.alias
 
-        self.solver_id = self.info.solver_id
+        self.solver_id: Optional[int] = self.info.solver_id
         # Do not alias to junk--it has no solver id!
-        self.alias_id = ItemInfo.solver_ids[escape_name(self.alias[0])] if self.alias else None
+        self.alias_id: Optional[int] = ItemInfo.solver_ids[escape_name(self.alias[0])] if self.alias else None
 
     item_worlds_to_fix: 'Dict[Item, int]' = {}
 
@@ -141,6 +141,8 @@ class Item:
 
     @property
     def unshuffled_dungeon_item(self) -> bool:
+        if self.world is None:
+            return False
         return ((self.type == 'SmallKey' and self.world.settings.shuffle_smallkeys in ('remove', 'vanilla', 'dungeon')) or
                 (self.type == 'HideoutSmallKey' and self.world.settings.shuffle_hideoutkeys == 'vanilla') or
                 (self.type == 'TCGSmallKey' and self.world.settings.shuffle_tcgkeys in ('remove', 'vanilla')) or
@@ -151,6 +153,8 @@ class Item:
 
     @property
     def majoritem(self) -> bool:
+        if self.world is None:
+            return False
         if self.type == 'Token':
             return (self.world.settings.bridge == 'tokens' or self.world.settings.shuffle_ganon_bosskey == 'tokens' or
                 (self.world.settings.shuffle_ganon_bosskey == 'on_lacs' and self.world.settings.lacs_condition == 'tokens'))
@@ -184,6 +188,8 @@ class Item:
 
     @property
     def goalitem(self) -> bool:
+        if self.world is None:
+            return False
         return self.name in self.world.goal_items
 
     def __str__(self) -> str:
@@ -192,6 +198,14 @@ class Item:
     def __unicode__(self) -> str:
         return '%s' % self.name
 
+
+@overload
+def ItemFactory(items: str, world: "Optional[World]" = None, event: bool = False) -> Item:
+    pass
+
+@overload
+def ItemFactory(items: Iterable[str], world: "Optional[World]" = None, event: bool = False) -> List[Item]:
+    pass
 
 def ItemFactory(items: Union[str, Iterable[str]], world: "Optional[World]" = None, event: bool = False) -> Union[Item, List[Item]]:
     if isinstance(items, str):
@@ -209,6 +223,8 @@ def ItemFactory(items: Union[str, Iterable[str]], world: "Optional[World]" = Non
 
 
 def make_event_item(name: str, location: "Location", item: Optional[Item] = None) -> Item:
+    if location.world is None:
+        raise Exception(f"`make_event_item` called with location '{location.name}' that doesn't have a world.")
     if item is None:
         item = Item(name, location.world, event=True)
     location.world.push_item(location, item)

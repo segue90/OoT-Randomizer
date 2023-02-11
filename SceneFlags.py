@@ -26,7 +26,7 @@ def get_collectible_flag_table(world: "World") -> "Tuple[Dict[int, Dict[int, int
                     primary_tuple = default[0]
                     for c in range(1, len(default)):
                         alt_list.append((location, default[c], primary_tuple))
-                    default = location.default[0]  # Use the first tuple as the primary tuple
+                    default = primary_tuple  # Use the first tuple as the primary tuple
                 if isinstance(default, tuple):
                     room, setup, flag = default
                     room_setup = room + (setup << 6)
@@ -65,6 +65,9 @@ def get_alt_list_bytes(alt_list: "List[Tuple[Location, Tuple[int, int, int], Tup
     for entry in alt_list:
         location, alt, primary = entry
         room, scene_setup, flag = alt
+        if location.scene is None:
+            continue
+
         alt_override = (room << 8) + (scene_setup << 14) + flag
         room, scene_setup, flag = primary
         primary_override = (room << 8) + (scene_setup << 14) + flag

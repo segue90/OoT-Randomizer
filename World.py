@@ -35,7 +35,7 @@ class World:
         self._region_cache: Dict[str, Region] = {}
         self._location_cache: Dict[str, Location] = {}
         self.shop_prices: Dict[str, int] = {}
-        self.scrub_prices: Dict[str, int] = {}
+        self.scrub_prices: Dict[int, int] = {}
         self.maximum_wallets: int = 0
         self.hinted_dungeon_reward_locations: Dict[str, Location] = {}
         self.misc_hint_item_locations: Dict[str, Location] = {}
@@ -63,7 +63,7 @@ class World:
         self.shuffle_special_dungeon_entrances: bool = settings.shuffle_dungeon_entrances == 'all'
         self.shuffle_dungeon_entrances: bool = settings.shuffle_dungeon_entrances in ['simple', 'all']
 
-        self.entrance_shuffle: bool = (
+        self.entrance_shuffle: bool = bool(
             self.shuffle_interior_entrances or settings.shuffle_grotto_entrances or self.shuffle_dungeon_entrances
             or settings.shuffle_overworld_entrances or settings.shuffle_gerudo_valley_river_exit or settings.owl_drops or settings.warp_songs
             or settings.spawn_positions or (settings.shuffle_bosses != 'off')
@@ -71,7 +71,7 @@ class World:
 
         self.mixed_pools_bosses = False # this setting is still in active development at https://github.com/Roman971/OoT-Randomizer
 
-        self.ensure_tod_access: bool = self.shuffle_interior_entrances or settings.shuffle_overworld_entrances or settings.spawn_positions
+        self.ensure_tod_access: bool = bool(self.shuffle_interior_entrances or settings.shuffle_overworld_entrances or settings.spawn_positions)
         self.disable_trade_revert: bool = self.shuffle_interior_entrances or settings.shuffle_overworld_entrances or settings.adult_trade_shuffle
         self.skip_child_zelda: bool = 'Zeldas Letter' not in settings.shuffle_child_trade and \
                                       'Zeldas Letter' in self.distribution.starting_items
@@ -128,7 +128,7 @@ class World:
             def __missing__(self, dungeon_name: str) -> EmptyDungeonInfo:
                 return self.EmptyDungeonInfo(None)
 
-        self.empty_dungeons: EmptyDungeons[str, EmptyDungeons.EmptyDungeonInfo] = EmptyDungeons()
+        self.empty_dungeons: Dict[str, EmptyDungeons.EmptyDungeonInfo] = EmptyDungeons()
 
         # dungeon forms will be decided later
         self.dungeon_mq: Dict[str, bool] = {

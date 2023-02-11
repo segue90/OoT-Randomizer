@@ -1,8 +1,11 @@
+from typing import Dict, Tuple, Union
+
+
 # Below is the list of possible glitchless tricks.
 # The order they are listed in is also the order in which
 # they appear to the user in the GUI, so a sensible order was chosen
 
-logic_tricks: dict = {
+logic_tricks: Dict[str, Dict[str, Union[str, Tuple[str, ...]]]] = {
 
     # General tricks
 

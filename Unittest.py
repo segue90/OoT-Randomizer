@@ -7,9 +7,10 @@ import logging
 import os
 import random
 import re
+import sys
 import unittest
 from collections import Counter, defaultdict
-from typing import Dict, Tuple, Optional, Union, Any
+from typing import Dict, Tuple, Optional, Union, Any, overload
 
 from EntranceShuffle import EntranceShuffleError
 from Fill import ShuffleError
@@ -21,6 +22,13 @@ from Main import main, resolve_settings, build_world_graphs
 from Messages import Message
 from Settings import Settings, get_preset_files
 from Spoiler import Spoiler
+
+if sys.version_info >= (3, 8):
+    from typing import Literal
+    LiteralTrue = Literal[True]
+    LiteralFalse = Literal[False]
+else:
+    LiteralTrue = LiteralFalse = bool
 
 test_dir = os.path.join(os.path.dirname(__file__), 'tests')
 output_dir = os.path.join(test_dir, 'Output')
@@ -52,7 +60,7 @@ ludicrous_junk = set(remove_junk_ludicrous_items)
 ludicrous_set = set(ludicrous_items_base) | set(ludicrous_items_extended) | ludicrous_junk | set(trade_items) | set(bottles) | set(ludicrous_exclusions) | {'Bottle with Big Poe'} | shop_items
 
 
-def make_settings_for_test(settings_dict: Dict[str, Any], seed: Optional[str] = None, outfilename: str = None, strict: bool = True) -> Settings:
+def make_settings_for_test(settings_dict: Dict[str, Any], seed: Optional[str] = None, outfilename: str = '', strict: bool = True) -> Settings:
     # Some consistent settings for testability
     settings_dict.update({
         'create_patch_file': False,
@@ -70,14 +78,13 @@ def make_settings_for_test(settings_dict: Dict[str, Any], seed: Optional[str] = 
 
 def load_settings(settings_file: Union[Dict[str, Any], str], seed: Optional[str] = None, filename: Optional[str] = None) -> Settings:
     if isinstance(settings_file, dict):  # Check if settings_file is a distribution file settings dict
-        try:
-            j = settings_file
-            j.update({
-                'enable_distribution_file': True,
-                'distribution_file': os.path.join(test_dir, 'plando', filename + '.json')
-            })
-        except TypeError:
+        if filename is None:
             raise RuntimeError("Running test with in memory file but did not supply a filename for output file.")
+        j = settings_file
+        j.update({
+            'enable_distribution_file': True,
+            'distribution_file': os.path.join(test_dir, 'plando', filename + '.json')
+        })
     else:
         sfile = os.path.join(test_dir, settings_file)
         filename = os.path.splitext(settings_file)[0]
@@ -90,6 +97,14 @@ def load_spoiler(json_file: str) -> Any:
     with open(json_file) as f:
         return json.load(f)
 
+
+@overload
+def generate_with_plandomizer(filename: str, live_copy: LiteralFalse = False, max_attempts: int = 10) -> Tuple[Dict[str, Any], Dict[str, Any]]:
+    pass
+
+@overload
+def generate_with_plandomizer(filename: str, live_copy: LiteralTrue, max_attempts: int = 10) -> Tuple[Dict[str, Any], Spoiler]:
+    pass
 
 def generate_with_plandomizer(filename: str, live_copy: bool = False, max_attempts: int = 10) -> Tuple[Dict[str, Any], Union[Spoiler, Dict[str, Any]]]:
     distribution_file = load_spoiler(os.path.join(test_dir, 'plando', filename + '.json'))
@@ -193,7 +208,7 @@ class TestPlandomizer(unittest.TestCase):
 
     def test_rom_patching(self):
         # This makes sure there are no crashes while patching.
-        if not os.path.exists('./ZOOTDEC.z64'):
+        if not os.path.isfile('./ZOOTDEC.z64'):
             self.skipTest("Base ROM file not available.")
         filename = "plando-ammo-max-out-of-bounds"
         logic_rules_settings = ['glitchless', 'glitched', 'none']
@@ -546,7 +561,7 @@ class TestHints(unittest.TestCase):
         self.assertIn('Hyrule Castle', woth)
 
     def test_ganondorf(self):
-        if not os.path.exists('./ZOOTDEC.z64'):
+        if not os.path.isfile('./ZOOTDEC.z64'):
             self.skipTest("Base ROM file not available.")
         filenames = [
             "light-arrows-1",
@@ -614,7 +629,7 @@ class TestHints(unittest.TestCase):
         _, spoiler = generate_with_plandomizer(filename, live_copy=True)
         world = spoiler.worlds[0]
         location = spoiler.worlds[0].misc_hint_item_locations["ganondorf"]
-        area = HintArea.at(location, use_alt_hint=True).text(world.settings.clearer_hints, world=None if location.world.id == world.id else location.world.id + 1)
+        area = HintArea.at(location, use_alt_hint=True).text(world.settings.clearer_hints, world=None if not location.world or location.world.id == world.id else location.world.id + 1)
         self.assertEqual(area, "#Ganondorf's Chamber#")
         # Build a test message with the same ID as the ganondorf hint (0x70CC)
         messages = [Message("Test", 0, 0x70CC, 0,0,0)]

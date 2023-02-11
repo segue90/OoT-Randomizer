@@ -243,7 +243,7 @@ def apply_patch_file(rom: Rom, settings: "Settings", sub_file: Optional[str] = N
             rom.buffer[start:start+size] = [0] * size
 
     # Read in the XOR data blocks. This goes to the end of the file.
-    block_start = None
+    block_start = 0
     while not patch_data.eof():
         is_new_block = patch_data.read_byte() != 0xFF
 

@@ -16,7 +16,7 @@ class uint16:
 
     @staticmethod
     def bytes(value: int) -> bytearray:
-        value: int = value & 0xFFFF
+        value = value & 0xFFFF
         return bytearray([(value >> 8) & 0xFF, value & 0xFF])
 
     @staticmethod
@@ -37,7 +37,7 @@ class uint32:
 
     @staticmethod
     def bytes(value: int) -> bytearray:
-        value: int = value & 0xFFFFFFFF
+        value = value & 0xFFFFFFFF
         return bytearray([(value >> 24) & 0xFF, (value >> 16) & 0xFF, (value >> 8) & 0xFF, value & 0xFF])
 
     @staticmethod
@@ -58,7 +58,7 @@ class int32:
 
     @staticmethod
     def bytes(value: int) -> bytearray:
-        value: int = value & 0xFFFFFFFF
+        value = value & 0xFFFFFFFF
         return bytearray([(value >> 24) & 0xFF, (value >> 16) & 0xFF, (value >> 8) & 0xFF, value & 0xFF])
 
     @staticmethod
@@ -82,7 +82,7 @@ class uint24:
 
     @staticmethod
     def bytes(value: int) -> bytearray:
-        value: int = value & 0xFFFFFF
+        value = value & 0xFFFFFF
         return bytearray([(value >> 16) & 0xFF, (value >> 8) & 0xFF, value & 0xFF])
 
     @staticmethod

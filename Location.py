@@ -1,6 +1,6 @@
 import logging
 from enum import Enum
-from typing import TYPE_CHECKING, Optional, List, Tuple, Callable, Union, Iterable
+from typing import TYPE_CHECKING, Optional, List, Tuple, Callable, Union, Iterable, overload
 
 from HintList import misc_item_hint_table, misc_location_hint_table
 from LocationList import location_table, location_is_viewable, LocationAddress, LocationDefault, LocationFilterTags
@@ -45,7 +45,7 @@ class Location:
         self.disabled: DisableType = DisableType.ENABLED
         self.always: bool = False
         self.never: bool = False
-        self.filter_tags: Tuple[str, ...] = (filter_tags,) if isinstance(filter_tags, str) else filter_tags
+        self.filter_tags: Optional[Tuple[str, ...]] = (filter_tags,) if isinstance(filter_tags, str) else filter_tags
         self.rule_string: Optional[str] = None
 
     def copy(self, new_region: "Region") -> 'Location':
@@ -92,6 +92,8 @@ class Location:
         self.access_rules = [lambda_rule]
 
     def can_fill(self, state: "State", item: "Item", check_access: bool = True) -> bool:
+        if state.search is None:
+            return False
         if self.minor_only and item.majoritem:
             return False
         return (
@@ -101,6 +103,8 @@ class Location:
         )
 
     def can_fill_fast(self, item: "Item", manual: bool = False) -> bool:
+        if self.parent_region is None:
+            return False
         return self.parent_region.can_fill(item, manual) and self.item_rule(self, item)
 
     @property
@@ -111,6 +115,8 @@ class Location:
     # Can the player see what's placed at this location without collecting it?
     # Used to reduce JSON spoiler noise
     def has_preview(self) -> bool:
+        if self.world is None:
+            return False
         return location_is_viewable(self.name, self.world.settings.correct_chest_appearances, self.world.settings.fast_chests)
 
     def has_item(self) -> bool:
@@ -122,8 +128,8 @@ class Location:
     def has_progression_item(self) -> bool:
         return self.item is not None and self.item.advancement
 
-    def maybe_set_misc_item_hints(self) -> None:
-        if not self.item:
+    def maybe_set_misc_hints(self) -> None:
+        if self.item is None or self.item.world is None or self.world is None:
             return
         if self.item.world.dungeon_rewards_hinted and self.item.name in self.item.world.rewardlist:
             if self.item.name not in self.item.world.hinted_dungeon_reward_locations:
@@ -146,6 +152,14 @@ class Location:
     def __unicode__(self) -> str:
         return '%s' % self.name
 
+
+@overload
+def LocationFactory(locations: str) -> Location:
+    pass
+
+@overload
+def LocationFactory(locations: List[str]) -> List[Location]:
+    pass
 
 def LocationFactory(locations: Union[str, List[str]]) -> Union[Location, List[Location]]:
     ret = []

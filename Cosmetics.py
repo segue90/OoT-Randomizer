@@ -33,7 +33,6 @@ def patch_dpad(rom: "Rom", settings: "Settings", log: 'CosmeticsLog', symbols: D
         rom.write_byte(symbols['CFG_DISPLAY_DPAD'], 0x01)
     else:
         rom.write_byte(symbols['CFG_DISPLAY_DPAD'], 0x00)
-    log.display_dpad = settings.display_dpad
 
 
 def patch_dpad_info(rom: "Rom", settings: "Settings", log: 'CosmeticsLog', symbols: Dict[str, int]) -> None:
@@ -42,7 +41,6 @@ def patch_dpad_info(rom: "Rom", settings: "Settings", log: 'CosmeticsLog', symbo
         rom.write_byte(symbols['CFG_DPAD_DUNGEON_INFO_ENABLE'], 0x01)
     else:
         rom.write_byte(symbols['CFG_DPAD_DUNGEON_INFO_ENABLE'], 0x00)
-    log.dpad_dungeon_menu = settings.dpad_dungeon_menu
 
 
 def patch_music(rom: "Rom", settings: "Settings", log: 'CosmeticsLog', symbols: Dict[str, int]) -> None:
@@ -954,7 +952,7 @@ legacy_cosmetic_data_headers: List[int] = [
 ]
 
 patch_sets: Dict[int, Dict[str, Any]] = {}
-global_patch_sets: List[Callable[["Rom", "Settings", 'CosmeticsLog', Dict[str, int]], type(None)]] = [
+global_patch_sets: List[Callable[["Rom", "Settings", 'CosmeticsLog', Dict[str, int]], None]] = [
     patch_targeting,
     patch_music,
     patch_tunic_colors,

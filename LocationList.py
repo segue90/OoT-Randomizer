@@ -1,7 +1,11 @@
+import sys
 from collections import OrderedDict
 from typing import Dict, Tuple, Optional, Union, List
 
-from Utils import TypeAlias
+if sys.version_info >= (3, 10):
+    from typing import TypeAlias
+else:
+    TypeAlias = str
 
 LocationDefault: TypeAlias = Optional[Union[int, Tuple[int, ...], List[Tuple[int, ...]]]]
 LocationAddress: TypeAlias = Optional[Union[int, List[int]]]

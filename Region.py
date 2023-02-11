@@ -67,7 +67,7 @@ class Region:
         return new_region
 
     @property
-    def hint(self) -> "HintArea":
+    def hint(self) -> "Optional[HintArea]":
         from Hints import HintArea
 
         if self.hint_name is not None:
@@ -76,13 +76,15 @@ class Region:
             return self.dungeon.hint
 
     @property
-    def alt_hint(self) -> "HintArea":
+    def alt_hint(self) -> "Optional[HintArea]":
         from Hints import HintArea
 
         if self.alt_hint_name is not None:
             return HintArea[self.alt_hint_name]
 
     def can_fill(self, item: "Item", manual: bool = False) -> bool:
+        from Hints import HintArea
+
         if not manual and self.world.settings.empty_dungeons_mode != 'none' and item.dungeonitem:
             # An empty dungeon can only store its own dungeon items
             if self.dungeon and self.dungeon.world.empty_dungeons[self.dungeon.name].empty:
@@ -91,8 +93,6 @@ class Region:
             for dungeon in item.world.dungeons:
                 if item.world.empty_dungeons[dungeon.name].empty and dungeon.is_dungeon_item(item):
                     return False
-
-        from Hints import HintArea
 
         is_self_dungeon_restricted = False
         is_self_region_restricted = None

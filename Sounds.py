@@ -32,8 +32,7 @@ from typing import Dict, List
 from Utils import data_path
 
 # Python 3.6 support. We can drop the conditional usage of namedtuple if we decide to no longer support Python 3.6.
-dataclass_supported = sys.version_info >= (3, 7)
-if dataclass_supported:
+if sys.version_info >= (3, 7):
     from dataclasses import dataclass
 else:
     from collections import namedtuple
@@ -57,7 +56,7 @@ class Tags(Enum):
                         # I'm now thinking it has to do with a limit of concurrent sounds)
 
 
-if dataclass_supported:
+if sys.version_info >= (3, 7):
     @dataclass(frozen=True)
     class Sound:
         id: int
@@ -172,7 +171,7 @@ class Sounds(Enum):
     ZELDA_ADULT_GASP   = Sound(0x6879, 'adult-zelda-gasp',      'Zelda Gasp (Adult)',        [Tags.NAVI, Tags.HPLOW])
 
 
-if dataclass_supported:
+if sys.version_info >= (3, 7):
     @dataclass(frozen=True)
     class SoundHook:
         name: str

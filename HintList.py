@@ -26,7 +26,7 @@ if TYPE_CHECKING:
 
 
 class Hint:
-    def __init__(self, name: str, text: Union[str, List[str]], hint_type: Union[str, List[str]], choice: int = None) -> None:
+    def __init__(self, name: str, text: Union[str, List[str]], hint_type: Union[str, List[str]], choice: Optional[int] = None) -> None:
         self.name: str = name
         self.type: List[str] = [hint_type] if not isinstance(hint_type, list) else hint_type
 
@@ -290,7 +290,7 @@ conditional_sometimes: "Dict[str, Callable[[World], bool]]" = {
 #   \u00A9      Down arrow
 #   \u00AA      Joystick
 
-hintTable: Dict[str, Tuple[List[str], Optional[str], Union[str, List[str]]]] = {
+hintTable: Dict[str, Tuple[Union[List[str], str], Optional[str], Union[str, List[str]]]] = {
     'Kokiri Emerald':                                           (["a tree's farewell", "the Spiritual Stone of the Forest"], "the Kokiri Emerald", 'item'),
     'Goron Ruby':                                               (["the Gorons' hidden treasure", "the Spiritual Stone of Fire"], "the Goron Ruby", 'item'),
     'Zora Sapphire':                                            (["an engagement ring", "the Spiritual Stone of Water"], "the Zora Sapphire", 'item'),

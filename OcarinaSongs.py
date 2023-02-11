@@ -1,9 +1,14 @@
 import random
+import sys
 from itertools import chain
 from typing import TYPE_CHECKING, Dict, List, Tuple, Sequence, Callable, Optional, Union
 
 from Fill import ShuffleError
-from Utils import TypeAlias
+
+if sys.version_info >= (3, 10):
+    from typing import TypeAlias
+else:
+    TypeAlias = str
 
 if TYPE_CHECKING:
     from Rom import Rom

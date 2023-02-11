@@ -139,25 +139,28 @@ class State:
     # Be careful using this function. It will not collect any
     # items that may be locked behind the item, only the item itself.
     def collect(self, item: Item) -> None:
+        if item.solver_id is None:
+            raise Exception(f"Item '{item.name}' lacks a `solver_id` and can not be used in `State.collect()`.")
         if 'Small Key Ring' in item.name and self.world.settings.keyring_give_bk:
             dungeon_name = item.name[:-1].split(' (', 1)[1]
             if dungeon_name in ['Forest Temple', 'Fire Temple', 'Water Temple', 'Shadow Temple', 'Spirit Temple']:
                 bk = f'Boss Key ({dungeon_name})'
                 self.solv_items[ItemInfo.solver_ids[escape_name(bk)]] = 1
-        if item.alias:
+        if item.alias and item.alias_id is not None:
             self.solv_items[item.alias_id] += item.alias[1]
-        if item.advancement:
-            self.solv_items[item.solver_id] += 1
+        self.solv_items[item.solver_id] += 1
 
     # Be careful using this function. It will not uncollect any
     # items that may be locked behind the item, only the item itself.
     def remove(self, item: Item) -> None:
+        if item.solver_id is None:
+            raise Exception(f"Item '{item.name}' lacks a `solver_id` and can not be used in `State.remove()`.")
         if 'Small Key Ring' in item.name and self.world.settings.keyring_give_bk:
             dungeon_name = item.name[:-1].split(' (', 1)[1]
             if dungeon_name in ['Forest Temple', 'Fire Temple', 'Water Temple', 'Shadow Temple', 'Spirit Temple']:
                 bk = f'Boss Key ({dungeon_name})'
                 self.solv_items[ItemInfo.solver_ids[escape_name(bk)]] = 0
-        if item.alias and self.solv_items[item.alias_id] > 0:
+        if item.alias and item.alias_id is not None and self.solv_items[item.alias_id] > 0:
             self.solv_items[item.alias_id] -= item.alias[1]
             if self.solv_items[item.alias_id] < 0:
                 self.solv_items[item.alias_id] = 0
@@ -177,7 +180,7 @@ class State:
         return {
             **{item.name: self.solv_items[item.solver_id]
                 for item in ItemInfo.items.values()
-                if item.junk is None and self.solv_items[item.solver_id]},
+                if item.solver_id is not None},
             **{event: self.solv_items[ItemInfo.solver_ids[event]]
                 for event in self.world.event_items
                 if self.solv_items[ItemInfo.solver_ids[event]]}

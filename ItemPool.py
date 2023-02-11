@@ -304,9 +304,9 @@ child_trade_items: Tuple[str, ...] = (
 )
 
 normal_bottles: List[str] = [bottle for bottle in sorted(ItemInfo.bottles) if bottle not in ['Deliver Letter', 'Sell Big Poe']] + ['Bottle with Big Poe']
-song_list: List[str] = [item.name for item in sorted([i for n, i in ItemInfo.items.items() if i.type == 'Song'], key=lambda x: x.index)]
-junk_pool_base: List[Tuple[str, int]] = [(item, weight) for (item, weight) in sorted(ItemInfo.junk.items()) if weight > 0]
-remove_junk_items: List[str] = [item for (item, weight) in sorted(ItemInfo.junk.items()) if weight >= 0]
+song_list: List[str] = [item.name for item in sorted([i for n, i in ItemInfo.items.items() if i.type == 'Song'], key=lambda x: x.index if x.index is not None else 0)]
+junk_pool_base: List[Tuple[str, int]] = [(item, weight) for (item, weight) in sorted(ItemInfo.junk_weight.items()) if weight > 0]
+remove_junk_items: List[str] = [item for (item, weight) in sorted(ItemInfo.junk_weight.items()) if weight >= 0]
 
 remove_junk_ludicrous_items: List[str] = [
     'Ice Arrows',
@@ -375,15 +375,13 @@ def get_junk_item(count: int = 1, pool: Optional[List[str]] = None, plando_pool:
         count -= pending_count
 
     if pool and plando_pool:
-        jw_list = [(junk, weight) for (junk, weight) in junk_pool
-                   if junk not in plando_pool or pool.count(junk) < plando_pool[junk].count]
-        try:
-            junk_items, junk_weights = zip(*jw_list)
-        except ValueError:
+        jw_dict = {junk: weight for (junk, weight) in junk_pool
+                   if junk not in plando_pool or pool.count(junk) < plando_pool[junk].count}
+        if not jw_dict:
             raise RuntimeError("Not enough junk is available in the item pool to replace removed items.")
     else:
-        junk_items, junk_weights = zip(*junk_pool)
-    return_pool.extend(random.choices(junk_items, weights=junk_weights, k=count))
+        jw_dict = {junk: weight for (junk, weight) in junk_pool}
+    return_pool.extend(random.choices(list(jw_dict.keys()), weights=list(jw_dict.values()), k=count))
 
     return return_pool
 
@@ -709,9 +707,9 @@ def get_pool_core(world: "World") -> Tuple[List[str], Dict[str, str]]:
         elif location.type in ['Pot', 'FlyingPot']:
             if world.settings.shuffle_pots == 'all':
                 shuffle_item = True
-            elif world.settings.shuffle_pots == 'dungeons' and (location.dungeon is not None or location.parent_region.is_boss_room):
+            elif world.settings.shuffle_pots == 'dungeons' and (location.dungeon is not None or (location.parent_region is not None and location.parent_region.is_boss_room)):
                 shuffle_item = True
-            elif world.settings.shuffle_pots == 'overworld' and not (location.dungeon is not None or location.parent_region.is_boss_room):
+            elif world.settings.shuffle_pots == 'overworld' and not (location.dungeon is not None or (location.parent_region is not None and location.parent_region.is_boss_room)):
                 shuffle_item = True
             else:
                 shuffle_item = False
@@ -787,7 +785,7 @@ def get_pool_core(world: "World") -> Tuple[List[str], Dict[str, str]]:
                 shuffle_item = True
 
             # Handle dungeon item.
-            if shuffle_setting is not None and not shuffle_item:
+            if shuffle_setting is not None and dungeon_collection is not None and not shuffle_item:
                 dungeon_collection.append(ItemFactory(item))
                 if shuffle_setting in ['remove', 'startwith']:
                     world.state.collect(dungeon_collection[-1])
@@ -880,7 +878,7 @@ def get_pool_core(world: "World") -> Tuple[List[str], Dict[str, str]]:
     if pending_junk_pool:
         for item in set(pending_junk_pool):
             # Ensure pending_junk_pool contents don't exceed values given by distribution file
-            if item in world.distribution.item_pool:
+            if world.distribution.item_pool and item in world.distribution.item_pool:
                 while pending_junk_pool.count(item) > world.distribution.item_pool[item].count:
                     pending_junk_pool.remove(item)
                 # Remove pending junk already added to the pool by alter_pool from the pending_junk_pool

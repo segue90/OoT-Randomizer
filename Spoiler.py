@@ -84,7 +84,7 @@ class Spoiler:
             spoiler_locations = sorted(
                     [location for location in world.get_locations() if not location.locked and not location.type.startswith('Hint')],
                     key=lambda x: location_sort_order.get(x.name, 100000))
-            self.locations[world.id] = OrderedDict([(str(location), location.item) for location in spoiler_locations])
+            self.locations[world.id] = OrderedDict([(str(location), location.item) for location in spoiler_locations if location.item is not None])
 
         entrance_sort_order = {
             "Spawn": 0,
@@ -125,13 +125,14 @@ class Spoiler:
         search = Search([world.state for world in self.worlds])
         all_locations = [location for world in self.worlds for location in world.get_filled_locations()]
         for location in search.iter_reachable_locations(all_locations[:]):
-            search.collect(location.item)
             # include locations that are reachable but not part of the spoiler log playthrough in misc. item hints
-            location.maybe_set_misc_item_hints()
+            location.maybe_set_misc_hints()
             all_locations.remove(location)
+            if location.item and location.item.solver_id is not None:
+                search.collect(location.item)
         for location in all_locations:
             # finally, collect unreachable locations for misc. item hints
-            location.maybe_set_misc_item_hints()
+            location.maybe_set_misc_hints()
 
     def create_playthrough(self) -> None:
         logger = logging.getLogger('')
@@ -180,7 +181,7 @@ class Spoiler:
             for location in collected:
                 # Collect the item for the state world it is for
                 search.state_list[location.item.world.id].collect(location.item)
-                location.maybe_set_misc_item_hints()
+                location.maybe_set_misc_hints()
         logger.info('Collected %d spheres', len(collection_spheres))
         self.full_playthrough = dict((location.name, i + 1) for i, sphere in enumerate(collection_spheres) for location in sphere)
         self.max_sphere = len(collection_spheres)

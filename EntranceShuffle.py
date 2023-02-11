@@ -45,7 +45,7 @@ def assume_entrance_pool(entrance_pool: "List[Entrance]") -> "List[Entrance]":
         if entrance.reverse is not None:
             assumed_return = entrance.reverse.assume_reachable()
             if (entrance.type in ('Dungeon', 'Grotto', 'Grave') and entrance.reverse.name != 'Spirit Temple Lobby -> Desert Colossus From Spirit Lobby') or \
-               (entrance.type == 'Interior' and entrance.world.shuffle_special_interior_entrances):
+               (entrance.type == 'Interior' and entrance.world and entrance.world.shuffle_special_interior_entrances):
                 # In most cases, Dungeon, Grotto/Grave and Simple Interior exits shouldn't be assumed able to give access to their parent region
                 assumed_return.set_rule(lambda state, **kwargs: False)
             assumed_forward.bind_two_way(assumed_return)
@@ -444,6 +444,7 @@ def shuffle_random_entrances(worlds: "List[World]") -> None:
     non_drop_locations = [location for world in worlds for location in world.get_locations() if location.type not in ('Drop', 'Event')]
     max_search.visit_locations(non_drop_locations)
     locations_to_ensure_reachable = list(filter(max_search.visited, non_drop_locations))
+    placed_one_way_entrances = None
 
     # Shuffle all entrances within their own worlds
     for world in worlds:

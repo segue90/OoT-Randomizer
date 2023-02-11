@@ -4,17 +4,10 @@ if sys.version_info < (3, 6, 0):
     print("OoT Randomizer requires Python version 3.6 or newer and you are using %s" % '.'.join([str(i) for i in sys.version_info[0:3]]))
     sys.exit(1)
 
-import argparse
 import datetime
 import logging
 import os
-import textwrap
 import time
-
-
-class ArgumentDefaultsHelpFormatter(argparse.RawTextHelpFormatter):
-    def _get_help_string(self, action):
-        return textwrap.dedent(action.help)
 
 
 def start() -> None:

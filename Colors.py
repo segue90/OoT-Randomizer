@@ -208,7 +208,7 @@ b_button_colors: Dict[str, Color] = {
 }
 
 #                        C Button                 Pause Menu C Cursor      Pause Menu C Icon        C Note
-c_button_colors: Dict[str, Color] = {
+c_button_colors: Dict[str, Tuple[Color, Color, Color, Color]] = {
     "N64 Blue":         (Color(0x5A, 0x5A, 0xFF), Color(0x00, 0x32, 0xFF), Color(0x00, 0x64, 0xFF), Color(0x50, 0x96, 0xFF)),
     "N64 Green":        (Color(0x00, 0x96, 0x00), Color(0x00, 0x96, 0x00), Color(0x00, 0x96, 0x00), Color(0x00, 0x96, 0x00)),
     "N64 Red":          (Color(0xC8, 0x00, 0x00), Color(0xC8, 0x00, 0x00), Color(0xC8, 0x00, 0x00), Color(0xC8, 0x00, 0x00)),
@@ -378,7 +378,7 @@ def relative_luminance(color: List[int]) -> float:
     return color_ratios[0] * 0.299 + color_ratios[1] * 0.587 + color_ratios[2] * 0.114
 
 
-def lum_color_ratio(val: int) -> float:
+def lum_color_ratio(val: float) -> float:
     val /= 255
     if val <= 0.03928:
         return val / 12.92

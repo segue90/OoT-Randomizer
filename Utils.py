@@ -12,14 +12,6 @@ from urllib.error import URLError, HTTPError
 from version import __version__, base_version, supplementary_version, branch_url
 
 
-# For easy import of TypeAlias that won't break older versions of Python.
-if sys.version_info >= (3, 10):
-    # noinspection PyUnresolvedReferences
-    from typing import TypeAlias
-else:
-    TypeAlias = str
-
-
 def is_bundled() -> bool:
     return getattr(sys, 'frozen', False)
 
@@ -85,16 +77,6 @@ def open_file(filename: str) -> None:
     else:
         open_command = 'open' if sys.platform == 'darwin' else 'xdg-open'
         subprocess.call([open_command, filename])
-
-
-def close_console() -> None:
-    if sys.platform == 'win32':
-        # windows
-        import win32gui, win32con
-        try:
-            win32gui.ShowWindow(win32gui.GetForegroundWindow(), win32con.SW_HIDE)
-        except Exception:
-            pass
 
 
 def get_version_bytes(a: str, b: int = 0x00, c: int = 0x00) -> List[int]:
@@ -234,8 +216,14 @@ def run_process(logger: logging.Logger, args: Sequence[str], stdin: Optional[Any
 
 
 # https://stackoverflow.com/a/23146126
-def find_last(source_list: Sequence[Any], sought_element: Any) -> Optional[int]:
+def try_find_last(source_list: Sequence[Any], sought_element: Any) -> Optional[int]:
     for reverse_index, element in enumerate(reversed(source_list)):
         if element == sought_element:
             return len(source_list) - 1 - reverse_index
     return None
+
+def find_last(source_list: Sequence[Any], sought_element: Any) -> int:
+    last = try_find_last(source_list, sought_element)
+    if last is None:
+        raise Exception(f"Element {sought_element} not found in sequence {source_list}.")
+    return last

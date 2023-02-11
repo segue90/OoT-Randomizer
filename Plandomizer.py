@@ -51,9 +51,10 @@ per_world_keys = (
 
 
 class Record:
-    def __init__(self, properties: Dict[str, Any] = None, src_dict: Dict[str, Any] = None) -> None:
+    def __init__(self, properties: Optional[Dict[str, Any]] = None, src_dict: Optional[Dict[str, Any]] = None) -> None:
         self.properties: Dict[str, Any] = properties if properties is not None else getattr(self, "properties")
-        self.update(src_dict, update_all=True)
+        if src_dict is not None:
+            self.update(src_dict, update_all=True)
 
     def update(self, src_dict: Dict[str, Any], update_all: bool = False) -> None:
         if src_dict is None:
@@ -117,13 +118,13 @@ class GossipRecord(Record):
             self.colors = CollapseList(self.colors)
         if self.hinted_locations is not None:
             self.hinted_locations = CollapseList(self.hinted_locations)
-        if self.hinted_locations is not None:
+        if self.hinted_items is not None:
             self.hinted_items = CollapseList(self.hinted_items)
         return CollapseDict(super().to_json())
 
 
 class ItemPoolRecord(Record):
-    def __init__(self, src_dict: int = 1) -> None:
+    def __init__(self, src_dict: Union[int, Dict[str, int]] = 1) -> None:
         self.type: str = 'set'
         self.count: int = 1
 

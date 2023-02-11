@@ -306,7 +306,7 @@ def LoadVanilla(rom: "Rom", missing: List[str], rebase: int, linkstart: int, lin
                         # Branch to another texture
                         if segJ == segment:
                             if vanillaData[j+1] == 0x0:
-                                returnStack.push(j)
+                                returnStack.append(j)
                             j = loJ & 0x00FFFFFF
                     elif opJ == 0xF0:
                         # F0: G_LOADTLUT

@@ -1,10 +1,16 @@
+import sys
 from collections import defaultdict
 from typing import TYPE_CHECKING, List, Union, Dict, Optional, Any, Tuple, Iterable, Callable, Collection
 
 from HintList import goalTable, get_hint_group, hint_exclusions
 from ItemList import item_table
+from RulesCommon import AccessRule
 from Search import Search, ValidGoals
-from Utils import TypeAlias
+
+if sys.version_info >= (3, 10):
+    from typing import TypeAlias
+else:
+    TypeAlias = str
 
 if TYPE_CHECKING:
     from Location import Location
@@ -274,7 +280,7 @@ def update_goal_items(spoiler: "Spoiler") -> None:
     spoiler.goal_locations = required_locations_dict
 
 
-def lock_category_entrances(category: GoalCategory, state_list: "Iterable[State]") -> "Dict[int, Dict[str, Callable[[State, ...], bool]]]":
+def lock_category_entrances(category: GoalCategory, state_list: "Iterable[State]") -> "Dict[int, Dict[str, AccessRule]]":
     # Disable access rules for specified entrances
     category_locks = {}
     if category.lock_entrances is not None:
@@ -287,7 +293,7 @@ def lock_category_entrances(category: GoalCategory, state_list: "Iterable[State]
     return category_locks
 
 
-def unlock_category_entrances(category_locks: "Dict[int, Dict[str, Callable[[State, ...], bool]]]",
+def unlock_category_entrances(category_locks: "Dict[int, Dict[str, AccessRule]]",
                               state_list: "List[State]") -> None:
     # Restore access rules
     for state_id, exits in category_locks.items():
@@ -345,10 +351,11 @@ def search_goals(categories: Dict[str, GoalCategory], reachable_goals: ValidGoal
             if search_woth and not valid_goals['way of the hero']:
                 required_locations['way of the hero'].append(location)
             location.item = old_item
-        location.maybe_set_misc_item_hints()
+        location.maybe_set_misc_hints()
         remaining_locations.remove(location)
-        search.state_list[location.item.world.id].collect(location.item)
+        if location.item.solver_id is not None:
+            search.state_list[location.item.world.id].collect(location.item)
     for location in remaining_locations:
         # finally, collect unreachable locations for misc. item hints
-        location.maybe_set_misc_item_hints()
+        location.maybe_set_misc_hints()
     return required_locations

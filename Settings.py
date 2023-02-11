@@ -10,13 +10,13 @@ import re
 import string
 import sys
 import textwrap
-from typing import TYPE_CHECKING, Dict, List, Tuple, Set, Any, Optional
+from typing import Dict, List, Tuple, Set, Any, Optional
 
+import StartingItems
 from version import __version__
 from Utils import local_path, data_path
 from SettingsList import SettingInfos, validate_settings
 from Plandomizer import Distribution
-import StartingItems
 
 LEGACY_STARTING_ITEM_SETTINGS: Dict[str, Dict[str, StartingItems.Entry]] = {
     'starting_equipment': StartingItems.equipment,
@@ -27,8 +27,9 @@ LEGACY_STARTING_ITEM_SETTINGS: Dict[str, Dict[str, StartingItems.Entry]] = {
 
 class ArgumentDefaultsHelpFormatter(argparse.RawTextHelpFormatter):
 
-    def _get_help_string(self, action):
-        return textwrap.dedent(action.help)
+    def _get_help_string(self, action) -> Optional[str]:
+        if  action.help is not None:
+            return textwrap.dedent(action.help)
 
 
 # 32 characters

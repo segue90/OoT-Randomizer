@@ -1,8 +1,13 @@
+import sys
 from enum import IntEnum
 from typing import TYPE_CHECKING, Dict, List, Iterable, Callable, Optional, Union, Any
 
 from ItemPool import IGNORE_LOCATION
-from Utils import TypeAlias
+
+if sys.version_info >= (3, 10):
+    from typing import TypeAlias
+else:
+    TypeAlias = str
 
 if TYPE_CHECKING:
     from Rom import Rom
@@ -46,7 +51,7 @@ class FlagType(IntEnum):
 
 
 class Address:
-    prev_address: Optional[int] = None
+    prev_address: int = 0
     EXTENDED_CONTEXT_START = 0x1450
 
     def __init__(self, address: Optional[int] = None, extended: bool = False, size: int = 4, mask: int = 0xFFFFFFFF,

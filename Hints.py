@@ -3,6 +3,7 @@ import json
 import logging
 import os
 import random
+import sys
 import urllib.request
 from collections import OrderedDict, defaultdict
 from enum import Enum
@@ -16,7 +17,12 @@ from Messages import Message, COLOR_MAP, update_message_by_id
 from Region import Region
 from Search import Search
 from TextBox import line_wrap
-from Utils import TypeAlias, data_path
+from Utils import data_path
+
+if sys.version_info >= (3, 10):
+    from typing import TypeAlias
+else:
+    TypeAlias = str
 
 if TYPE_CHECKING:
     from Entrance import Entrance
@@ -27,8 +33,8 @@ if TYPE_CHECKING:
 
 Spot: TypeAlias = "Union[Entrance, Location, Region]"
 HintReturn: TypeAlias = "Optional[Tuple[GossipText, Optional[List[Location]]]]"
-HintFunc: TypeAlias = "Callable[[Spoiler, World, MutableSet[str]], HintReturn]"
-BarrenFunc: TypeAlias = "Callable[[Spoiler, World, MutableSet[str], MutableSet[str]], HintReturn]"
+HintFunc: TypeAlias = Callable[["Spoiler", "World", MutableSet[str]], HintReturn]
+BarrenFunc: TypeAlias = Callable[["Spoiler", "World", MutableSet[str], MutableSet[str]], HintReturn]
 
 bingoBottlesForHints: Set[str] = {
     "Bottle", "Bottle with Red Potion", "Bottle with Green Potion", "Bottle with Blue Potion",
@@ -467,8 +473,8 @@ class HintArea(Enum):
 
     # Formats the hint text for this area with proper grammar.
     # Dungeons are hinted differently depending on the clearer_hints setting.
-    def text(self, clearer_hints: bool, preposition: bool = False, world: "Optional[World]" = None) -> str:
-        if self.is_dungeon:
+    def text(self, clearer_hints: bool, preposition: bool = False, world: "Optional[int]" = None) -> str:
+        if self.is_dungeon and self.dungeon_name:
             text = get_hint(self.dungeon_name, clearer_hints).text
         else:
             text = str(self)

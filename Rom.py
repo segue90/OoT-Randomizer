@@ -1,15 +1,14 @@
+import copy
 import json
 import os
 import platform
-import struct
 import subprocess
-import copy
-from typing import List, Tuple, Sequence, Iterable, Optional
+from typing import List, Tuple, Sequence, Iterator, Optional
 
-from Utils import is_bundled, subprocess_args, local_path, data_path, get_version_bytes
-from ntype import BigStream
-from crc import calculate_crc
 from Models import restrictiveBytes
+from Utils import is_bundled, subprocess_args, local_path, data_path, get_version_bytes
+from crc import calculate_crc
+from ntype import BigStream
 from version import base_version, branch_identifier, supplementary_version
 
 DMADATA_START: int = 0x7430  # NTSC 1.0/1.1: 0x7430, NTSC 1.2: 0x7960, Debug: 0x012F70
@@ -17,13 +16,14 @@ DMADATA_INDEX: int = 2
 
 
 class Rom(BigStream):
-    def __init__(self, file: str = None) -> None:
+    def __init__(self, file: Optional[str] = None) -> None:
         super().__init__(bytearray())
 
-        self.original: Optional[Rom] = None
+        self.original: Rom = self
         self.changed_address: dict[int, int] = {}
         self.changed_dma: dict[int, Tuple[int, int, int]] = {}
         self.force_patch: List[int] = []
+        self.dma: 'DMAIterator' = DMAIterator(self, DMADATA_START, DMADATA_INDEX)
 
         if file is None:
             return
@@ -36,26 +36,19 @@ class Rom(BigStream):
             symbols = json.load(stream)
             self.symbols: dict[str, int] = {name: int(addr, 16) for name, addr in symbols.items()}
 
-        if file == '':
-            # if not specified, try to read from the previously decompressed rom
-            file = decompressed_file
+        if os.path.isfile(decompressed_file):
+            # Try to read from previously decompressed rom if one exists.
             try:
+                self.read_rom(decompressed_file)
+            except (FileNotFoundError, RuntimeError):
+                # Decompress the provided file.
+                if not file:
+                    raise FileNotFoundError('Must specify path to base ROM')
                 self.read_rom(file)
-            except FileNotFoundError:
-                # could not find the decompressed rom either
-                raise FileNotFoundError('Must specify path to base ROM')
-        else:
-            self.read_rom(file)
-
-        # decompress rom, or check if it's already decompressed
-        self.decompress_rom_file(file, decompressed_file)
 
         # Add file to maximum size
         self.buffer.extend(bytearray([0x00] * (0x4000000 - len(self.buffer))))
         self.original = self.copy()
-
-        # Easy access to DMA entries.
-        self.dma: 'DMAIterator' = DMAIterator(self, DMADATA_START, DMADATA_INDEX)
 
         # Add version number to header.
         self.write_version_bytes()
@@ -66,58 +59,70 @@ class Rom(BigStream):
         new_rom.changed_address = copy.copy(self.changed_address)
         new_rom.changed_dma = copy.copy(self.changed_dma)
         new_rom.force_patch = copy.copy(self.force_patch)
-        new_rom.dma = DMAIterator(new_rom, DMADATA_START, DMADATA_INDEX)
         return new_rom
 
-    def decompress_rom_file(self, input_file: str, output_file: str, verify_crc: bool = True) -> None:
+    def read_rom(self, input_file: str, output_file: Optional[str] = None, verify_crc: bool = True) -> None:
+        try:
+            with open(input_file, 'rb') as stream:
+                self.buffer = bytearray(stream.read())
+        except FileNotFoundError as ex:
+            raise FileNotFoundError(f'Invalid path to Base ROM: "{input_file}"')
+
+        # Validate ROM file
+        if not verify_crc:
+            return
+
         valid_crc = [
             [0xEC, 0x70, 0x11, 0xB7, 0x76, 0x16, 0xD7, 0x2B], # Compressed
             [0x70, 0xEC, 0xB7, 0x11, 0x16, 0x76, 0x2B, 0xD7], # Byteswap compressed
             [0x93, 0x52, 0x2E, 0x7B, 0xE5, 0x06, 0xD4, 0x27], # Decompressed
         ]
 
-        # Validate ROM file
         file_name = os.path.splitext(input_file)
         rom_crc = list(self.buffer[0x10:0x18])
-        if verify_crc and rom_crc not in valid_crc:
+        if rom_crc not in valid_crc:
             # Bad CRC validation
             raise RuntimeError('ROM file %s is not a valid OoT 1.0 US ROM.' % input_file)
         elif len(self.buffer) < 0x2000000 or len(self.buffer) > 0x4000000 or file_name[1].lower() not in ['.z64', '.n64']:
-            # ROM is too big, or too small, or not a bad type
+            # ROM is too big, or too small, or a bad type
             raise RuntimeError('ROM file %s is not a valid OoT 1.0 US ROM.' % input_file)
         elif len(self.buffer) == 0x2000000:
             # If Input ROM is compressed, then Decompress it
-            subcall = []
-
-            sub_dir = "./" if is_bundled() else "bin/Decompress/"
-
-            if platform.system() == 'Windows':
-                if platform.machine() == 'AMD64':
-                    subcall = [sub_dir + "Decompress.exe", input_file, output_file]
-                elif platform.machine() == 'ARM64':
-                    subcall = [sub_dir + "Decompress_ARM64.exe", input_file, output_file]
-                else:
-                    subcall = [sub_dir + "Decompress32.exe", input_file, output_file]
-            elif platform.system() == 'Linux':
-                if platform.machine() in ['arm64', 'aarch64', 'aarch64_be', 'armv8b', 'armv8l']:
-                    subcall = [sub_dir + "Decompress_ARM64", input_file, output_file]
-                elif platform.machine() in ['arm', 'armv7l', 'armhf']:
-                    subcall = [sub_dir + "Decompress_ARM32", input_file, output_file]
-                else:
-                    subcall = [sub_dir + "Decompress", input_file, output_file]
-            elif platform.system() == 'Darwin':
-                if platform.machine() == 'arm64':
-                    subcall = [sub_dir + "Decompress_ARM64.out", input_file, output_file]
-                else:
-                    subcall = [sub_dir + "Decompress.out", input_file, output_file]
+            if output_file:
+                self.decompress_rom(input_file, output_file, verify_crc)
             else:
-                raise RuntimeError('Unsupported operating system for decompression. Please supply an already decompressed ROM.')
-
-            subprocess.call(subcall, **subprocess_args())
-            self.read_rom(output_file)
+                raise RuntimeError('ROM was unable to be decompressed. Please supply an already decompressed ROM.')
         else:
             # ROM file is a valid and already uncompressed
             pass
+
+    def decompress_rom(self, input_file: str, output_file: str, verify_crc: bool = True) -> None:
+        sub_dir = "./" if is_bundled() else "bin/Decompress/"
+
+        if platform.system() == 'Windows':
+            if platform.machine() == 'AMD64':
+                subcall = [sub_dir + "Decompress.exe", input_file, output_file]
+            elif platform.machine() == 'ARM64':
+                subcall = [sub_dir + "Decompress_ARM64.exe", input_file, output_file]
+            else:
+                subcall = [sub_dir + "Decompress32.exe", input_file, output_file]
+        elif platform.system() == 'Linux':
+            if platform.machine() in ['arm64', 'aarch64', 'aarch64_be', 'armv8b', 'armv8l']:
+                subcall = [sub_dir + "Decompress_ARM64", input_file, output_file]
+            elif platform.machine() in ['arm', 'armv7l', 'armhf']:
+                subcall = [sub_dir + "Decompress_ARM32", input_file, output_file]
+            else:
+                subcall = [sub_dir + "Decompress", input_file, output_file]
+        elif platform.system() == 'Darwin':
+            if platform.machine() == 'arm64':
+                subcall = [sub_dir + "Decompress_ARM64.out", input_file, output_file]
+            else:
+                subcall = [sub_dir + "Decompress.out", input_file, output_file]
+        else:
+            raise RuntimeError('Unsupported operating system for decompression. Please supply an already decompressed ROM.')
+
+        subprocess.call(subcall, **subprocess_args())
+        self.read_rom(output_file, verify_crc=verify_crc)
 
     def write_byte(self, address: int, value: int) -> None:
         super().write_byte(address, value)
@@ -144,11 +149,11 @@ class Rom(BigStream):
         self.changed_address = {}
         self.changed_dma = {}
         self.force_patch = []
-        self.last_address = None
+        self.last_address = 0
         self.write_version_bytes()
 
     def sym(self, symbol_name: str) -> int:
-        return self.symbols.get(symbol_name)
+        return self.symbols[symbol_name]
 
     def write_to_file(self, file: str) -> None:
         self.verify_dmadata()
@@ -162,7 +167,7 @@ class Rom(BigStream):
 
     def write_version_bytes(self) -> None:
         version_bytes = get_version_bytes(base_version, branch_identifier, supplementary_version)
-        self.write_bytes(0x19, version_bytes)
+        self.write_bytes(0x19, version_bytes[:5])
         self.write_bytes(0x35, version_bytes[:3])
         self.force_patch.extend([0x19, 0x1A, 0x1B, 0x1C, 0x1D, 0x35, 0x36, 0x37])
 
@@ -173,14 +178,6 @@ class Rom(BigStream):
             if secondary_version_bytes[i] != version_bytes[i]:
                 return secondary_version_bytes
         return version_bytes
-
-    def read_rom(self, file: str) -> None:
-        # "Reads rom into bytearray"
-        try:
-            with open(file, 'rb') as stream:
-                self.buffer = bytearray(stream.read())
-        except FileNotFoundError as ex:
-            raise FileNotFoundError('Invalid path to Base ROM: "' + file + '"')
 
     # dmadata/file management helper functions
 
@@ -297,8 +294,18 @@ class DMAIterator:
         self.rom: Rom = rom
         self.dma_start: int = dma_start
         self.dma_index: int = dma_index
-        self.dma_end: int = self.rom.read_int32(self.dma_start + (self.dma_index * 0x10) + 0x04)
-        self.dma_entries: int = (self.dma_end - self.dma_start) >> 4
+        self.dma_end: int = 0
+        self._dma_entries: int = 0
+
+    @property
+    def dma_entries(self) -> int:
+        if not self._dma_entries:
+            self._calculate_dma_entries()
+        return self._dma_entries
+
+    def _calculate_dma_entries(self) -> None:
+        self.dma_end = self.rom.read_int32(self.dma_start + (self.dma_index * 0x10) + 0x04)
+        self._dma_entries = (self.dma_end - self.dma_start) >> 4
 
     def __getitem__(self, item: int) -> DMAEntry:
         if not isinstance(item, int):
@@ -310,18 +317,18 @@ class DMAIterator:
 
         return DMAEntry(self.rom, item)
 
-    def __iter__(self) -> Iterable[DMAEntry]:
+    def __iter__(self) -> Iterator[DMAEntry]:
         for item in range(0, self.dma_entries):
             yield self[item]
 
     # Gets a dmadata entry by the file start position.
-    def get_dmadata_record_by_key(self, key: Optional[int]) -> Optional[DMAEntry]:
+    def get_dmadata_record_by_key(self, key: Optional[int]) -> DMAEntry:
         for dma_entry in self:
             if key is None and dma_entry.end == 0 and dma_entry.start == 0:
                 return dma_entry
             elif dma_entry.start == key:
                 return dma_entry
-        return None
+        raise Exception(f"`get_dmadata_record_by_key`: DMA Start '{key}' not found in the DMA Table.")
 
     # gets the last used byte of rom defined in the DMA table
     def free_space(self) -> int:

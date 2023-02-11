@@ -1,10 +1,15 @@
 import copy
 import itertools
+import sys
 from typing import TYPE_CHECKING, Dict, List, Tuple, Iterable, Set, Callable, Union, Optional
 
 from Region import Region, TimeOfDay
 from State import State
-from Utils import TypeAlias
+
+if sys.version_info >= (3, 10):
+    from typing import TypeAlias
+else:
+    TypeAlias = str
 
 if TYPE_CHECKING:
     from Entrance import Entrance
@@ -54,9 +59,12 @@ class Search:
 
     def collect_all(self, itempool: "Iterable[Item]") -> None:
         for item in itempool:
-            self.state_list[item.world.id].collect(item)
+            if item.solver_id is not None and item.world is not None:
+                self.state_list[item.world.id].collect(item)
 
     def collect(self, item: "Item") -> None:
+        if item.world is None:
+            raise Exception(f"Item '{item.name}' cannot be collected as it does not have a world.")
         self.state_list[item.world.id].collect(item)
 
     @classmethod
@@ -89,6 +97,8 @@ class Search:
     # Drops the item from its respective state.
     # Has no effect on cache!
     def uncollect(self, item: "Item") -> None:
+        if item.world is None:
+            raise Exception(f"Item '{item.name}' cannot be uncollected as it does not have a world.")
         self.state_list[item.world.id].remove(item)
 
     # Resets the sphere cache to the first entry only.
@@ -103,7 +113,7 @@ class Search:
     def _expand_regions(self, exit_queue: "List[Entrance]", regions: Dict[Region, int], age: Optional[str]) -> "List[Entrance]":
         failed = []
         for exit in exit_queue:
-            if exit.connected_region and exit.connected_region not in regions:
+            if exit.world and exit.connected_region and exit.connected_region not in regions:
                 # Evaluate the access rule directly, without tod
                 if exit.access_rule(self.state_list[exit.world.id], spot=exit, age=age):
                     # If it found a new tod, make sure we try other entrances again.
@@ -153,8 +163,8 @@ class Search:
         })
         return self._cache['child_regions'], self._cache['adult_regions'], self._cache['visited_locations']
 
-    # Yields every reachable location, by iteratively deepening explored sets of
-    # regions (one as child, one as adult) and invoking access rules.
+    # Yields every reachable location, by iteratively deepening explored sets of regions
+    # (one as child, one as adult) and invoking access rules.
     # item_locations is a list of Location objects from state_list that the caller
     # has prefiltered (eg. by whether they contain advancement items).
     #
@@ -292,7 +302,8 @@ class Search:
 
     def collect_pseudo_starting_items(self) -> None:
         for location in self.iter_pseudo_starting_locations():
-            self.collect(location.item)
+            if location.item and location.item.solver_id is not None:
+                self.collect(location.item)
 
     # Use the cache in the search to determine region reachability.
     # Implicitly requires is_starting_age or Time_Travel.

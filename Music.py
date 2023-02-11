@@ -209,7 +209,7 @@ def process_sequences(rom: Rom, ids: Iterable[Tuple[str, int]], seq_type: str = 
 
 
 def shuffle_music(log: "CosmeticsLog", source_sequences: Dict[str, Sequence], target_sequences: Dict[str, Sequence],
-                  music_mapping: Dict[str, Union[str, List[str]]], seq_type: str = "music") -> List[Sequence]:
+                  music_mapping: Dict[str, str], seq_type: str = "music") -> List[Sequence]:
     sequences = []
     favorites = log.src_dict.get('bgm_groups', {}).get('favorites', []).copy()
 

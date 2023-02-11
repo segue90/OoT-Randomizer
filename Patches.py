@@ -3,6 +3,7 @@ import itertools
 import random
 import re
 import struct
+import sys
 import zlib
 from typing import Dict, List, Iterable, Tuple, Set, Callable, Optional, Any
 
@@ -24,10 +25,15 @@ from Rom import Rom
 from SaveContext import SaveContext, Scenes, FlagType
 from SceneFlags import get_alt_list_bytes, get_collectible_flag_table, get_collectible_flag_table_bytes
 from Spoiler import Spoiler
-from Utils import TypeAlias, data_path
+from Utils import data_path
 from World import World
 from texture_util import ci4_rgba16patch_to_ci8, rgba16_patch
 from version import __version__
+
+if sys.version_info >= (3, 10):
+    from typing import TypeAlias
+else:
+    TypeAlias = str
 
 OverrideEntry: TypeAlias = Tuple[int, int, int, int, int, int]
 
@@ -983,6 +989,8 @@ def patch_rom(spoiler: Spoiler, world: World, rom: Rom) -> Rom:
             rom.write_int16(0xAC995A, 0x060C)
 
         for entrance in entrances:
+            if entrance.data is None or entrance.replaces is None or entrance.replaces.data is None:
+                continue
             new_entrance = entrance.data
             replaced_entrance = (entrance.replaces or entrance).data
 
@@ -1670,6 +1678,7 @@ def patch_rom(spoiler: Spoiler, world: World, rom: Rom) -> Rom:
             locations = [
                 loc
                 for region in jabu_reward_regions
+                if region is not None and region.locations is not None
                 for loc in region.locations
                 if not loc.locked
                 and loc.has_item()
@@ -1687,11 +1696,12 @@ def patch_rom(spoiler: Spoiler, world: World, rom: Rom) -> Rom:
             jabu_reward_regions = {
                 exit.connected_region
                 for region in jabu_reward_regions
+                if region is not None
                 for exit in region.exits
-                if exit.connected_region.dungeon != 'Jabu Jabus Belly' and exit.connected_region not in already_checked
+                if exit.connected_region is not None and exit.connected_region.dungeon != 'Jabu Jabus Belly' and exit.connected_region.name not in already_checked
             }
 
-    if location is None:
+    if location is None or location.item is None:
         jabu_item = None
         reward_text = None
     elif location.item.looks_like_item is not None:
@@ -1702,7 +1712,7 @@ def patch_rom(spoiler: Spoiler, world: World, rom: Rom) -> Rom:
         reward_text = get_hint(get_item_generic_name(location.item), True).text
 
     # Update "Princess Ruto got the Spiritual Stone!" text before the midboss in Jabu
-    if reward_text is None:
+    if reward_text is None or location is None or location.item is None:
         new_message = f"\x08Princess Ruto got \x01\x05\x43nothing\x05\x40!\x01Well, that's disappointing...\x02"
     else:
         reward_texts = {
@@ -1721,7 +1731,7 @@ def patch_rom(spoiler: Spoiler, world: World, rom: Rom) -> Rom:
     update_message_by_id(messages, 0x4050, new_message)
 
     # Set Dungeon Reward Actor in Jabu Jabu to be accurate
-    if location is not None: #TODO make actor invisible if no item?
+    if location is not None and location.item is not None:  # TODO make actor invisible if no item?
         jabu_item = location.item
         jabu_actor_type = jabu_item.special.get('actor_type', 0x15) #TODO handle non-dungeon-reward items
         set_jabu_stone_actors(rom, jabu_actor_type)

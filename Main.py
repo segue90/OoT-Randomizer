@@ -5,10 +5,10 @@ import os
 import platform
 import random
 import shutil
-import struct
 import time
-from typing import List
 import zipfile
+from typing import List, Optional
+
 
 from Cosmetics import CosmeticsLog, patch_cosmetics
 from EntranceShuffle import set_entrances
@@ -51,12 +51,14 @@ def main(settings: Settings, max_attempts: int = 10) -> Spoiler:
             else:
                 logger.info('Retrying...\n\n')
             settings.reset_distribution()
+    if spoiler is None:
+        raise RuntimeError("Generation failed.")
     patch_and_output(settings, spoiler, rom)
     logger.debug('Total Time: %s', time.process_time() - start)
     return spoiler
 
 
-def resolve_settings(settings: Settings) -> Rom:
+def resolve_settings(settings: Settings) -> Optional[Rom]:
     logger = logging.getLogger('')
 
     old_tricks = settings.allowed_tricks
@@ -185,7 +187,7 @@ def make_spoiler(settings: Settings, worlds: List[World]) -> Spoiler:
     return spoiler
 
 
-def prepare_rom(spoiler: Spoiler, world: World, rom: Rom, settings: Settings, rng_state: tuple = None, restore: bool = True) -> CosmeticsLog:
+def prepare_rom(spoiler: Spoiler, world: World, rom: Rom, settings: Settings, rng_state: Optional[tuple] = None, restore: bool = True) -> CosmeticsLog:
     if rng_state:
         random.setstate(rng_state)
         # Use different seeds for each world when patching.
@@ -279,7 +281,7 @@ def generate_wad(wad_file: str, rom_file: str, output_file: str, channel_title: 
         os.remove(rom_file)
 
 
-def patch_and_output(settings: Settings, spoiler: Spoiler, rom: Rom) -> None:
+def patch_and_output(settings: Settings, spoiler: Spoiler, rom: Optional[Rom]) -> None:
     logger = logging.getLogger('')
     worlds = spoiler.worlds
     cosmetics_log = None
@@ -299,7 +301,7 @@ def patch_and_output(settings: Settings, spoiler: Spoiler, rom: Rom) -> None:
     generate_rom = uncompressed_rom or settings.create_patch_file or settings.patch_without_output
     separate_cosmetics = settings.create_patch_file and uncompressed_rom
 
-    if generate_rom:
+    if generate_rom and rom is not None:
         rng_state = random.getstate()
         file_list = []
         restore_rom = False
@@ -581,8 +583,7 @@ def diff_roms(settings: Settings, diff_rom_file: str) -> None:
     output_path = os.path.join(output_dir, output_filename_base)
 
     logger.info('Loading patched ROM.')
-    rom.read_rom(diff_rom_file)
-    rom.decompress_rom_file(diff_rom_file, f"{output_path}_decomp.z64", verify_crc=False)
+    rom.read_rom(diff_rom_file, f"{output_path}_decomp.z64", verify_crc=False)
     try:
         os.remove(f"{output_path}_decomp.z64")
     except FileNotFoundError:

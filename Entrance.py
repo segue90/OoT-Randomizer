@@ -1,4 +1,4 @@
-from typing import TYPE_CHECKING, List, Optional, Callable, Dict, Any
+from typing import TYPE_CHECKING, List, Optional, Dict, Any
 
 from RulesCommon import AccessRule
 
@@ -11,7 +11,7 @@ class Entrance:
     def __init__(self, name: str = '', parent: "Optional[Region]" = None) -> None:
         self.name: str = name
         self.parent_region: "Optional[Region]" = parent
-        self.world: "World" = parent.world
+        self.world: "Optional[World]" = parent.world if parent is not None else None
         self.connected_region: "Optional[Region]" = None
         self.access_rule: AccessRule = lambda state, **kwargs: True
         self.access_rules: List[AccessRule] = []
@@ -28,7 +28,7 @@ class Entrance:
 
     def copy(self, new_region: "Region") -> 'Entrance':
         new_entrance = Entrance(self.name, new_region)
-        new_entrance.connected_region = self.connected_region.name
+        new_entrance.connected_region = self.connected_region.name  # TODO: Revamp World/Region copying such that this is not a type error.
         new_entrance.access_rule = self.access_rule
         new_entrance.access_rules = list(self.access_rules)
         new_entrance.reverse = self.reverse
@@ -62,6 +62,8 @@ class Entrance:
         region.entrances.append(self)
 
     def disconnect(self) -> "Optional[Region]":
+        if self.connected_region is None:
+            raise Exception(f"`disconnect()` called without a valid `connected_region` for entrance {self.name}.")
         self.connected_region.entrances.remove(self)
         previously_connected = self.connected_region
         self.connected_region = None
@@ -72,6 +74,10 @@ class Entrance:
         other_entrance.reverse = self
 
     def get_new_target(self) -> 'Entrance':
+        if self.world is None:
+            raise Exception(f"`get_new_target()` called without a valid `world` for entrance {self.name}.")
+        if self.connected_region is None:
+            raise Exception(f"`get_new_target()` called without a valid `connected_region` for entrance {self.name}.")
         root = self.world.get_region('Root Exits')
         target_entrance = Entrance('Root -> ' + self.connected_region.name, root)
         target_entrance.connect(self.connected_region)
