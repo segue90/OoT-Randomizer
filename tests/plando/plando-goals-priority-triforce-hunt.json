@@ -15,7 +15,7 @@
     "triforce_goal_per_world":                 20,
     "logic_rules":                             "glitchless",
     "reachable_locations":                     "all",
-    "bombchus_in_logic":                       false,
+    "free_bombchu_drops":                       false,
     "one_item_per_dungeon":                    false,
     "trials_random":                           false,
     "trials":                                  3,

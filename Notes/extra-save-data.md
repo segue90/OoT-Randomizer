@@ -39,6 +39,8 @@ With `shuffle_beans` or `shuffle_medigoron_carpet_salesman`, flags for the bean 
 * Wasteland Bombchu Salesman: scene 0x5e, bit 0000_0002
 * GC Medigoron: scene 0x62, bit 0000_0002
 
+Bombchu Bowling uses collectible flags 0 - 5 for each of the possible prizes in its scene flags (0x4B).
+
 # inf_table
 
 Additional flags stored in `inf_table` (an array of 16-bit integers at save context + 0x0ef8):

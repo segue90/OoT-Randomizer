@@ -114,6 +114,7 @@ issue. You should always Hard Reset to avoid this issue entirely.
 * **Settings**
   * New setting `Key Rings give Boss Keys` makes it so when picking up a key ring for a certain dungeon, you will also get the boss key for that dungeon, if applicable.
   * New ER setting `Shuffle Gerudo Valley River Exit` allows you to shuffle the one-way exit going down the river in Gerudo Valley.
+  * New setting `Add Bombchu Bag and Drops` which, along with the previous changes of `Bombchus in Logic`, makes the first pack of Bombchus you find into a bag which then allows you to purchase bombchus from shops as well as find them hidden in grass or rocks like regular bombs.
 * **Hints**
   * New `Important Checks` hint type which hints at how many major items are in a given region.
   * New Misc. Hint `Frogs Ocarina Game` which tells you what item you'll get from the Zora's River frog minigame. The hint appears in the dialog box that's printed before they jump onto the log.

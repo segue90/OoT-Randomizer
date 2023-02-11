@@ -68,7 +68,7 @@ ludicrous_items_base = [
     'Bow',
     'Slingshot',
     'Bomb Bag',
-    'Bombchus',
+    'Bombchus (10)',
     'Lens of Truth',
     'Goron Tunic',
     'Zora Tunic',
@@ -144,7 +144,6 @@ item_difficulty_max = {
     },
     'balanced': {},
     'scarce': {
-        'Bombchus': 3,
         'Bombchus (5)': 1,
         'Bombchus (10)': 2,
         'Bombchus (20)': 0,
@@ -158,7 +157,6 @@ item_difficulty_max = {
         'Heart Container': 0,
     },
     'minimal': {
-        'Bombchus': 1,
         'Bombchus (5)': 1,
         'Bombchus (10)': 0,
         'Bombchus (20)': 0,
@@ -421,8 +419,6 @@ def get_pool_core(world):
         # Shops
         elif location.type == "Shop":
             if world.settings.shopsanity == 'off':
-                if world.settings.bombchus_in_logic and location.name in ['KF Shop Item 8', 'Market Bazaar Item 4', 'Kak Bazaar Item 4']:
-                    item = 'Buy Bombchu (5)'
                 shuffle_item = False
             else:
                 remain_shop_items.append(item)
@@ -466,10 +462,12 @@ def get_pool_core(world):
         elif location.vanilla_item == 'Giants Knife':
             shuffle_item = world.settings.shuffle_medigoron_carpet_salesman
 
+        # Bombchu Bowling 3rd and 4th prizes (must be checked before Bombchu vanilla items!)
+        elif location.name in ['Market Bombchu Bowling Bombchus', 'Market Bombchu Bowling Bomb']:
+            shuffle_item = False
+
         # Bombchus
         elif location.vanilla_item in ['Bombchus', 'Bombchus (5)', 'Bombchus (10)', 'Bombchus (20)']:
-            if world.settings.bombchus_in_logic:
-                item = 'Bombchus'
             shuffle_item = location.name != 'Wasteland Bombchu Salesman' or world.settings.shuffle_medigoron_carpet_salesman
 
         # Cows

@@ -549,9 +549,10 @@
     {
         "region_name": "Market Bombchu Bowling",
         "locations": {
-            "Market Bombchu Bowling First Prize": "found_bombchus",
-            "Market Bombchu Bowling Second Prize": "found_bombchus",
-            "Market Bombchu Bowling Bombchus": "found_bombchus"
+            "Market Bombchu Bowling First Prize": "has_explosives",
+            "Market Bombchu Bowling Second Prize": "has_explosives",
+            "Market Bombchu Bowling Bombchus": "has_explosives",
+            "Market Bombchu Bowling Bomb": "has_explosives"
         }
     },
     {

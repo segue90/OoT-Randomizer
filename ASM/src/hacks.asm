@@ -479,6 +479,12 @@ SRAM_SLOTS:
     j       Item_DropCollectible2_End_Hack
     lw      ra, 0x003C(sp)
 
+; Hack Item_DropCollectibleRandom to call custom drop override function (mostly just for chus in logic)
+; replaces
+;   jal     0x80013530
+;.orga 0xA89D4C
+;    jal     get_override_drop_id
+
 ; Hack Item_DropCollectible call to Actor_Spawn to set override
 ; replaces
 ;   jal     0x80025110
@@ -1651,6 +1657,59 @@ skip_GS_BGS_text:
     nop
     nop
     nop
+
+; en_bom_bowl_man actor changes to prize selection using new flags
+; Replaces:
+;   jr      t7
+.orga 0xE2E070
+    jal     select_bombchu_bowling_prize
+    lhu     a0, 0x0232(s0)
+    or      v1, v0, $zero
+    b       skip_bombchu_bowling_prize_switch
+    sh      v1, 0x004E($sp)
+
+.orga 0xE2E0E0
+skip_bombchu_bowling_prize_switch:
+
+; set new bombchu bowling flags in scene collectible flags, skipping
+; inf_table flags
+; Replaces:
+;   lh      v0, 0x014A(a2)
+;   addiu   $at, $zero, 0x0001
+;   beq     v0, $zero, lbl_80AAEFA4
+;   nop
+;   beq     v0, $at, lbl_80AAEFBC
+.orga 0xE2EDD4
+    jal     set_bombchu_bowling_prize_flag
+    lh      a0, 0x014A(a2)
+    nop
+    nop
+    nop
+
+; en_js actor changes to prevent buying bombchus before finding a shuffled source
+.orga 0xE5B5C8
+    jal     logic_chus__carpet_dude_1
+.orga 0xE5B5DC
+    jal     logic_chus__carpet_dude_2
+
+;==================================================================================================
+; Override Collectible 05 to be a Bombchus (5) drop instead of the unused Arrow (1) drop
+;==================================================================================================
+; Replaces: 0x80011D30
+.orga 0xB7BD24
+    .word 0x80011D88
+
+; Replaces: li   a1, 0x03
+.orga 0xA8801C
+    li      a1, 0x96 ; Give Item Bombchus (5)
+.orga 0xA88CCC
+    li      a1, 0x96 ; Give Item Bombchus (5)
+
+; Replaces: lui     t5, 0x8012
+;           lui     at, 0x00FF
+.orga 0xA89268
+    jal     chu_drop_draw
+    lui     t5, 0x8012
 
 ;==================================================================================================
 ; Rainbow Bridge

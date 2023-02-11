@@ -176,7 +176,7 @@
             "triforce_hunt",
             "triforce_count_per_world",
             "triforce_goal_per_world",
-            "bombchus_in_logic",
+            "free_bombchu_drops",
             "one_item_per_dungeon"
           ]
         },

@@ -140,6 +140,7 @@ item_draw_table_entry_t item_draw_table[] = {
     [0x7A] = { draw_gi_song_notes,          { 0x06000EC0, 0xFF9600FF, 1 } }, // Music Note inverted (Orange)
     [0x7B] = { draw_gi_song_notes,          { 0x06000EC0, 0xC832FFFF, 1 } }, // Music Note inverted (Purple)
     [0x7C] = { draw_gi_song_notes,          { 0x06000EC0, 0xC8FF00FF, 1 } }, // Music Note inverted (Yellow)
+    [0x7D] = { draw_gi_various_opa0,        { 0x060016A0 } }, // Bombchu Bag
 };
 
 void base_draw_gi_model(z64_game_t *game, uint32_t draw_id) {
