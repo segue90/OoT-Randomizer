@@ -543,23 +543,32 @@ class WorldDistribution(object):
             if bottle_matcher(item_name):
                 self.pool_remove_item([pool], "#Bottle", record.count)
             elif item_name in ['Pocket Egg', 'Pocket Cucco'] and world.settings.adult_trade_shuffle:
-                if 'Pocket Egg' in world.settings.adult_trade_start:
-                    self.pool_remove_item([pool], "Pocket Egg", record.count)
-                elif 'Pocket Cucco' not in world.settings.adult_trade_start:
-                    raise RuntimeError('An unshuffled trade item was included as a starting item. Please remove %s from starting items' % item_name)
-                else:
-                    self.pool_remove_item([pool], "Pocket Cucco", record.count)
+                try:
+                    if 'Pocket Egg' in world.settings.adult_trade_start:
+                        try:
+                            self.pool_remove_item([pool], "Pocket Egg", record.count)
+                        except KeyError:
+                            raise KeyError('Tried to start with a Pocket Egg but could not remove it from the item pool. Are both Pocket Egg and Pocket Cucco shuffled?')
+                    elif 'Pocket Cucco' not in world.settings.adult_trade_start:
+                        raise RuntimeError('An unshuffled trade item was included as a starting item. Please remove %s from starting items' % item_name)
+                    else:
+                        self.pool_remove_item([pool], "Pocket Cucco", record.count)
+                except KeyError:
+                    raise KeyError('Tried to start with a Pocket Egg or Pocket Cucco but could not remove it from the item pool. Are both Pocket Egg and Pocket Cucco shuffled?')
             elif adult_trade_matcher(item_name) and not world.settings.adult_trade_shuffle:
                 self.pool_remove_item([pool], "#AdultTrade", record.count)
             elif item_name == 'Ice Arrows' and world.settings.blue_fire_arrows:
                 self.pool_remove_item([pool], "Blue Fire Arrows", record.count)
             elif item_name in ['Weird Egg', 'Chicken'] and world.settings.shuffle_child_trade:
-                if 'Weird Egg' in world.settings.shuffle_child_trade:
-                    self.pool_remove_item([pool], "Weird Egg", record.count)
-                elif 'Chicken' not in world.settings.shuffle_child_trade:
-                    raise RuntimeError('An unshuffled trade item was included as a starting item. Please remove %s from starting items' % item_name)
-                else:
-                    self.pool_remove_item([pool], "Chicken", record.count)
+                try:
+                    if 'Weird Egg' in world.settings.shuffle_child_trade:
+                        self.pool_remove_item([pool], "Weird Egg", record.count)
+                    elif 'Chicken' not in world.settings.shuffle_child_trade:
+                        raise RuntimeError('An unshuffled trade item was included as a starting item. Please remove %s from starting items' % item_name)
+                    else:
+                        self.pool_remove_item([pool], "Chicken", record.count)
+                except KeyError:
+                    raise KeyError('Tried to start with a Weird Egg or Chicken but could not remove it from the item pool. Are both Weird Egg and the Chicken shuffled?')
             elif IsItem(item_name):
                 try:
                     self.pool_remove_item([pool], item_name, record.count)
