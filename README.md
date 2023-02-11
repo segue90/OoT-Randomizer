@@ -120,6 +120,7 @@ issue. You should always Hard Reset to avoid this issue entirely.
   * Add a goal category for the items required to open the Door of Time, if it's closed.
 * **Other**
   * When picking up a small key after the first, the text box will now inform you how many you've found total.
+  * The longstanding vanilla bug where using Din's Fire on a white bubble crashes the game has been fixed.
 
 #### Bug Fixes
 * **Misc.**
