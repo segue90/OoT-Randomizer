@@ -1,7 +1,7 @@
 {
-    "name":                  "mw3",
-    "gui_name":              "MW Season 3",
-    "description":           "Hints used for the Multiworld Tournament Season 3.",
+    "name":                  "mw3_woth",
+    "gui_name":              "MW Season 3 (WotH)",
+    "description":           "Like the hints used for the Multiworld Tournament Season 3, but with Way of the Hero hints instead of goal hints. Useful for large multiworld seeds.",
     "add_locations":         [
         { "location": "Sheik in Kakariko", "types": ["always"] },
         { "location": "Song from Ocarina of Time", "types": ["always"] },
@@ -46,18 +46,21 @@
     "distribution":          {
         "trial":           {"order": 1, "weight": 0.0, "fixed":   0, "copies": 2},
         "always":          {"order": 2, "weight": 0.0, "fixed":   0, "copies": 2},
-        "goal":            {"order": 3, "weight": 0.0, "fixed":   7, "copies": 2},
+        "woth":            {"order": 3, "weight": 0.0, "fixed":   7, "copies": 2},
         "sometimes":       {"order": 4, "weight": 0.0, "fixed": 100, "copies": 2},
         "barren":          {"order": 0, "weight": 0.0, "fixed":   0, "copies": 2},
         "entrance":        {"order": 0, "weight": 0.0, "fixed":   0, "copies": 2},
         "random":          {"order": 0, "weight": 9.0, "fixed":   0, "copies": 2},
-        "woth":            {"order": 0, "weight": 0.0, "fixed":   0, "copies": 2},
+        "goal":            {"order": 0, "weight": 0.0, "fixed":   0, "copies": 2},
         "item":            {"order": 0, "weight": 0.0, "fixed":   0, "copies": 2},
         "song":            {"order": 0, "weight": 0.0, "fixed":   0, "copies": 2},
         "overworld":       {"order": 0, "weight": 0.0, "fixed":   0, "copies": 2},
         "dungeon":         {"order": 0, "weight": 0.0, "fixed":   0, "copies": 2},
         "junk":            {"order": 0, "weight": 0.0, "fixed":   0, "copies": 2},
         "named-item":      {"order": 0, "weight": 0.0, "fixed":   0, "copies": 2},
+        "dual_always":     {"order": 0, "weight": 0.0, "fixed":   0, "copies": 0},
+        "dual":            {"order": 0, "weight": 0.0, "fixed":   0, "copies": 0},
+        "entrance_always": {"order": 0, "weight": 0.0, "fixed":   0, "copies": 0},
         "important_check": {"order": 0, "weight": 0.0, "fixed":   0, "copies": 0}
     }
 }
