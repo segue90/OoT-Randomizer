@@ -125,7 +125,11 @@ RANDO_CONTEXT:
 .include "camera_init.asm"
 .include "chest_game.asm"
 .include "en_item00.asm"
+<<<<<<< Dev
 .include "armos.asm"
+=======
+.include "ocarina_buttons.asm"
+>>>>>>> Shuffle Individual Ocarina Notes
 
 .align 0x10
 .importobj "../build/bundle.o"

@@ -151,6 +151,11 @@ class World:
         if resolve_randomized_settings:
             self.resolve_random_settings()
 
+        self.song_notes = generate_song_list(self,
+            frog=settings.randomize_ocarina_melodies in ('frog', 'all'),
+            warp=settings.randomize_ocarina_melodies in ('warp', 'all'),
+        )
+
         if len(settings.hint_dist_user) == 0:
             for d in hint_dist_files():
                 with open(d, 'r') as dist_file:
@@ -364,6 +369,8 @@ class World:
         new_world.randomized_list = list(self.randomized_list)
         for randomized_item in new_world.randomized_list:
             setattr(new_world, randomized_item, getattr(self.settings, randomized_item))
+
+        new_world.song_notes = self.song_notes
 
         new_world.always_hints = list(self.always_hints)
         new_world.max_progressions = copy.copy(self.max_progressions)

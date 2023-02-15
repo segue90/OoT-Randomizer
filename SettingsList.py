@@ -3157,7 +3157,9 @@ class SettingInfos:
         shared         = True,
     )
 
-    ocarina_songs = Combobox(
+
+    Combobox(
+        name           = 'ocarina_songs',
         gui_text       = 'Randomize Ocarina Song Notes',
         default        = 'off',
         choices        = {

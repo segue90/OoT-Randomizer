@@ -65,8 +65,8 @@ for item_name in item_table:
     if iteminfo.stone:
         ItemInfo.stones.add(item_name)
         ItemInfo.stone_ids.add(ItemInfo.solver_ids[escape_name(item_name)])
-    if iteminfo.junk is not None:
-        ItemInfo.junk_weight[item_name] = iteminfo.junk
+    if ItemInfo.items[item_name].junk is not None:
+        ItemInfo.junk[item_name] = ItemInfo.items[item_name].junk
 
 
 class Item:

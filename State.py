@@ -96,6 +96,7 @@ class State:
     def has_dungeon_rewards(self, count: int) -> bool:
         return (self.count_of(ItemInfo.medallion_ids) + self.count_of(ItemInfo.stone_ids)) >= count
 
+
     # TODO: Store the item's solver id in the goal
     def has_item_goal(self, item_goal: dict[str, Any]) -> bool:
         return self.solv_items[ItemInfo.solver_ids[escape_name(item_goal['name'])]] >= item_goal['minimum']
@@ -171,7 +172,8 @@ class State:
     def region_has_shortcuts(self, region_name: str) -> bool:
         return self.world.region_has_shortcuts(region_name)
 
-    def __getstate__(self) -> dict[str, Any]:
+
+    def __getstate__(self):
         return self.__dict__.copy()
 
     def __setstate__(self, state: dict[str, Any]) -> None:
