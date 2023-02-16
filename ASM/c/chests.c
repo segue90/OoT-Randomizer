@@ -95,6 +95,11 @@ void set_chest_texture(z64_gfx_t *gfx, uint8_t chest_type, Gfx **opa_ptr) {
                 baseTexture = get_texture(TEXTURE_ID_CHEST_BASE_SKULL);
                 break;
 
+            case HEART_CHEST:
+                frontTexture = get_texture(TEXTURE_ID_CHEST_FRONT_HEART);
+                baseTexture = get_texture(TEXTURE_ID_CHEST_BASE_HEART);
+                break;
+
             default:
                 break;
         }

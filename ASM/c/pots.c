@@ -89,6 +89,10 @@ void draw_pot(z64_actor_t *actor, z64_game_t *game) {
             side_texture = get_texture(TEXTURE_ID_POT_SKULL);
             break;
 
+        case HEART_CHEST:
+            texture = get_texture(TEXTURE_ID_POT_HEART);
+            break;
+
         default:
             break;
     }

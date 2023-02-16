@@ -22,6 +22,7 @@ typedef enum {
     /* 13 */ SILVER_CHEST,
     /* 14 */ SKULL_CHEST_SMALL,
     /* 15 */ SKULL_CHEST_BIG,
+    /* 16 */ HEART_CHEST,
 } ChestType;
 
 typedef uint16_t (*upgrade_fn)(z64_file_t *save, uint16_t item_id);
