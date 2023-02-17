@@ -74,8 +74,8 @@ uint8_t get_chest_type(z64_actor_t *actor)
 
 void set_chest_texture(z64_gfx_t *gfx, uint8_t chest_type, Gfx **opa_ptr) {
     //set texture type
-    void* frontTexture;
-    void* baseTexture;
+    void* frontTexture = (void*)BROWN_FRONT_TEXTURE;
+    void* baseTexture = (void*)BROWN_BASE_TEXTURE;
 
     if (CHEST_SIZE_TEXTURE || CHEST_TEXTURE_MATCH_CONTENTS) {
         switch (chest_type) {
@@ -96,8 +96,6 @@ void set_chest_texture(z64_gfx_t *gfx, uint8_t chest_type, Gfx **opa_ptr) {
                 break;
 
             default:
-                frontTexture = (void*)BROWN_FRONT_TEXTURE;
-                baseTexture = (void*)BROWN_BASE_TEXTURE;
                 break;
         }
     }
