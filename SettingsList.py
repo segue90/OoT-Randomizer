@@ -4261,23 +4261,42 @@ setting_infos = [
             'randomize_key': 'randomize_settings',
         },
     ),
-    Checkbutton(
+    Combobox(
         name           = 'shuffle_loach_reward',
         gui_text       = 'Shuffle Hyrule Loach Reward',
         gui_tooltip    = '''\
             Enabling this shuffles the reward for catching the 
             Hyrule Loach at the fishing pond into the item pool
+
+            Vanilla Behavior shuffles the reward for catching the loach
+            but otherwise keeps all behavior the same as in 
+            the vanilla game. The loach will spawn every fourth play
+            of the fishing minigame and the sinking lure will
+            become available only after obtaining the fishing prize
+            for link's current age.
             
+            Easier Behavior shuffles the loach reward but also modifies 
+            some behavior in order to make the loach easier to catch.
             When enabled the loach will always spawn at the 
             fishing pond, the sinking lure will be available 
             immediately at all four possible positions, and
             the child/adult fishing prizes are still obtainable
             if you use the sinking lure.
         ''',
-        default        = False,
+        default        = 'off',
+        choices        = {
+            'off': 'Off',
+            'vanilla': 'Vanilla Behavior',
+            'easy': 'Easier Behavior'
+        },
         shared         = True,
         gui_params     = {
             'randomize_key': 'randomize_settings',
+            'distribution': [
+                ('off',          1),
+                ('vanilla',      1),
+                ('easy',         1)
+            ],
         },
     ),
 

@@ -506,7 +506,7 @@ def get_pool_core(world):
         
         # Hyrule Loach Reward
         elif location.scene == 0x49 and location.vanilla_item == 'Rupees (50)':
-            shuffle_item = world.settings.shuffle_loach_reward
+            shuffle_item = world.settings.shuffle_loach_reward != 'off'
 
         # Adult Trade Item
         elif location.vanilla_item == 'Pocket Egg':

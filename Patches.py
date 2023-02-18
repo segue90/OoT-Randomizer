@@ -2305,7 +2305,8 @@ def patch_rom(spoiler:Spoiler, world:World, rom:Rom):
         torch_count = world.settings.fae_torch_count
         rom.write_byte(0xCA61E3, torch_count)
 
-    if world.settings.shuffle_loach_reward:
+    # Behavior Modifications to make the loach easier to catch
+    if world.settings.shuffle_loach_reward == 'easy':
         # Make the loach always spawn
         # Rather than just nop the branch, replace it with instruction 'sb at, 0xB057(s0)'
         # this stores a non-zero value to an unused byte in the fishing overlay
