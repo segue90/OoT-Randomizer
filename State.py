@@ -172,6 +172,7 @@ class State:
     def region_has_shortcuts(self, region_name: str) -> bool:
         return self.world.region_has_shortcuts(region_name)
 
+    def have_all_notes_for_song(self, song):
 
     def __getstate__(self):
         return self.__dict__.copy()
