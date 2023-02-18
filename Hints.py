@@ -1062,15 +1062,12 @@ def get_important_check_hint(spoiler, world, checked):
         region = HintArea.at(location).text(world.settings.clearer_hints)
         if region == hintLoc:
             if (location.item.majoritem
+                #exclude locked items
+                and not location.locked
+                #exclude triforce pieces as it defeats the idea of a triforce hunt
                 and not location.item.name == 'Triforce Piece'
-                and not location.item.name == 'Deliver Letter'
-                and not ((location.name == 'Song from Impa' or location.item.name == 'Zeldas Letter') and world.settings.shuffle_child_trade == 'skip_child_zelda')
-                and not(location.item.name == 'Kokiri Sword' and not world.settings.shuffle_kokiri_sword
-                or location.item.name == 'Giants Knife' and not world.settings.shuffle_medigoron_carpet_salesman
-                or location.item.name == 'Gerudo Membership Card' and not world.settings.shuffle_gerudo_card
-                or location.item.name == 'Ocarina' and not world.settings.shuffle_ocarinas
-                or 'Bean' in location.item.name and not world.settings.shuffle_beans
-                or location.item.name == 'Weird Egg' and not world.settings.shuffle_child_trade == 'shuffle')
+                and not (location.name == 'Song from Impa' and 'Zeldas Letter' in world.settings.starting_items and 'Zeldas Letter' not in world.settings.shuffle_child_trade)
+                #Handle make keys not in own dungeon major items
                 or (location.item.type == 'SmallKey' and not (world.settings.shuffle_smallkeys == 'dungeon' or world.settings.shuffle_smallkeys == 'vanilla'))
                 or (location.item.type == 'HideoutSmallKey' and not world.settings.shuffle_hideoutkeys == 'vanilla')
                 or (location.item.type == 'BossKey' and not (world.settings.shuffle_bosskeys == 'dungeon' or world.settings.shuffle_bosskeys == 'vanilla'))
