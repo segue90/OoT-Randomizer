@@ -154,6 +154,7 @@ issue. You should always Hard Reset to avoid this issue entirely.
 * Priority placement of certain warp songs is now conditional if `Guarantee Reachable Locations` is set to `All Goals` or `Required Only`.
 * Improve seed generation time.
 * The key ring texture has been updated with the normal small key texture, making it shinier.
+* D-Pad mask icons will now enlarge when the mask is equipped, similarly to D-Pad boots.
 
 #### Plandomizer
 * Plandomizer now allows you to specify locations that are valid but do not exist in your current seed, for example, an MQ-specific location when that dungeon is Vanilla.
