@@ -298,7 +298,7 @@ def colorText(gossip_text):
     while '#' in text:
         splitText = text.split('#', 2)
         if len(colors) > 0:
-            color = colors.pop()
+            color = colors.pop(0)
 
         for prefix in hintPrefixes:
             if splitText[1].startswith(prefix):
@@ -631,7 +631,7 @@ def get_goal_hint(spoiler, world, checked):
         player_text = "Player %s's" % (world_id + 1)
         goal_text = spoiler.goal_categories[world_id][goal_category.name].get_goal(goal.name).hint_text
 
-    return (GossipText('%s is on %s %s.' % (location_text, player_text, goal_text), [goal.color, 'Light Blue'], [location.name], [location.item.name]), [location])
+    return (GossipText('%s is on %s %s.' % (location_text, player_text, goal_text), ['Light Blue', goal.color], [location.name], [location.item.name]), [location])
 
 
 def get_barren_hint(spoiler, world, checked, allChecked):
@@ -719,10 +719,10 @@ def get_good_item_hint(spoiler, world, checked):
     hint_area = HintArea.at(location)
     if hint_area.is_dungeon:
         location_text = hint_area.text(world.settings.clearer_hints)
-        return (GossipText('%s hoards #%s#.' % (location_text, item_text), ['Green', 'Red'], [location.name], [location.item.name]), [location])
+        return (GossipText('%s hoards #%s#.' % (location_text, item_text), ['Red', 'Green'], [location.name], [location.item.name]), [location])
     else:
         location_text = hint_area.text(world.settings.clearer_hints, preposition=True)
-        return (GossipText('#%s# can be found %s.' % (item_text, location_text), ['Red', 'Green'], [location.name], [location.item.name]), [location])
+        return (GossipText('#%s# can be found %s.' % (item_text, location_text), ['Green', 'Red'], [location.name], [location.item.name]), [location])
 
 
 def get_specific_item_hint(spoiler, world, checked):
@@ -777,10 +777,10 @@ def get_specific_item_hint(spoiler, world, checked):
             return (GossipText('%s may be on the hero\'s path.' % (location_text), ['Green'], [location.name], [location.item.name]), [location])
         elif hint_area.is_dungeon:
             location_text = hint_area.text(world.settings.clearer_hints)
-            return (GossipText('%s hoards #%s#.' % (location_text, item_text), ['Green', 'Red'], [location.name], [location.item.name]), [location])
+            return (GossipText('%s hoards #%s#.' % (location_text, item_text), ['Red', 'Green'], [location.name], [location.item.name]), [location])
         else:
             location_text = hint_area.text(world.settings.clearer_hints, preposition=True)
-            return (GossipText('#%s# can be found %s.' % (item_text, location_text), ['Red', 'Green'], [location.name], [location.item.name]), [location])
+            return (GossipText('#%s# can be found %s.' % (item_text, location_text), ['Green', 'Red'], [location.name], [location.item.name]), [location])
 
     else:
         while True:
@@ -859,10 +859,10 @@ def get_specific_item_hint(spoiler, world, checked):
             return (GossipText('%s may be on the hero\'s path.' % (location_text), ['Green'], [location.name], [location.item.name]), [location])
         elif hint_area.is_dungeon:
             location_text = hint_area.text(world.settings.clearer_hints, world=location.world.id + 1)
-            return (GossipText('%s hoards #%s#.' % (location_text, item_text), ['Green', 'Red'], [location.name], [location.item.name]), [location])
+            return (GossipText('%s hoards #%s#.' % (location_text, item_text), ['Red', 'Green'], [location.name], [location.item.name]), [location])
         else:
             location_text = hint_area.text(world.settings.clearer_hints, preposition=True, world=location.world.id + 1)
-            return (GossipText('#%s# can be found %s.' % (item_text, location_text), ['Red', 'Green'], [location.name], [location.item.name]), [location])
+            return (GossipText('#%s# can be found %s.' % (item_text, location_text), ['Green', 'Red'], [location.name], [location.item.name]), [location])
 
 
 def get_random_location_hint(spoiler, world, checked):
@@ -885,10 +885,10 @@ def get_random_location_hint(spoiler, world, checked):
     hint_area = HintArea.at(location)
     if hint_area.is_dungeon:
         location_text = hint_area.text(world.settings.clearer_hints)
-        return (GossipText('%s hoards #%s#.' % (location_text, item_text), ['Green', 'Red'], [location.name], [location.item.name]), [location])
+        return (GossipText('%s hoards #%s#.' % (location_text, item_text), ['Red', 'Green'], [location.name], [location.item.name]), [location])
     else:
         location_text = hint_area.text(world.settings.clearer_hints, preposition=True)
-        return (GossipText('#%s# can be found %s.' % (item_text, location_text), ['Red', 'Green'], [location.name], [location.item.name]), [location])
+        return (GossipText('#%s# can be found %s.' % (item_text, location_text), ['Green', 'Red'], [location.name], [location.item.name]), [location])
 
 
 def get_specific_hint(spoiler, world, checked, type):
@@ -928,7 +928,7 @@ def get_specific_hint(spoiler, world, checked, type):
         location_text = '#%s#' % location_text
     item_text = getHint(getItemGenericName(location.item), world.settings.clearer_hints).text
 
-    return (GossipText('%s #%s#.' % (location_text, item_text), ['Green', 'Red'], [location.name], [location.item.name]), [location])
+    return (GossipText('%s #%s#.' % (location_text, item_text), ['Red', 'Green'], [location.name], [location.item.name]), [location])
 
 
 def get_sometimes_hint(spoiler, world, checked):
@@ -989,7 +989,7 @@ def get_specific_multi_hint(spoiler, world, checked, hint):
     colors = ['Red']
     gossip_string = '%s '
     for i in range(location_count):
-        colors = ['Green'] + colors
+        colors.append('Green')
         if i == location_count - 1:
             gossip_string = gossip_string + 'and #%s#.'
         else:
@@ -1035,7 +1035,7 @@ def get_entrance_hint(spoiler, world, checked):
     if '#' not in region_text:
         region_text = '#%s#' % region_text
 
-    return (GossipText('%s %s.' % (entrance_text, region_text), ['Light Blue', 'Green']), None)
+    return (GossipText('%s %s.' % (entrance_text, region_text), ['Green', 'Light Blue']), None)
 
 
 def get_junk_hint(spoiler, world, checked):
@@ -1093,7 +1093,7 @@ def get_important_check_hint(spoiler, world, checked):
     else:
         numcolor = 'Green'
 
-    return (GossipText('#%s# has #%d# major item%s.' % (hintLoc, item_count, "s" if item_count != 1 else ""), [numcolor, 'Green']), None)
+    return (GossipText('#%s# has #%d# major item%s.' % (hintLoc, item_count, "s" if item_count != 1 else ""), ['Green', numcolor]), None)
 
 
 hint_func = {
@@ -1370,7 +1370,7 @@ def buildWorldGossipHints(spoiler, world, checkedLocations=None):
                 location_text = '#%s#' % location_text
             first_item_text = getHint(getItemGenericName(firstLocation.item), world.settings.clearer_hints).text
             second_item_text = getHint(getItemGenericName(secondLocation.item), world.settings.clearer_hints).text
-            add_hint(spoiler, world, stoneGroups, GossipText('%s #%s# and #%s#.' % (location_text, first_item_text, second_item_text), ['Green', 'Green', 'Red'], [firstLocation.name, secondLocation.name], [firstLocation.item.name, secondLocation.item.name]), hint_dist['dual_always'][1], [firstLocation, secondLocation], force_reachable=True)
+            add_hint(spoiler, world, stoneGroups, GossipText('%s #%s# and #%s#.' % (location_text, first_item_text, second_item_text), ['Red', 'Green', 'Green'], [firstLocation.name, secondLocation.name], [firstLocation.item.name, secondLocation.item.name]), hint_dist['dual_always'][1], [firstLocation, secondLocation], force_reachable=True)
             logging.getLogger('').debug('Placed dual_always hint for %s.', hint.name)
 
     # Add required location hints, only if hint copies > 0
@@ -1389,7 +1389,7 @@ def buildWorldGossipHints(spoiler, world, checkedLocations=None):
             if '#' not in location_text:
                 location_text = '#%s#' % location_text
             item_text = getHint(getItemGenericName(location.item), world.settings.clearer_hints).text
-            add_hint(spoiler, world, stoneGroups, GossipText('%s #%s#.' % (location_text, item_text), ['Green', 'Red'], [location.name], [location.item.name]), hint_dist['always'][1], [location], force_reachable=True)
+            add_hint(spoiler, world, stoneGroups, GossipText('%s #%s#.' % (location_text, item_text), ['Red', 'Green'], [location.name], [location.item.name]), hint_dist['always'][1], [location], force_reachable=True)
             logging.getLogger('').debug('Placed always hint for %s.', location.name)
 
     # Add required entrance hints, only if hint copies > 0
@@ -1412,7 +1412,7 @@ def buildWorldGossipHints(spoiler, world, checkedLocations=None):
                 if '#' not in region_text:
                     region_text = '#%s#' % region_text
 
-                add_hint(spoiler, world, stoneGroups, GossipText('%s %s.' % (entrance_text, region_text), ['Light Blue', 'Green']), hint_dist['entrance_always'][1], None, force_reachable=True)
+                add_hint(spoiler, world, stoneGroups, GossipText('%s %s.' % (entrance_text, region_text), ['Green', 'Light Blue']), hint_dist['entrance_always'][1], None, force_reachable=True)
 
     # Add trial hints, only if hint copies > 0
     if hint_dist['trial'][1] > 0:

@@ -158,6 +158,7 @@ issue. You should always Hard Reset to avoid this issue entirely.
 #### Plandomizer
 * Plandomizer now allows you to specify locations that are valid but do not exist in your current seed, for example, an MQ-specific location when that dungeon is Vanilla.
 * Error messages for conflicting settings have been improved.
+* Gossip stone text colors are no longer specified in reverse order.
 
 ### 7.1
 
