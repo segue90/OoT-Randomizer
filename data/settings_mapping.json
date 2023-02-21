@@ -477,7 +477,7 @@
       "name": "sfx_tab",
       "text": "SFX",
       "app_type": ["generator", "patcher"],
-      "is_sfx": true,
+      "is_cosmetics": true,
       "sections": [
         {
           "name": "sfx_main_section",
