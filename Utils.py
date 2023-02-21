@@ -1,3 +1,4 @@
+from __future__ import annotations
 import io
 import json
 import logging
@@ -6,7 +7,8 @@ import re
 import subprocess
 import sys
 import urllib.request
-from typing import Dict, List, Sequence, Optional, AnyStr, Any
+from collections.abc import Sequence
+from typing import AnyStr, Optional, Any
 from urllib.error import URLError, HTTPError
 
 from version import __version__, base_version, supplementary_version, branch_url
@@ -79,7 +81,7 @@ def open_file(filename: str) -> None:
         subprocess.call([open_command, filename])
 
 
-def get_version_bytes(a: str, b: int = 0x00, c: int = 0x00) -> List[int]:
+def get_version_bytes(a: str, b: int = 0x00, c: int = 0x00) -> list[int]:
     version_bytes = [0x00, 0x00, 0x00, b, c]
 
     if not a:
@@ -163,7 +165,7 @@ def check_version(checked_version: str) -> None:
 # variants) call work with or without Pyinstaller, ``--noconsole`` or
 # not, on Windows and Linux. Typical use::
 #   subprocess.call(['program_to_run', 'arg_1'], **subprocess_args())
-def subprocess_args(include_stdout: bool = True) -> Dict[str, Any]:
+def subprocess_args(include_stdout: bool = True) -> dict[str, Any]:
     # The following is true only on Windows.
     if hasattr(subprocess, 'STARTUPINFO'):
         # On Windows, subprocess calls will pop up a command window by default
@@ -221,6 +223,7 @@ def try_find_last(source_list: Sequence[Any], sought_element: Any) -> Optional[i
         if element == sought_element:
             return len(source_list) - 1 - reverse_index
     return None
+
 
 def find_last(source_list: Sequence[Any], sought_element: Any) -> int:
     last = try_find_last(source_list, sought_element)

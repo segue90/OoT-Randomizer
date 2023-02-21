@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 import sys
-if sys.version_info < (3, 6, 0):
-    print("OoT Randomizer requires Python version 3.6 or newer and you are using %s" % '.'.join([str(i) for i in sys.version_info[0:3]]))
+if sys.version_info < (3, 7, 0):
+    print("OoT Randomizer requires Python version 3.7 or newer and you are using %s" % '.'.join([str(i) for i in sys.version_info[0:3]]))
     sys.exit(1)
 
 import datetime

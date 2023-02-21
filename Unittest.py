@@ -2,6 +2,7 @@
 # With python3.10, you can instead run pytest Unittest.py
 # See `python -m unittest -h` or `pytest -h` for more options.
 
+from __future__ import annotations
 import json
 import logging
 import os
@@ -10,7 +11,7 @@ import re
 import sys
 import unittest
 from collections import Counter, defaultdict
-from typing import Dict, Tuple, Optional, Union, Any, overload
+from typing import Optional, Any, overload
 
 from EntranceShuffle import EntranceShuffleError
 from Fill import ShuffleError
@@ -60,7 +61,7 @@ ludicrous_junk = set(remove_junk_ludicrous_items)
 ludicrous_set = set(ludicrous_items_base) | set(ludicrous_items_extended) | ludicrous_junk | set(trade_items) | set(bottles) | set(ludicrous_exclusions) | {'Bottle with Big Poe'} | shop_items
 
 
-def make_settings_for_test(settings_dict: Dict[str, Any], seed: Optional[str] = None, outfilename: str = '', strict: bool = True) -> Settings:
+def make_settings_for_test(settings_dict: dict[str, Any], seed: Optional[str] = None, outfilename: str = '', strict: bool = True) -> Settings:
     # Some consistent settings for testability
     settings_dict.update({
         'create_patch_file': False,
@@ -76,7 +77,7 @@ def make_settings_for_test(settings_dict: Dict[str, Any], seed: Optional[str] = 
     return Settings(settings_dict, strict=strict)
 
 
-def load_settings(settings_file: Union[Dict[str, Any], str], seed: Optional[str] = None, filename: Optional[str] = None) -> Settings:
+def load_settings(settings_file: dict[str, Any] | str, seed: Optional[str] = None, filename: Optional[str] = None) -> Settings:
     if isinstance(settings_file, dict):  # Check if settings_file is a distribution file settings dict
         if filename is None:
             raise RuntimeError("Running test with in memory file but did not supply a filename for output file.")
@@ -99,14 +100,16 @@ def load_spoiler(json_file: str) -> Any:
 
 
 @overload
-def generate_with_plandomizer(filename: str, live_copy: LiteralFalse = False, max_attempts: int = 10) -> Tuple[Dict[str, Any], Dict[str, Any]]:
+def generate_with_plandomizer(filename: str, live_copy: LiteralFalse = False, max_attempts: int = 10) -> tuple[dict[str, Any], dict[str, Any]]:
     pass
+
 
 @overload
-def generate_with_plandomizer(filename: str, live_copy: LiteralTrue, max_attempts: int = 10) -> Tuple[Dict[str, Any], Spoiler]:
+def generate_with_plandomizer(filename: str, live_copy: LiteralTrue, max_attempts: int = 10) -> tuple[dict[str, Any], Spoiler]:
     pass
 
-def generate_with_plandomizer(filename: str, live_copy: bool = False, max_attempts: int = 10) -> Tuple[Dict[str, Any], Union[Spoiler, Dict[str, Any]]]:
+
+def generate_with_plandomizer(filename: str, live_copy: bool = False, max_attempts: int = 10) -> tuple[dict[str, Any], Spoiler | dict[str, Any]]:
     distribution_file = load_spoiler(os.path.join(test_dir, 'plando', filename + '.json'))
     try:
         settings = load_settings(distribution_file['settings'], seed='TESTTESTTEST', filename=filename)
@@ -129,7 +132,7 @@ def generate_with_plandomizer(filename: str, live_copy: bool = False, max_attemp
     return distribution_file, spoiler
 
 
-def get_actual_pool(spoiler: Dict[str, Any]) -> Dict[str, int]:
+def get_actual_pool(spoiler: dict[str, Any]) -> dict[str, int]:
     """Retrieves the actual item pool based on items placed in the spoiler log.
 
     :param spoiler: Spoiler log output from generator

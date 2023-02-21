@@ -1,5 +1,6 @@
+from __future__ import annotations
 import re
-from typing import TYPE_CHECKING, Dict, List, Pattern, Match
+from typing import TYPE_CHECKING
 
 import Messages
 
@@ -17,7 +18,7 @@ LINES_PER_BOX: int = 4
 # appear in lower areas of the text box. Eventually, the text box will become uncloseable.
 MAX_CHARACTERS_PER_BOX: int = 200
 
-CONTROL_CHARS: Dict[str, List[str]] = {
+CONTROL_CHARS: dict[str, list[str]] = {
     'LINE_BREAK':   ['&', '\x01'],
     'BOX_BREAK':    ['^', '\x04'],
     'NAME':         ['@', '\x0F'],
@@ -26,13 +27,13 @@ CONTROL_CHARS: Dict[str, List[str]] = {
 TEXT_END: str = '\x02'
 
 
-hex_string_regex: Pattern = re.compile(r"\$\{((?:[0-9a-f][0-9a-f] ?)+)}", flags=re.IGNORECASE)
+hex_string_regex: re.Pattern = re.compile(r"\$\{((?:[0-9a-f][0-9a-f] ?)+)}", flags=re.IGNORECASE)
 
 
 def line_wrap(text: str, strip_existing_lines: bool = False, strip_existing_boxes: bool = False, replace_control_chars: bool = True):
     # Replace stand-in characters with their actual control code.
     if replace_control_chars:
-        def replace_bytes(match: Match) -> str:
+        def replace_bytes(match: re.Match) -> str:
             return ''.join(chr(x) for x in bytes.fromhex(match[1]))
 
         for char in CONTROL_CHARS.values():
@@ -146,7 +147,7 @@ def line_wrap(text: str, strip_existing_lines: bool = False, strip_existing_boxe
     return '\x04'.join(['\x01'.join([' '.join([''.join([code.get_string() for code in word]) for word in line]) for line in box]) for box in processed_boxes])
 
 
-def calculate_width(words: "List[List[TextCode]]"):
+def calculate_width(words: list[list[TextCode]]):
     words_width = 0
     for word in words:
         index = 0
@@ -176,7 +177,7 @@ def get_character_width(character: str) -> int:
             return character_table[' ']
 
 
-control_code_width: Dict[str, str] = {
+control_code_width: dict[str, str] = {
     '\x0F': '00000000',
     '\x16': '00\'00"',
     '\x17': '00\'00"',
@@ -194,7 +195,7 @@ control_code_width: Dict[str, str] = {
 # at worst. This ensures that we will never bleed text out of the text box while line wrapping.
 # Larger numbers in the denominator mean more of that character fits on a line; conversely, larger values in this table
 # mean the character is wider and can't fit as many on one line.
-character_table: Dict[str, int] = {
+character_table: dict[str, int] = {
     '\x0F': 655200,
     '\x16': 292215,
     '\x17': 292215,

@@ -1,6 +1,8 @@
+from __future__ import annotations
 import difflib
 import json
-from typing import TYPE_CHECKING, Dict, List, Iterable, Union, Optional, Any
+from collections.abc import Iterable
+from typing import TYPE_CHECKING, Optional, Any
 
 import Colors
 from Hints import hint_dist_list, hint_dist_tips, gossipLocations
@@ -4897,11 +4899,11 @@ class SettingInfos:
         }
     )
 
-    setting_infos: Dict[str, SettingInfo] = {}
+    setting_infos: dict[str, SettingInfo] = {}
     setting_map: dict = {}
 
     def __init__(self) -> None:
-        self.settings_dict: Dict[str, Any] = {}
+        self.settings_dict: dict[str, Any] = {}
 
 
 def get_settings_from_section(section_name: str) -> Iterable[str]:
@@ -4932,7 +4934,7 @@ def is_mapped(setting_name: str) -> bool:
 
 # When a string isn't found in the source list, attempt to get the closest match from the list
 # ex. Given "Recovery Hart" returns "Did you mean 'Recovery Heart'?"
-def build_close_match(name: str, value_type: str, source_list: "Optional[Union[List[str], Dict[str, List[Entrance]]]]" = None) -> str:
+def build_close_match(name: str, value_type: str, source_list: Optional[list[str] | dict[str, list[Entrance]]] = None) -> str:
     source = []
     if value_type == 'item':
         source = ItemInfo.items.keys()
@@ -4955,7 +4957,7 @@ def build_close_match(name: str, value_type: str, source_list: "Optional[Union[L
     return ""  # No matches
 
 
-def validate_settings(settings_dict: Dict[str, Any], *, check_conflicts: bool = True) -> None:
+def validate_settings(settings_dict: dict[str, Any], *, check_conflicts: bool = True) -> None:
     for setting, choice in settings_dict.items():
         # Ensure the supplied setting name is a real setting
         if setting not in SettingInfos.setting_infos:
@@ -4993,7 +4995,7 @@ def validate_settings(settings_dict: Dict[str, Any], *, check_conflicts: bool = 
                             validate_disabled_setting(settings_dict, setting, choice, other_setting)
 
 
-def validate_disabled_setting(settings_dict: Dict[str, Any], setting: str, choice, other_setting: str) -> None:
+def validate_disabled_setting(settings_dict: dict[str, Any], setting: str, choice, other_setting: str) -> None:
     if other_setting in settings_dict:
         if settings_dict[other_setting] != SettingInfos.setting_infos[other_setting].disabled_default:
             raise ValueError(f'The {other_setting!r} setting cannot be used since {setting!r} is set to {choice!r}')

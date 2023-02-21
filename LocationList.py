@@ -1,16 +1,17 @@
+from __future__ import annotations
 import sys
 from collections import OrderedDict
-from typing import Dict, Tuple, Optional, Union, List
+from typing import Optional
 
 if sys.version_info >= (3, 10):
     from typing import TypeAlias
 else:
     TypeAlias = str
 
-LocationDefault: TypeAlias = Optional[Union[int, Tuple[int, ...], List[Tuple[int, ...]]]]
-LocationAddress: TypeAlias = Optional[Union[int, List[int]]]
-LocationAddresses: TypeAlias = Optional[Tuple[LocationAddress, LocationAddress]]
-LocationFilterTags: TypeAlias = Optional[Union[Tuple[str, ...], str]]
+LocationDefault: TypeAlias = "Optional[int | tuple[int, ...] | list[tuple[int, ...]]]"
+LocationAddress: TypeAlias = "Optional[int | list[int]]"
+LocationAddresses: TypeAlias = "Optional[tuple[LocationAddress, LocationAddress]]"
+LocationFilterTags: TypeAlias = "Optional[tuple[str, ...] | str]"
 
 
 def shop_address(shop_id: int, shelf_id: int) -> int:
@@ -56,7 +57,7 @@ def shop_address(shop_id: int, shelf_id: int) -> int:
 # Note: for ActorOverride locations, the "Addresses" variable is in the form ([addresses], [bytes]) where addresses is a list of memory locations in ROM to be updated, and bytes is the data that will be written to that location
 
 #   Location:                                                        Type             Scene  Default Addresses                      Vanilla Item                             Categories
-location_table: Dict[str, Tuple[str, Optional[int], LocationDefault, LocationAddresses, Optional[str], LocationFilterTags]] = OrderedDict([
+location_table: dict[str, tuple[str, Optional[int], LocationDefault, LocationAddresses, Optional[str], LocationFilterTags]] = OrderedDict([
     ## Dungeon Rewards
     ("Links Pocket",                                                 ("Boss",         None,  None, None,                            'Light Medallion',                       None)),
     ("Queen Gohma",                                                  ("Boss",         None,  0x6C, (0x0CA315F, 0x2079571),          'Kokiri Emerald',                        None)),
@@ -2260,12 +2261,12 @@ location_table: Dict[str, Tuple[str, Optional[int], LocationDefault, LocationAdd
     ("Ganondorf Hint",                                               ("Hint",         None,  None, None,                            None,                                    None)),
 ])
 
-location_sort_order: Dict[str, int] = {
+location_sort_order: dict[str, int] = {
     loc: i for i, loc in enumerate(location_table.keys())
 }
 
 # Business Scrub Details
-business_scrubs: List[Tuple[int, int, int, List[str]]] = [
+business_scrubs: list[tuple[int, int, int, list[str]]] = [
     # id   price  text   text replacement
     (0x30, 20,   0x10A0, ["Deku Nuts", "a \x05\x42mysterious item\x05\x40"]),
     (0x31, 15,   0x10A1, ["Deku Sticks", "a \x05\x42mysterious item\x05\x40"]),
@@ -2280,8 +2281,8 @@ business_scrubs: List[Tuple[int, int, int, List[str]]] = [
     (0x79, 40,   0x10DD, ["enable you to pick up more \x05\x41Deku\x01Nuts", "sell you a \x05\x42mysterious item"]),
 ]
 
-dungeons: Tuple[str, ...] = ('Deku Tree', "Dodongo's Cavern", "Jabu Jabu's Belly", 'Forest Temple', 'Fire Temple', 'Water Temple', 'Spirit Temple', 'Shadow Temple', 'Ice Cavern', 'Bottom of the Well', 'Gerudo Training Ground', "Ganon's Castle")
-location_groups: Dict[str, List[str]] = {
+dungeons: tuple[str, ...] = ('Deku Tree', "Dodongo's Cavern", "Jabu Jabu's Belly", 'Forest Temple', 'Fire Temple', 'Water Temple', 'Spirit Temple', 'Shadow Temple', 'Ice Cavern', 'Bottom of the Well', 'Gerudo Training Ground', "Ganon's Castle")
+location_groups: dict[str, list[str]] = {
     'Song': [name for (name, data) in location_table.items() if data[0] == 'Song'],
     'Chest': [name for (name, data) in location_table.items() if data[0] == 'Chest'],
     'Collectable': [name for (name, data) in location_table.items() if data[0] == 'Collectable'],

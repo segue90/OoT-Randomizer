@@ -1,4 +1,6 @@
-from typing import TYPE_CHECKING, Optional, Tuple, List, Dict, Union, Iterable, Set, Any, Callable, overload
+from __future__ import annotations
+from collections.abc import Callable, Iterable
+from typing import TYPE_CHECKING, Optional, Any, overload
 
 from ItemList import item_table
 from RulesCommon import allowed_globals, escape_name
@@ -9,17 +11,17 @@ if TYPE_CHECKING:
 
 
 class ItemInfo:
-    items: 'Dict[str, ItemInfo]' = {}
-    events: 'Dict[str, ItemInfo]' = {}
-    bottles: Set[str] = set()
-    medallions: Set[str] = set()
-    stones: Set[str] = set()
-    junk_weight: Dict[str, int] = {}
+    items: dict[str, ItemInfo] = {}
+    events: dict[str, ItemInfo] = {}
+    bottles: set[str] = set()
+    medallions: set[str] = set()
+    stones: set[str] = set()
+    junk_weight: dict[str, int] = {}
 
-    solver_ids: Dict[str, int] = {}
-    bottle_ids: Set[int] = set()
-    medallion_ids: Set[int] = set()
-    stone_ids: Set[int] = set()
+    solver_ids: dict[str, int] = {}
+    bottle_ids: set[int] = set()
+    medallion_ids: set[int] = set()
+    stone_ids: set[int] = set()
 
     def __init__(self, name: str = '', event: bool = False) -> None:
         if event:
@@ -34,13 +36,13 @@ class ItemInfo:
         self.advancement: bool = (progressive is True)
         self.priority: bool = (progressive is False)
         self.type: str = item_type
-        self.special: Dict[str, Any] = special or {}
+        self.special: dict[str, Any] = special or {}
         self.index: Optional[int] = item_id
         self.price: Optional[int] = self.special.get('price', None)
         self.bottle: bool = self.special.get('bottle', False)
         self.medallion: bool = self.special.get('medallion', False)
         self.stone: bool = self.special.get('stone', False)
-        self.alias: Optional[Tuple[str, int]] = self.special.get('alias', None)
+        self.alias: Optional[tuple[str, int]] = self.special.get('alias', None)
         self.junk: Optional[int] = self.special.get('junk', None)
         self.trade: bool = self.special.get('trade', False)
 
@@ -68,9 +70,9 @@ for item_name in item_table:
 
 
 class Item:
-    def __init__(self, name: str = '', world: "Optional[World]" = None, event: bool = False) -> None:
+    def __init__(self, name: str = '', world: Optional[World] = None, event: bool = False) -> None:
         self.name: str = name
-        self.location: "Optional[Location]" = None
+        self.location: Optional[Location] = None
         self.event: bool = event
         if event:
             if name not in ItemInfo.events:
@@ -79,22 +81,22 @@ class Item:
         else:
             self.info: ItemInfo = ItemInfo.items[name]
         self.price: Optional[int] = self.info.special.get('price', None)
-        self.world: "Optional[World]" = world
-        self.looks_like_item: 'Optional[Item]' = None
+        self.world: Optional[World] = world
+        self.looks_like_item: Optional[Item] = None
         self.advancement: bool = self.info.advancement
         self.priority: bool = self.info.priority
         self.type: str = self.info.type
         self.special: dict = self.info.special
         self.index: Optional[int] = self.info.index
-        self.alias: Optional[Tuple[str, int]] = self.info.alias
+        self.alias: Optional[tuple[str, int]] = self.info.alias
 
         self.solver_id: Optional[int] = self.info.solver_id
         # Do not alias to junk--it has no solver id!
         self.alias_id: Optional[int] = ItemInfo.solver_ids[escape_name(self.alias[0])] if self.alias else None
 
-    item_worlds_to_fix: 'Dict[Item, int]' = {}
+    item_worlds_to_fix: dict[Item, int] = {}
 
-    def copy(self, new_world: "Optional[World]" = None) -> 'Item':
+    def copy(self, new_world: Optional[World] = None) -> Item:
         if new_world is not None and self.world is not None and new_world.id != self.world.id:
             new_world = None
 
@@ -107,7 +109,7 @@ class Item:
         return new_item
 
     @classmethod
-    def fix_worlds_after_copy(cls, worlds: "List[World]") -> None:
+    def fix_worlds_after_copy(cls, worlds: list[World]) -> None:
         items_fixed = []
         for item, world_id in cls.item_worlds_to_fix.items():
             item.world = worlds[world_id]
@@ -200,14 +202,16 @@ class Item:
 
 
 @overload
-def ItemFactory(items: str, world: "Optional[World]" = None, event: bool = False) -> Item:
+def ItemFactory(items: str, world: Optional[World] = None, event: bool = False) -> Item:
     pass
+
 
 @overload
-def ItemFactory(items: Iterable[str], world: "Optional[World]" = None, event: bool = False) -> List[Item]:
+def ItemFactory(items: Iterable[str], world: Optional[World] = None, event: bool = False) -> list[Item]:
     pass
 
-def ItemFactory(items: Union[str, Iterable[str]], world: "Optional[World]" = None, event: bool = False) -> Union[Item, List[Item]]:
+
+def ItemFactory(items: str | Iterable[str], world: Optional[World] = None, event: bool = False) -> Item | list[Item]:
     if isinstance(items, str):
         if not event and items not in ItemInfo.items:
             raise KeyError('Unknown Item: %s' % items)
@@ -222,7 +226,7 @@ def ItemFactory(items: Union[str, Iterable[str]], world: "Optional[World]" = Non
     return ret
 
 
-def make_event_item(name: str, location: "Location", item: Optional[Item] = None) -> Item:
+def make_event_item(name: str, location: Location, item: Optional[Item] = None) -> Item:
     if location.world is None:
         raise Exception(f"`make_event_item` called with location '{location.name}' that doesn't have a world.")
     if item is None:
@@ -239,7 +243,7 @@ def is_item(name: str) -> bool:
     return name in item_table
 
 
-def ItemIterator(predicate: Callable[[Item], bool] = lambda item: True, world: "Optional[World]" = None) -> Iterable[Item]:
+def ItemIterator(predicate: Callable[[Item], bool] = lambda item: True, world: Optional[World] = None) -> Iterable[Item]:
     for item_name in item_table:
         item = ItemFactory(item_name, world)
         if predicate(item):

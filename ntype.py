@@ -1,5 +1,7 @@
 # Originally written by mzxrules
-from typing import Sequence, Optional
+from __future__ import annotations
+from collections.abc import Sequence
+from typing import Optional
 import struct
 
 

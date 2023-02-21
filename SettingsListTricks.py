@@ -1,11 +1,11 @@
-from typing import Dict, Tuple, Union
+from __future__ import annotations
 
 
 # Below is the list of possible glitchless tricks.
 # The order they are listed in is also the order in which
 # they appear to the user in the GUI, so a sensible order was chosen
 
-logic_tricks: Dict[str, Dict[str, Union[str, Tuple[str, ...]]]] = {
+logic_tricks: dict[str, dict[str, str | tuple[str, ...]]] = {
 
     # General tricks
 

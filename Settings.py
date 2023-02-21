@@ -1,5 +1,5 @@
+from __future__ import annotations
 import argparse
-from collections.abc import Iterable
 import copy
 import hashlib
 import json
@@ -10,7 +10,8 @@ import re
 import string
 import sys
 import textwrap
-from typing import Dict, List, Tuple, Set, Any, Optional
+from collections.abc import Iterable
+from typing import Any, Optional
 
 import StartingItems
 from version import __version__
@@ -18,7 +19,7 @@ from Utils import local_path, data_path
 from SettingsList import SettingInfos, validate_settings
 from Plandomizer import Distribution
 
-LEGACY_STARTING_ITEM_SETTINGS: Dict[str, Dict[str, StartingItems.Entry]] = {
+LEGACY_STARTING_ITEM_SETTINGS: dict[str, dict[str, StartingItems.Entry]] = {
     'starting_equipment': StartingItems.equipment,
     'starting_inventory': StartingItems.inventory,
     'starting_songs': StartingItems.songs,
@@ -34,11 +35,11 @@ class ArgumentDefaultsHelpFormatter(argparse.RawTextHelpFormatter):
 
 # 32 characters
 letters: str = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789"
-index_to_letter: Dict[int, str] = {i: letters[i] for i in range(32)}
-letter_to_index: Dict[str, int] = {v: k for k, v in index_to_letter.items()}
+index_to_letter: dict[int, str] = {i: letters[i] for i in range(32)}
+letter_to_index: dict[str, int] = {v: k for k, v in index_to_letter.items()}
 
 
-def bit_string_to_text(bits: List[int]) -> str:
+def bit_string_to_text(bits: list[int]) -> str:
     # pad the bits array to be multiple of 5
     if len(bits) % 5 > 0:
         bits += [0] * (5 - len(bits) % 5)
@@ -53,7 +54,7 @@ def bit_string_to_text(bits: List[int]) -> str:
     return result
 
 
-def text_to_bit_string(text: str) -> List[int]:
+def text_to_bit_string(text: str) -> list[int]:
     bits = []
     for c in text:
         index = letter_to_index[c]
@@ -62,7 +63,7 @@ def text_to_bit_string(text: str) -> List[int]:
     return bits
 
 
-def get_preset_files() -> List[str]:
+def get_preset_files() -> list[str]:
     return [data_path('presets_default.json')] + sorted(
             os.path.join(data_path('Presets'), fn)
             for fn in os.listdir(data_path('Presets'))
@@ -72,7 +73,7 @@ def get_preset_files() -> List[str]:
 # holds the particular choices for a run's settings
 class Settings(SettingInfos):
     # add the settings as fields, and calculate information based on them
-    def __init__(self, settings_dict: Dict[str, Any], strict: bool = False) -> None:
+    def __init__(self, settings_dict: dict[str, Any], strict: bool = False) -> None:
         super().__init__()
         self.numeric_seed: Optional[int] = None
         if settings_dict.get('compress_rom', None):
@@ -93,13 +94,13 @@ class Settings(SettingInfos):
         if self.world_count > 255:
             self.world_count = 255
 
-        self._disabled: Set[str] = set()
+        self._disabled: set[str] = set()
         self.settings_string: str = self.get_settings_string()
         self.distribution: Distribution = Distribution(self)
         self.update_seed(self.seed)
         self.custom_seed: bool = False
 
-    def copy(self) -> 'Settings':
+    def copy(self) -> Settings:
         settings = copy.copy(self)
         settings.settings_dict = copy.deepcopy(settings.settings_dict)
         return settings
@@ -345,7 +346,7 @@ class Settings(SettingInfos):
         for randomize_keys in randomize_keys_enabled:
             self.settings_dict[randomize_keys] = True
 
-    def to_json(self, *, legacy_starting_items: bool = False) -> Dict[str, Any]:
+    def to_json(self, *, legacy_starting_items: bool = False) -> dict[str, Any]:
         if legacy_starting_items:
             settings = self.copy()
             for setting_name, items in LEGACY_STARTING_ITEM_SETTINGS.items():
@@ -378,12 +379,12 @@ class Settings(SettingInfos):
             and (setting.name != 'starting_items' or not legacy_starting_items)
         }
 
-    def to_json_cosmetics(self) -> Dict[str, Any]:
+    def to_json_cosmetics(self) -> dict[str, Any]:
         return {setting.name: self.settings_dict[setting.name] for setting in self.setting_infos.values() if setting.cosmetic}
 
 
 # gets the randomizer settings, whether to open the gui, and the logger level from command line arguments
-def get_settings_from_command_line_args() -> Tuple[Settings, bool, str, bool, str]:
+def get_settings_from_command_line_args() -> tuple[Settings, bool, str, bool, str]:
     parser = argparse.ArgumentParser(formatter_class=ArgumentDefaultsHelpFormatter)
 
     parser.add_argument('--gui', help='Launch the GUI', action='store_true')

@@ -1,6 +1,8 @@
+from __future__ import annotations
 import sys
 from collections import defaultdict
-from typing import TYPE_CHECKING, List, Union, Dict, Optional, Any, Tuple, Iterable, Callable, Collection
+from collections.abc import Iterable, Collection
+from typing import TYPE_CHECKING, Optional, Any
 
 from HintList import goalTable, get_hint_group, hint_exclusions
 from ItemList import item_table
@@ -18,10 +20,10 @@ if TYPE_CHECKING:
     from State import State
     from World import World
 
-RequiredLocations: TypeAlias = "Dict[str, Union[Dict[str, Dict[int, List[Tuple[Location, int, int]]]], List[Location]]]"
-GoalItem: TypeAlias = Dict[str, Union[str, int, bool]]
+RequiredLocations: TypeAlias = "dict[str, dict[str, dict[int, list[tuple[Location, int, int]]]] | list[Location]]"
+GoalItem: TypeAlias = "dict[str, str | int | bool]"
 
-validColors: List[str] = [
+validColors: list[str] = [
     'White',
     'Red',
     'Green',
@@ -34,28 +36,28 @@ validColors: List[str] = [
 
 
 class Goal:
-    def __init__(self, world: "World", name: str, hint_text: Union[str, Dict[str, str]], color: str, items: Optional[List[Dict[str, Any]]] = None,
-                 locations=None, lock_locations=None, lock_entrances: List[str] = None, required_locations=None, create_empty: bool = False) -> None:
+    def __init__(self, world: World, name: str, hint_text: str | dict[str, str], color: str, items: Optional[list[dict[str, Any]]] = None,
+                 locations=None, lock_locations=None, lock_entrances: list[str] = None, required_locations=None, create_empty: bool = False) -> None:
         # early exit if goal initialized incorrectly
         if not items and not locations and not create_empty:
             raise Exception('Invalid goal: no items or destinations set')
         if color not in validColors:
             raise Exception(f'Invalid goal: Color {color} not supported')
 
-        self.world: "World" = world
+        self.world: World = world
         self.name: str = name
-        self.hint_text: Union[str, Dict[str, str]] = hint_text
+        self.hint_text: str | dict[str, str] = hint_text
         self.color: str = color
-        self.items: List[GoalItem] = items or []
+        self.items: list[GoalItem] = items or []
         self.locations = locations  # Unused?
         self.lock_locations = lock_locations  # Unused?
-        self.lock_entrances: List[str] = lock_entrances
-        self.required_locations: "List[Tuple[Location, int, int, List[int]]]" = required_locations or []
+        self.lock_entrances: list[str] = lock_entrances
+        self.required_locations: list[tuple[Location, int, int, list[int]]] = required_locations or []
         self.weight: int = 0
-        self.category: 'Optional[GoalCategory]' = None
-        self._item_cache: Dict[str, GoalItem] = {}
+        self.category: Optional[GoalCategory] = None
+        self._item_cache: dict[str, GoalItem] = {}
 
-    def copy(self) -> 'Goal':
+    def copy(self) -> Goal:
         new_goal = Goal(self.world, self.name, self.hint_text, self.color, self.items, self.locations, self.lock_locations,
                         self.lock_entrances, self.required_locations, True)
         return new_goal
@@ -80,18 +82,18 @@ class Goal:
 
 class GoalCategory:
     def __init__(self, name: str, priority: int, goal_count: int = 0, minimum_goals: int = 0,
-                 lock_locations=None, lock_entrances: List[str] = None) -> None:
+                 lock_locations=None, lock_entrances: list[str] = None) -> None:
         self.name: str = name
         self.priority: int = priority
         self.lock_locations = lock_locations  # Unused?
-        self.lock_entrances: List[str] = lock_entrances
-        self.goals: List[Goal] = []
+        self.lock_entrances: list[str] = lock_entrances
+        self.goals: list[Goal] = []
         self.goal_count: int = goal_count
         self.minimum_goals: int = minimum_goals
         self.weight: int = 0
-        self._goal_cache: Dict[str, Goal] = {}
+        self._goal_cache: dict[str, Goal] = {}
 
-    def copy(self) -> 'GoalCategory':
+    def copy(self) -> GoalCategory:
         new_category = GoalCategory(self.name, self.priority, self.goal_count, self.minimum_goals, self.lock_locations, self.lock_entrances)
         new_category.goals = list(goal.copy() for goal in self.goals)
         return new_category
@@ -141,7 +143,7 @@ class GoalCategory:
                             i['quantity'] = min(full_search.state_list[index].item_name_count(i['name']), i['quantity'])
 
 
-def replace_goal_names(worlds: "List[World]") -> None:
+def replace_goal_names(worlds: list[World]) -> None:
     for world in worlds:
         bosses = [location for location in world.get_filled_locations() if location.item.type == 'DungeonReward']
         for cat_name, category in world.goal_categories.items():
@@ -158,7 +160,7 @@ def replace_goal_names(worlds: "List[World]") -> None:
                             break
 
 
-def update_goal_items(spoiler: "Spoiler") -> None:
+def update_goal_items(spoiler: Spoiler) -> None:
     worlds = spoiler.worlds
 
     # get list of all the progressive items that can appear in hints
@@ -280,7 +282,7 @@ def update_goal_items(spoiler: "Spoiler") -> None:
     spoiler.goal_locations = required_locations_dict
 
 
-def lock_category_entrances(category: GoalCategory, state_list: "Iterable[State]") -> "Dict[int, Dict[str, AccessRule]]":
+def lock_category_entrances(category: GoalCategory, state_list: Iterable[State]) -> dict[int, dict[str, AccessRule]]:
     # Disable access rules for specified entrances
     category_locks = {}
     if category.lock_entrances is not None:
@@ -293,8 +295,8 @@ def lock_category_entrances(category: GoalCategory, state_list: "Iterable[State]
     return category_locks
 
 
-def unlock_category_entrances(category_locks: "Dict[int, Dict[str, AccessRule]]",
-                              state_list: "List[State]") -> None:
+def unlock_category_entrances(category_locks: dict[int, dict[str, AccessRule]],
+                              state_list: list[State]) -> None:
     # Restore access rules
     for state_id, exits in category_locks.items():
         for exit_name, access_rule in exits.items():
@@ -302,8 +304,8 @@ def unlock_category_entrances(category_locks: "Dict[int, Dict[str, AccessRule]]"
             exit.access_rule = access_rule
 
 
-def search_goals(categories: Dict[str, GoalCategory], reachable_goals: ValidGoals, search: Search, priority_locations: Dict[int, Dict[str, str]],
-                 all_locations: "List[Location]", item_locations: "Collection[Location]", always_locations: Collection[str],
+def search_goals(categories: dict[str, GoalCategory], reachable_goals: ValidGoals, search: Search, priority_locations: dict[int, dict[str, str]],
+                 all_locations: list[Location], item_locations: Collection[Location], always_locations: Collection[str],
                  search_woth: bool = False) -> RequiredLocations:
     # required_locations[category.name][goal.name][world_id] = [...]
     required_locations: RequiredLocations = defaultdict(lambda: defaultdict(lambda: defaultdict(list)))
@@ -324,11 +326,11 @@ def search_goals(categories: Dict[str, GoalCategory], reachable_goals: ValidGoal
                 if category.name in reachable_goals and reachable_goals[category.name]:
                     for goal in category.goals:
                         if (category.name in valid_goals
-                            and goal.name in valid_goals[category.name]
-                            and goal.name in reachable_goals[category.name]
-                            and (location.name not in priority_locations[location.world.id]
-                                    or priority_locations[location.world.id][location.name] == category.name)
-                            and not goal.requires(old_item.name)):
+                                and goal.name in valid_goals[category.name]
+                                and goal.name in reachable_goals[category.name]
+                                and (location.name not in priority_locations[location.world.id]
+                                     or priority_locations[location.world.id][location.name] == category.name)
+                                and not goal.requires(old_item.name)):
                             invalid_states = set(world_ids) - set(valid_goals[category.name][goal.name])
                             hintable_states = list(invalid_states & set(reachable_goals[category.name][goal.name]))
                             if hintable_states:

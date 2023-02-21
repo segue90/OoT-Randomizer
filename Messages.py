@@ -1,7 +1,9 @@
 # text details: https://wiki.cloudmodding.com/oot/Text_Format
 
+from __future__ import annotations
 import random
-from typing import TYPE_CHECKING, Dict, List, Tuple, Callable, Any, Union, Optional, Iterable, Set
+from collections.abc import Callable, Iterable
+from typing import TYPE_CHECKING, Optional, Any
 
 from HintList import misc_item_hint_table, misc_location_hint_table
 from TextBox import line_wrap
@@ -23,14 +25,14 @@ CREDITS_TABLE_START: int = 0xB88C0C
 JPN_TABLE_SIZE: int = ENG_TABLE_START - JPN_TABLE_START
 ENG_TABLE_SIZE: int = CREDITS_TABLE_START - ENG_TABLE_START
 
-EXTENDED_TABLE_START: int = JPN_TABLE_START # start writing entries to the jp table instead of english for more space
-EXTENDED_TABLE_SIZE: int = JPN_TABLE_SIZE + ENG_TABLE_SIZE # 0x8360 bytes, 4204 entries
+EXTENDED_TABLE_START: int = JPN_TABLE_START  # start writing entries to the jp table instead of english for more space
+EXTENDED_TABLE_SIZE: int = JPN_TABLE_SIZE + ENG_TABLE_SIZE  # 0x8360 bytes, 4204 entries
 
-EXTENDED_TEXT_START: int = JPN_TABLE_START # start writing text to the jp table instead of english for more space
-EXTENDED_TEXT_SIZE_LIMIT: int = JPN_TEXT_SIZE_LIMIT + ENG_TEXT_SIZE_LIMIT # 0x74000 bytes
+EXTENDED_TEXT_START: int = JPN_TABLE_START  # start writing text to the jp table instead of english for more space
+EXTENDED_TEXT_SIZE_LIMIT: int = JPN_TEXT_SIZE_LIMIT + ENG_TEXT_SIZE_LIMIT  # 0x74000 bytes
 
 # name of type, followed by number of additional bytes to read, follwed by a function that prints the code
-CONTROL_CODES: Dict[int, Tuple[str, int, Callable[[Any], str]]] = {
+CONTROL_CODES: dict[int, tuple[str, int, Callable[[Any], str]]] = {
     0x00: ('pad', 0, lambda _: '<pad>' ),
     0x01: ('line-break', 0, lambda _: '\n' ),
     0x02: ('end', 0, lambda _: '' ),
@@ -65,7 +67,7 @@ CONTROL_CODES: Dict[int, Tuple[str, int, Callable[[Any], str]]] = {
 }
 
 # Maps unicode characters to corresponding bytes in OOTR's character set.
-CHARACTER_MAP: Dict[str, int] = {
+CHARACTER_MAP: dict[str, int] = {
     'Ⓐ': 0x9F,
     'Ⓑ': 0xA0,
     'Ⓒ': 0xA1,
@@ -96,7 +98,7 @@ CHARACTER_MAP.update((c, ix) for ix, c in enumerate(
         start=0x7f
 ))
 
-SPECIAL_CHARACTERS: Dict[int, str] = {
+SPECIAL_CHARACTERS: dict[int, str] = {
     0x9F: '[A]',
     0xA0: '[B]',
     0xA1: '[C]',
@@ -111,22 +113,22 @@ SPECIAL_CHARACTERS: Dict[int, str] = {
     0xAA: '[Control Stick]',
 }
 
-REVERSE_MAP: List[str] = list(chr(x) for x in range(256))
+REVERSE_MAP: list[str] = list(chr(x) for x in range(256))
 
 for char, byte in CHARACTER_MAP.items():
     SPECIAL_CHARACTERS.setdefault(byte, char)
     REVERSE_MAP[byte] = char
 
 # [0x0500,0x0560] (inclusive) are reserved for plandomakers
-GOSSIP_STONE_MESSAGES: List[int] = list(range(0x0401, 0x04FF))  # ids of the actual hints
+GOSSIP_STONE_MESSAGES: list[int] = list(range(0x0401, 0x04FF))  # ids of the actual hints
 GOSSIP_STONE_MESSAGES += [0x2053, 0x2054]  # shared initial stone messages
-TEMPLE_HINTS_MESSAGES: List[int] = [0x7057, 0x707A]  # dungeon reward hints from the temple of time pedestal
-GS_TOKEN_MESSAGES: List[int] = [0x00B4, 0x00B5]  # Get Gold Skulltula Token messages
+TEMPLE_HINTS_MESSAGES: list[int] = [0x7057, 0x707A]  # dungeon reward hints from the temple of time pedestal
+GS_TOKEN_MESSAGES: list[int] = [0x00B4, 0x00B5]  # Get Gold Skulltula Token messages
 ERROR_MESSAGE: int = 0x0001
 
 # messages for shorter item messages
 # ids are in the space freed up by move_shop_item_messages()
-ITEM_MESSAGES: List[Tuple[int, str]] = [
+ITEM_MESSAGES: list[tuple[int, str]] = [
     (0x0001, "\x08\x06\x30\x05\x41TEXT ID ERROR!\x05\x40"),
     (0x9001, "\x08\x13\x2DYou borrowed a \x05\x41Pocket Egg\x05\x40!\x01A Pocket Cucco will hatch from\x01it overnight. Be sure to give it\x01back."),
     (0x0002, "\x08\x13\x2FYou returned the Pocket Cucco\x01and got \x05\x41Cojiro\x05\x40 in return!\x01Unlike other Cuccos, Cojiro\x01rarely crows."),
@@ -273,7 +275,7 @@ ITEM_MESSAGES: List[Tuple[int, str]] = [
     (0x901A, "\x08You can't buy Bombchus without a\x01\x05\x41Bombchu Bag\x05\x40!")
 ]
 
-KEYSANITY_MESSAGES: List[Tuple[int, str]] = [
+KEYSANITY_MESSAGES: list[tuple[int, str]] = [
     (0x001C, "\x13\x74\x08You got the \x05\x41Boss Key\x05\x40\x01for the \x05\x41Fire Temple\x05\x40!\x09"),
     (0x0006, "\x13\x74\x08You got the \x05\x41Boss Key\x05\x40\x01for the \x05\x42Forest Temple\x05\x40!\x09"),
     (0x001D, "\x13\x74\x08You got the \x05\x41Boss Key\x05\x40\x01for the \x05\x43Water Temple\x05\x40!\x09"),
@@ -485,7 +487,7 @@ for dungeon_name in key_rings_with_bk_dungeon_names:
     KEYSANITY_MESSAGES.append((i, f"\x13\x77\x08You found a \x05\x41Key Ring\x05\x40\x01for {dungeon_name}!\x09\x01It includes the \x05\x41Boss Key\x05\x40!"))
     i += 1
 
-COLOR_MAP: Dict[str, str] = {
+COLOR_MAP: dict[str, str] = {
     'White':      '\x40',
     'Red':        '\x41',
     'Green':      '\x42',
@@ -496,16 +498,16 @@ COLOR_MAP: Dict[str, str] = {
     'Black':      '\x47',
 }
 
-MISC_MESSAGES: Dict[int, Tuple[Union[str, bytearray], int]] = {
+MISC_MESSAGES: dict[int, tuple[str | bytearray, int]] = {
     0x507B: (bytearray(
             b"\x08I tell you, I saw him!\x04"
             b"\x08I saw the ghostly figure of Damp\x96\x01"
             b"the gravekeeper sinking into\x01"
             b"his grave. It looked like he was\x01"
             b"holding some kind of \x05\x41treasure\x05\x40!\x02"
-            ), None),
+            ), 0x00),
     0x0422: ("They say that once \x05\x41Morpha's Curse\x05\x40\x01is lifted, striking \x05\x42this stone\x05\x40 can\x01shift the tides of \x05\x44Lake Hylia\x05\x40.\x02", 0x23),
-    0x401C: ("Please find my dear \05\x41Princess Ruto\x05\x40\x01immediately... Zora!\x12\x68\x7A", 0x23),
+    0x401C: ("Please find my dear \05\x41Princess Ruto\x05\x40\x01immediately... Zora!\x12\x68\x7A", 0x03),
     0x9100: ("I am out of goods now.\x01Sorry!\x04The mark that will lead you to\x01the Spirit Temple is the \x05\x41flag on\x01the left \x05\x40outside the shop.\x01Be seeing you!\x02", 0x00),
     0x0451: ("\x12\x68\x7AMweep\x07\x04\x52", 0x23),
     0x0452: ("\x12\x68\x7AMweep\x07\x04\x53", 0x23),
@@ -532,14 +534,14 @@ def int_to_bytes(num: int, width: int, signed: bool = False) -> bytes:
     return int.to_bytes(num, width, byteorder='big', signed=signed)
 
 
-def display_code_list(codes: 'List[TextCode]') -> str:
+def display_code_list(codes: list[TextCode]) -> str:
     message = ""
     for code in codes:
         message += str(code)
     return message
 
 
-def encode_text_string(text: str) -> List[int]:
+def encode_text_string(text: str) -> list[int]:
     result = []
     it = iter(text)
     for ch in it:
@@ -560,7 +562,7 @@ def encode_text_string(text: str) -> List[int]:
     return result
 
 
-def parse_control_codes(text: Union[List[int], bytearray, str]) -> 'List[TextCode]':
+def parse_control_codes(text: list[int] | bytearray | str) -> list[TextCode]:
     if isinstance(text, list):
         text_bytes = text
     elif isinstance(text, bytearray):
@@ -643,7 +645,7 @@ class TextCode:
         return size
 
     # writes the code to the given offset, and returns the offset of the next byte
-    def write(self, rom: "Rom", text_start: int, offset: int) -> int:
+    def write(self, rom: Rom, text_start: int, offset: int) -> int:
         rom.write_byte(text_start + offset, self.code)
 
         extra_bytes = 0
@@ -659,7 +661,7 @@ class TextCode:
 
 # holds a single message, and all its data
 class Message:
-    def __init__(self, raw_text: Union[List[int], bytearray, str], index: int, id: int, opts: int, offset: int, length: int) -> None:
+    def __init__(self, raw_text: list[int] | bytearray | str, index: int, id: int, opts: int, offset: int, length: int) -> None:
         if isinstance(raw_text, str):
             raw_text = bytearray(raw_text, encoding='utf-8')
         elif not isinstance(raw_text, bytearray):
@@ -684,7 +686,7 @@ class Message:
         self.has_three_choice: bool = False
         self.ending: Optional[TextCode] = None
 
-        self.text_codes: List[TextCode] = []
+        self.text_codes: list[TextCode] = []
         self.text: str = ''
         self.unpadded_length: int = 0
         self.parse_text()
@@ -820,7 +822,7 @@ class Message:
 
     # writes a Message back into the rom, using the given index and offset to update the table
     # returns the offset of the next message
-    def write(self, rom: "Rom", index: int, text_start: int, offset: int, bank: int) -> int:
+    def write(self, rom: Rom, index: int, text_start: int, offset: int, bank: int) -> int:
         # construct the table entry
         id_bytes = int_to_bytes(self.id, 2)
         offset_bytes = int_to_bytes(offset, 3)
@@ -839,7 +841,7 @@ class Message:
 
     # read a single message from rom
     @classmethod
-    def from_rom(cls, rom: "Rom", index: int, eng: bool = True) -> 'Message':
+    def from_rom(cls, rom: Rom, index: int, eng: bool = True) -> Message:
         if eng:
             table_start = ENG_TABLE_START
             text_start = ENG_TEXT_START
@@ -860,12 +862,12 @@ class Message:
         return cls(raw_text, index, id, opts, offset, length)
 
     @classmethod
-    def from_string(cls, text: str, id: int = 0, opts: int = 0x00) -> 'Message':
+    def from_string(cls, text: str, id: int = 0, opts: int = 0x00) -> Message:
         bytes = text + "\x02"
         return cls(bytes, 0, id, opts, 0, len(bytes) + 1)
 
     @classmethod
-    def from_bytearray(cls, text: bytearray, id: int = 0, opts: int = 0x00) -> 'Message':
+    def from_bytearray(cls, text: bytearray, id: int = 0, opts: int = 0x00) -> Message:
         bytes = list(text) + [0x02]
         return cls(bytes, 0, id, opts, 0, len(bytes) + 1)
 
@@ -874,7 +876,7 @@ class Message:
 
 # wrapper for updating the text of a message, given its message id
 # if the id does not exist in the list, then it will add it
-def update_message_by_id(messages: List[Message], id: int, text: Union[bytearray, str], opts: Optional[int] = None) -> None:
+def update_message_by_id(messages: list[Message], id: int, text: bytearray | str, opts: Optional[int] = None) -> None:
     # get the message index
     index = next( (m.index for m in messages if m.id == id), -1)
     # update if it was found
@@ -885,7 +887,7 @@ def update_message_by_id(messages: List[Message], id: int, text: Union[bytearray
 
 
 # Gets the message by its ID. Returns None if the index does not exist
-def get_message_by_id(messages: List[Message], id: int) -> Optional[Message]:
+def get_message_by_id(messages: list[Message], id: int) -> Optional[Message]:
     # get the message index
     index = next( (m.index for m in messages if m.id == id), -1)
     if index >= 0:
@@ -895,7 +897,7 @@ def get_message_by_id(messages: List[Message], id: int) -> Optional[Message]:
 
 
 # wrapper for updating the text of a message, given its index in the list
-def update_message_by_index(messages: List[Message], index: int, text: Union[bytearray, str], opts: Optional[int] = None) -> None:
+def update_message_by_index(messages: list[Message], index: int, text: bytearray | str, opts: Optional[int] = None) -> None:
     if opts is None:
         opts = messages[index].opts
 
@@ -907,7 +909,7 @@ def update_message_by_index(messages: List[Message], index: int, text: Union[byt
 
 
 # wrapper for adding a string message to a list of messages
-def add_message(messages: List[Message], text: Union[bytearray, str], id: int = 0, opts: int = 0x00) -> None:
+def add_message(messages: list[Message], text: bytearray | str, id: int = 0, opts: int = 0x00) -> None:
     if isinstance(text, bytearray):
         messages.append(Message.from_bytearray(text, id, opts))
     else:
@@ -918,7 +920,7 @@ def add_message(messages: List[Message], text: Union[bytearray, str], id: int = 
 # holds a row in the shop item table (which contains pointers to the description and purchase messages)
 class ShopItem:
     # read a single message
-    def __init__(self, rom: "Rom", shop_table_address: int, index: int) -> None:
+    def __init__(self, rom: Rom, shop_table_address: int, index: int) -> None:
         entry_offset = shop_table_address + 0x20 * index
         entry = rom.read_bytes(entry_offset, 0x20)
 
@@ -956,7 +958,7 @@ class ShopItem:
         return ', '.join(meta_data) + '\n' + ', '.join(func_data)
 
     # write the shop item back
-    def write(self, rom: "Rom", shop_table_address: int, index: int) -> None:
+    def write(self, rom: Rom, shop_table_address: int, index: int) -> None:
         entry_offset = shop_table_address + 0x20 * index
 
         data = []
@@ -979,7 +981,7 @@ class ShopItem:
 
 
 # reads each of the shop items
-def read_shop_items(rom: "Rom", shop_table_address: int) -> List[ShopItem]:
+def read_shop_items(rom: Rom, shop_table_address: int) -> list[ShopItem]:
     shop_items = []
 
     for index in range(0, 100):
@@ -989,17 +991,17 @@ def read_shop_items(rom: "Rom", shop_table_address: int) -> List[ShopItem]:
 
 
 # writes each of the shop item back into rom
-def write_shop_items(rom: "Rom", shop_table_address: int, shop_items: Iterable[ShopItem]) -> None:
+def write_shop_items(rom: Rom, shop_table_address: int, shop_items: Iterable[ShopItem]) -> None:
     for s in shop_items:
         s.write(rom, shop_table_address, s.index)
 
 
 # these are unused shop items, and contain text ids that are used elsewhere, and should not be moved
-SHOP_ITEM_EXCEPTIONS: List[int] = [0x0A, 0x0B, 0x11, 0x12, 0x13, 0x14, 0x29]
+SHOP_ITEM_EXCEPTIONS: list[int] = [0x0A, 0x0B, 0x11, 0x12, 0x13, 0x14, 0x29]
 
 
 # returns a set of all message ids used for shop items
-def get_shop_message_id_set(shop_items: Iterable[ShopItem]) -> Set[int]:
+def get_shop_message_id_set(shop_items: Iterable[ShopItem]) -> set[int]:
     ids = set()
     for shop in shop_items:
         if shop.index not in SHOP_ITEM_EXCEPTIONS:
@@ -1009,14 +1011,14 @@ def get_shop_message_id_set(shop_items: Iterable[ShopItem]) -> Set[int]:
 
 
 # remove all messages that easy to tell are unused to create space in the message index table
-def remove_unused_messages(messages: List[Message]) -> None:
+def remove_unused_messages(messages: list[Message]) -> None:
     messages[:] = [m for m in messages if not m.is_id_message()]
     for index, m in enumerate(messages):
         m.index = index
 
 
 # takes all messages used for shop items, and moves messages from the 00xx range into the unused 80xx range
-def move_shop_item_messages(messages: List[Message], shop_items: Iterable[ShopItem]) -> None:
+def move_shop_item_messages(messages: list[Message], shop_items: Iterable[ShopItem]) -> None:
     # checks if a message id is in the item message range
     def is_in_item_range(id: int) -> bool:
         bytes = int_to_bytes(id, 2)
@@ -1089,7 +1091,7 @@ def make_player_message(text: str) -> str:
 
 # reduce item message sizes and add new item messages
 # make sure to call this AFTER move_shop_item_messages()
-def update_item_messages(messages: List[Message], world: "World") -> None:
+def update_item_messages(messages: list[Message], world: World) -> None:
     new_item_messages = ITEM_MESSAGES + KEYSANITY_MESSAGES
     check_message_dupes(new_item_messages)
     for id, text in new_item_messages:
@@ -1112,12 +1114,12 @@ def check_message_dupes(new_item_messages):
                     raise Exception("Duplicate MessageID found: " + hex(message_id1) + ", " + message1 + ", " + message2)
 
 # run all keysanity related patching to add messages for dungeon specific items
-def add_item_messages(messages: List[Message], shop_items: Iterable[ShopItem], world: "World") -> None:
+def add_item_messages(messages: list[Message], shop_items: Iterable[ShopItem], world: World) -> None:
     move_shop_item_messages(messages, shop_items)
     update_item_messages(messages, world)
 
 # reads each of the game's messages into a list of Message objects
-def read_messages(rom: "Rom") -> List[Message]:
+def read_messages(rom: Rom) -> list[Message]:
     table_offset = ENG_TABLE_START
     index = 0
     messages = []
@@ -1145,7 +1147,7 @@ def read_messages(rom: "Rom") -> List[Message]:
 # title and file select screens. Preserve this table entry and text data when
 # overwriting the JP data. The regular read_messages function only reads English
 # data.
-def read_fffc_message(rom: "Rom") -> Message:
+def read_fffc_message(rom: Rom) -> Message:
     table_offset = JPN_TABLE_START
     index = 0
     while True:
@@ -1163,7 +1165,7 @@ def read_fffc_message(rom: "Rom") -> Message:
 
 
 # write the messages back
-def repack_messages(rom: "Rom", messages: List[Message], permutation: Optional[List[int]] = None,
+def repack_messages(rom: Rom, messages: list[Message], permutation: Optional[list[int]] = None,
                     always_allow_skip: bool = True, speed_up_text: bool = True) -> None:
     rom.update_dmadata_record_by_key(ENG_TEXT_START, ENG_TEXT_START, ENG_TEXT_START + ENG_TEXT_SIZE_LIMIT)
     rom.update_dmadata_record_by_key(JPN_TEXT_START, JPN_TEXT_START, JPN_TEXT_START + JPN_TEXT_SIZE_LIMIT)
@@ -1251,7 +1253,7 @@ def repack_messages(rom: "Rom", messages: List[Message], permutation: Optional[L
 
 
 # shuffles the messages in the game, making sure to keep various message types in their own group
-def shuffle_messages(messages: List[Message], except_hints: bool = True) -> List[int]:
+def shuffle_messages(messages: list[Message], except_hints: bool = True) -> list[int]:
     if not hasattr(shuffle_messages, "shop_item_messages"):
         shuffle_messages.shop_item_messages = []
     if not hasattr(shuffle_messages, "scrubs_message_ids"):
@@ -1300,7 +1302,7 @@ def shuffle_messages(messages: List[Message], except_hints: bool = True) -> List
     have_three_choice = list(filter(lambda m: not is_exempt(m) and m.has_three_choice, messages))
     basic_messages    = list(filter(lambda m: not is_exempt(m) and m.is_basic(),       messages))
 
-    def shuffle_group(group: List[Message]) -> None:
+    def shuffle_group(group: list[Message]) -> None:
         group_permutation = [i for i, _ in enumerate(group)]
         random.shuffle(group_permutation)
 
@@ -1319,7 +1321,7 @@ def shuffle_messages(messages: List[Message], except_hints: bool = True) -> List
 
 
 # Update warp song text boxes for ER
-def update_warp_song_text(messages: List[Message], world: "World") -> None:
+def update_warp_song_text(messages: list[Message], world: World) -> None:
     from Hints import HintArea
 
     msg_list = {

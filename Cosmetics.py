@@ -1,9 +1,11 @@
+from __future__ import annotations
 import json
 import logging
 import os
 import random
+from collections.abc import Iterable, Callable
 from itertools import chain
-from typing import TYPE_CHECKING, Dict, List, Tuple, Optional, Union, Iterable, Callable, Any
+from typing import TYPE_CHECKING, Optional, Any
 
 import Colors
 import IconManip
@@ -19,7 +21,7 @@ if TYPE_CHECKING:
     from Settings import Settings
 
 
-def patch_targeting(rom: "Rom", settings: "Settings", log: 'CosmeticsLog', symbols: Dict[str, int]) -> None:
+def patch_targeting(rom: Rom, settings: Settings, log: CosmeticsLog, symbols: dict[str, int]) -> None:
     # Set default targeting option to Hold
     if settings.default_targeting == 'hold':
         rom.write_byte(0xB71E6D, 0x01)
@@ -27,7 +29,7 @@ def patch_targeting(rom: "Rom", settings: "Settings", log: 'CosmeticsLog', symbo
         rom.write_byte(0xB71E6D, 0x00)
 
 
-def patch_dpad(rom: "Rom", settings: "Settings", log: 'CosmeticsLog', symbols: Dict[str, int]) -> None:
+def patch_dpad(rom: Rom, settings: Settings, log: CosmeticsLog, symbols: dict[str, int]) -> None:
     # Display D-Pad HUD
     if settings.display_dpad:
         rom.write_byte(symbols['CFG_DISPLAY_DPAD'], 0x01)
@@ -35,7 +37,7 @@ def patch_dpad(rom: "Rom", settings: "Settings", log: 'CosmeticsLog', symbols: D
         rom.write_byte(symbols['CFG_DISPLAY_DPAD'], 0x00)
 
 
-def patch_dpad_info(rom: "Rom", settings: "Settings", log: 'CosmeticsLog', symbols: Dict[str, int]) -> None:
+def patch_dpad_info(rom: Rom, settings: Settings, log: CosmeticsLog, symbols: dict[str, int]) -> None:
     # Display D-Pad HUD in pause menu for either dungeon info or equips
     if settings.dpad_dungeon_menu:
         rom.write_byte(symbols['CFG_DPAD_DUNGEON_INFO_ENABLE'], 0x01)
@@ -43,7 +45,7 @@ def patch_dpad_info(rom: "Rom", settings: "Settings", log: 'CosmeticsLog', symbo
         rom.write_byte(symbols['CFG_DPAD_DUNGEON_INFO_ENABLE'], 0x00)
 
 
-def patch_music(rom: "Rom", settings: "Settings", log: 'CosmeticsLog', symbols: Dict[str, int]) -> None:
+def patch_music(rom: Rom, settings: Settings, log: CosmeticsLog, symbols: dict[str, int]) -> None:
     # patch music
     if settings.background_music != 'normal' or settings.fanfares != 'normal' or log.src_dict.get('bgm', {}):
         Music.restore_music(rom)
@@ -55,7 +57,7 @@ def patch_music(rom: "Rom", settings: "Settings", log: 'CosmeticsLog', symbols: 
         rom.write_byte(0xBE447F, 0x00)
 
 
-def patch_model_colors(rom: "Rom", color: Optional[List[int]], model_addresses: Tuple[List[int], List[int], List[int]]) -> None:
+def patch_model_colors(rom: Rom, color: Optional[list[int]], model_addresses: tuple[list[int], list[int], list[int]]) -> None:
     main_addresses, dark_addresses, light_addresses = model_addresses
 
     if color is None:
@@ -76,7 +78,7 @@ def patch_model_colors(rom: "Rom", color: Optional[List[int]], model_addresses: 
         rom.write_bytes(address, lightened_color)
 
 
-def patch_tunic_icon(rom: "Rom", tunic: str, color: Optional[List[int]], rainbow: bool = False) -> None:
+def patch_tunic_icon(rom: Rom, tunic: str, color: Optional[list[int]], rainbow: bool = False) -> None:
     # patch tunic icon colors
     icon_locations = {
         'Kokiri Tunic': 0x007FE000,
@@ -92,7 +94,7 @@ def patch_tunic_icon(rom: "Rom", tunic: str, color: Optional[List[int]], rainbow
     rom.write_bytes(icon_locations[tunic], tunic_icon)
 
 
-def patch_tunic_colors(rom: "Rom", settings: "Settings", log: 'CosmeticsLog', symbols: Dict[str, int]) -> None:
+def patch_tunic_colors(rom: Rom, settings: Settings, log: CosmeticsLog, symbols: dict[str, int]) -> None:
     # Need to check for the existence of the CFG_TUNIC_COLORS symbol.
     # This was added with rainbow tunic but custom tunic colors should still support older patch versions.
     tunic_address = symbols.get('CFG_TUNIC_COLORS', 0x00B6DA38) # Use new tunic color ROM address. Fall back to vanilla tunic color ROM address.
@@ -162,7 +164,7 @@ def patch_tunic_colors(rom: "Rom", settings: "Settings", log: 'CosmeticsLog', sy
             log.errors.append(rainbow_error)
 
 
-def patch_navi_colors(rom: "Rom", settings: "Settings", log: 'CosmeticsLog', symbols: Dict[str, int]) -> None:
+def patch_navi_colors(rom: Rom, settings: Settings, log: CosmeticsLog, symbols: dict[str, int]) -> None:
     # patch navi colors
     navi = [
         # colors for Navi
@@ -267,7 +269,7 @@ def patch_navi_colors(rom: "Rom", settings: "Settings", log: 'CosmeticsLog', sym
         log.errors.append(rainbow_error)
 
 
-def patch_sword_trails(rom: "Rom", settings: "Settings", log: 'CosmeticsLog', symbols: Dict[str, int]) -> None:
+def patch_sword_trails(rom: Rom, settings: Settings, log: CosmeticsLog, symbols: dict[str, int]) -> None:
     # patch sword trail duration
     rom.write_byte(0x00BEFF8C, settings.sword_trail_duration)
 
@@ -371,7 +373,7 @@ def patch_sword_trails(rom: "Rom", settings: "Settings", log: 'CosmeticsLog', sy
         log.errors.append(rainbow_error)
 
 
-def patch_bombchu_trails(rom: "Rom", settings: "Settings", log: 'CosmeticsLog', symbols: Dict[str, int]) -> None:
+def patch_bombchu_trails(rom: Rom, settings: Settings, log: CosmeticsLog, symbols: dict[str, int]) -> None:
     # patch bombchu trail colors
     bombchu_trails = [
         ('Bombchu Trail', 'bombchu_trail_color', Colors.get_bombchu_trail_colors(), Colors.bombchu_trail_colors,
@@ -382,7 +384,7 @@ def patch_bombchu_trails(rom: "Rom", settings: "Settings", log: 'CosmeticsLog', 
     patch_trails(rom, settings, log, bombchu_trails)
 
 
-def patch_boomerang_trails(rom: "Rom", settings: "Settings", log: 'CosmeticsLog', symbols: Dict[str, int]) -> None:
+def patch_boomerang_trails(rom: Rom, settings: Settings, log: CosmeticsLog, symbols: dict[str, int]) -> None:
     # patch boomerang trail colors
     boomerang_trails = [
         ('Boomerang Trail', 'boomerang_trail_color', Colors.get_boomerang_trail_colors(), Colors.boomerang_trail_colors,
@@ -393,7 +395,7 @@ def patch_boomerang_trails(rom: "Rom", settings: "Settings", log: 'CosmeticsLog'
     patch_trails(rom, settings, log, boomerang_trails)
 
 
-def patch_trails(rom: "Rom", settings: "Settings", log: 'CosmeticsLog', trails) -> None:
+def patch_trails(rom: Rom, settings: Settings, log: CosmeticsLog, trails) -> None:
     for trail_name, trail_setting, trail_color_list, trail_color_dict, trail_symbols in trails:
         color_inner_symbol, color_outer_symbol, rainbow_inner_symbol, rainbow_outer_symbol = trail_symbols
         option_inner = getattr(settings, f'{trail_setting}_inner')
@@ -472,7 +474,7 @@ def patch_trails(rom: "Rom", settings: "Settings", log: 'CosmeticsLog', trails) 
             del log.misc_colors[trail_name]['colors']
 
 
-def patch_gauntlet_colors(rom: "Rom", settings: "Settings", log: 'CosmeticsLog', symbols: Dict[str, int]) -> None:
+def patch_gauntlet_colors(rom: Rom, settings: Settings, log: CosmeticsLog, symbols: dict[str, int]) -> None:
     # patch gauntlet colors
     gauntlets = [
         ('Silver Gauntlets', 'silver_gauntlets_color', 0x00B6DA44,
@@ -513,7 +515,7 @@ def patch_gauntlet_colors(rom: "Rom", settings: "Settings", log: 'CosmeticsLog',
         })
 
 
-def patch_shield_frame_colors(rom: "Rom", settings: "Settings", log: 'CosmeticsLog', symbols: Dict[str, int]) -> None:
+def patch_shield_frame_colors(rom: Rom, settings: Settings, log: CosmeticsLog, symbols: dict[str, int]) -> None:
     # patch shield frame colors
     shield_frames = [
         ('Mirror Shield Frame', 'mirror_shield_frame_color',
@@ -555,7 +557,7 @@ def patch_shield_frame_colors(rom: "Rom", settings: "Settings", log: 'CosmeticsL
         })
 
 
-def patch_heart_colors(rom: "Rom", settings: "Settings", log: 'CosmeticsLog', symbols: Dict[str, int]) -> None:
+def patch_heart_colors(rom: Rom, settings: Settings, log: CosmeticsLog, symbols: dict[str, int]) -> None:
     # patch heart colors
     hearts = [
         ('Heart Color', 'heart_color', symbols['CFG_HEART_COLOR'], 0xBB0994,
@@ -605,7 +607,7 @@ def patch_heart_colors(rom: "Rom", settings: "Settings", log: 'CosmeticsLog', sy
         })
 
 
-def patch_magic_colors(rom: "Rom", settings: "Settings", log: 'CosmeticsLog', symbols: Dict[str, int]) -> None:
+def patch_magic_colors(rom: Rom, settings: Settings, log: CosmeticsLog, symbols: dict[str, int]) -> None:
     # patch magic colors
     magic = [
         ('Magic Meter Color', 'magic_color', symbols["CFG_MAGIC_COLOR"],
@@ -647,7 +649,7 @@ def patch_magic_colors(rom: "Rom", settings: "Settings", log: 'CosmeticsLog', sy
         })
 
 
-def patch_button_colors(rom: "Rom", settings: "Settings", log: 'CosmeticsLog', symbols: Dict[str, int]) -> None:
+def patch_button_colors(rom: Rom, settings: Settings, log: CosmeticsLog, symbols: dict[str, int]) -> None:
     buttons = [
         ('A Button Color', 'a_button_color', Colors.a_button_colors,
             [('A Button Color', symbols['CFG_A_BUTTON_COLOR'],
@@ -736,7 +738,7 @@ def patch_button_colors(rom: "Rom", settings: "Settings", log: 'CosmeticsLog', s
             log_dict['colors'][patch] = Colors.color_to_hex(colors[patch])
 
 
-def patch_sfx(rom: "Rom", settings: "Settings", log: 'CosmeticsLog', symbols: Dict[str, int]) -> None:
+def patch_sfx(rom: Rom, settings: Settings, log: CosmeticsLog, symbols: dict[str, int]) -> None:
     # Configurable Sound Effects
     sfx_config = [
           ('sfx_navi_overworld',   Sounds.SoundHooks.NAVI_OVERWORLD),
@@ -802,7 +804,7 @@ def patch_sfx(rom: "Rom", settings: "Settings", log: 'CosmeticsLog', symbols: Di
             rom.write_int16(symbols['GET_ITEM_SEQ_ID'], sound_id)
 
 
-def patch_instrument(rom: "Rom", settings: "Settings", log: 'CosmeticsLog', symbols: Dict[str, int]) -> None:
+def patch_instrument(rom: Rom, settings: Settings, log: CosmeticsLog, symbols: dict[str, int]) -> None:
     # Player Instrument
     instruments = {
            #'none':            0x00,
@@ -828,7 +830,7 @@ def patch_instrument(rom: "Rom", settings: "Settings", log: 'CosmeticsLog', symb
     log.sfx['Ocarina'] = ocarina_options[choice]
 
 
-def read_default_voice_data(rom: "Rom") -> Dict[str, Dict[str, int]]:
+def read_default_voice_data(rom: Rom) -> dict[str, dict[str, int]]:
     audiobank = 0xD390
     audiotable = 0x79470
     soundbank = audiobank + rom.read_int32(audiobank + 0x4)
@@ -849,7 +851,7 @@ def read_default_voice_data(rom: "Rom") -> Dict[str, Dict[str, int]]:
     return soundbank_entries
 
 
-def patch_silent_voice(rom: "Rom", sfxidlist: Iterable[int], soundbank_entries: Dict[str, Dict[str, int]], log: 'CosmeticsLog') -> None:
+def patch_silent_voice(rom: Rom, sfxidlist: Iterable[int], soundbank_entries: dict[str, dict[str, int]], log: CosmeticsLog) -> None:
     binsfxfilename = os.path.join(data_path('Voices'), 'SilentVoiceSFX.bin')
     if not os.path.isfile(binsfxfilename):
         log.errors.append(f"Could not find silent voice sfx at {binsfxfilename}. Skipping voice patching")
@@ -867,7 +869,7 @@ def patch_silent_voice(rom: "Rom", sfxidlist: Iterable[int], soundbank_entries: 
         rom.write_bytes(soundbank_entries[sfxid]["romoffset"], injectme)
 
 
-def apply_voice_patch(rom: "Rom", voice_path: str, soundbank_entries: Dict[str, Dict[str, int]]) -> None:
+def apply_voice_patch(rom: Rom, voice_path: str, soundbank_entries: dict[str, dict[str, int]]) -> None:
     if not os.path.exists(voice_path):
         return
 
@@ -883,7 +885,7 @@ def apply_voice_patch(rom: "Rom", voice_path: str, soundbank_entries: Dict[str, 
             rom.write_bytes(soundbank_entries[sfxid]["romoffset"], binsfx)
 
 
-def patch_voices(rom: "Rom", settings: "Settings", log: 'CosmeticsLog', symbols: Dict[str, int]) -> None:
+def patch_voices(rom: Rom, settings: Settings, log: CosmeticsLog, symbols: dict[str, int]) -> None:
     # Reset the audiotable back to default to prepare patching voices and read data
     rom.write_bytes(0x00079470, rom.original.read_bytes(0x00079470, 0x460AD0))
 
@@ -946,13 +948,13 @@ def patch_music_changes(rom, settings, log, symbols):
     log.slowdown_music_when_lowhp = settings.slowdown_music_when_lowhp
 
 
-legacy_cosmetic_data_headers: List[int] = [
+legacy_cosmetic_data_headers: list[int] = [
     0x03481000,
     0x03480810,
 ]
 
-patch_sets: Dict[int, Dict[str, Any]] = {}
-global_patch_sets: List[Callable[["Rom", "Settings", 'CosmeticsLog', Dict[str, int]], None]] = [
+patch_sets: dict[int, dict[str, Any]] = {}
+global_patch_sets: list[Callable[[Rom, Settings, CosmeticsLog, dict[str, int]], None]] = [
     patch_targeting,
     patch_music,
     patch_tunic_colors,
@@ -1100,7 +1102,7 @@ patch_sets[0x1F073FDC] = {
 }
 
 
-def patch_cosmetics(settings: "Settings", rom: "Rom") -> 'CosmeticsLog':
+def patch_cosmetics(settings: Settings, rom: Rom) -> CosmeticsLog:
     # re-seed for aesthetic effects. They shouldn't be affected by the generation seed
     random.seed()
     settings.resolve_random_settings(cosmetic=True)
@@ -1156,18 +1158,18 @@ def patch_cosmetics(settings: "Settings", rom: "Rom") -> 'CosmeticsLog':
 
 
 class CosmeticsLog:
-    def __init__(self, settings: "Settings") -> None:
-        self.settings: "Settings" = settings
+    def __init__(self, settings: Settings) -> None:
+        self.settings: Settings = settings
 
-        self.equipment_colors: Dict[str, dict] = {}
-        self.ui_colors: Dict[str, dict] = {}
-        self.misc_colors: Dict[str, dict] = {}
-        self.sfx: Dict[str, str] = {}
-        self.bgm: Dict[str, str] = {}
-        self.bgm_groups: Dict[str, Union[list, dict]] = {}
+        self.equipment_colors: dict[str, dict] = {}
+        self.ui_colors: dict[str, dict] = {}
+        self.misc_colors: dict[str, dict] = {}
+        self.sfx: dict[str, str] = {}
+        self.bgm: dict[str, str] = {}
+        self.bgm_groups: dict[str, list | dict] = {}
 
         self.src_dict: dict = {}
-        self.errors: List[str] = []
+        self.errors: list[str] = []
 
         if self.settings.enable_cosmetic_file:
             if self.settings.cosmetic_file:

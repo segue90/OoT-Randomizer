@@ -1,6 +1,7 @@
+from __future__ import annotations
 import re
 import sys
-from typing import TYPE_CHECKING, Dict, Pattern, Callable, Any
+from typing import TYPE_CHECKING, Any
 
 if TYPE_CHECKING:
     from State import State
@@ -10,18 +11,19 @@ if sys.version_info >= (3, 8):
     from typing import Protocol
 
     class AccessRule(Protocol):
-        def __call__(self, state: "State", **kwargs) -> bool:
+        def __call__(self, state: State, **kwargs) -> bool:
             ...
 else:
+    from typing import Callable
     AccessRule = Callable[["State"], bool]
 
 
 # Variable names and values used by rule execution,
 # will be automatically filled by Items
-allowed_globals: Dict[str, Any] = {}
+allowed_globals: dict[str, Any] = {}
 
 
-_escape: Pattern[str] = re.compile(r'[\'()[\]-]')
+_escape: re.Pattern[str] = re.compile(r'[\'()[\]-]')
 
 
 def escape_name(name: str) -> str:

@@ -1,7 +1,8 @@
+from __future__ import annotations
 from collections import OrderedDict
 import logging
 import random
-from typing import TYPE_CHECKING, List, Dict
+from typing import TYPE_CHECKING
 
 from Item import Item
 from LocationList import location_sort_order
@@ -15,7 +16,7 @@ if TYPE_CHECKING:
     from Settings import Settings
     from World import World
 
-HASH_ICONS: List[str] = [
+HASH_ICONS: list[str] = [
     'Deku Stick',
     'Deku Nut',
     'Bow',
@@ -52,20 +53,20 @@ HASH_ICONS: List[str] = [
 
 
 class Spoiler:
-    def __init__(self, worlds: "List[World]") -> None:
-        self.worlds: "List[World]" = worlds
-        self.settings: "Settings" = worlds[0].settings
-        self.playthrough: "Dict[str, List[Location]]" = {}
-        self.entrance_playthrough: "Dict[str, List[Entrance]]" = {}
-        self.full_playthrough: Dict[str, int] = {}
+    def __init__(self, worlds: list[World]) -> None:
+        self.worlds: list[World] = worlds
+        self.settings: Settings = worlds[0].settings
+        self.playthrough: dict[str, list[Location]] = {}
+        self.entrance_playthrough: dict[str, list[Entrance]] = {}
+        self.full_playthrough: dict[str, int] = {}
         self.max_sphere: int = 0
-        self.locations: "Dict[int, Dict[str, Item]]" = {}
-        self.entrances: "Dict[int, List[Entrance]]" = {}
-        self.required_locations: "Dict[int, List[Location]]" = {}
-        self.goal_locations: "Dict[int, Dict[str, Dict[str, Dict[int, List[Location]]]]]" = {}
-        self.goal_categories: "Dict[int, Dict[str, GoalCategory]]" = {}
-        self.hints: "Dict[int, Dict[int, GossipText]]" = {world.id: {} for world in worlds}
-        self.file_hash: List[int] = []
+        self.locations: dict[int, dict[str, Item]] = {}
+        self.entrances: dict[int, list[Entrance]] = {}
+        self.required_locations: dict[int, list[Location]] = {}
+        self.goal_locations: dict[int, dict[str, dict[str, dict[int, list[Location]]]]] = {}
+        self.goal_categories: dict[int, dict[str, GoalCategory]] = {}
+        self.hints: dict[int, dict[int, GossipText]] = {world.id: {} for world in worlds}
+        self.file_hash: list[int] = []
 
     def build_file_hash(self) -> None:
         dist_file_hash = self.settings.distribution.file_hash
@@ -116,7 +117,7 @@ class Spoiler:
             spoiler_entrances.sort(key=lambda entrance: entrance_sort_order.get(entrance.type, -1))
             self.entrances[world.id] = spoiler_entrances
 
-    def copy_worlds(self) -> "List[World]":
+    def copy_worlds(self) -> list[World]:
         worlds = [world.copy() for world in self.worlds]
         Item.fix_worlds_after_copy(worlds)
         return worlds

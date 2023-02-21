@@ -1,8 +1,9 @@
+from __future__ import annotations
 import copy
 import random
 import zipfile
 import zlib
-from typing import TYPE_CHECKING, Tuple, List, Optional
+from typing import TYPE_CHECKING, Optional
 
 from Rom import Rom
 from ntype import BigStream
@@ -14,7 +15,7 @@ if TYPE_CHECKING:
 # get the next XOR key. Uses some location in the source rom.
 # This will skip of 0s, since if we hit a block of 0s, the
 # patch data will be raw.
-def key_next(rom: Rom, key_address: int, address_range: Tuple[int, int]) -> Tuple[int, int]:
+def key_next(rom: Rom, key_address: int, address_range: tuple[int, int]) -> tuple[int, int]:
     key = 0
     while key == 0:
         key_address += 1
@@ -27,8 +28,8 @@ def key_next(rom: Rom, key_address: int, address_range: Tuple[int, int]) -> Tupl
 # creates a XOR block for the patch. This might break it up into
 # multiple smaller blocks if there is a concern about the XOR key
 # or if it is too long.
-def write_block(rom: Rom, xor_address: int, xor_range: Tuple[int, int], block_start: int,
-                data: List[int], patch_data: BigStream) -> int:
+def write_block(rom: Rom, xor_address: int, xor_range: tuple[int, int], block_start: int,
+                data: list[int], patch_data: BigStream) -> int:
     new_data = []
     key_offset = 0
     continue_block = False
@@ -79,7 +80,7 @@ def write_block(rom: Rom, xor_address: int, xor_range: Tuple[int, int], block_st
 # then it will include the address to write to. Otherwise, it will
 # have a number of XOR keys to skip and then continue writing after
 # the previous block
-def write_block_section(start: int, key_skip: int, in_data: List[int], patch_data: BigStream, is_continue: bool) -> None:
+def write_block_section(start: int, key_skip: int, in_data: list[int], patch_data: BigStream, is_continue: bool) -> None:
     if not is_continue:
         patch_data.append_int32(start)
     else:
@@ -92,7 +93,7 @@ def write_block_section(start: int, key_skip: int, in_data: List[int], patch_dat
 # xor_range is the range the XOR key will read from. This range is not
 # too important, but I tried to choose from a section that didn't really
 # have big gaps of 0s which we want to avoid.
-def create_patch_file(rom: Rom, file: str, xor_range: Tuple[int, int] = (0x00B8AD30, 0x00F029A0)) -> None:
+def create_patch_file(rom: Rom, file: str, xor_range: tuple[int, int] = (0x00B8AD30, 0x00F029A0)) -> None:
     dma_start, dma_end = rom.dma.dma_start, rom.dma.dma_end
 
     # add header
@@ -179,7 +180,7 @@ def create_patch_file(rom: Rom, file: str, xor_range: Tuple[int, int] = (0x00B8A
 
 
 # This will apply a patch file to a source rom to generate a patched rom.
-def apply_patch_file(rom: Rom, settings: "Settings", sub_file: Optional[str] = None) -> None:
+def apply_patch_file(rom: Rom, settings: Settings, sub_file: Optional[str] = None) -> None:
     file = settings.patch_file
 
     # load the patch file and decompress

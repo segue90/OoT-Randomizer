@@ -1,15 +1,17 @@
+from __future__ import annotations
 import logging
+from collections.abc import Callable, Iterable
 from enum import Enum
-from typing import TYPE_CHECKING, Optional, List, Tuple, Callable, Union, Iterable, overload
+from typing import TYPE_CHECKING, Optional, overload
 
 from HintList import misc_item_hint_table, misc_location_hint_table
 from LocationList import location_table, location_is_viewable, LocationAddress, LocationDefault, LocationFilterTags
-from RulesCommon import AccessRule
 
 if TYPE_CHECKING:
     from Dungeon import Dungeon
     from Item import Item
     from Region import Region
+    from RulesCommon import AccessRule
     from State import State
     from World import World
 
@@ -22,11 +24,11 @@ class DisableType(Enum):
 
 class Location:
     def __init__(self, name: str = '', address: LocationAddress = None, address2: LocationAddress = None, default: LocationDefault = None,
-                 location_type: str = 'Chest', scene: Optional[int] = None, parent: "Optional[Region]" = None,
+                 location_type: str = 'Chest', scene: Optional[int] = None, parent: Optional[Region] = None,
                  filter_tags: LocationFilterTags = None, internal: bool = False, vanilla_item: Optional[str] = None) -> None:
         self.name: str = name
-        self.parent_region: "Optional[Region]" = parent
-        self.item: "Optional[Item]" = None
+        self.parent_region: Optional[Region] = parent
+        self.item: Optional[Item] = None
         self.vanilla_item: Optional[str] = vanilla_item
         self.address: LocationAddress = address
         self.address2: LocationAddress = address2
@@ -36,19 +38,19 @@ class Location:
         self.internal: bool = internal
         self.staleness_count: int = 0
         self.access_rule: AccessRule = lambda state, **kwargs: True
-        self.access_rules: List[AccessRule] = []
-        self.item_rule: "Callable[[Location, Item], bool]" = lambda location, item: True
+        self.access_rules: list[AccessRule] = []
+        self.item_rule: Callable[[Location, Item], bool] = lambda location, item: True
         self.locked: bool = False
         self.price: Optional[int] = None
         self.minor_only: bool = False
-        self.world: "Optional[World]" = None
+        self.world: Optional[World] = None
         self.disabled: DisableType = DisableType.ENABLED
         self.always: bool = False
         self.never: bool = False
-        self.filter_tags: Optional[Tuple[str, ...]] = (filter_tags,) if isinstance(filter_tags, str) else filter_tags
+        self.filter_tags: Optional[tuple[str, ...]] = (filter_tags,) if isinstance(filter_tags, str) else filter_tags
         self.rule_string: Optional[str] = None
 
-    def copy(self, new_region: "Region") -> 'Location':
+    def copy(self, new_region: Region) -> Location:
         new_location = Location(self.name, self.address, self.address2, self.default, self.type, self.scene, new_region,
                                 self.filter_tags, self.internal, self.vanilla_item)
         new_location.world = new_region.world
@@ -67,7 +69,7 @@ class Location:
         return new_location
 
     @property
-    def dungeon(self) -> "Optional[Dungeon]":
+    def dungeon(self) -> Optional[Dungeon]:
         return self.parent_region.dungeon if self.parent_region is not None else None
 
     def add_rule(self, lambda_rule: AccessRule) -> None:
@@ -80,7 +82,6 @@ class Location:
         self.access_rules.append(lambda_rule)
         self.access_rule = self._run_rules
 
-
     def _run_rules(self, state, **kwargs):
         for rule in self.access_rules:
             if not rule(state, **kwargs):
@@ -91,7 +92,7 @@ class Location:
         self.access_rule = lambda_rule
         self.access_rules = [lambda_rule]
 
-    def can_fill(self, state: "State", item: "Item", check_access: bool = True) -> bool:
+    def can_fill(self, state: State, item: Item, check_access: bool = True) -> bool:
         if state.search is None:
             return False
         if self.minor_only and item.majoritem:
@@ -102,7 +103,7 @@ class Location:
             (not check_access or state.search.spot_access(self, 'either'))
         )
 
-    def can_fill_fast(self, item: "Item", manual: bool = False) -> bool:
+    def can_fill_fast(self, item: Item, manual: bool = False) -> bool:
         if self.parent_region is None:
             return False
         return self.parent_region.can_fill(item, manual) and self.item_rule(self, item)
@@ -157,11 +158,13 @@ class Location:
 def LocationFactory(locations: str) -> Location:
     pass
 
+
 @overload
-def LocationFactory(locations: List[str]) -> List[Location]:
+def LocationFactory(locations: list[str]) -> list[Location]:
     pass
 
-def LocationFactory(locations: Union[str, List[str]]) -> Union[Location, List[Location]]:
+
+def LocationFactory(locations: str | list[str]) -> Location | list[Location]:
     ret = []
     singleton = False
     if isinstance(locations, str):

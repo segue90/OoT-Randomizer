@@ -1,6 +1,8 @@
+from __future__ import annotations
 import sys
+from collections.abc import Callable, Iterable
 from enum import IntEnum
-from typing import TYPE_CHECKING, Dict, List, Iterable, Callable, Optional, Union, Any
+from typing import TYPE_CHECKING, Optional, Any
 
 from ItemPool import IGNORE_LOCATION
 
@@ -13,7 +15,7 @@ if TYPE_CHECKING:
     from Rom import Rom
     from World import World
 
-AddressesDict: TypeAlias = 'Dict[str, Union[Address, Dict[str, Union[Address, Dict[str, Address]]]]]'
+AddressesDict: TypeAlias = "dict[str, Address | dict[str, Address | dict[str, Address]]]"
 
 
 class Scenes(IntEnum):
@@ -54,14 +56,14 @@ class Address:
     prev_address: int = 0
     EXTENDED_CONTEXT_START = 0x1450
 
-    def __init__(self, address: Optional[int] = None, extended: bool = False, size: int = 4, mask: int = 0xFFFFFFFF,
-                 max: Optional[int] = None, choices: Optional[Dict[str, int]] = None, value: Optional[str] = None) -> None:
+    def __init__(self, address: Optional[int] = None, extended: bool = False, size: int = 4, mask: int = 0xFFFFFFFF, max: Optional[int] = None,
+                 choices: Optional[dict[str, int]] = None, value: Optional[str] = None) -> None:
         self.address: int = Address.prev_address if address is None else address
         if extended and address is not None:
             self.address += Address.EXTENDED_CONTEXT_START
-        self.value: Optional[Union[str, int]] = value
+        self.value: Optional[str | int] = value
         self.size: int = size
-        self.choices: Optional[Dict[str, int]] = choices
+        self.choices: Optional[dict[str, int]] = choices
         self.mask: int = mask
 
         Address.prev_address = self.address + self.size
@@ -73,7 +75,7 @@ class Address:
 
         self.max: int = mask if max is None else max
 
-    def get_value(self, default: Union[str, int] = 0) -> Union[str, int]:
+    def get_value(self, default: str | int = 0) -> str | int:
         if self.value is None:
             return default
         return self.value
@@ -116,7 +118,7 @@ class Address:
 
         self.value = value
 
-    def get_writes(self, save_context: 'SaveContext') -> None:
+    def get_writes(self, save_context: SaveContext) -> None:
         if self.value is None:
             return
 
@@ -136,7 +138,7 @@ class Address:
                 save_context.write_bits(self.address + i, byte, mask=mask)
 
     @staticmethod
-    def to_bytes(value: int, size: int) -> List[int]:
+    def to_bytes(value: int, size: int) -> list[int]:
         ret = []
         for _ in range(size):
             ret.insert(0, value & 0xFF)
@@ -146,8 +148,8 @@ class Address:
 
 class SaveContext:
     def __init__(self):
-        self.save_bits: Dict[int, int] = {}
-        self.save_bytes: Dict[int, int] = {}
+        self.save_bits: dict[int, int] = {}
+        self.save_bytes: dict[int, int] = {}
         self.addresses: AddressesDict = self.get_save_context_addresses()
 
     # will set the bits of value to the offset in the save (or'ing them with what is already there)
@@ -232,7 +234,7 @@ class SaveContext:
                 self.addresses['ammo'][ammo].max = ammo_max
 
     # will overwrite the byte at offset with the given value
-    def write_save_table(self, rom: "Rom") -> None:
+    def write_save_table(self, rom: Rom) -> None:
         self.set_ammo_max()
         for name, address in self.addresses.items():
             self.write_save_entry(address)
@@ -284,7 +286,7 @@ class SaveContext:
         self.addresses['health'].value                = int(health) * 0x10
         self.addresses['quest']['heart_pieces'].value = int((health % 1) * 4) * 0x10
 
-    def give_item(self, world: "World", item: str, count: int = 1) -> None:
+    def give_item(self, world: World, item: str, count: int = 1) -> None:
         if item.endswith(')'):
             item_base, implicit_count = item[:-1].split(' (', 1)
             if implicit_count.isdigit():
@@ -443,7 +445,7 @@ class SaveContext:
         else:
             raise ValueError("Cannot give unknown starting item %s" % item)
 
-    def give_bombchu_item(self, world: "World") -> None:
+    def give_bombchu_item(self, world: World) -> None:
         self.give_item(world, "Bombchus", 0)
 
     def equip_default_items(self, age: str) -> None:
@@ -886,7 +888,7 @@ class SaveContext:
             }
         }
 
-    item_id_map: Dict[str, int] = {
+    item_id_map: dict[str, int] = {
         'none'                : 0xFF,
         'stick'               : 0x00,
         'nut'                 : 0x01,
@@ -1010,7 +1012,7 @@ class SaveContext:
         'small_key'           : 0x67,
     }
 
-    slot_id_map: Dict[str, int] = {
+    slot_id_map: dict[str, int] = {
         'stick'               : 0x00,
         'nut'                 : 0x01,
         'bomb'                : 0x02,
@@ -1037,7 +1039,7 @@ class SaveContext:
         'child_trade'         : 0x17,
     }
 
-    bottle_types: Dict[str, str] = {
+    bottle_types: dict[str, str] = {
         "Bottle"                   : 'bottle',
         "Bottle with Red Potion"   : 'red_potion',
         "Bottle with Green Potion" : 'green_potion',
@@ -1053,7 +1055,7 @@ class SaveContext:
         "Bottle with Poe"          : 'poe',
     }
 
-    save_writes_table: Dict[str, Dict[str, Any]] = {
+    save_writes_table: dict[str, dict[str, Any]] = {
         "Deku Stick Capacity": {
             'item_slot.stick'            : 'stick',
             'upgrades.stick_upgrade'     : [2, 3],
@@ -1363,7 +1365,7 @@ class SaveContext:
         'Silver Rupee Pouch (Ganons Castle Forest Trial)':           {'silver_rupee_counts.trials_forest': 5},
     }
 
-    equipable_items: Dict[str, Dict[str, List[str]]] = {
+    equipable_items: dict[str, dict[str, list[str]]] = {
         'equips_adult' : {
             'items': [
                 'hookshot',

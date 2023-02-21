@@ -24,18 +24,12 @@
 # hook would contain a bunch of addresses, whether they share the same default
 # value or not.
 
+from __future__ import annotations
 import os
-import sys
+from dataclasses import dataclass
 from enum import Enum
-from typing import Dict, List
 
 from Utils import data_path
-
-# Python 3.6 support. We can drop the conditional usage of namedtuple if we decide to no longer support Python 3.6.
-if sys.version_info >= (3, 7):
-    from dataclasses import dataclass
-else:
-    from collections import namedtuple
 
 
 class Tags(Enum):
@@ -56,15 +50,12 @@ class Tags(Enum):
                         # I'm now thinking it has to do with a limit of concurrent sounds)
 
 
-if sys.version_info >= (3, 7):
-    @dataclass(frozen=True)
-    class Sound:
-        id: int
-        keyword: str
-        label: str
-        tags: List[Tags]
-else:
-    Sound = namedtuple('Sound', 'id    keyword                  label                        tags')
+@dataclass(frozen=True)
+class Sound:
+    id: int
+    keyword: str
+    label: str
+    tags: list[Tags]
 
 
 class Sounds(Enum):
@@ -171,17 +162,6 @@ class Sounds(Enum):
     ZELDA_ADULT_GASP   = Sound(0x6879, 'adult-zelda-gasp',      'Zelda Gasp (Adult)',        [Tags.NAVI, Tags.HPLOW])
 
 
-if sys.version_info >= (3, 7):
-    @dataclass(frozen=True)
-    class SoundHook:
-        name: str
-        pool: List[Sounds]
-        locations: List[int]
-        sfx_flag: bool
-else:
-    SoundHook = namedtuple('SoundHook', 'name pool locations sfx_flag')
-
-
 # Sound pools
 standard    = [s for s in Sounds if Tags.LOOPED not in s.value.tags]
 looping     = [s for s in Sounds if Tags.LOOPED in s.value.tags]
@@ -193,6 +173,14 @@ nightfall   = [s for s in Sounds if Tags.NIGHTFALL in s.value.tags]
 menu_select = [s for s in Sounds if Tags.MENUSELECT in s.value.tags]
 menu_cursor = [s for s in Sounds if Tags.MENUMOVE in s.value.tags]
 horse_neigh = [s for s in Sounds if Tags.HORSE in s.value.tags]
+
+
+@dataclass(frozen=True)
+class SoundHook:
+    name: str
+    pool: list[Sounds]
+    locations: list[int]
+    sfx_flag: bool
 
 
 class SoundHooks(Enum):
@@ -236,11 +224,11 @@ class SoundHooks(Enum):
 #   SWORD_SLASH     = SoundHook('Sword Slash',      standard,         [0xAC2942])
 
 
-def get_patch_dict() -> Dict[str, int]:
+def get_patch_dict() -> dict[str, int]:
     return {s.value.keyword: s.value.id for s in Sounds}
 
 
-def get_hook_pool(sound_hook: SoundHooks, earsafeonly: bool = False) -> List[Sounds]:
+def get_hook_pool(sound_hook: SoundHooks, earsafeonly: bool = False) -> list[Sounds]:
     if earsafeonly:
         list = [s for s in sound_hook.value.pool if Tags.PAINFUL not in s.value.tags]
         return list
@@ -248,7 +236,7 @@ def get_hook_pool(sound_hook: SoundHooks, earsafeonly: bool = False) -> List[Sou
         return sound_hook.value.pool
 
 
-def get_setting_choices(sound_hook: SoundHooks) -> Dict[str, str]:
+def get_setting_choices(sound_hook: SoundHooks) -> dict[str, str]:
     pool = sound_hook.value.pool
     choices = {s.value.keyword: s.value.label for s in sorted(pool, key=lambda s: s.value.label)}
     result = {
@@ -262,7 +250,7 @@ def get_setting_choices(sound_hook: SoundHooks) -> Dict[str, str]:
     return result
 
 
-def get_voice_sfx_choices(age: int, include_random: bool = True) -> List[str]:
+def get_voice_sfx_choices(age: int, include_random: bool = True) -> list[str]:
     # Dynamically populate the SettingsList entry for the voice effects
     # Voice packs should be a folder of .bin files in the Voices/{age} directory
     names = ['Default', 'Silent']

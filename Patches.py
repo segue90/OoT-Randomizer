@@ -1,3 +1,4 @@
+from __future__ import annotations
 import datetime
 import itertools
 import random
@@ -5,7 +6,8 @@ import re
 import struct
 import sys
 import zlib
-from typing import Dict, List, Iterable, Tuple, Set, Callable, Optional, Any
+from collections.abc import Callable, Iterable
+from typing import Optional, Any
 
 from Entrance import Entrance
 from HintList import get_hint
@@ -35,7 +37,7 @@ if sys.version_info >= (3, 10):
 else:
     TypeAlias = str
 
-OverrideEntry: TypeAlias = Tuple[int, int, int, int, int, int]
+OverrideEntry: TypeAlias = "tuple[int, int, int, int, int, int]"
 
 
 def patch_rom(spoiler: Spoiler, world: World, rom: Rom) -> Rom:
@@ -231,7 +233,7 @@ def patch_rom(spoiler: Spoiler, world: World, rom: Rom) -> Rom:
         rom.write_int32(rom.sym('FREE_BOMBCHU_DROPS'), 1)
 
     # show seed info on file select screen
-    def make_bytes(txt: str, size: int) -> List[int]:
+    def make_bytes(txt: str, size: int) -> list[int]:
         bytes = list(ord(c) for c in txt[:size-1]) + [0] * size
         return bytes[:size]
 
@@ -911,7 +913,7 @@ def patch_rom(spoiler: Spoiler, world: World, rom: Rom) -> Rom:
 
     exit_updates = []
 
-    def generate_exit_lookup_table() -> Dict[int, List[int]]:
+    def generate_exit_lookup_table() -> dict[int, list[int]]:
         # Assumes that the last exit on a scene's exit list cannot be 0000
         exit_table = {
             0x0028: [0xAC95C2]  # Jabu with the fish is entered from a cutscene hardcode
@@ -2031,7 +2033,7 @@ def patch_rom(spoiler: Spoiler, world: World, rom: Rom) -> Rom:
     rom.write_int16s(0x3417400, list(shop_objs))
 
     # Scrub text stuff.
-    def update_scrub_text(message: bytearray, text_replacement: List[str], default_price: int, price: int,
+    def update_scrub_text(message: bytearray, text_replacement: list[str], default_price: int, price: int,
                           item_name: Optional[str] = None) -> bytearray:
         scrub_strip_text = ["some ", "1 piece   ", "5 pieces   ", "30 pieces   "]
         for text in scrub_strip_text:
@@ -2538,20 +2540,20 @@ def add_to_extended_object_table(rom: Rom, object_id: int, start_adddress: int, 
 
 
 item_row_struct = struct.Struct('>BBHHBBIIhhBxxxI') # Match item_row_t in item_table.h
-item_row_fields = [
+item_row_fields: list[str] = [
     'base_item_id', 'action_id', 'text_id', 'object_id', 'graphic_id', 'chest_type',
     'upgrade_fn', 'effect_fn', 'effect_arg1', 'effect_arg2', 'collectible', 'alt_text_fn',
 ]
 
 
-def read_rom_item(rom: Rom, item_id: int) -> Dict[str, Any]:
+def read_rom_item(rom: Rom, item_id: int) -> dict[str, Any]:
     addr = rom.sym('item_table') + (item_id * item_row_struct.size)
     row_bytes = rom.read_bytes(addr, item_row_struct.size)
     row = item_row_struct.unpack(row_bytes)
     return { item_row_fields[i]: row[i] for i in range(len(item_row_fields)) }
 
 
-def write_rom_item(rom: Rom, item_id: int, item: Dict[str, Any]) -> None:
+def write_rom_item(rom: Rom, item_id: int, item: dict[str, Any]) -> None:
     addr = rom.sym('item_table') + (item_id * item_row_struct.size)
     row = [item[f] for f in item_row_fields]
     row_bytes = item_row_struct.pack(*row)
@@ -2559,17 +2561,17 @@ def write_rom_item(rom: Rom, item_id: int, item: Dict[str, Any]) -> None:
 
 
 texture_struct = struct.Struct('>HBxxxxxII')  # Match texture_t in textures.c
-texture_fields: List[str] = ['texture_id', 'file_buf', 'file_vrom_start', 'file_size']
+texture_fields: list[str] = ['texture_id', 'file_buf', 'file_vrom_start', 'file_size']
 
 
-def read_rom_texture(rom: Rom, texture_id: int) -> Dict[str, Any]:
+def read_rom_texture(rom: Rom, texture_id: int) -> dict[str, Any]:
     addr = rom.sym('texture_table') + (texture_id * texture_struct.size)
     row_bytes = rom.read_bytes(addr, texture_struct.size)
     row = texture_struct.unpack(row_bytes)
     return {texture_fields[i]: row[i] for i in range(len(texture_fields))}
 
 
-def write_rom_texture(rom: Rom, texture_id: int, texture: Dict[str, Any]) -> None:
+def write_rom_texture(rom: Rom, texture_id: int, texture: dict[str, Any]) -> None:
     addr = rom.sym('texture_table') + (texture_id * texture_struct.size)
     row = [texture[f] for f in texture_fields]
     row_bytes = texture_struct.pack(*row)
@@ -2645,7 +2647,7 @@ def check_location_dupes(world: World) -> None:
                 raise Exception(f'Discovered duplicate location: {check_i.name}')
 
 
-chestTypeMap: Dict[int, List[int]] = {
+chestTypeMap: dict[int, list[int]] = {
     #         small   big     boss
     0x0000: [0x5000, 0x0000, 0x2000],  # Large
     0x1000: [0x7000, 0x1000, 0x1000],  # Large, Appears, Clear Flag
@@ -2667,7 +2669,7 @@ chestTypeMap: Dict[int, List[int]] = {
 
 
 def room_get_actors(rom: Rom, actor_func: Callable[[Rom, int, int, int], Any], room_data: int, scene: int,
-                    alternate: Optional[int] = None) -> Dict[int, Any]:
+                    alternate: Optional[int] = None) -> dict[int, Any]:
     actors = {}
     room_start = alternate if alternate else room_data
     command = 0
@@ -2694,7 +2696,7 @@ def room_get_actors(rom: Rom, actor_func: Callable[[Rom, int, int, int], Any], r
 
 
 def scene_get_actors(rom: Rom, actor_func: Callable[[Rom, int, int, int], Any], scene_data: int, scene: int,
-                     alternate: Optional[int] = None, processed_rooms: Optional[List[int]] = None) -> Dict[int, Any]:
+                     alternate: Optional[int] = None, processed_rooms: Optional[list[int]] = None) -> dict[int, Any]:
     if processed_rooms is None:
         processed_rooms = []
     actors = {}
@@ -2733,7 +2735,7 @@ def scene_get_actors(rom: Rom, actor_func: Callable[[Rom, int, int, int], Any], 
     return actors
 
 
-def get_actor_list(rom: Rom, actor_func: Callable[[Rom, int, int, int], Any]) -> Dict[int, Any]:
+def get_actor_list(rom: Rom, actor_func: Callable[[Rom, int, int, int], Any]) -> dict[int, Any]:
     actors = {}
     scene_table = 0x00B71440
     for scene in range(0x00, 0x65):
@@ -2858,8 +2860,8 @@ def move_fado_in_lost_woods(rom):
 # If boss keys are set to remove, returns boss key doors
 # If ganons boss key is set to remove, returns ganons boss key doors
 # If pot/crate shuffle is enabled, returns the first ganon's boss key door so that it can be unlocked separately to allow access to the room w/ the pots..
-def get_doors_to_unlock(rom: Rom, world: World) -> Dict[int, List[int]]:
-    def get_door_to_unlock(rom: Rom, actor_id: int, actor: int, scene: int) -> List[int]:
+def get_doors_to_unlock(rom: Rom, world: World) -> dict[int, list[int]]:
+    def get_door_to_unlock(rom: Rom, actor_id: int, actor: int, scene: int) -> list[int]:
         actor_var = rom.read_int16(actor + 14)
         door_type = actor_var >> 6
         switch_flag = actor_var & 0x003F
@@ -2886,7 +2888,7 @@ def get_doors_to_unlock(rom: Rom, world: World) -> Dict[int, List[int]]:
 def create_fake_name(name: str) -> str:
     vowels = 'aeiou'
     list_name = list(name)
-    vowel_indexes = [i for i,c in enumerate(list_name) if c in vowels]
+    vowel_indexes = [i for i, c in enumerate(list_name) if c in vowels]
     for i in random.sample(vowel_indexes, min(2, len(vowel_indexes))):
         c = list_name[i]
         list_name[i] = random.choice([v for v in vowels if v != c])
@@ -2901,7 +2903,7 @@ def create_fake_name(name: str) -> str:
     return new_name
 
 
-def place_shop_items(rom: Rom, world: World, shop_items, messages, locations, init_shop_id: bool = False) -> Set[int]:
+def place_shop_items(rom: Rom, world: World, shop_items, messages, locations, init_shop_id: bool = False) -> set[int]:
     if init_shop_id:
         place_shop_items.shop_id = 0x32
 
@@ -2950,9 +2952,9 @@ def place_shop_items(rom: Rom, world: World, shop_items, messages, locations, in
             # give it and set this as sold out.
             # With complete mask quest, it's free to take normally
             if not world.settings.complete_mask_quest and \
-              ((location.vanilla_item == 'Mask of Truth' and 'Mask of Truth' in world.settings.shuffle_child_trade) or \
-               ('mask_shop' in world.settings.misc_hints and location.vanilla_item == 'Goron Mask' and 'Goron Mask' in world.settings.shuffle_child_trade) or \
-               ('mask_shop' in world.settings.misc_hints and location.vanilla_item == 'Zora Mask' and 'Zora Mask' in world.settings.shuffle_child_trade) or \
+              ((location.vanilla_item == 'Mask of Truth' and 'Mask of Truth' in world.settings.shuffle_child_trade) or
+               ('mask_shop' in world.settings.misc_hints and location.vanilla_item == 'Goron Mask' and 'Goron Mask' in world.settings.shuffle_child_trade) or
+               ('mask_shop' in world.settings.misc_hints and location.vanilla_item == 'Zora Mask' and 'Zora Mask' in world.settings.shuffle_child_trade) or
                ('mask_shop' in world.settings.misc_hints and location.vanilla_item == 'Gerudo Mask' and 'Gerudo Mask' in world.settings.shuffle_child_trade)):
                 shop_item.func2 = 0x80863714  # override to custom CanBuy function to prevent purchase before trade quest complete
 

@@ -1,8 +1,10 @@
+from __future__ import annotations
 import random
 import logging
 from collections import OrderedDict
+from collections.abc import Iterable, Container
 from itertools import chain
-from typing import TYPE_CHECKING, List, Iterable, Container, Tuple, Dict, Optional
+from typing import TYPE_CHECKING, Optional
 
 from Fill import ShuffleError
 from Search import Search
@@ -20,7 +22,7 @@ if TYPE_CHECKING:
     from World import World
 
 
-def set_all_entrances_data(world: "World") -> None:
+def set_all_entrances_data(world: World) -> None:
     for type, forward_entry, *return_entry in entrance_shuffle_table:
         forward_entrance = world.get_entrance(forward_entry[0])
         forward_entrance.data = forward_entry[1]
@@ -38,7 +40,7 @@ def set_all_entrances_data(world: "World") -> None:
                 return_entrance.data['index'] = 0x7FFF
 
 
-def assume_entrance_pool(entrance_pool: "List[Entrance]") -> "List[Entrance]":
+def assume_entrance_pool(entrance_pool: list[Entrance]) -> list[Entrance]:
     assumed_pool = []
     for entrance in entrance_pool:
         assumed_forward = entrance.assume_reachable()
@@ -53,8 +55,8 @@ def assume_entrance_pool(entrance_pool: "List[Entrance]") -> "List[Entrance]":
     return assumed_pool
 
 
-def build_one_way_targets(world: "World", types_to_include: Iterable[str], exclude: Container[str] = (), target_region_names: Container[str] = ()) -> "List[Entrance]":
-    one_way_entrances: "List[Entrance]" = []
+def build_one_way_targets(world: World, types_to_include: Iterable[str], exclude: Container[str] = (), target_region_names: Container[str] = ()) -> list[Entrance]:
+    one_way_entrances: list[Entrance] = []
     for pool_type in types_to_include:
         one_way_entrances += world.get_shufflable_entrances(type=pool_type)
     valid_one_way_entrances = list(filter(lambda entrance: entrance.name not in exclude, one_way_entrances))
@@ -416,7 +418,7 @@ class EntranceShuffleError(ShuffleError):
 
 
 # Set entrances of all worlds, first initializing them to their default regions, then potentially shuffling part of them
-def set_entrances(worlds: "List[World]", savewarps_to_connect: "List[Tuple[Entrance, str]]") -> None:
+def set_entrances(worlds: list[World], savewarps_to_connect: list[tuple[Entrance, str]]) -> None:
     for world in worlds:
         world.initialize_entrances()
 
@@ -436,7 +438,7 @@ def set_entrances(worlds: "List[World]", savewarps_to_connect: "List[Tuple[Entra
 
 
 # Shuffles entrances that need to be shuffled in all worlds
-def shuffle_random_entrances(worlds: "List[World]") -> None:
+def shuffle_random_entrances(worlds: list[World]) -> None:
     # Store all locations reachable before shuffling to differentiate which locations were already unreachable from those we made unreachable
     complete_itempool = [item for world in worlds for item in world.get_itempool_with_dungeon_items()]
     max_search = Search.max_explore([world.state for world in worlds], complete_itempool)
@@ -688,10 +690,10 @@ def shuffle_random_entrances(worlds: "List[World]") -> None:
             raise EntranceShuffleError('Worlds are not valid after shuffling entrances, Reason: %s' % error)
 
 
-def shuffle_one_way_priority_entrances(worlds: "List[World]", world: "World", one_way_priorities: Dict[str, Tuple[List[str], List[str]]],
-                                       one_way_entrance_pools: "Dict[str, List[Entrance]]", one_way_target_entrance_pools: "Dict[str, List[Entrance]]",
-                                       locations_to_ensure_reachable: "Iterable[Location]", complete_itempool: "List[Item]",
-                                       retry_count: int = 2) -> "List[Tuple[Entrance, Entrance]]":
+def shuffle_one_way_priority_entrances(worlds: list[World], world: World, one_way_priorities: dict[str, tuple[list[str], list[str]]],
+                                       one_way_entrance_pools: dict[str, list[Entrance]], one_way_target_entrance_pools: dict[str, list[Entrance]],
+                                       locations_to_ensure_reachable: Iterable[Location], complete_itempool: list[Item],
+                                       retry_count: int = 2) -> list[tuple[Entrance, Entrance]]:
     while retry_count:
         retry_count -= 1
         rollbacks = []
@@ -719,9 +721,9 @@ def shuffle_one_way_priority_entrances(worlds: "List[World]", world: "World", on
 
 
 # Shuffle all entrances within a provided pool
-def shuffle_entrance_pool(world: "World", worlds: "List[World]", entrance_pool: "List[Entrance]", target_entrances: "List[Entrance]",
-                          locations_to_ensure_reachable: "Iterable[Location]", check_all: bool = False, retry_count: int = 20,
-                          placed_one_way_entrances: "Optional[List[Tuple[Entrance, Entrance]]]" = None) -> "List[Tuple[Entrance, Entrance]]":
+def shuffle_entrance_pool(world: World, worlds: list[World], entrance_pool: list[Entrance], target_entrances: list[Entrance],
+                          locations_to_ensure_reachable: Iterable[Location], check_all: bool = False, retry_count: int = 20,
+                          placed_one_way_entrances: Optional[list[tuple[Entrance, Entrance]]] = None) -> list[tuple[Entrance, Entrance]]:
     if placed_one_way_entrances is None:
         placed_one_way_entrances = []
     # Split entrances between those that have requirements (restrictive) and those that do not (soft). These are primarily age or time of day requirements.
@@ -764,7 +766,7 @@ def shuffle_entrance_pool(world: "World", worlds: "List[World]", entrance_pool: 
 
 
 # Split entrances based on their requirements to figure out how each entrance should be handled when shuffling them
-def split_entrances_by_requirements(worlds: "List[World]", entrances_to_split: "List[Entrance]", assumed_entrances: "List[Entrance]") -> "Tuple[List[Entrance], List[Entrance]]":
+def split_entrances_by_requirements(worlds: list[World], entrances_to_split: list[Entrance], assumed_entrances: list[Entrance]) -> tuple[list[Entrance], list[Entrance]]:
     # First, disconnect all root assumed entrances and save which regions they were originally connected to, so we can reconnect them later
     original_connected_regions = {}
     entrances_to_disconnect = set(assumed_entrances).union(entrance.reverse for entrance in assumed_entrances if entrance.reverse)
@@ -798,8 +800,8 @@ def split_entrances_by_requirements(worlds: "List[World]", entrances_to_split: "
     return restrictive_entrances, soft_entrances
 
 
-def replace_entrance(worlds: "List[World]", entrance: "Entrance", target: "Entrance", rollbacks: "List[Tuple[Entrance, Entrance]]",
-                     locations_to_ensure_reachable: "Iterable[Location]", itempool: "List[Item]", placed_one_way_entrances: "Optional[List[Tuple[Entrance, Entrance]]]" = None) -> bool:
+def replace_entrance(worlds: list[World], entrance: Entrance, target: Entrance, rollbacks: list[tuple[Entrance, Entrance]],
+                     locations_to_ensure_reachable: Iterable[Location], itempool: list[Item], placed_one_way_entrances: Optional[list[tuple[Entrance, Entrance]]] = None) -> bool:
     if placed_one_way_entrances is None:
         placed_one_way_entrances = []
     try:
@@ -820,9 +822,9 @@ def replace_entrance(worlds: "List[World]", entrance: "Entrance", target: "Entra
 # Connect one random entrance from entrance pools to one random target in the respective target pool.
 # Entrance chosen will have one of the allowed types.
 # Target chosen will lead to one of the allowed regions.
-def place_one_way_priority_entrance(worlds: "List[World]", world: "World", priority_name: str, allowed_regions: Container[str], allowed_types: Iterable[str],
-                                    rollbacks: "List[Tuple[Entrance, Entrance]]", locations_to_ensure_reachable: "Iterable[Location]", complete_itempool: "List[Item]",
-                                    one_way_entrance_pools: "Dict[str, List[Entrance]]", one_way_target_entrance_pools: "Dict[str, List[Entrance]]") -> None:
+def place_one_way_priority_entrance(worlds: list[World], world: World, priority_name: str, allowed_regions: Container[str], allowed_types: Iterable[str],
+                                    rollbacks: list[tuple[Entrance, Entrance]], locations_to_ensure_reachable: Iterable[Location], complete_itempool: list[Item],
+                                    one_way_entrance_pools: dict[str, list[Entrance]], one_way_target_entrance_pools: dict[str, list[Entrance]]) -> None:
     # Combine the entrances for allowed types in one list.
     # Shuffle this list.
     # Pick the first one not already set, not adult spawn, that has a valid target entrance.
@@ -851,8 +853,8 @@ def place_one_way_priority_entrance(worlds: "List[World]", world: "World", prior
 
 # Shuffle entrances by placing them instead of entrances in the provided target entrances list
 # While shuffling entrances, the algorithm will ensure worlds are still valid based on multiple criterias
-def shuffle_entrances(worlds: "List[World]", entrances: "List[Entrance]", target_entrances: "List[Entrance]", rollbacks: "List[Tuple[Entrance, Entrance]]",
-                      locations_to_ensure_reachable: "Iterable[Location]" = (), placed_one_way_entrances: "Optional[List[Tuple[Entrance, Entrance]]]" = None) -> None:
+def shuffle_entrances(worlds: list[World], entrances: list[Entrance], target_entrances: list[Entrance], rollbacks: list[tuple[Entrance, Entrance]],
+                      locations_to_ensure_reachable: Iterable[Location] = (), placed_one_way_entrances: Optional[list[tuple[Entrance, Entrance]]] = None) -> None:
     if placed_one_way_entrances is None:
         placed_one_way_entrances = []
     # Retrieve all items in the itempool, all worlds included
@@ -878,8 +880,8 @@ def shuffle_entrances(worlds: "List[World]", entrances: "List[Entrance]", target
 
 
 # Check and validate that an entrance is compatible to replace a specific target
-def check_entrances_compatibility(entrance: "Entrance", target: "Entrance", rollbacks: "List[Tuple[Entrance, Entrance]]" = (),
-                                  placed_one_way_entrances: "Optional[List[Tuple[Entrance, Entrance]]]" = None) -> None:
+def check_entrances_compatibility(entrance: Entrance, target: Entrance, rollbacks: list[tuple[Entrance, Entrance]] = (),
+                                  placed_one_way_entrances: Optional[list[tuple[Entrance, Entrance]]] = None) -> None:
     if placed_one_way_entrances is None:
         placed_one_way_entrances = []
     # An entrance shouldn't be connected to its own scene, so we fail in that situation
@@ -904,8 +906,8 @@ def check_entrances_compatibility(entrance: "Entrance", target: "Entrance", roll
 
 
 # Validate the provided worlds' structures, raising an error if it's not valid based on our criterias
-def validate_world(world: "World", worlds: "List[World]", entrance_placed: "Optional[Entrance]", locations_to_ensure_reachable: "Iterable[Location]",
-                   itempool: "List[Item]", placed_one_way_entrances: "Optional[List[Tuple[Entrance, Entrance]]]" = None) -> None:
+def validate_world(world: World, worlds: list[World], entrance_placed: Optional[Entrance], locations_to_ensure_reachable: Iterable[Location],
+                   itempool: list[Item], placed_one_way_entrances: Optional[list[tuple[Entrance, Entrance]]] = None) -> None:
     if placed_one_way_entrances is None:
         placed_one_way_entrances = []
     # For various reasons, we don't want the player to end up through certain entrances as the wrong age
@@ -1024,7 +1026,7 @@ def validate_world(world: "World", worlds: "List[World]", entrance_placed: "Opti
 
 
 # Returns whether or not we can affirm the entrance can never be accessed as the given age
-def entrance_unreachable_as(entrance: "Entrance", age: str, already_checked: "Optional[List[Entrance]]" = None) -> bool:
+def entrance_unreachable_as(entrance: Entrance, age: str, already_checked: Optional[list[Entrance]] = None) -> bool:
     if already_checked is None:
         already_checked = []
 
@@ -1053,7 +1055,7 @@ def entrance_unreachable_as(entrance: "Entrance", age: str, already_checked: "Op
 
 
 # Returns whether two entrances are in the same hint area
-def same_hint_area(first: HintArea, second: HintArea) -> bool:
+def same_hint_area(first: Entrance, second: Entrance) -> bool:
     try:
         return HintArea.at(first) == HintArea.at(second)
     except HintAreaNotFound:
@@ -1061,7 +1063,7 @@ def same_hint_area(first: HintArea, second: HintArea) -> bool:
 
 
 # Shorthand function to find an entrance with the requested name leading to a specific region
-def get_entrance_replacing(region: Region, entrance_name: str) -> "Optional[Entrance]":
+def get_entrance_replacing(region: Region, entrance_name: str) -> Optional[Entrance]:
     original_entrance = region.world.get_entrance(entrance_name)
 
     if not original_entrance.shuffled:
@@ -1076,7 +1078,7 @@ def get_entrance_replacing(region: Region, entrance_name: str) -> "Optional[Entr
 
 
 # Change connections between an entrance and a target assumed entrance, in order to test the connections afterwards if necessary
-def change_connections(entrance: "Entrance", target_entrance: "Entrance") -> None:
+def change_connections(entrance: Entrance, target_entrance: Entrance) -> None:
     entrance.connect(target_entrance.disconnect())
     entrance.replaces = target_entrance.replaces
     if entrance.reverse:
@@ -1085,7 +1087,7 @@ def change_connections(entrance: "Entrance", target_entrance: "Entrance") -> Non
 
 
 # Restore connections between an entrance and a target assumed entrance
-def restore_connections(entrance: "Entrance", target_entrance: "Entrance") -> None:
+def restore_connections(entrance: Entrance, target_entrance: Entrance) -> None:
     target_entrance.connect(entrance.disconnect())
     entrance.replaces = None
     if entrance.reverse:
@@ -1094,7 +1096,7 @@ def restore_connections(entrance: "Entrance", target_entrance: "Entrance") -> No
 
 
 # Confirm the replacement of a target entrance by a new entrance, logging the new connections and completely deleting the target entrances
-def confirm_replacement(entrance: "Entrance", target_entrance: "Entrance") -> None:
+def confirm_replacement(entrance: Entrance, target_entrance: Entrance) -> None:
     delete_target_entrance(target_entrance)
     logging.getLogger('').debug('Connected %s To %s [World %d]', entrance, entrance.connected_region, entrance.world.id)
     if entrance.reverse:
@@ -1104,7 +1106,7 @@ def confirm_replacement(entrance: "Entrance", target_entrance: "Entrance") -> No
 
 
 # Delete an assumed target entrance, by disconnecting it if needed and removing it from its parent region
-def delete_target_entrance(target_entrance: "Entrance") -> None:
+def delete_target_entrance(target_entrance: Entrance) -> None:
     if target_entrance.connected_region is not None:
         target_entrance.disconnect()
     if target_entrance.parent_region is not None:

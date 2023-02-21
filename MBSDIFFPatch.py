@@ -1,10 +1,10 @@
+from __future__ import annotations
 import logging
 import gzip
 import os
 import platform
 import shutil
-import struct
-from typing import Optional, MutableSequence
+from typing import Optional
 
 from Rom import Rom
 from Utils import default_output_path, is_bundled, local_path, run_process
@@ -99,7 +99,7 @@ def apply_minibsdiff_patch_file(rom: Rom, file: str) -> None:
     if size_difference > 0:
         rom.append_bytes([0] * size_difference)
 
-    ctrl_block: MutableSequence[int] = [0] * 3
+    ctrl_block: list[int] = [0] * 3
     ctrl_block_address: int = 32
     diff_block_address: int = ctrl_block_address + ctrl_len
     extra_block_address: int = diff_block_address + data_len

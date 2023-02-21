@@ -1,12 +1,13 @@
+from __future__ import annotations
 from collections import namedtuple
 from itertools import chain
-from typing import Dict, List, Tuple, Optional
+from typing import Optional
 
 Entry = namedtuple("Entry", ['setting_name', 'item_name', 'available', 'gui_text', 'special', 'ammo', 'i'])
 
 
 def _entry(setting_name: str, item_name: Optional[str] = None, available: int = 1, gui_text: Optional[str] = None,
-           special: bool = False, ammo: Optional[Dict[str, Tuple[int, ...]]] = None) -> List[Tuple[str, Entry]]:
+           special: bool = False, ammo: Optional[dict[str, tuple[int, ...]]] = None) -> list[tuple[str, Entry]]:
     if item_name is None:
         item_name = setting_name.capitalize()
     if gui_text is None:
@@ -22,7 +23,7 @@ def _entry(setting_name: str, item_name: Optional[str] = None, available: int = 
 
 
 # Ammo items must be declared in ItemList.py.
-inventory: Dict[str, Entry] = dict(chain(
+inventory: dict[str, Entry] = dict(chain(
     _entry('deku_stick', 'Deku Stick Capacity', available=2, ammo={'Deku Sticks': (20, 30)}),
     _entry('deku_nut', 'Deku Nut Capacity', available=2, ammo={'Deku Nuts': (30, 40)}),
     _entry('bombs', 'Bomb Bag', available=3, ammo={'Bombs': (20, 30, 40)}),
@@ -67,7 +68,7 @@ inventory: Dict[str, Entry] = dict(chain(
     _entry("mask_of_truth","Mask of Truth", gui_text="Mask of Truth"),
 ))
 
-songs: Dict[str, Entry] = dict(chain(
+songs: dict[str, Entry] = dict(chain(
     _entry('lullaby', 'Zeldas Lullaby', gui_text="Zelda's Lullaby"),
     _entry('eponas_song', 'Eponas Song', gui_text="Epona's Song"),
     _entry('sarias_song', 'Sarias Song', gui_text="Saria's Song"),
@@ -82,7 +83,7 @@ songs: Dict[str, Entry] = dict(chain(
     _entry('prelude', 'Prelude of Light'),
 ))
 
-equipment: Dict[str, Entry] = dict(chain(
+equipment: dict[str, Entry] = dict(chain(
     _entry('kokiri_sword', 'Kokiri Sword'),
     _entry('giants_knife', 'Giants Knife'),
     _entry('biggoron_sword', 'Biggoron Sword'),
@@ -101,4 +102,4 @@ equipment: Dict[str, Entry] = dict(chain(
     _entry('defense', 'Double Defense'),
 ))
 
-everything: Dict[str, Entry] = {**equipment, **inventory, **songs}
+everything: dict[str, Entry] = {**equipment, **inventory, **songs}

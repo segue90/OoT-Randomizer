@@ -1,3 +1,4 @@
+from __future__ import annotations
 import copy
 import hashlib
 import logging
@@ -7,7 +8,7 @@ import random
 import shutil
 import time
 import zipfile
-from typing import List, Optional
+from typing import Optional
 
 
 from Cosmetics import CosmeticsLog, patch_cosmetics
@@ -119,7 +120,7 @@ def generate(settings: Settings) -> Spoiler:
     return make_spoiler(settings, worlds)
 
 
-def build_world_graphs(settings: Settings) -> List[World]:
+def build_world_graphs(settings: Settings) -> list[World]:
     logger = logging.getLogger('')
     worlds = []
     for i in range(0, settings.world_count):
@@ -165,13 +166,13 @@ def build_world_graphs(settings: Settings) -> List[World]:
     return worlds
 
 
-def place_items(worlds: List[World]) -> None:
+def place_items(worlds: list[World]) -> None:
     logger = logging.getLogger('')
     logger.info('Fill the world.')
     distribute_items_restrictive(worlds)
 
 
-def make_spoiler(settings: Settings, worlds: List[World]) -> Spoiler:
+def make_spoiler(settings: Settings, worlds: list[World]) -> Spoiler:
     logger = logging.getLogger('')
     spoiler = Spoiler(worlds)
     if settings.create_spoiler:

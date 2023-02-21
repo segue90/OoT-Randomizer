@@ -1,7 +1,8 @@
+from __future__ import annotations
 import os
 import random
 from enum import IntEnum
-from typing import TYPE_CHECKING, List, Union, Dict, Tuple
+from typing import TYPE_CHECKING
 
 from Utils import data_path
 
@@ -11,7 +12,7 @@ if TYPE_CHECKING:
     from Settings import Settings
 
 
-def get_model_choices(age: int) -> List[str]:
+def get_model_choices(age: int) -> list[str]:
     names = ["Default"]
     path = data_path("Models/Adult")
     if age == 1:
@@ -36,8 +37,8 @@ class ModelDefinitionError(ModelError):
 
 # Used for writer model pointers to the rom in place of the vanilla pointers
 class ModelPointerWriter:
-    def __init__(self, rom: "Rom") -> None:
-        self.rom: "Rom" = rom
+    def __init__(self, rom: Rom) -> None:
+        self.rom: Rom = rom
         self.offset: int = 0
         self.advance: int = 4
         self.base: int = CODE_START
@@ -92,7 +93,7 @@ class ModelPointerWriter:
 
 # Either return the starting index of the requested data (when start == 0)
 # or the offset of the element in the footer, if it exists (start > 0)
-def scan(bytes: bytearray, data: Union[bytearray, str], start: int = 0) -> int:
+def scan(bytes: bytearray, data: bytearray | str, start: int = 0) -> int:
     databytes = data
     # If a string was passed, encode string as bytes
     if isinstance(data, str):
@@ -193,7 +194,7 @@ def unwrap(zobj: bytearray, address: int) -> int:
 
 
 # Used to overwrite pointers in the displaylist with new ones
-def WriteDLPointer(dl: List[int], index: int, data: int) -> None:
+def WriteDLPointer(dl: list[int], index: int, data: int) -> None:
     bytes = data.to_bytes(4, 'big')
     for i in range(4):
         dl[index + i] = bytes[i]
@@ -201,8 +202,8 @@ def WriteDLPointer(dl: List[int], index: int, data: int) -> None:
 
 # An extensive function which loads pieces from the vanilla Link model to add to the user-provided zobj
 # Based on https://github.com/hylian-modding/ML64-Z64Lib/blob/master/cores/Z64Lib/API/zzoptimize.ts function optimize()
-def LoadVanilla(rom: "Rom", missing: List[str], rebase: int, linkstart: int, linksize: int,
-                pieces: 'Dict[str, Tuple[Offsets, int]]', skips: Dict[str, List[Tuple[int, int]]]) -> Tuple[List[int], Dict[str, int]]:
+def LoadVanilla(rom: Rom, missing: list[str], rebase: int, linkstart: int, linksize: int,
+                pieces: dict[str, tuple[Offsets, int]], skips: dict[str, list[tuple[int, int]]]) -> tuple[list[int], dict[str, int]]:
     # Get vanilla "zobj" of Link's model
     vanillaData = []
     for i in range(linksize):
@@ -440,7 +441,7 @@ def CheckDiff(limb: int, skeleton: int) -> bool:
     return diff > TOLERANCE
 
 
-def CorrectSkeleton(zobj: bytearray, skeleton: List[List[int]], agestr: str) -> bool:
+def CorrectSkeleton(zobj: bytearray, skeleton: list[list[int]], agestr: str) -> bool:
     # Get the hierarchy pointer
     hierarchy = FindHierarchy(zobj, agestr)
     # Get what the hierarchy pointer points to (pointer to limb 0)
@@ -483,7 +484,7 @@ def CorrectSkeleton(zobj: bytearray, skeleton: List[List[int]], agestr: str) -> 
 
 
 # Loads model from file and processes it by adding vanilla pieces and setting up the LUT if necessary.
-def LoadModel(rom: "Rom", model: str, age: int) -> int:
+def LoadModel(rom: Rom, model: str, age: int) -> int:
     # age 0 = adult, 1 = child
     linkstart = ADULT_START
     linksize = ADULT_SIZE
@@ -603,7 +604,7 @@ def LoadModel(rom: "Rom", model: str, age: int) -> int:
 
 
 # Write in the adult model and repoint references to it
-def patch_model_adult(rom: "Rom", settings: "Settings", log: "CosmeticsLog") -> None:
+def patch_model_adult(rom: Rom, settings: Settings, log: CosmeticsLog) -> None:
     # Get model filepath
     model = settings.model_adult_filepicker
     # Default to filepicker if non-empty
@@ -775,7 +776,7 @@ def patch_model_adult(rom: "Rom", settings: "Settings", log: "CosmeticsLog") -> 
 
 
 # Write in the child model and repoint references to it
-def patch_model_child(rom: "Rom", settings: "Settings", log: "CosmeticsLog") -> None:
+def patch_model_child(rom: Rom, settings: Settings, log: CosmeticsLog) -> None:
     # Get model filepath
     model = settings.model_child_filepicker
     # Default to filepicker if non-empty
@@ -1089,7 +1090,7 @@ class Offsets(IntEnum):
 
 
 # Adult model pieces and their offsets, both in the LUT and in vanilla
-AdultPieces: Dict[str, Tuple[Offsets, int]] = {
+AdultPieces: dict[str, tuple[Offsets, int]] = {
     "Sheath": (Offsets.ADULT_LINK_LUT_DL_SWORD_SHEATH, 0x249D8),
     "FPS.Hookshot": (Offsets.ADULT_LINK_LUT_DL_FPS_HOOKSHOT, 0x2A738),
     "Hilt.2": (Offsets.ADULT_LINK_LUT_DL_SWORD_HILT, 0x22060),  # 0x21F78 + 0xE8, skips blade
@@ -1149,7 +1150,7 @@ AdultPieces: Dict[str, Tuple[Offsets, int]] = {
 # Note: Some skips which can be implemented by skipping the beginning portion of the model
 # rather than specifying those indices here, simply have their offset in the table above
 # increased by whatever amount of starting indices would be skipped.
-adultSkips: Dict[str, List[Tuple[int, int]]] = {
+adultSkips: dict[str, list[tuple[int, int]]] = {
     "FPS.Hookshot":  [(0x2F0, 0x618)],
     "Hilt.2": [(0x1E8, 0x430)],
     "Hilt.3": [(0x160, 0x480)],
@@ -1163,7 +1164,7 @@ adultSkips: Dict[str, List[Tuple[int, int]]] = {
     "Shield.3": [(0x1B8, 0x3E8)],
 }
 
-adultSkeleton: List[List[int]] = [
+adultSkeleton: list[list[int]] = [
     [0xFFC7, 0x0D31, 0x0000],  # Limb 0
     [0x0000, 0x0000, 0x0000],  # Limb 1
     [0x03B1, 0x0000, 0x0000],  # Limb 2
@@ -1188,7 +1189,7 @@ adultSkeleton: List[List[int]] = [
 ]
 
 
-ChildPieces: Dict[str, Tuple[Offsets, int]] = {
+ChildPieces: dict[str, tuple[Offsets, int]] = {
     "Slingshot.String": (Offsets.CHILD_LINK_LUT_DL_SLINGSHOT_STRING, 0x221A8),
     "Sheath": (Offsets.CHILD_LINK_LUT_DL_SWORD_SHEATH, 0x15408),
     "Blade.2": (Offsets.CHILD_LINK_LUT_DL_MASTER_SWORD, 0x15698),  # 0x15540 + 0x158, skips fist
@@ -1235,14 +1236,14 @@ ChildPieces: Dict[str, Tuple[Offsets, int]] = {
 }
 
 
-childSkips: Dict[str, List[Tuple[int, int]]] = {
+childSkips: dict[str, list[tuple[int, int]]] = {
     "Boomerang": [(0x140, 0x240)],
     "Hilt.1": [(0xC8, 0x170)],
     "Shield.1": [(0x140, 0x218)],
     "Ocarina.1": [(0x110, 0x240)],
 }
 
-childSkeleton: List[List[int]] = [
+childSkeleton: list[list[int]] = [
     [0x0000, 0x0948, 0x0000],  # Limb 0
     [0xFFFC, 0xFF98, 0x0000],  # Limb 1
     [0x025F, 0x0000, 0x0000],  # Limb 2
@@ -1313,7 +1314,7 @@ CHILD_HIERARCHY: int     = 0x060053A8
 CHILD_POST_START: int    = 0x00005228
 
 # Parts of the rom to not overwrite when applying a patch file
-restrictiveBytes: List[Tuple[int, int]] = [
+restrictiveBytes: list[tuple[int, int]] = [
     (ADULT_START, ADULT_SIZE),  # Ignore adult model
     (CHILD_START, CHILD_SIZE),  # Ignore child model
     # Adult model pointers

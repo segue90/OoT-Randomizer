@@ -1,18 +1,19 @@
 #!/usr/bin/env python3
+from __future__ import annotations
 import copy
 import json
 import sys
-from typing import Dict, List, Any, Optional
+from typing import Any, Optional
 
 from Hints import hint_dist_files
 from SettingsList import SettingInfos, get_settings_from_section, get_settings_from_tab
 from Utils import data_path
 
 
-tab_keys: List[str] = ['text', 'app_type', 'footer']
-section_keys: List[str] = ['text', 'app_type', 'is_colors', 'is_sfx', 'col_span', 'row_span', 'subheader']
-setting_keys: List[str] = ['hide_when_disabled', 'min', 'max', 'size', 'max_length', 'file_types', 'no_line_break', 'function', 'option_remove', 'dynamic']
-types_with_options: List[str] = ['Checkbutton', 'Radiobutton', 'Combobox', 'SearchBox', 'MultipleSelect']
+tab_keys: list[str] = ['text', 'app_type', 'footer']
+section_keys: list[str] = ['text', 'app_type', 'is_colors', 'is_sfx', 'col_span', 'row_span', 'subheader']
+setting_keys: list[str] = ['hide_when_disabled', 'min', 'max', 'size', 'max_length', 'file_types', 'no_line_break', 'function', 'option_remove', 'dynamic']
+types_with_options: list[str] = ['Checkbutton', 'Radiobutton', 'Combobox', 'SearchBox', 'MultipleSelect']
 
 
 def remove_trailing_lines(text: str) -> str:
@@ -34,7 +35,7 @@ def deep_update(source: dict, new_dict: dict) -> dict:
     return source
 
 
-def add_disable_option_to_json(disable_option: Dict[str, Any], option_json: Dict[str, Any]) -> None:
+def add_disable_option_to_json(disable_option: dict[str, Any], option_json: dict[str, Any]) -> None:
     if disable_option.get('settings') is not None:
         if 'controls_visibility_setting' not in option_json:
             option_json['controls_visibility_setting'] = ','.join(disable_option['settings'])
@@ -52,7 +53,7 @@ def add_disable_option_to_json(disable_option: Dict[str, Any], option_json: Dict
             option_json['controls_visibility_tab'] += ',' + ','.join(disable_option['tabs'])
 
 
-def get_setting_json(setting: str, web_version: bool, as_array: bool = False) -> Optional[Dict[str, Any]]:
+def get_setting_json(setting: str, web_version: bool, as_array: bool = False) -> Optional[dict[str, Any]]:
     try:
         setting_info = SettingInfos.setting_infos[setting]
     except KeyError:
@@ -64,7 +65,7 @@ def get_setting_json(setting: str, web_version: bool, as_array: bool = False) ->
     if setting_info.gui_text is None:
         return None
 
-    setting_json: Dict[str, Any] = {
+    setting_json: dict[str, Any] = {
         'options':       [],
         'default':       setting_info.default,
         'text':          setting_info.gui_text,
@@ -180,7 +181,7 @@ def get_setting_json(setting: str, web_version: bool, as_array: bool = False) ->
     return setting_json
 
 
-def get_section_json(section: Dict[str, Any], web_version: bool, as_array: bool = False) -> Dict[str, Any]:
+def get_section_json(section: dict[str, Any], web_version: bool, as_array: bool = False) -> dict[str, Any]:
     if as_array:
         section_json = {
             'name'     : section['name'],
@@ -205,7 +206,7 @@ def get_section_json(section: Dict[str, Any], web_version: bool, as_array: bool 
     return section_json
 
 
-def get_tab_json(tab: Dict[str, Any], web_version: bool, as_array: bool = False) -> Dict[str, Any]:
+def get_tab_json(tab: dict[str, Any], web_version: bool, as_array: bool = False) -> dict[str, Any]:
     if as_array:
         tab_json = {
             'name'     : tab['name'],

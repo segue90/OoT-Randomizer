@@ -1,7 +1,9 @@
+from __future__ import annotations
 import random
 import sys
+from collections.abc import Callable, Sequence
 from itertools import chain
-from typing import TYPE_CHECKING, Dict, List, Tuple, Sequence, Callable, Optional, Union
+from typing import TYPE_CHECKING, Optional
 
 from Fill import ShuffleError
 
@@ -14,16 +16,16 @@ if TYPE_CHECKING:
     from Rom import Rom
     from World import World
 
-ActivationTransform: TypeAlias = Callable[[List[int]], List[int]]
-PlaybackTransform: TypeAlias = Callable[[List[Dict[str, int]]], List[Dict[str, int]]]
-Transform: TypeAlias = Union[ActivationTransform, PlaybackTransform]
+ActivationTransform: TypeAlias = "Callable[[list[int]], list[int]]"
+PlaybackTransform: TypeAlias = "Callable[[list[dict[str, int]]], list[dict[str, int]]]"
+Transform: TypeAlias = "ActivationTransform | PlaybackTransform"
 
 PLAYBACK_START: int = 0xB781DC
 PLAYBACK_LENGTH: int = 0xA0
 ACTIVATION_START: int = 0xB78E5C
 ACTIVATION_LENGTH: int = 0x09
 
-FORMAT_ACTIVATION: Dict[int, str] = {
+FORMAT_ACTIVATION: dict[int, str] = {
     0: 'A',
     1: 'v',
     2: '>',
@@ -31,7 +33,7 @@ FORMAT_ACTIVATION: Dict[int, str] = {
     4: '^',
 }
 
-READ_ACTIVATION: Dict[str, int] = {  # support both Av><^ and ADRLU
+READ_ACTIVATION: dict[str, int] = {  # support both Av><^ and ADRLU
     'a': 0,
     'v': 1,
     'd': 1,
@@ -43,7 +45,7 @@ READ_ACTIVATION: Dict[str, int] = {  # support both Av><^ and ADRLU
     'u': 4,
 }
 
-ACTIVATION_TO_PLAYBACK_NOTE: Dict[int, int] = {
+ACTIVATION_TO_PLAYBACK_NOTE: dict[int, int] = {
     0: 0x02,  # A
     1: 0x05,  # Down
     2: 0x09,  # Right
@@ -52,7 +54,7 @@ ACTIVATION_TO_PLAYBACK_NOTE: Dict[int, int] = {
     0xFF: 0xFF,  # Rest
 }
 
-DIFFICULTY_ORDER: List[str] = [
+DIFFICULTY_ORDER: list[str] = [
     'Zeldas Lullaby',
     'Sarias Song',
     'Eponas Song',
@@ -68,7 +70,7 @@ DIFFICULTY_ORDER: List[str] = [
 ]
 
 #    Song name:    (rom index, warp,   vanilla activation),
-SONG_TABLE: Dict[str, Tuple[int, bool, str]] = {
+SONG_TABLE: dict[str, tuple[int, bool, str]] = {
     'Zeldas Lullaby':     ( 8, False, '<^><^>'),
     'Eponas Song':        ( 7, False, '^<>^<>'),
     'Sarias Song':        ( 6, False, 'v><v><'),
@@ -86,7 +88,7 @@ SONG_TABLE: Dict[str, Tuple[int, bool, str]] = {
 
 # checks if one list is a sublist of the other (in either direction)
 # python is magic.....
-def subsong(song1: 'Song', song2: 'Song') -> bool:
+def subsong(song1: Song, song2: Song) -> bool:
     # convert both lists to strings
     s1 = ''.join( map(chr, song1.activation))
     s2 = ''.join( map(chr, song2.activation))
@@ -95,7 +97,7 @@ def subsong(song1: 'Song', song2: 'Song') -> bool:
 
 
 # give random durations and volumes to the notes
-def fast_playback(activation: List[int]) -> List[Dict[str, int]]:
+def fast_playback(activation: list[int]) -> list[dict[str, int]]:
     playback = []
     for note_index, note in enumerate(activation):
         playback.append({'note': note, 'duration': 0x04, 'volume': 0x57})
@@ -103,7 +105,7 @@ def fast_playback(activation: List[int]) -> List[Dict[str, int]]:
 
 
 # give random durations and volumes to the notes
-def random_playback(activation: List[int]) -> List[Dict[str, int]]:
+def random_playback(activation: list[int]) -> list[dict[str, int]]:
     playback = []
     for note_index, note in enumerate(activation):
         duration = random.randint(0x8, 0x20)
@@ -120,7 +122,7 @@ def random_playback(activation: List[int]) -> List[Dict[str, int]]:
 
 
 # gives random volume and duration to the notes of piece
-def random_piece_playback(piece: List[int]) -> List[Dict[str, int]]:
+def random_piece_playback(piece: list[int]) -> list[dict[str, int]]:
     playback = []
     for note in piece:
         duration = random.randint(0x8, 0x20)
@@ -131,23 +133,23 @@ def random_piece_playback(piece: List[int]) -> List[Dict[str, int]]:
 
 # takes the volume/duration of playback, and notes of piece, and creates a playback piece
 # assumes the lists are the same length
-def copy_playback_info(playback: List[Dict[str, int]], piece: List[int]):
+def copy_playback_info(playback: list[dict[str, int]], piece: list[int]):
     return [{'note': n, 'volume': p['volume'], 'duration': p['duration']} for (p, n) in zip(playback, piece)]
 
 
-def identity(x: List[Union[int, Dict[str, int]]]) -> List[Union[int, Dict[str, int]]]:
+def identity(x: list[int | dict[str, int]]) -> list[int | dict[str, int]]:
     return x
 
 
-def random_piece(count: int, allowed: Sequence[int] = range(0, 5)) -> List[int]:
+def random_piece(count: int, allowed: Sequence[int] = range(0, 5)) -> list[int]:
     return random.choices(allowed, k=count)
 
 
-def invert_piece(piece: List[int]) -> List[int]:
+def invert_piece(piece: list[int]) -> list[int]:
     return [4 - note for note in piece]
 
 
-def reverse_piece(piece: List[Union[int, Dict[str, int]]]) -> List[Union[int, Dict[str, int]]]:
+def reverse_piece(piece: list[int | dict[str, int]]) -> list[int | dict[str, int]]:
     return piece[::-1]
 
 
@@ -156,7 +158,7 @@ def clamp(val: int, low: int, high: int) -> int:
 
 
 def transpose_piece(amount: int) -> ActivationTransform:
-    def transpose(piece: List[int]) -> List[int]:
+    def transpose(piece: list[int]) -> list[int]:
         return [clamp(note + amount, 0, 4) for note in piece]
     return transpose
 
@@ -165,11 +167,11 @@ def compose(f: Transform, g: Transform) -> Transform:
     return lambda x: f(g(x))
 
 
-def add_transform_to_piece(piece: List[int], transform: ActivationTransform) -> List[int]:
+def add_transform_to_piece(piece: list[int], transform: ActivationTransform) -> list[int]:
     return piece + transform(piece)
 
 
-def repeat(piece: List[int]) -> List[int]:
+def repeat(piece: list[int]) -> list[int]:
     return 2 * piece
 
 
@@ -178,13 +180,13 @@ class Song:
     # create a song, based on a given scheme
     def __init__(self, rand_song: bool = True, piece_size: int = 3, extra_position: str = 'none',
                  starting_range: Sequence[int] = range(0, 5), activation_transform: ActivationTransform = identity,
-                 playback_transform: PlaybackTransform = identity, *, activation: Optional[List[int]] = None,
+                 playback_transform: PlaybackTransform = identity, *, activation: Optional[list[int]] = None,
                  playback_fast: bool = False) -> None:
         self.length: int = 0
-        self.activation: List[int] = []
-        self.playback: List[Dict[str, int]] = []
-        self.activation_data: List[int] = []
-        self.playback_data: List[int] = []
+        self.activation: list[int] = []
+        self.playback: list[dict[str, int]] = []
+        self.activation_data: list[int] = []
+        self.playback_data: list[int] = []
         self.total_duration: int = 0
 
         if activation:
@@ -234,7 +236,7 @@ class Song:
         self.playback.append({'note': 0xFF, 'duration': duration_needed, 'volume': 0})
         self.format_playback_data()
 
-    def two_piece_playback(self, piece: List[int], extra_position: str = 'none', activation_transform: ActivationTransform = identity,
+    def two_piece_playback(self, piece: list[int], extra_position: str = 'none', activation_transform: ActivationTransform = identity,
                            playback_transform: PlaybackTransform = identity) -> None:
         piece_length = len(piece)
         piece2 = activation_transform(piece)
@@ -306,7 +308,7 @@ class Song:
         return activation_string + '\n' + playback_string
 
     @classmethod
-    def from_str(cls, notes: str) -> 'Song':
+    def from_str(cls, notes: str) -> Song:
         return cls(activation=[READ_ACTIVATION[note.lower()] for note in notes])
 
     def __str__(self) -> str:
@@ -346,7 +348,6 @@ def get_random_song() -> Song:
     song = Song(rand_song, piece_size, extra_position, starting_range, activation_transform, playback_transform)
 
     # rate its difficulty
-    difficulty = 0
     difficulty = piece_size * 12
     if extra_position != 'none':
         difficulty += 12
@@ -364,7 +365,7 @@ def get_random_song() -> Song:
 
 
 # create a list of 12 songs, none of which are sub-strings of any other song
-def generate_song_list(world: "World", frog: bool, warp: bool) -> Dict[str, Song]:
+def generate_song_list(world: World, frog: bool, warp: bool) -> dict[str, Song]:
     fixed_songs = {}
     if not frog:
         fixed_songs.update({name: Song.from_str(notes) for name, (_, is_warp, notes) in SONG_TABLE.items() if not is_warp})
@@ -410,7 +411,7 @@ def generate_song_list(world: "World", frog: bool, warp: bool) -> Dict[str, Song
 
 
 # replace the playback and activation requirements for the ocarina songs
-def replace_songs(world: "World", rom: "Rom", frog: bool, warp: bool) -> None:
+def replace_songs(world: World, rom: Rom, frog: bool, warp: bool) -> None:
     songs = generate_song_list(world, frog, warp)
     world.song_notes = songs
 

@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-from typing import List, Tuple
+from __future__ import annotations
 
 from Rom import Rom
 
@@ -9,7 +9,7 @@ from Rom import Rom
 # address - address of the ci4 texture in Rom
 # length - size of the texture in PIXELS
 # palette - 4-bit color palette to use (max of 16 colors)
-def ci4_to_rgba16(rom: Rom, address: int, length: int, palette: List[int]) -> List[int]:
+def ci4_to_rgba16(rom: Rom, address: int, length: int, palette: list[int]) -> list[int]:
     new_pixels = []
     texture = rom.read_bytes(address, length // 2)
     for byte in texture:
@@ -21,7 +21,7 @@ def ci4_to_rgba16(rom: Rom, address: int, length: int, palette: List[int]) -> Li
 # Convert an rgba16 texture to ci8
 # rgba16_texture - texture to convert
 # returns - tuple (ci8_texture, palette)
-def rgba16_to_ci8(rgba16_texture: List[int]) -> Tuple[List[int], List[int]]:
+def rgba16_to_ci8(rgba16_texture: list[int]) -> tuple[list[int], list[int]]:
     ci8_texture = []
     palette = get_colors_from_rgba16(rgba16_texture)  # Get all the colors in the texture
     if len(palette) > 0x100:  # Make sure there are <= 256 colors. Could probably do some fancy stuff to convert, but nah.
@@ -38,7 +38,7 @@ def rgba16_to_ci8(rgba16_texture: List[int]) -> Tuple[List[int], List[int]]:
 
 
 # Load a palette (essentially just an rgba16 texture) from rom
-def load_palette(rom: Rom, address: int, length: int) -> List[int]:
+def load_palette(rom: Rom, address: int, length: int) -> list[int]:
     palette = []
     for i in range(0, length):
         palette.append(rom.read_int16(address + 2 * i))
@@ -46,7 +46,7 @@ def load_palette(rom: Rom, address: int, length: int) -> List[int]:
 
 
 # Get a list of unique colors (palette) from an rgba16 texture
-def get_colors_from_rgba16(rgba16_texture: List[int]) -> List[int]:
+def get_colors_from_rgba16(rgba16_texture: list[int]) -> list[int]:
     colors = []
     for pixel in rgba16_texture:
         if pixel not in colors:
@@ -58,7 +58,7 @@ def get_colors_from_rgba16(rgba16_texture: List[int]) -> List[int]:
 # rgba16_texture - Original texture
 # rgba16_patch - Patch texture. If this parameter is not supplied, this function will simply return the original texture.
 # returns - new texture = texture xor patch
-def apply_rgba16_patch(rgba16_texture: List[int], rgba16_patch: List[int]) -> List[int]:
+def apply_rgba16_patch(rgba16_texture: list[int], rgba16_patch: list[int]) -> list[int]:
     if rgba16_patch is not None and (len(rgba16_texture) != len(rgba16_patch)):
         raise(Exception("OG Texture and Patch not the same length!"))
 
@@ -73,7 +73,7 @@ def apply_rgba16_patch(rgba16_texture: List[int], rgba16_patch: List[int]) -> Li
 
 
 # Save a rgba16 texture to a file
-def save_rgba16_texture(rgba16_texture: List[int], filename: str) -> None:
+def save_rgba16_texture(rgba16_texture: list[int], filename: str) -> None:
     file = open(filename, 'wb')
     bytes = bytearray()
     for pixel in rgba16_texture:
@@ -83,7 +83,7 @@ def save_rgba16_texture(rgba16_texture: List[int], filename: str) -> None:
 
 
 # Save a ci8 texture to a file
-def save_ci8_texture(ci8_texture: List[int], filename: str) -> None:
+def save_ci8_texture(ci8_texture: list[int], filename: str) -> None:
     file = open(filename, 'wb')
     bytes = bytearray()
     for pixel in ci8_texture:
@@ -97,7 +97,7 @@ def save_ci8_texture(ci8_texture: List[int], filename: str) -> None:
 # base_texture_address - Address of the rbga16 texture in ROM
 # size - Size of the texture in PIXELS
 # returns - list of ints representing each 16-bit pixel
-def load_rgba16_texture_from_rom(rom: Rom, base_texture_address: int, size: int) -> List[int]:
+def load_rgba16_texture_from_rom(rom: Rom, base_texture_address: int, size: int) -> list[int]:
     texture = []
     for i in range(0, size):
         texture.append(int.from_bytes(rom.read_bytes(base_texture_address + 2 * i, 2), 'big'))
@@ -107,7 +107,7 @@ def load_rgba16_texture_from_rom(rom: Rom, base_texture_address: int, size: int)
 # Load an rgba16 texture from a binary file.
 # filename - path to the file
 # size - number of 16-bit pixels in the texture.
-def load_rgba16_texture(filename: str, size: int) -> List[int]:
+def load_rgba16_texture(filename: str, size: int) -> list[int]:
     texture = []
     file = open(filename, 'rb')
     for i in range(0, size):

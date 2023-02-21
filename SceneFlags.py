@@ -1,5 +1,6 @@
+from __future__ import annotations
 from math import ceil
-from typing import TYPE_CHECKING, Dict, List, Tuple
+from typing import TYPE_CHECKING
 
 if TYPE_CHECKING:
     from Location import Location
@@ -14,7 +15,7 @@ if TYPE_CHECKING:
 # }
 # where room_setup_number defines the room + scene setup as ((setup << 6) + room) for scene n
 # and max_flags is the highest used enemy flag for that setup/room
-def get_collectible_flag_table(world: "World") -> "Tuple[Dict[int, Dict[int, int]], List[Tuple[Location, Tuple[int, int, int], Tuple[int, int, int]]]]":
+def get_collectible_flag_table(world: World) -> tuple[dict[int, dict[int, int]], list[tuple[Location, tuple[int, int, int], tuple[int, int, int]]]]:
     scene_flags = {}
     alt_list = []
     for i in range(0, 101):
@@ -42,7 +43,7 @@ def get_collectible_flag_table(world: "World") -> "Tuple[Dict[int, Dict[int, int
 
 
 # Create a byte array from the scene flag table created by get_collectible_flag_table
-def get_collectible_flag_table_bytes(scene_flag_table: Dict[int, Dict[int, int]]) -> Tuple[bytearray, int]:
+def get_collectible_flag_table_bytes(scene_flag_table: dict[int, dict[int, int]]) -> tuple[bytearray, int]:
     num_flag_bytes = 0
     bytes = bytearray()
     bytes.append(len(scene_flag_table.keys()))
@@ -60,7 +61,7 @@ def get_collectible_flag_table_bytes(scene_flag_table: Dict[int, Dict[int, int]]
     return bytes, num_flag_bytes
 
 
-def get_alt_list_bytes(alt_list: "List[Tuple[Location, Tuple[int, int, int], Tuple[int, int, int]]]") -> bytearray:
+def get_alt_list_bytes(alt_list: list[tuple[Location, tuple[int, int, int], tuple[int, int, int]]]) -> bytearray:
     bytes = bytearray()
     for entry in alt_list:
         location, alt, primary = entry

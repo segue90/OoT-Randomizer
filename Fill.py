@@ -1,6 +1,7 @@
+from __future__ import annotations
 import random
 import logging
-from typing import TYPE_CHECKING, List, Optional
+from typing import TYPE_CHECKING, Optional
 
 from Hints import HintArea
 from Item import Item, ItemFactory, ItemInfo
@@ -26,7 +27,7 @@ class FillError(ShuffleError):
 
 
 # Places all items into the world
-def distribute_items_restrictive(worlds: "List[World]", fill_locations: Optional[List[Location]] = None) -> None:
+def distribute_items_restrictive(worlds: list[World], fill_locations: Optional[list[Location]] = None) -> None:
     if worlds[0].settings.shuffle_song_items == 'song':
         song_location_names = location_groups['Song']
     elif worlds[0].settings.shuffle_song_items == 'dungeon':
@@ -237,7 +238,7 @@ def distribute_items_restrictive(worlds: "List[World]", fill_locations: Optional
 
 # Places restricted dungeon items into the worlds. To ensure there is room for them.
 # they are placed first, so it will assume all other items are reachable
-def fill_dungeons_restrictive(worlds: "List[World]", search: Search, shuffled_locations: List[Location], dungeon_items: List[Item], itempool: List[Item]) -> None:
+def fill_dungeons_restrictive(worlds: list[World], search: Search, shuffled_locations: list[Location], dungeon_items: list[Item], itempool: list[Item]) -> None:
     # List of states with all non-key items
     base_search = search.copy()
     base_search.collect_all(itempool)
@@ -259,7 +260,7 @@ def fill_dungeons_restrictive(worlds: "List[World]", search: Search, shuffled_lo
 # Places items into dungeon locations. This is used when there should be exactly
 # one progression item per dungeon. This should be run before all the progression
 # items are places to ensure there is space to place them.
-def fill_dungeon_unique_item(worlds: "List[World]", search: Search, fill_locations: List[Location], itempool: List[Item]) -> None:
+def fill_dungeon_unique_item(worlds: list[World], search: Search, fill_locations: list[Location], itempool: list[Item]) -> None:
     # We should make sure that we don't count event items, shop items,
     # token items, or dungeon items as a major item. itempool at this
     # point should only be able to have tokens of those restrictions
@@ -333,8 +334,8 @@ def fill_dungeon_unique_item(worlds: "List[World]", search: Search, fill_locatio
 
 
 # Places items restricting placement to the recipient player's own world
-def fill_ownworld_restrictive(worlds: "List[World]", search: Search, locations: List[Location], ownpool: List[Item],
-                              itempool: List[Item], description: str = "Unknown", attempts: int = 15) -> None:
+def fill_ownworld_restrictive(worlds: list[World], search: Search, locations: list[Location], ownpool: list[Item],
+                              itempool: list[Item], description: str = "Unknown", attempts: int = 15) -> None:
     # look for preplaced items
     placed_prizes = [loc.item.name for loc in locations if loc.item is not None]
     unplaced_prizes = [item for item in ownpool if item.name not in placed_prizes]
@@ -390,9 +391,9 @@ def fill_ownworld_restrictive(worlds: "List[World]", search: Search, locations: 
 # every item. Raises an error if specified count of items are not placed.
 #
 # This function will modify the location and itempool arguments. placed items and
-# filled locations will be removed. If this returns and error, then the state of
+# filled locations will be removed. If this returns an error, then the state of
 # those two lists cannot be guaranteed.
-def fill_restrictive(worlds: "List[World]", base_search: Search, locations: List[Location], itempool: List[Item], count: int = -1) -> None:
+def fill_restrictive(worlds: list[World], base_search: Search, locations: list[Location], itempool: list[Item], count: int = -1) -> None:
     unplaced_items = []
 
     # don't run over this search, just keep it as an item collection
@@ -507,7 +508,7 @@ def fill_restrictive(worlds: "List[World]", base_search: Search, locations: List
 # This places items in the itempool into the locations
 # It does not check for reachability, only that the item is
 # allowed in the location
-def fill_restrictive_fast(worlds: "List[World]", locations: List[Location], itempool: List[Item]) -> None:
+def fill_restrictive_fast(worlds: list[World], locations: list[Location], itempool: list[Item]) -> None:
     while itempool and locations:
         item_to_place = itempool.pop()
         random.shuffle(locations)
@@ -535,7 +536,7 @@ def fill_restrictive_fast(worlds: "List[World]", locations: List[Location], item
 # this places item in item_pool completely randomly into
 # fill_locations. There is no checks for validity since
 # there should be none for these remaining items
-def fast_fill(locations: List[Location], itempool: List[Item]) -> None:
+def fast_fill(locations: list[Location], itempool: list[Item]) -> None:
     random.shuffle(locations)
     while itempool and locations:
         spot_to_fill = locations.pop()

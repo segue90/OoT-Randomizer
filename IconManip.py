@@ -1,5 +1,7 @@
+from __future__ import annotations
 import sys
-from typing import TYPE_CHECKING, Sequence, MutableSequence, Optional
+from collections.abc import Sequence, MutableSequence
+from typing import TYPE_CHECKING, Optional
 
 from Utils import data_path
 
@@ -11,7 +13,7 @@ else:
 if TYPE_CHECKING:
     from Rom import Rom
 
-RGBValues: TypeAlias = MutableSequence[MutableSequence[int]]
+RGBValues: TypeAlias = "MutableSequence[MutableSequence[int]]"
 
 
 # TODO
@@ -140,7 +142,7 @@ def rgb_to_rgb5a1(rgb_values: RGBValues) -> bytes:
 
 
 # Patch overworld icons
-def patch_overworld_icon(rom: "Rom", color: Optional[Sequence[int]], address: int, filename: Optional[str] = None) -> None:
+def patch_overworld_icon(rom: Rom, color: Optional[Sequence[int]], address: int, filename: Optional[str] = None) -> None:
     original = rom.original.read_bytes(address, 0x800)
 
     if color is None:

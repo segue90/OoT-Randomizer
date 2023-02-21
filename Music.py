@@ -1,8 +1,10 @@
 # Much of this is heavily inspired from and/or based on az64's / Deathbasket's MM randomizer
+from __future__ import annotations
 import itertools
 import os
 import random
-from typing import TYPE_CHECKING, Tuple, List, Dict, Iterable, Optional, Union
+from collections.abc import Iterable
+from typing import TYPE_CHECKING, Optional
 
 from Rom import Rom
 from Utils import compare_version, data_path
@@ -14,7 +16,7 @@ if TYPE_CHECKING:
 AUDIOSEQ_DMADATA_INDEX: int = 4
 
 # Format: (Title, Sequence ID)
-bgm_sequence_ids: Tuple[Tuple[str, int], ...] = (
+bgm_sequence_ids: tuple[tuple[str, int], ...] = (
     ("Hyrule Field", 0x02),
     ("Dodongos Cavern", 0x18),
     ("Kakariko Adult", 0x19),
@@ -64,7 +66,7 @@ bgm_sequence_ids: Tuple[Tuple[str, int], ...] = (
     ("Mini-game", 0x6C),
 )
 
-fanfare_sequence_ids: Tuple[Tuple[str, int], ...] = (
+fanfare_sequence_ids: tuple[tuple[str, int], ...] = (
     ("Game Over", 0x20),
     ("Boss Defeated", 0x21),
     ("Item Get", 0x22),
@@ -82,7 +84,7 @@ fanfare_sequence_ids: Tuple[Tuple[str, int], ...] = (
     ("Door of Time", 0x59),
 )
 
-ocarina_sequence_ids: Tuple[Tuple[str, int], ...] = (
+ocarina_sequence_ids: tuple[tuple[str, int], ...] = (
     ("Prelude of Light", 0x25),
     ("Bolero of Fire", 0x33),
     ("Minuet of Forest", 0x34),
@@ -109,7 +111,7 @@ class Sequence:
         self.type: int = type
         self.instrument_set: int = instrument_set
 
-    def copy(self) -> 'Sequence':
+    def copy(self) -> Sequence:
         copy = Sequence(self.name, self.cosmetic_name, self.type, self.instrument_set, self.replaces, self.vanilla_id)
         return copy
 
@@ -122,10 +124,10 @@ class SequenceData:
         self.data: bytearray = bytearray()
 
 
-def process_sequences(rom: Rom, ids: Iterable[Tuple[str, int]], seq_type: str = 'bgm', disabled_source_sequences: Optional[List[str]] = None,
-                      disabled_target_sequences: Optional[Dict[str, Tuple[str, int]]] = None, include_custom: bool = True,
-                      sequences: Optional[Dict[str, Sequence]] = None, target_sequences: Optional[Dict[str, Sequence]] = None,
-                      groups: Optional[Dict[str, List[str]]] = None) -> Tuple[Dict[str, Sequence], Dict[str, Sequence], Dict[str, List[str]]]:
+def process_sequences(rom: Rom, ids: Iterable[tuple[str, int]], seq_type: str = 'bgm', disabled_source_sequences: Optional[list[str]] = None,
+                      disabled_target_sequences: Optional[dict[str, tuple[str, int]]] = None, include_custom: bool = True,
+                      sequences: Optional[dict[str, Sequence]] = None, target_sequences: Optional[dict[str, Sequence]] = None,
+                      groups: Optional[dict[str, list[str]]] = None) -> tuple[dict[str, Sequence], dict[str, Sequence], dict[str, list[str]]]:
     disabled_source_sequences = [] if disabled_source_sequences is None else disabled_source_sequences
     disabled_target_sequences = {} if disabled_target_sequences is None else disabled_target_sequences
     sequences = {} if sequences is None else sequences
@@ -208,8 +210,8 @@ def process_sequences(rom: Rom, ids: Iterable[Tuple[str, int]], seq_type: str = 
     return sequences, target_sequences, groups
 
 
-def shuffle_music(log: "CosmeticsLog", source_sequences: Dict[str, Sequence], target_sequences: Dict[str, Sequence],
-                  music_mapping: Dict[str, str], seq_type: str = "music") -> List[Sequence]:
+def shuffle_music(log: CosmeticsLog, source_sequences: dict[str, Sequence], target_sequences: dict[str, Sequence],
+                  music_mapping: dict[str, str], seq_type: str = "music") -> list[Sequence]:
     sequences = []
     favorites = log.src_dict.get('bgm_groups', {}).get('favorites', []).copy()
 
@@ -243,7 +245,7 @@ def shuffle_music(log: "CosmeticsLog", source_sequences: Dict[str, Sequence], ta
     return sequences
 
 
-def rebuild_sequences(rom: Rom, sequences: List[Sequence]) -> None:
+def rebuild_sequences(rom: Rom, sequences: list[Sequence]) -> None:
     dma_entry = rom.dma[AUDIOSEQ_DMADATA_INDEX]
     audioseq_start, audioseq_end, audioseq_size = dma_entry.as_tuple()
     replacement_dict = {seq.replaces: seq for seq in sequences}
@@ -351,7 +353,7 @@ def rebuild_sequences(rom: Rom, sequences: List[Sequence]) -> None:
             rom.write_byte(base, j.instrument_set)
 
 
-def rebuild_pointers_table(rom: Rom, sequences: List[Sequence]) -> None:
+def rebuild_pointers_table(rom: Rom, sequences: list[Sequence]) -> None:
     for sequence in [s for s in sequences if s.vanilla_id and s.replaces]:
         bgm_sequence = rom.original.read_bytes(0xB89AE0 + (sequence.vanilla_id * 0x10), 0x10)
         bgm_instrument = rom.original.read_int16(0xB89910 + 0xDD + (sequence.vanilla_id * 2))
@@ -362,7 +364,7 @@ def rebuild_pointers_table(rom: Rom, sequences: List[Sequence]) -> None:
     rom.write_int16(0xB89910 + 0xDD + (0x57 * 2), rom.read_int16(0xB89910 + 0xDD + (0x28 * 2)))
 
 
-def randomize_music(rom: Rom, settings: "Settings", log: "CosmeticsLog") -> None:
+def randomize_music(rom: Rom, settings: Settings, log: CosmeticsLog) -> None:
     shuffled_sequences = shuffled_fanfare_sequences = []
     sequences = fanfare_sequences = target_sequences = target_fanfare_sequences = bgm_groups = fanfare_groups = {}
     disabled_source_sequences = log.src_dict.get('bgm_groups', {}).get('exclude', []).copy()
@@ -521,7 +523,7 @@ def randomize_music(rom: Rom, settings: "Settings", log: "CosmeticsLog") -> None
         disable_music(rom, log, disabled_target_sequences.values())
 
 
-def disable_music(rom: Rom, log: "CosmeticsLog", ids: Iterable[Tuple[str, int]]) -> None:
+def disable_music(rom: Rom, log: CosmeticsLog, ids: Iterable[tuple[str, int]]) -> None:
     # First track is no music
     blank_track = rom.read_bytes(0xB89AE0 + (0 * 0x10), 0x10)
     for bgm in ids:

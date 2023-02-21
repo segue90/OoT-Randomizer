@@ -1,7 +1,10 @@
+from __future__ import annotations
 import copy
 import itertools
 import sys
-from typing import TYPE_CHECKING, Dict, List, Tuple, Iterable, Set, Callable, Union, Optional
+from collections.abc import Callable, Iterable
+from dataclasses import dataclass, field
+from typing import TYPE_CHECKING, Optional
 
 from Region import Region, TimeOfDay
 from State import State
@@ -17,20 +20,34 @@ if TYPE_CHECKING:
     from Location import Location
     from Goals import GoalCategory
 
-ValidGoals: TypeAlias = Dict[str, Union[bool, Dict[str, Union[List[int], Dict[int, List[str]]]]]]
-SearchCache: TypeAlias = "Dict[str, Union[List[Entrance], Set[Location], Dict[Region, int]]]"
+ValidGoals: TypeAlias = "dict[str, bool | dict[str, list[int] | dict[int, list[str]]]]"
+
+
+@dataclass
+class SearchCache:
+    child_queue: list[Entrance] = field(default_factory=list)
+    adult_queue: list[Entrance] = field(default_factory=list)
+    visited_locations: set[Location] = field(default_factory=set)
+    child_regions: dict[Region, int] = field(default_factory=dict)
+    adult_regions: dict[Region, int] = field(default_factory=dict)
+
+    def copy(self) -> SearchCache:
+        new = type(self)()
+        for name, value in self.__dict__.items():
+            setattr(new, name, copy.copy(value))
+        return new
 
 
 class Search:
-    def __init__(self, state_list: "Iterable[State]", initial_cache: Optional[SearchCache] = None) -> None:
-        self.state_list: List[State] = [state.copy() for state in state_list]
+    def __init__(self, state_list: Iterable[State], initial_cache: Optional[SearchCache] = None) -> None:
+        self.state_list: list[State] = [state.copy() for state in state_list]
 
         # Let the states reference this search.
         for state in self.state_list:
             state.search = self
 
         self._cache: SearchCache
-        self.cached_spheres: List[SearchCache]
+        self.cached_spheres: list[SearchCache]
         if initial_cache:
             self._cache = initial_cache
             self.cached_spheres = [self._cache]
@@ -41,34 +58,33 @@ class Search:
             #    values are lazily-determined tod flags (see TimeOfDay).
             #  child_queue, adult_queue: queue of Entrance, all the exits to try next sphere
             #  visited_locations: set of Locations visited in or before that sphere.
-            self._cache = {
-                'child_queue': list(exit for region in root_regions for exit in region.exits),
-                'adult_queue': list(exit for region in root_regions for exit in region.exits),
-                'visited_locations': set(),
-                'child_regions': {region: TimeOfDay.NONE for region in root_regions},
-                'adult_regions': {region: TimeOfDay.NONE for region in root_regions},
-            }
+            self._cache = SearchCache(
+                child_queue=list(exit for region in root_regions for exit in region.exits),
+                adult_queue=list(exit for region in root_regions for exit in region.exits),
+                visited_locations=set(),
+                child_regions={region: TimeOfDay.NONE for region in root_regions},
+                adult_regions={region: TimeOfDay.NONE for region in root_regions},
+            )
             self.cached_spheres = [self._cache]
             self.next_sphere()
 
-    def copy(self) -> 'Search':
+    def copy(self) -> Search:
         # we only need to copy the top sphere since that's what we're starting with and we don't go back
-        new_cache = {k: copy.copy(v) for k,v in self._cache.items()}
         # copy always makes a nonreversible instance
-        return Search(self.state_list, initial_cache=new_cache)
+        return Search(self.state_list, initial_cache=self._cache.copy())
 
-    def collect_all(self, itempool: "Iterable[Item]") -> None:
+    def collect_all(self, itempool: Iterable[Item]) -> None:
         for item in itempool:
             if item.solver_id is not None and item.world is not None:
                 self.state_list[item.world.id].collect(item)
 
-    def collect(self, item: "Item") -> None:
+    def collect(self, item: Item) -> None:
         if item.world is None:
             raise Exception(f"Item '{item.name}' cannot be collected as it does not have a world.")
         self.state_list[item.world.id].collect(item)
 
     @classmethod
-    def max_explore(cls, state_list: Iterable[State], itempool: "Optional[Iterable[Item]]" = None) -> 'Search':
+    def max_explore(cls, state_list: Iterable[State], itempool: Optional[Iterable[Item]] = None) -> Search:
         p = cls(state_list)
         if itempool:
             p.collect_all(itempool)
@@ -76,7 +92,7 @@ class Search:
         return p
 
     @classmethod
-    def with_items(cls, state_list: Iterable[State], itempool: "Optional[Iterable[Item]]" = None) -> 'Search':
+    def with_items(cls, state_list: Iterable[State], itempool: Optional[Iterable[Item]] = None) -> Search:
         p = cls(state_list)
         if itempool:
             p.collect_all(itempool)
@@ -91,12 +107,12 @@ class Search:
     # Locations never visited in this Search are assumed to have been visited
     # in sphere 0, so unvisiting them will discard the entire cache.
     # Not safe to call during iteration.
-    def unvisit(self, location: "Location") -> None:
+    def unvisit(self, location: Location) -> None:
         raise Exception('Unimplemented for Search. Perhaps you want RewindableSearch.')
 
     # Drops the item from its respective state.
     # Has no effect on cache!
-    def uncollect(self, item: "Item") -> None:
+    def uncollect(self, item: Item) -> None:
         if item.world is None:
             raise Exception(f"Item '{item.name}' cannot be uncollected as it does not have a world.")
         self.state_list[item.world.id].remove(item)
@@ -110,7 +126,7 @@ class Search:
     # Internal to the iteration. Modifies the exit_queue, regions.
     # Returns a queue of the exits whose access rule failed,
     # as a cache for the exits to try on the next iteration.
-    def _expand_regions(self, exit_queue: "List[Entrance]", regions: Dict[Region, int], age: Optional[str]) -> "List[Entrance]":
+    def _expand_regions(self, exit_queue: list[Entrance], regions: dict[Region, int], age: Optional[str]) -> list[Entrance]:
         failed = []
         for exit in exit_queue:
             if exit.world and exit.connected_region and exit.connected_region not in regions:
@@ -129,7 +145,7 @@ class Search:
                     failed.append(exit)
         return failed
 
-    def _expand_tod_regions(self, regions: Dict[Region, int], goal_region: Region, age: Optional[str], tod: int) -> bool:
+    def _expand_tod_regions(self, regions: dict[Region, int], goal_region: Region, age: Optional[str], tod: int) -> bool:
         # grab all the exits from the regions with the given tod in the same world as our goal.
         # we want those that go to existing regions without the tod, until we reach the goal.
         has_tod_world = lambda regtod: regtod[1] & tod and regtod[0].world == goal_region.world
@@ -150,18 +166,16 @@ class Search:
     # the regions accessible as adult, and the set of visited locations.
     # These are references to the new entry in the cache, so they can be modified
     # directly.
-    def next_sphere(self) -> "Tuple[Dict[Region, int], Dict[Region, int], Set[Location]]":
+    def next_sphere(self) -> tuple[dict[Region, int], dict[Region, int], set[Location]]:
         # Use the queue to iteratively add regions to the accessed set,
         # until we are stuck or out of regions.
-        self._cache.update({
-            # Replace the queues (which have been modified) with just the
-            # failed exits that we can retry next time.
-            'adult_queue': self._expand_regions(
-                self._cache['adult_queue'], self._cache['adult_regions'], 'adult'),
-            'child_queue': self._expand_regions(
-                self._cache['child_queue'], self._cache['child_regions'], 'child'),
-        })
-        return self._cache['child_regions'], self._cache['adult_regions'], self._cache['visited_locations']
+
+        # Replace the queues (which have been modified) with just the
+        # failed exits that we can retry next time.
+        self._cache.adult_queue = self._expand_regions(self._cache.adult_queue, self._cache.adult_regions, 'adult')
+        self._cache.child_queue = self._expand_regions(self._cache.child_queue, self._cache.child_regions, 'child')
+
+        return self._cache.child_regions, self._cache.adult_regions, self._cache.visited_locations
 
     # Yields every reachable location, by iteratively deepening explored sets of regions
     # (one as child, one as adult) and invoking access rules.
@@ -171,7 +185,7 @@ class Search:
     # Inside the loop, the caller usually wants to collect items at these
     # locations to see if the game is beatable. Collection should be done
     # using internal State (recommended to just call search.collect).
-    def iter_reachable_locations(self, item_locations: "Iterable[Location]") -> "Iterable[Location]":
+    def iter_reachable_locations(self, item_locations: Iterable[Location]) -> Iterable[Location]:
         had_reachable_locations = True
         # will loop as long as any visits were made, and at least once
         while had_reachable_locations:
@@ -201,20 +215,20 @@ class Search:
     # This collects all item locations available in the state list given that
     # the states have collected items. The purpose is that it will search for
     # all new items that become accessible with a new item set.
-    def collect_locations(self, item_locations: "Optional[Iterable[Location]]" = None) -> None:
+    def collect_locations(self, item_locations: Optional[Iterable[Location]] = None) -> None:
         item_locations = item_locations or self.progression_locations()
         for location in self.iter_reachable_locations(item_locations):
             # Collect the item for the state world it is for
             self.collect(location.item)
 
     # A shorthand way to iterate over locations without collecting items.
-    def visit_locations(self, locations: "Optional[Iterable[Location]]" = None) -> None:
+    def visit_locations(self, locations: Optional[Iterable[Location]] = None) -> None:
         locations = locations or self.progression_locations()
         for _ in self.iter_reachable_locations(locations):
             pass
 
     # Retrieve all item locations in the worlds that have progression items
-    def progression_locations(self) -> "List[Location]":
+    def progression_locations(self) -> list[Location]:
         return [location for state in self.state_list for location in state.world.get_locations() if location.item and location.item.advancement]
 
     # This returns True if every state is beatable. It's important to ensure
@@ -244,7 +258,7 @@ class Search:
         else:
             return False
 
-    def beatable_goals_fast(self, goal_categories: "Dict[str, GoalCategory]", world_filter: Optional[int] = None) -> ValidGoals:
+    def beatable_goals_fast(self, goal_categories: dict[str, GoalCategory], world_filter: Optional[int] = None) -> ValidGoals:
         valid_goals = self.test_category_goals(goal_categories, world_filter)
         if all(map(State.won, self.state_list)):
             valid_goals['way of the hero'] = True
@@ -252,7 +266,7 @@ class Search:
             valid_goals['way of the hero'] = False
         return valid_goals
 
-    def beatable_goals(self, goal_categories: "Dict[str, GoalCategory]") -> ValidGoals:
+    def beatable_goals(self, goal_categories: dict[str, GoalCategory]) -> ValidGoals:
         # collect all available items
         # make a new search since we might be iterating over one already
         search = self.copy()
@@ -264,7 +278,7 @@ class Search:
             valid_goals['way of the hero'] = False
         return valid_goals
 
-    def test_category_goals(self, goal_categories: "Dict[str, GoalCategory]", world_filter: Optional[int] = None) -> ValidGoals:
+    def test_category_goals(self, goal_categories: dict[str, GoalCategory], world_filter: Optional[int] = None) -> ValidGoals:
         valid_goals: ValidGoals = {}
         for category_name, category in goal_categories.items():
             valid_goals[category_name] = {}
@@ -292,12 +306,12 @@ class Search:
                         valid_goals[category_name]['stateReverse'][state.world.id].append(goal.name)
         return valid_goals
 
-    def iter_pseudo_starting_locations(self) -> "Iterable[Location]":
+    def iter_pseudo_starting_locations(self) -> Iterable[Location]:
         for state in self.state_list:
             for location in state.world.distribution.skipped_locations:
                 # We need to use the locations in the current world
                 location = state.world.get_location(location.name)
-                self._cache['visited_locations'].add(location)
+                self._cache.visited_locations.add(location)
                 yield location
 
     def collect_pseudo_starting_items(self) -> None:
@@ -310,14 +324,14 @@ class Search:
     def can_reach(self, region: Region, age: Optional[str] = None, tod: int = TimeOfDay.NONE) -> bool:
         if age == 'adult':
             if tod:
-                return region in self._cache['adult_regions'] and (self._cache['adult_regions'][region] & tod or self._expand_tod_regions(self._cache['adult_regions'], region, age, tod))
+                return region in self._cache.adult_regions and (self._cache.adult_regions[region] & tod or self._expand_tod_regions(self._cache.adult_regions, region, age, tod))
             else:
-                return region in self._cache['adult_regions']
+                return region in self._cache.adult_regions
         elif age == 'child':
             if tod:
-                return region in self._cache['child_regions'] and (self._cache['child_regions'][region] & tod or self._expand_tod_regions(self._cache['child_regions'], region, age, tod))
+                return region in self._cache.child_regions and (self._cache.child_regions[region] & tod or self._expand_tod_regions(self._cache.child_regions, region, age, tod))
             else:
-                return region in self._cache['child_regions']
+                return region in self._cache.child_regions
         elif age == 'both':
             return self.can_reach(region, age='adult', tod=tod) and self.can_reach(region, age='child', tod=tod)
         else:
@@ -330,21 +344,21 @@ class Search:
 
     # Use the cache in the search to determine location reachability.
     # Only works for locations that had progression items...
-    def visited(self, location: "Location") -> bool:
-        return location in self._cache['visited_locations']
+    def visited(self, location: Location) -> bool:
+        return location in self._cache.visited_locations
 
     # Use the cache in the search to get all reachable regions.
-    def reachable_regions(self, age: Optional[str] = None) -> Set[Region]:
+    def reachable_regions(self, age: Optional[str] = None) -> set[Region]:
         if age == 'adult':
-            return set(self._cache['adult_regions'].keys())
+            return set(self._cache.adult_regions.keys())
         elif age == 'child':
-            return set(self._cache['child_regions'].keys())
+            return set(self._cache.child_regions.keys())
         else:
-            return set(self._cache['adult_regions'].keys()).union(self._cache['child_regions'].keys())
+            return set(self._cache.adult_regions.keys()).union(self._cache.child_regions.keys())
 
     # Returns whether the given age can access the spot at this age and tod,
     # by checking whether the search has reached the containing region, and evaluating the spot's access rule.
-    def spot_access(self, spot: "Union[Location, Entrance]", age: Optional[str] = None, tod: int = TimeOfDay.NONE) -> bool:
+    def spot_access(self, spot: Location | Entrance, age: Optional[str] = None, tod: int = TimeOfDay.NONE) -> bool:
         if age == 'adult' or age == 'child':
             return (self.can_reach(spot.parent_region, age=age, tod=tod)
                     and spot.access_rule(self.state_list[spot.world.id], spot=spot, age=age, tod=tod))
@@ -360,16 +374,16 @@ class Search:
 
 
 class RewindableSearch(Search):
-    def unvisit(self, location: "Location") -> None:
+    def unvisit(self, location: Location) -> None:
         # A location being unvisited is either:
         # in the top two caches (if it's the first being unvisited for a sphere)
         # in the topmost cache only (otherwise)
         # After we unvisit every location in a sphere, the top two caches have identical visited locations.
-        assert location in self.cached_spheres[-1]['visited_locations']
-        if location in self.cached_spheres[-2]['visited_locations']:
+        assert location in self.cached_spheres[-1].visited_locations
+        if location in self.cached_spheres[-2].visited_locations:
             self.cached_spheres.pop()
             self._cache = self.cached_spheres[-1]
-        self._cache['visited_locations'].discard(location)
+        self._cache.visited_locations.discard(location)
 
     def reset(self) -> None:
         self._cache = self.cached_spheres[0]
@@ -378,7 +392,5 @@ class RewindableSearch(Search):
     # Adds a new layer to the sphere cache, as a copy of the previous.
     def checkpoint(self) -> None:
         # Save the current data into the cache.
-        self.cached_spheres.append({
-            k: copy.copy(v) for k, v in self._cache.items()
-        })
+        self.cached_spheres.append(self._cache.copy())
         self._cache = self.cached_spheres[-1]

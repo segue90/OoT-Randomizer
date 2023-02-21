@@ -1,9 +1,11 @@
+from __future__ import annotations
 import copy
 import json
 import os
 import platform
 import subprocess
-from typing import List, Tuple, Sequence, Iterator, Optional
+from collections.abc import Iterator, Sequence
+from typing import Optional
 
 from Models import restrictiveBytes
 from Utils import is_bundled, subprocess_args, local_path, data_path, get_version_bytes
@@ -21,9 +23,9 @@ class Rom(BigStream):
 
         self.original: Rom = self
         self.changed_address: dict[int, int] = {}
-        self.changed_dma: dict[int, Tuple[int, int, int]] = {}
-        self.force_patch: List[int] = []
-        self.dma: 'DMAIterator' = DMAIterator(self, DMADATA_START, DMADATA_INDEX)
+        self.changed_dma: dict[int, tuple[int, int, int]] = {}
+        self.force_patch: list[int] = []
+        self.dma: DMAIterator = DMAIterator(self, DMADATA_START, DMADATA_INDEX)
 
         if file is None:
             return
@@ -53,7 +55,7 @@ class Rom(BigStream):
         # Add version number to header.
         self.write_version_bytes()
 
-    def copy(self) -> 'Rom':
+    def copy(self) -> Rom:
         new_rom: Rom = Rom()
         new_rom.buffer = copy.copy(self.buffer)
         new_rom.changed_address = copy.copy(self.changed_address)
@@ -273,7 +275,7 @@ class DMAEntry:
     def size(self) -> int:
         return self.end - self.start
 
-    def as_tuple(self) -> Tuple[int, int, int]:
+    def as_tuple(self) -> tuple[int, int, int]:
         start, end = self.start, self.end
         return start, end, end - start
 

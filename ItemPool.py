@@ -1,6 +1,8 @@
+from __future__ import annotations
 import random
+from collections.abc import Sequence
 from decimal import Decimal, ROUND_UP
-from typing import TYPE_CHECKING, List, Dict, Tuple, Sequence, Union, Optional
+from typing import TYPE_CHECKING, Optional
 
 from Item import ItemInfo, ItemFactory
 from Location import DisableType
@@ -10,7 +12,7 @@ if TYPE_CHECKING:
     from World import World
 
 
-plentiful_items: List[str] = ([
+plentiful_items: list[str] = ([
     'Biggoron Sword',
     'Boomerang',
     'Lens of Truth',
@@ -40,7 +42,7 @@ plentiful_items: List[str] = ([
 # Ludicrous replaces all health upgrades with heart containers
 # as done in plentiful. The item list is used separately to
 # dynamically replace all junk with even levels of each item.
-ludicrous_health: List[str] = ['Heart Container'] * 8
+ludicrous_health: list[str] = ['Heart Container'] * 8
 
 # List of items that can be multiplied in ludicrous mode.
 # Used to filter the pre-plando pool for candidates instead
@@ -52,7 +54,7 @@ ludicrous_health: List[str] = ['Heart Container'] * 8
 #
 # Base items will always be candidates to replace junk items,
 # even if the player starts with all "normal" copies of an item.
-ludicrous_items_base: List[str] = [
+ludicrous_items_base: list[str] = [
     'Light Arrows',
     'Megaton Hammer',
     'Progressive Hookshot',
@@ -82,7 +84,7 @@ ludicrous_items_base: List[str] = [
     'Deku Nut Capacity'
 ]
 
-ludicrous_items_extended: List[str] = [
+ludicrous_items_extended: list[str] = [
     'Zeldas Lullaby',
     'Eponas Song',
     'Suns Song',
@@ -192,7 +194,7 @@ ludicrous_items_extended: List[str] = [
     'Silver Rupee Pouch (Ganons Castle Forest Trial)',
 ]
 
-ludicrous_exclusions: List[str] = [
+ludicrous_exclusions: list[str] = [
     'Triforce Piece',
     'Gold Skulltula Token',
     'Rutos Letter',
@@ -201,7 +203,7 @@ ludicrous_exclusions: List[str] = [
     'Piece of Heart (Treasure Chest Game)'
 ]
 
-item_difficulty_max: Dict[str, Dict[str, int]] = {
+item_difficulty_max: dict[str, dict[str, int]] = {
     'ludicrous': {
         'Piece of Heart': 3,
     },
@@ -239,13 +241,13 @@ item_difficulty_max: Dict[str, Dict[str, int]] = {
     },
 }
 
-shopsanity_rupees: List[str] = (
+shopsanity_rupees: list[str] = (
     ['Rupees (20)'] * 5 +
     ['Rupees (50)'] * 3 +
     ['Rupees (200)'] * 2
 )
 
-min_shop_items: List[str] = (
+min_shop_items: list[str] = (
     ['Buy Deku Shield'] +
     ['Buy Hylian Shield'] +
     ['Buy Goron Tunic'] +
@@ -264,7 +266,7 @@ min_shop_items: List[str] = (
     ['Buy Fish']
 )
 
-deku_scrubs_items: Dict[str, Union[str, List[Tuple[str, int]]]] = {
+deku_scrubs_items: dict[str, str | list[tuple[str, int]]] = {
     'Buy Deku Shield':     'Deku Shield',
     'Buy Deku Nut (5)':    'Deku Nuts (5)',
     'Buy Deku Stick (1)':  'Deku Stick (1)',
@@ -275,7 +277,7 @@ deku_scrubs_items: Dict[str, Union[str, List[Tuple[str, int]]]] = {
     'Buy Deku Seeds (30)': [('Arrows (30)', 3), ('Deku Seeds (30)', 1)],
 }
 
-trade_items: Tuple[str, ...] = (
+trade_items: tuple[str, ...] = (
     "Pocket Egg",
     "Pocket Cucco",
     "Cojiro",
@@ -289,7 +291,7 @@ trade_items: Tuple[str, ...] = (
     "Claim Check",
 )
 
-child_trade_items: Tuple[str, ...] = (
+child_trade_items: tuple[str, ...] = (
     "Weird Egg",
     "Chicken",
     "Zeldas Letter",
@@ -303,12 +305,12 @@ child_trade_items: Tuple[str, ...] = (
     "Mask of Truth",
 )
 
-normal_bottles: List[str] = [bottle for bottle in sorted(ItemInfo.bottles) if bottle not in ['Deliver Letter', 'Sell Big Poe']] + ['Bottle with Big Poe']
-song_list: List[str] = [item.name for item in sorted([i for n, i in ItemInfo.items.items() if i.type == 'Song'], key=lambda x: x.index if x.index is not None else 0)]
-junk_pool_base: List[Tuple[str, int]] = [(item, weight) for (item, weight) in sorted(ItemInfo.junk_weight.items()) if weight > 0]
-remove_junk_items: List[str] = [item for (item, weight) in sorted(ItemInfo.junk_weight.items()) if weight >= 0]
+normal_bottles: list[str] = [bottle for bottle in sorted(ItemInfo.bottles) if bottle not in ['Deliver Letter', 'Sell Big Poe']] + ['Bottle with Big Poe']
+song_list: list[str] = [item.name for item in sorted([i for n, i in ItemInfo.items.items() if i.type == 'Song'], key=lambda x: x.index if x.index is not None else 0)]
+junk_pool_base: list[tuple[str, int]] = [(item, weight) for (item, weight) in sorted(ItemInfo.junk_weight.items()) if weight > 0]
+remove_junk_items: list[str] = [item for (item, weight) in sorted(ItemInfo.junk_weight.items()) if weight >= 0]
 
-remove_junk_ludicrous_items: List[str] = [
+remove_junk_ludicrous_items: list[str] = [
     'Ice Arrows',
     'Deku Nut Capacity',
     'Deku Stick Capacity',
@@ -320,10 +322,10 @@ remove_junk_ludicrous_items: List[str] = [
 # (e.g. HC Malon Egg with Skip Child Zelda, or the carpenters with Open Gerudo Fortress)
 IGNORE_LOCATION: str = 'Recovery Heart'
 
-pending_junk_pool: List[str] = []
-junk_pool: List[Tuple[str, int]] = []
+pending_junk_pool: list[str] = []
+junk_pool: list[tuple[str, int]] = []
 
-exclude_from_major: List[str] = [
+exclude_from_major: list[str] = [
     'Deliver Letter',
     'Sell Big Poe',
     'Magic Bean',
@@ -339,7 +341,7 @@ exclude_from_major: List[str] = [
     'Piece of Heart (Treasure Chest Game)',
 ]
 
-item_groups: Dict[str, Sequence[str]] = {
+item_groups: dict[str, Sequence[str]] = {
     'Junk': remove_junk_items,
     'JunkSong': ('Prelude of Light', 'Serenade of Water'),
     'AdultTrade': trade_items,
@@ -364,7 +366,7 @@ item_groups: Dict[str, Sequence[str]] = {
 }
 
 
-def get_junk_item(count: int = 1, pool: Optional[List[str]] = None, plando_pool: "Optional[Dict[str, ItemPoolRecord]]" = None) -> List[str]:
+def get_junk_item(count: int = 1, pool: Optional[list[str]] = None, plando_pool: Optional[dict[str, ItemPoolRecord]] = None) -> list[str]:
     if count < 1:
         raise ValueError("get_junk_item argument 'count' must be greater than 0.")
 
@@ -386,7 +388,7 @@ def get_junk_item(count: int = 1, pool: Optional[List[str]] = None, plando_pool:
     return return_pool
 
 
-def replace_max_item(items: List[str], item: str, max_count: int) -> None:
+def replace_max_item(items: list[str], item: str, max_count: int) -> None:
     count = 0
     for i, val in enumerate(items):
         if val == item:
@@ -395,7 +397,7 @@ def replace_max_item(items: List[str], item: str, max_count: int) -> None:
             count += 1
 
 
-def generate_itempool(world: "World") -> None:
+def generate_itempool(world: World) -> None:
     junk_pool[:] = list(junk_pool_base)
     if world.settings.junk_ice_traps == 'on':
         junk_pool.append(('Ice Trap', 10))
@@ -424,7 +426,7 @@ def generate_itempool(world: "World") -> None:
         raise ValueError(f"Not enough available Gold Skulltula Tokens to meet requirements. Available: {world.available_tokens}, Required: {world.max_progressions['Gold Skulltula Token']}.")
 
 
-def get_pool_core(world: "World") -> Tuple[List[str], Dict[str, str]]:
+def get_pool_core(world: World) -> tuple[list[str], dict[str, str]]:
     pool = []
     placed_items = {}
     remain_shop_items = []

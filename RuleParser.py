@@ -1,8 +1,9 @@
+from __future__ import annotations
 import ast
 import logging
 import re
 from collections import defaultdict
-from typing import TYPE_CHECKING, Dict, List, Tuple, Set, Pattern, Union, Optional, Any
+from typing import TYPE_CHECKING, Optional, Any
 
 from Entrance import Entrance
 from Item import ItemInfo, Item, make_event_item
@@ -15,26 +16,26 @@ from Utils import data_path, read_logic_file
 if TYPE_CHECKING:
     from World import World
 
-escaped_items: Dict[str, str] = {}
+escaped_items: dict[str, str] = {}
 for item in ItemInfo.items:
     escaped_items[escape_name(item)] = item
 
-event_name: Pattern[str] = re.compile(r'[A-Z]\w+')
+event_name: re.Pattern[str] = re.compile(r'[A-Z]\w+')
 # All generated lambdas must accept these keyword args!
 # For evaluation at a certain age (required as all rules are evaluated at a specific age)
 # or at a certain spot (can be omitted in many cases)
 # or at a specific time of day (often unused)
-kwarg_defaults: Dict[str, Any] = {
+kwarg_defaults: dict[str, Any] = {
     'age': None,
     'spot': None,
     'tod': TimeOfDay.NONE,
 }
 
-special_globals: Dict[str, Any] = {'TimeOfDay': TimeOfDay}
+special_globals: dict[str, Any] = {'TimeOfDay': TimeOfDay}
 allowed_globals.update(special_globals)
 
-rule_aliases: Dict[str, Tuple[List[Pattern[str]], str]] = {}
-nonaliases: Set[str] = set()
+rule_aliases: dict[str, tuple[list[re.Pattern[str]], str]] = {}
+nonaliases: set[str] = set()
 
 
 def load_aliases() -> None:
@@ -56,19 +57,19 @@ def isliteral(expr: ast.expr) -> bool:
 
 
 class Rule_AST_Transformer(ast.NodeTransformer):
-    def __init__(self, world: "World") -> None:
-        self.world: "World" = world
-        self.current_spot: Optional[Union[Location, Entrance]] = None
-        self.events: Set[str] = set()
+    def __init__(self, world: World) -> None:
+        self.world: World = world
+        self.current_spot: Optional[Location | Entrance] = None
+        self.events: set[str] = set()
         # map Region -> rule ast string -> item name
-        self.replaced_rules: Dict[str, Dict[str, ast.Call]] = defaultdict(dict)
+        self.replaced_rules: dict[str, dict[str, ast.Call]] = defaultdict(dict)
         # delayed rules need to keep: region name, ast node, event name
-        self.delayed_rules: List[Tuple[str, ast.AST, str]] = []
+        self.delayed_rules: list[tuple[str, ast.AST, str]] = []
         # lazy load aliases
         if not rule_aliases:
             load_aliases()
         # final rule cache
-        self.rule_cache: Dict[str, AccessRule] = {}
+        self.rule_cache: dict[str, AccessRule] = {}
 
     def visit_Name(self, node: ast.Name) -> Any:
         if node.id in dir(self):
@@ -346,7 +347,7 @@ class Rule_AST_Transformer(ast.NodeTransformer):
     # Generates an ast.Call invoking the given State function 'name',
     # providing given args and keywords, and adding in additional
     # keyword args from kwarg_defaults (age, etc.)
-    def make_call(self, node: ast.AST, name: str, args: List[Any], keywords: List[ast.keyword]) -> ast.Call:
+    def make_call(self, node: ast.AST, name: str, args: list[Any], keywords: list[ast.keyword]) -> ast.Call:
         if not hasattr(State, name):
             raise Exception('Parse Error: No such function State.%s' % name, self.current_spot.name, ast.dump(node, False))
 
@@ -476,11 +477,11 @@ class Rule_AST_Transformer(ast.NodeTransformer):
 
     # Parse entry point
     # If spot is None, here() rules won't work.
-    def parse_rule(self, rule_string: str, spot: Optional[Union[Location, Entrance]] = None) -> AccessRule:
+    def parse_rule(self, rule_string: str, spot: Optional[Location | Entrance] = None) -> AccessRule:
         self.current_spot = spot
         return self.make_access_rule(self.visit(ast.parse(rule_string, mode='eval').body))
 
-    def parse_spot_rule(self, spot: Union[Location, Entrance]) -> None:
+    def parse_spot_rule(self, spot: Location | Entrance) -> None:
         rule = spot.rule_string.split('#', 1)[0].strip()
 
         access_rule = self.parse_rule(rule, spot)

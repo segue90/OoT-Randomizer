@@ -1,11 +1,13 @@
+from __future__ import annotations
 import itertools
 import json
 import math
 import re
 import random
 from collections import defaultdict
+from collections.abc import Callable, Iterable, Sequence
 from functools import reduce
-from typing import TYPE_CHECKING, Any, Dict, List, Tuple, Sequence, Iterable, Callable, Optional, Union
+from typing import TYPE_CHECKING, Any, Optional
 
 import StartingItems
 from Entrance import Entrance
@@ -51,12 +53,12 @@ per_world_keys = (
 
 
 class Record:
-    def __init__(self, properties: Optional[Dict[str, Any]] = None, src_dict: Optional[Dict[str, Any]] = None) -> None:
-        self.properties: Dict[str, Any] = properties if properties is not None else getattr(self, "properties")
+    def __init__(self, properties: Optional[dict[str, Any]] = None, src_dict: Optional[dict[str, Any]] = None) -> None:
+        self.properties: dict[str, Any] = properties if properties is not None else getattr(self, "properties")
         if src_dict is not None:
             self.update(src_dict, update_all=True)
 
-    def update(self, src_dict: Dict[str, Any], update_all: bool = False) -> None:
+    def update(self, src_dict: dict[str, Any], update_all: bool = False) -> None:
         if src_dict is None:
             src_dict = {}
         if isinstance(src_dict, list):
@@ -65,7 +67,7 @@ class Record:
             if update_all or k in src_dict:
                 setattr(self, k, src_dict.get(k, p))
 
-    def to_json(self) -> Dict[str, Any]:
+    def to_json(self) -> dict[str, Any]:
         return {k: getattr(self, k) for (k, d) in self.properties.items() if getattr(self, k) != d}
 
     def __str__(self) -> str:
@@ -73,13 +75,13 @@ class Record:
 
 
 class DungeonRecord(Record):
-    mapping: Dict[str, Optional[bool]] = {
+    mapping: dict[str, Optional[bool]] = {
         'random': None,
         'mq': True,
         'vanilla': False,
     }
 
-    def __init__(self, src_dict: Union[str, Dict[str, Optional[bool]]] = 'random') -> None:
+    def __init__(self, src_dict: str | dict[str, Optional[bool]] = 'random') -> None:
         self.mq: Optional[bool] = None
 
         if isinstance(src_dict, str):
@@ -93,7 +95,7 @@ class DungeonRecord(Record):
 
 
 class EmptyDungeonRecord(Record):
-    def __init__(self, src_dict: Union[Optional[bool], str, Dict[str, Optional[bool]]] = 'random') -> None:
+    def __init__(self, src_dict: Optional[bool | str | dict[str, Optional[bool]]] = 'random') -> None:
         self.empty: Optional[bool] = None
 
         if src_dict == 'random':
@@ -107,13 +109,13 @@ class EmptyDungeonRecord(Record):
 
 
 class GossipRecord(Record):
-    def __init__(self, src_dict: Dict[str, Any]) -> None:
+    def __init__(self, src_dict: dict[str, Any]) -> None:
         self.colors: Optional[Sequence[str]] = None
         self.hinted_locations: Optional[Sequence[str]] = None
         self.hinted_items: Optional[Sequence[str]] = None
         super().__init__({'text': None, 'colors': None, 'hinted_locations': None, 'hinted_items': None}, src_dict)
 
-    def to_json(self) -> Dict[str, Any]:
+    def to_json(self) -> dict[str, Any]:
         if self.colors is not None:
             self.colors = CollapseList(self.colors)
         if self.hinted_locations is not None:
@@ -124,7 +126,7 @@ class GossipRecord(Record):
 
 
 class ItemPoolRecord(Record):
-    def __init__(self, src_dict: Union[int, Dict[str, int]] = 1) -> None:
+    def __init__(self, src_dict: int | dict[str, int] = 1) -> None:
         self.type: str = 'set'
         self.count: int = 1
 
@@ -132,13 +134,13 @@ class ItemPoolRecord(Record):
             src_dict = {'count': src_dict}
         super().__init__({'type': 'set', 'count': 1}, src_dict)
 
-    def to_json(self) -> Union[int, CollapseDict]:
+    def to_json(self) -> int | CollapseDict:
         if self.type == 'set':
             return self.count
         else:
             return CollapseDict(super().to_json())
 
-    def update(self, src_dict: Dict[str, Any], update_all: bool = False) -> None:
+    def update(self, src_dict: dict[str, Any], update_all: bool = False) -> None:
         super().update(src_dict, update_all)
         if self.count < 0:
             raise ValueError("Count cannot be negative in a ItemPoolRecord.")
@@ -147,15 +149,15 @@ class ItemPoolRecord(Record):
 
 
 class LocationRecord(Record):
-    def __init__(self, src_dict: Union[Dict[str, Any], str]) -> None:
-        self.item: Optional[Union[str, List[str]]] = None
+    def __init__(self, src_dict: dict[str, Any] | str) -> None:
+        self.item: Optional[str | list[str]] = None
         self.player: Optional[int] = None
 
         if isinstance(src_dict, str):
             src_dict = {'item': src_dict}
         super().__init__({'item': None, 'player': None, 'price': None, 'model': None}, src_dict)
 
-    def to_json(self) -> Union[str, CollapseDict]:
+    def to_json(self) -> str | CollapseDict:
         self_dict = super().to_json()
         if list(self_dict.keys()) == ['item']:
             return str(self.item)
@@ -163,7 +165,7 @@ class LocationRecord(Record):
             return CollapseDict(self_dict)
 
     @staticmethod
-    def from_item(item: Item) -> 'LocationRecord':
+    def from_item(item: Item) -> LocationRecord:
         if item.world.settings.world_count > 1:
             player = item.world.id + 1
         else:
@@ -178,7 +180,7 @@ class LocationRecord(Record):
 
 
 class EntranceRecord(Record):
-    def __init__(self, src_dict: Union[Dict[str, Optional[str]], str]) -> None:
+    def __init__(self, src_dict: dict[str, Optional[str]] | str) -> None:
         self.region: Optional[str] = None
         self.origin: Optional[str] = None
 
@@ -189,7 +191,7 @@ class EntranceRecord(Record):
             del src_dict['from']
         super().__init__({'region': None, 'origin': None}, src_dict)
 
-    def to_json(self) -> Union[str, CollapseDict]:
+    def to_json(self) -> str | CollapseDict:
         self_dict = super().to_json()
         if list(self_dict.keys()) == ['region']:
             return str(self.region)
@@ -199,7 +201,7 @@ class EntranceRecord(Record):
             return CollapseDict(self_dict)
 
     @staticmethod
-    def from_entrance(entrance: Entrance) -> 'EntranceRecord':
+    def from_entrance(entrance: Entrance) -> EntranceRecord:
         if entrance.replaces.primary and entrance.replaces.type in ('Interior', 'SpecialInterior', 'Grotto', 'Grave'):
             origin_name = None
         else:
@@ -218,7 +220,7 @@ class StarterRecord(Record):
             src_dict = {'count': src_dict}
         super().__init__({'count': 1}, src_dict)
 
-    def copy(self) -> 'StarterRecord':
+    def copy(self) -> StarterRecord:
         return StarterRecord(self.count)
 
     def to_json(self) -> int:
@@ -226,13 +228,13 @@ class StarterRecord(Record):
 
 
 class TrialRecord(Record):
-    mapping: Dict[str, Optional[bool]] = {
+    mapping: dict[str, Optional[bool]] = {
         'random': None,
         'active': True,
         'inactive': False,
     }
 
-    def __init__(self, src_dict: Union[str, Dict[str, Optional[bool]]] = 'random') -> None:
+    def __init__(self, src_dict: str | dict[str, Optional[bool]] = 'random') -> None:
         self.active: Optional[bool] = None
 
         if isinstance(src_dict, str):
@@ -246,7 +248,7 @@ class TrialRecord(Record):
 
 
 class SongRecord(Record):
-    def __init__(self, src_dict: Union[Optional[str], Dict[str, Optional[str]]] = None) -> None:
+    def __init__(self, src_dict: Optional[str | dict[str, Optional[str]]] = None) -> None:
         self.notes: Optional[str] = None
 
         if src_dict is None or isinstance(src_dict, str):
@@ -258,32 +260,32 @@ class SongRecord(Record):
 
 
 class WorldDistribution:
-    def __init__(self, distribution: 'Distribution', id: int, src_dict: Optional[Dict[str, Any]] = None) -> None:
-        self.randomized_settings: Optional[Dict[str, Any]] = None
-        self.dungeons: Optional[Dict[str, DungeonRecord]] = None
-        self.empty_dungeons: Optional[Dict[str, EmptyDungeonRecord]] = None
-        self.trials: Optional[Dict[str, TrialRecord]] = None
-        self.songs: Optional[Dict[str, SongRecord]] = None
-        self.item_pool: Optional[Dict[str, ItemPoolRecord]] = None
-        self.entrances: Optional[Dict[str, EntranceRecord]] = None
-        self.locations: Optional[Dict[str, Union[LocationRecord, List[LocationRecord]]]] = None
-        self.woth_locations: Optional[Dict[str, LocationRecord]] = None
-        self.goal_locations: Optional[Dict[str, Dict[str, Dict[str, Union[LocationRecord, Dict[str, LocationRecord]]]]]] = None
-        self.barren_regions: Optional[List[str]] = None
-        self.gossip_stones: Optional[Dict[str, GossipRecord]] = None
+    def __init__(self, distribution: Distribution, id: int, src_dict: Optional[dict[str, Any]] = None) -> None:
+        self.randomized_settings: Optional[dict[str, Any]] = None
+        self.dungeons: Optional[dict[str, DungeonRecord]] = None
+        self.empty_dungeons: Optional[dict[str, EmptyDungeonRecord]] = None
+        self.trials: Optional[dict[str, TrialRecord]] = None
+        self.songs: Optional[dict[str, SongRecord]] = None
+        self.item_pool: Optional[dict[str, ItemPoolRecord]] = None
+        self.entrances: Optional[dict[str, EntranceRecord]] = None
+        self.locations: Optional[dict[str, LocationRecord | list[LocationRecord]]] = None
+        self.woth_locations: Optional[dict[str, LocationRecord]] = None
+        self.goal_locations: Optional[dict[str, dict[str, dict[str, LocationRecord | dict[str, LocationRecord]]]]] = None
+        self.barren_regions: Optional[list[str]] = None
+        self.gossip_stones: Optional[dict[str, GossipRecord]] = None
 
-        self.distribution: 'Distribution' = distribution
+        self.distribution: Distribution = distribution
         self.id: int = id
-        self.base_pool: List[str] = []
-        self.major_group: List[str] = []
+        self.base_pool: list[str] = []
+        self.major_group: list[str] = []
         self.song_as_items: bool = False
-        self.skipped_locations: List[Location] = []
-        self.effective_starting_items: Dict[str, StarterRecord] = {}
+        self.skipped_locations: list[Location] = []
+        self.effective_starting_items: dict[str, StarterRecord] = {}
 
         src_dict = {} if src_dict is None else src_dict
         self.update(src_dict, update_all=True)
 
-    def update(self, src_dict: Dict[str, Any], update_all: bool = False) -> None:
+    def update(self, src_dict: dict[str, Any], update_all: bool = False) -> None:
         update_dict = {
             'randomized_settings': {name: record for (name, record) in src_dict.get('randomized_settings', {}).items()},
             'dungeons': {name: DungeonRecord(record) for (name, record) in src_dict.get('dungeons', {}).items()},
@@ -314,7 +316,7 @@ class WorldDistribution:
                     else:
                         setattr(self, k, None)
 
-    def to_json(self) -> Dict[str, Any]:
+    def to_json(self) -> dict[str, Any]:
         return {
             'randomized_settings': self.randomized_settings,
             'dungeons': {name: record.to_json() for (name, record) in self.dungeons.items()},
@@ -334,7 +336,7 @@ class WorldDistribution:
     def __str__(self) -> str:
         return dump_obj(self.to_json())
 
-    def pattern_matcher(self, pattern: Union[str, List[str]]) -> Callable[[str], bool]:
+    def pattern_matcher(self, pattern: str | list[str]) -> Callable[[str], bool]:
         if isinstance(pattern, list):
             pattern_list = []
             for pattern_item in pattern:
@@ -417,7 +419,7 @@ class WorldDistribution:
                 raise KeyError('Cannot add location that already exists')
         self.locations[new_location] = LocationRecord(new_item)
 
-    def configure_dungeons(self, world: "World", mq_dungeon_pool: List[str], empty_dungeon_pool: List[str]) -> Tuple[int, int]:
+    def configure_dungeons(self, world: World, mq_dungeon_pool: list[str], empty_dungeon_pool: list[str]) -> tuple[int, int]:
         dist_num_mq, dist_num_empty = 0, 0
         for (name, record) in self.dungeons.items():
             if record.mq is not None:
@@ -433,7 +435,7 @@ class WorldDistribution:
                     world.empty_dungeons[name].empty = True
         return dist_num_mq, dist_num_empty
 
-    def configure_trials(self, trial_pool: List[str]) -> List[str]:
+    def configure_trials(self, trial_pool: list[str]) -> list[str]:
         dist_chosen = []
         for (name, record) in self.trials.items():
             if record.active is not None:
@@ -442,7 +444,7 @@ class WorldDistribution:
                     dist_chosen.append(name)
         return dist_chosen
 
-    def configure_songs(self) -> Dict[str, str]:
+    def configure_songs(self) -> dict[str, str]:
         dist_notes = {}
         for (name, record) in self.songs.items():
             if record.notes is not None:
@@ -450,7 +452,7 @@ class WorldDistribution:
         return dist_notes
 
     # Add randomized_settings defined in distribution to world's randomized settings list
-    def configure_randomized_settings(self, world: "World") -> None:
+    def configure_randomized_settings(self, world: World) -> None:
         settings = world.settings
         for name, record in self.randomized_settings.items():
             if not hasattr(settings, name):
@@ -459,8 +461,8 @@ class WorldDistribution:
             if name not in world.randomized_list:
                 world.randomized_list.append(name)
 
-    def pool_remove_item(self, pools: List[List[Union[str, Item]]], item_name: str, count: int,
-                         world_id: Optional[int] = None, use_base_pool: bool = True) -> List[Union[str, Item]]:
+    def pool_remove_item(self, pools: list[list[str | Item]], item_name: str, count: int,
+                         world_id: Optional[int] = None, use_base_pool: bool = True) -> list[str | Item]:
         removed_items = []
 
         base_remove_matcher = self.pattern_matcher(item_name)
@@ -490,7 +492,7 @@ class WorldDistribution:
 
         return removed_items
 
-    def pool_add_item(self, pool: List[str], item_name: str, count: int) -> List[str]:
+    def pool_add_item(self, pool: list[str], item_name: str, count: int) -> list[str]:
         if item_name == '#Junk':
             added_items = get_junk_item(count, pool=pool, plando_pool=self.item_pool)
         elif is_pattern(item_name):
@@ -512,7 +514,7 @@ class WorldDistribution:
 
         return added_items
 
-    def alter_pool(self, world: "World", pool: List[str]) -> List[str]:
+    def alter_pool(self, world: World, pool: list[str]) -> list[str]:
         self.base_pool = list(pool)
         pool_size = len(pool)
         bottle_matcher = self.pattern_matcher("#Bottle")
@@ -616,7 +618,7 @@ class WorldDistribution:
 
         return pool
 
-    def set_complete_itempool(self, pool: List[Item]) -> None:
+    def set_complete_itempool(self, pool: list[Item]) -> None:
         self.item_pool = {}
         for item in pool:
             if item.dungeonitem or item.type in ('Drop', 'Event', 'DungeonReward'):
@@ -626,13 +628,13 @@ class WorldDistribution:
             else:
                 self.item_pool[item.name] = ItemPoolRecord()
 
-    def collect_starters(self, state: "State") -> None:
+    def collect_starters(self, state: State) -> None:
         for (name, record) in self.starting_items.items():
             for _ in range(record.count):
                 item = ItemFactory("Bottle" if name == "Bottle with Milk (Half)" else name)
                 state.collect(item)
 
-    def pool_replace_item(self, item_pools: List[List[Item]], item_group: str, player_id: int, new_item: str, worlds: "List[World]") -> Item:
+    def pool_replace_item(self, item_pools: list[list[Item]], item_group: str, player_id: int, new_item: str, worlds: list[World]) -> Item:
         removed_item = self.pool_remove_item(item_pools, item_group, 1, world_id=player_id)[0]
         item_matcher = lambda item: self.pattern_matcher(new_item)(item.name)
         if self.item_pool[removed_item.name].count > 1:
@@ -646,8 +648,8 @@ class WorldDistribution:
                 return ItemFactory(get_junk_item(1))[0]
         return random.choice(list(ItemIterator(item_matcher, worlds[player_id])))
 
-    def set_shuffled_entrances(self, worlds: "List[World]", entrance_pools: Dict[str, List[Entrance]], target_entrance_pools: Dict[str, List[Entrance]],
-                               locations_to_ensure_reachable: Iterable[Location], itempool: List[Item]) -> None:
+    def set_shuffled_entrances(self, worlds: list[World], entrance_pools: dict[str, list[Entrance]], target_entrance_pools: dict[str, list[Entrance]],
+                               locations_to_ensure_reachable: Iterable[Location], itempool: list[Item]) -> None:
         for (name, record) in self.entrances.items():
             if record.region is None:
                 continue
@@ -707,7 +709,7 @@ class WorldDistribution:
             if not entrance_found:
                 raise RuntimeError('Entrance does not belong to a pool of shuffled entrances in world %d: %s' % (self.id + 1, name))
 
-    def pattern_dict_items(self, pattern_dict: Dict[str, Any]) -> Iterable[Tuple[str, Any]]:
+    def pattern_dict_items(self, pattern_dict: dict[str, Any]) -> Iterable[tuple[str, Any]]:
         """Retrieve a location by pattern.
 
         :param pattern_dict: the location dictionary. Capable of containing a pattern.
@@ -726,7 +728,7 @@ class WorldDistribution:
             else:
                 yield key, value
 
-    def get_valid_items_from_record(self, itempool: List[Item], used_items: List[str], record: LocationRecord) -> List[str]:
+    def get_valid_items_from_record(self, itempool: list[Item], used_items: list[str], record: LocationRecord) -> list[str]:
         """Gets items that are valid for placement.
 
         :param itempool: a list of the item pool to search through for the record
@@ -762,7 +764,7 @@ class WorldDistribution:
 
         return valid_items
 
-    def pull_item_or_location(self, pools: List[List[Union[Item, Location]]], world: "World", name: str, remove: bool = True) -> Optional[Union[Item, Location]]:
+    def pull_item_or_location(self, pools: list[list[Item | Location]], world: World, name: str, remove: bool = True) -> Optional[Item | Location]:
         """Finds and removes (unless told not to do so) an item or location matching the criteria from a list of pools.
 
         :param pools: the item pools to pull from
@@ -779,7 +781,7 @@ class WorldDistribution:
         else:
             return pull_first_element(pools, lambda e: e.world is world and e.name == name, remove)
 
-    def fill_bosses(self, world: "World", prize_locs: List[Location], prizepool: List[Item]) -> int:
+    def fill_bosses(self, world: World, prize_locs: list[Location], prizepool: list[Item]) -> int:
         count = 0
         used_items = []
         for (name, record) in self.pattern_dict_items(self.locations):
@@ -815,7 +817,7 @@ class WorldDistribution:
             world.push_item(boss, reward, True)
         return count
 
-    def fill(self, worlds: "List[World]", location_pools: List[List[Location]], item_pools: List[List[Item]]) -> None:
+    def fill(self, worlds: list[World], location_pools: list[list[Location]], item_pools: list[list[Item]]) -> None:
         """Fills the world with restrictions defined in a plandomizer JSON distribution file.
 
         :param worlds: A list of the world objects that define the rules of each game world.
@@ -913,8 +915,8 @@ class WorldDistribution:
                 if not search.can_beat_game(False):
                     raise FillError('%s in world %d is not reachable without %s in world %d!' % (location.name, self.id + 1, item.name, player_id + 1))
 
-    def get_item(self, ignore_pools: List[int], item_pools: List[List[Item]], location: Location, player_id: int,
-                 record: LocationRecord, worlds: "List[World]") -> Item:
+    def get_item(self, ignore_pools: list[int], item_pools: list[list[Item]], location: Location, player_id: int,
+                 record: LocationRecord, worlds: list[World]) -> Item:
         """Get or create the item specified by the record and replace something in the item pool with it
 
         :param ignore_pools: Pools to not replace items in
@@ -995,7 +997,7 @@ class WorldDistribution:
                 item_pools[i] = new_pool
         return item
 
-    def cloak(self, worlds: "List[World]", location_pools: List[List[Location]], model_pools: List[List[Item]]) -> None:
+    def cloak(self, worlds: list[World], location_pools: list[list[Location]], model_pools: list[list[Item]]) -> None:
         for (name, record) in self.pattern_dict_items(self.locations):
             if record.model is None:
                 continue
@@ -1019,7 +1021,7 @@ class WorldDistribution:
             if can_cloak(location.item, model):
                 location.item.looks_like_item = model
 
-    def configure_gossip(self, spoiler: Spoiler, stone_ids: List[int]) -> None:
+    def configure_gossip(self, spoiler: Spoiler, stone_ids: list[int]) -> None:
         for (name, record) in self.pattern_dict_items(self.gossip_stones):
             matcher = self.pattern_matcher(name)
             stone_id = pull_random_element([stone_ids], lambda id: matcher(gossipLocations[id].name))
@@ -1032,7 +1034,7 @@ class WorldDistribution:
                     raise RuntimeError('Gossip stone unknown or already assigned in world %d: %r. %s' % (self.id + 1, name, build_close_match(name, 'stone')))
             spoiler.hints[self.id][stone_id] = GossipText(text=record.text, colors=record.colors, prefix='')
 
-    def give_items(self, world: "World", save_context: "SaveContext") -> None:
+    def give_items(self, world: World, save_context: SaveContext) -> None:
         # copy Triforce pieces to all worlds
         triforce_count = sum(
             world_dist.effective_starting_items['Triforce Piece'].count
@@ -1055,7 +1057,7 @@ class WorldDistribution:
             return 0
 
     @property
-    def starting_items(self) -> Dict[str, StarterRecord]:
+    def starting_items(self) -> dict[str, StarterRecord]:
         data = defaultdict(lambda: StarterRecord(0))
         world_names = ['World %d' % (i + 1) for i in range(len(self.distribution.world_dists))]
 
@@ -1072,7 +1074,7 @@ class WorldDistribution:
 
         return data
 
-    def configure_effective_starting_items(self, worlds: "List[World]", world: "World") -> None:
+    def configure_effective_starting_items(self, worlds: list[World], world: World) -> None:
         items = {item_name: record.copy() for item_name, record in self.starting_items.items()}
 
         if world.settings.start_with_rupees:
@@ -1141,14 +1143,14 @@ class WorldDistribution:
 
 
 class Distribution:
-    def __init__(self, settings: "Settings", src_dict: Optional[Dict[str, Any]] = None) -> None:
-        self.file_hash: Optional[List[str]] = None
-        self.playthrough: Optional[Dict[str, Dict[str, LocationRecord]]] = None
-        self.entrance_playthrough: Optional[Dict[str, Dict[str, EntranceRecord]]] = None
+    def __init__(self, settings: Settings, src_dict: Optional[dict[str, Any]] = None) -> None:
+        self.file_hash: Optional[list[str]] = None
+        self.playthrough: Optional[dict[str, dict[str, LocationRecord]]] = None
+        self.entrance_playthrough: Optional[dict[str, dict[str, EntranceRecord]]] = None
 
-        self.src_dict: Dict[str, Any] = src_dict or {}
-        self.settings: "Settings" = settings
-        self.search_groups: Dict[str, Sequence[str]] = {
+        self.src_dict: dict[str, Any] = src_dict or {}
+        self.settings: Settings = settings
+        self.search_groups: dict[str, Sequence[str]] = {
             **location_groups,
             **item_groups,
         }
@@ -1158,7 +1160,7 @@ class Distribution:
             if 'starting_items' in self.src_dict:
                 raise ValueError('"starting_items" at the top level is no longer supported, please move it into "settings"')
 
-        self.world_dists: List[WorldDistribution] = [WorldDistribution(self, id) for id in range(settings.world_count)]
+        self.world_dists: list[WorldDistribution] = [WorldDistribution(self, id) for id in range(settings.world_count)]
         # One-time init
         update_dict = {
             'file_hash': (self.src_dict.get('file_hash', []) + [None, None, None, None, None])[0:5],
@@ -1192,7 +1194,7 @@ class Distribution:
             except KeyError:
                 print('Cannot place item at excluded location because it already has an item defined in the Distribution.')
 
-    def fill(self, worlds: "List[World]", location_pools: List[List[Location]], item_pools: List[List[Item]]) -> None:
+    def fill(self, worlds: list[World], location_pools: list[list[Location]], item_pools: list[list[Item]]) -> None:
         search = Search.max_explore([world.state for world in worlds], itertools.chain.from_iterable(item_pools))
         if not search.can_beat_game(False):
             raise FillError('Item pool does not contain items required to beat game!')
@@ -1200,11 +1202,11 @@ class Distribution:
         for world_dist in self.world_dists:
             world_dist.fill(worlds, location_pools, item_pools)
 
-    def cloak(self, worlds: "List[World]", location_pools: List[List[Location]], model_pools: List[List[Item]]) -> None:
+    def cloak(self, worlds: list[World], location_pools: list[list[Location]], model_pools: list[list[Item]]) -> None:
         for world_dist in self.world_dists:
             world_dist.cloak(worlds, location_pools, model_pools)
 
-    def configure_triforce_hunt(self, worlds: "List[World]") -> None:
+    def configure_triforce_hunt(self, worlds: list[World]) -> None:
         total_count = 0
         total_starting_count = 0
         for world in worlds:
@@ -1252,7 +1254,7 @@ class Distribution:
 
         # normalize starting items to use the dictionary format
         starting_items = itertools.chain(self.settings.starting_equipment, self.settings.starting_songs, self.settings.starting_inventory)
-        data: Dict[str, Union[StarterRecord, Dict[str, StarterRecord]]] = defaultdict(lambda: StarterRecord(0))
+        data: dict[str, StarterRecord | dict[str, StarterRecord]] = defaultdict(lambda: StarterRecord(0))
         if isinstance(self.settings.starting_items, dict) and self.settings.starting_items:
             world_names = ['World %d' % (i + 1) for i in range(len(self.world_dists))]
             for name, record in self.settings.starting_items.items():
@@ -1294,7 +1296,7 @@ class Distribution:
                 data['Heart Container'].count += math.floor(num_hearts_to_collect / 2)
         self.settings.starting_items = data
 
-    def to_json(self, include_output: bool = True, spoiler: bool = True) -> Dict[str, Any]:
+    def to_json(self, include_output: bool = True, spoiler: bool = True) -> dict[str, Any]:
         self_dict = {
             ':version': __version__,
             'file_hash': CollapseList(self.file_hash),
@@ -1416,7 +1418,7 @@ class Distribution:
                     ent_rec_sphere[entrance_key] = EntranceRecord.from_entrance(entrance)
 
     @staticmethod
-    def from_file(settings: "Settings", filename: str) -> 'Distribution':
+    def from_file(settings: Settings, filename: str) -> Distribution:
         if any(map(filename.endswith, ['.z64', '.n64', '.v64'])):
             raise InvalidFileException("Your Ocarina of Time ROM doesn't belong in the plandomizer setting. If you don't know what plandomizer is, or don't plan to use it, leave that setting blank and try again.")
 
@@ -1433,7 +1435,7 @@ class Distribution:
             outfile.write(json)
 
 
-def add_starting_ammo(starting_items: Dict[str, StarterRecord]) -> None:
+def add_starting_ammo(starting_items: dict[str, StarterRecord]) -> None:
     for item in StartingItems.inventory.values():
         if item.item_name in starting_items and item.ammo:
             for ammo, qty in item.ammo.items():
@@ -1443,7 +1445,7 @@ def add_starting_ammo(starting_items: Dict[str, StarterRecord]) -> None:
                     starting_items[ammo].count = qty[starting_items[item.item_name].count - 1]
 
 
-def add_starting_item_with_ammo(starting_items: Dict[str, StarterRecord], item_name: str, count: int = 1) -> None:
+def add_starting_item_with_ammo(starting_items: dict[str, StarterRecord], item_name: str, count: int = 1) -> None:
     if item_name not in starting_items:
         starting_items[item_name] = StarterRecord(0)
     starting_items[item_name].count += count
@@ -1456,7 +1458,7 @@ def add_starting_item_with_ammo(starting_items: Dict[str, StarterRecord], item_n
             break
 
 
-def strip_output_only(obj: Union[list, dict]) -> None:
+def strip_output_only(obj: list | dict) -> None:
     if isinstance(obj, list):
         for elem in obj:
             strip_output_only(elem)
@@ -1480,7 +1482,7 @@ def is_pattern(pattern: str) -> bool:
     return pattern.startswith('!') or pattern.startswith('*') or pattern.startswith('#') or pattern.endswith('*')
 
 
-def pull_first_element(pools: List[List[Any]], predicate: Callable[[Any], bool] = lambda k: True, remove: bool = True) -> Optional[Any]:
+def pull_first_element(pools: list[list[Any]], predicate: Callable[[Any], bool] = lambda k: True, remove: bool = True) -> Optional[Any]:
     for pool in pools:
         for element in pool:
             if predicate(element):
@@ -1490,7 +1492,7 @@ def pull_first_element(pools: List[List[Any]], predicate: Callable[[Any], bool] 
     return None
 
 
-def pull_random_element(pools: List[List[Any]], predicate: Callable[[Any], bool] = lambda k: True, remove: bool = True) -> Optional[Any]:
+def pull_random_element(pools: list[list[Any]], predicate: Callable[[Any], bool] = lambda k: True, remove: bool = True) -> Optional[Any]:
     candidates = [(element, pool) for pool in pools for element in pool if predicate(element)]
     if len(candidates) == 0:
         return None
@@ -1500,7 +1502,7 @@ def pull_random_element(pools: List[List[Any]], predicate: Callable[[Any], bool]
     return element
 
 
-def pull_all_elements(pools: List[List[Any]], predicate: Callable[[Any], bool] = lambda k: True, remove: bool = True) -> Optional[List[Any]]:
+def pull_all_elements(pools: list[list[Any]], predicate: Callable[[Any], bool] = lambda k: True, remove: bool = True) -> Optional[list[Any]]:
     elements = []
     for pool in pools:
         for element in pool:

@@ -43,9 +43,10 @@
 # the floor map data is missing a vertex pointer that would point within kaleido_scope.
 # As such, if the file moves, the patch will break.
 
+from __future__ import annotations
 import json
 from struct import pack, unpack
-from typing import Dict, List, Tuple, Optional, Union, Any
+from typing import Optional, Any
 
 from Rom import Rom
 from Utils import data_path
@@ -65,7 +66,7 @@ class File:
         self.dma_key: int = self.start
 
     @classmethod
-    def from_json(cls, file: Dict[str, Optional[str]]) -> 'File':
+    def from_json(cls, file: dict[str, Optional[str]]) -> File:
         return cls(
             file['Name'],
             int(file['Start'], 16) if file.get('Start', None) is not None else 0,
@@ -113,18 +114,18 @@ class CollisionMesh:
 
 
 class ColDelta:
-    def __init__(self, delta: Dict[str, Union[bool, List[Dict[str, int]]]]) -> None:
+    def __init__(self, delta: dict[str, bool | list[dict[str, int]]]) -> None:
         self.is_larger: bool = delta['IsLarger']
-        self.polys: List[Dict[str, int]] = delta['Polys']
-        self.polytypes: List[Dict[str, int]] = delta['PolyTypes']
-        self.cams: List[Dict[str, int]] = delta['Cams']
+        self.polys: list[dict[str, int]] = delta['Polys']
+        self.polytypes: list[dict[str, int]] = delta['PolyTypes']
+        self.cams: list[dict[str, int]] = delta['Cams']
 
 
 class Icon:
-    def __init__(self, data: Dict[str, Union[int, List[Dict[str, int]]]]) -> None:
+    def __init__(self, data: dict[str, int | list[dict[str, int]]]) -> None:
         self.icon: int = data["Icon"]
         self.count: int = data["Count"]
-        self.points: List[IconPoint] = [IconPoint(x) for x in data["IconPoints"]]
+        self.points: list[IconPoint] = [IconPoint(x) for x in data["IconPoints"]]
 
     def write_to_minimap(self, rom: Rom, addr: int) -> None:
         rom.write_sbyte(addr, self.icon)
@@ -145,7 +146,7 @@ class Icon:
 
 
 class IconPoint:
-    def __init__(self, point: Dict[str, int]) -> None:
+    def __init__(self, point: dict[str, int]) -> None:
         self.flag = point["Flag"]
         self.x = point["x"]
         self.y = point["y"]
@@ -162,15 +163,15 @@ class IconPoint:
 
 
 class Scene:
-    def __init__(self, scene: Dict[str, Any]) -> None:
+    def __init__(self, scene: dict[str, Any]) -> None:
         self.file: File = File.from_json(scene['File'])
         self.id: int = scene['Id']
-        self.transition_actors: List[List[int]] = [convert_actor_data(x) for x in scene['TActors']]
-        self.rooms: List[Room] = [Room(x) for x in scene['Rooms']]
-        self.paths: List[List[List[int]]] = []
+        self.transition_actors: list[list[int]] = [convert_actor_data(x) for x in scene['TActors']]
+        self.rooms: list[Room] = [Room(x) for x in scene['Rooms']]
+        self.paths: list[list[list[int]]] = []
         self.coldelta: ColDelta = ColDelta(scene["ColDelta"])
-        self.minimaps: List[List[Icon]] = [[Icon(icon) for icon in minimap['Icons']] for minimap in scene['Minimaps']]
-        self.floormaps: List[List[Icon]] = [[Icon(icon) for icon in floormap['Icons']] for floormap in scene['Floormaps']]
+        self.minimaps: list[list[Icon]] = [[Icon(icon) for icon in minimap['Icons']] for minimap in scene['Minimaps']]
+        self.floormaps: list[list[Icon]] = [[Icon(icon) for icon in floormap['Icons']] for floormap in scene['Floormaps']]
         temp_paths = scene['Paths']
         for item in temp_paths:
             self.paths.append(item['Points'])
@@ -332,7 +333,7 @@ class Scene:
         mesh.write_to_scene(rom, self.file.start)
 
     @staticmethod
-    def write_cam_data(rom: Rom, addr: int, cam_data: List[Tuple[int, int]]) -> None:
+    def write_cam_data(rom: Rom, addr: int, cam_data: list[tuple[int, int]]) -> None:
         for item in cam_data:
             data, pos = item
             rom.write_int32s(addr, [data, pos])
@@ -367,11 +368,11 @@ class Scene:
 
 
 class Room:
-    def __init__(self, room: Dict[str, Union[int, List[str], Dict[str, Optional[str]]]]):
+    def __init__(self, room: dict[str, int | list[str] | dict[str, Optional[str]]]):
         self.file: File = File.from_json(room['File'])
         self.id: int = room['Id']
-        self.objects: List[int] = [int(x, 16) for x in room['Objects']]
-        self.actors: List[List[int]] = [convert_actor_data(x) for x in room['Actors']]
+        self.objects: list[int] = [int(x, 16) for x in room['Objects']]
+        self.actors: list[list[int]] = [convert_actor_data(x) for x in room['Actors']]
 
     def write_data(self, rom: Rom) -> None:
         # move file to remap address
@@ -407,7 +408,7 @@ class Room:
         self.file.end = align16(self.file.end)
         update_dmadata(rom, self.file)
 
-    def append_object_data(self, rom: Rom, objects: List[int]) -> int:
+    def append_object_data(self, rom: Rom, objects: list[int]) -> int:
         offset = self.file.end - self.file.start
         cur = self.file.end
         rom.write_int16s(cur, objects)
@@ -417,7 +418,7 @@ class Room:
         return offset
 
 
-def patch_files(rom: Rom, mq_scenes: List[int]) -> None:
+def patch_files(rom: Rom, mq_scenes: list[int]) -> None:
     data = get_json()
     scenes = [Scene(x) for x in data]
     for scene in scenes:
@@ -433,7 +434,7 @@ def get_json() -> Any:
     return data
 
 
-def convert_actor_data(string: str) -> List[int]:
+def convert_actor_data(string: str) -> list[int]:
     spawn_args = string.split(" ")
     return [ int(x,16) for x in spawn_args ]
 
@@ -505,7 +506,7 @@ def patch_spirit_temple_mq_room_6(rom: Rom, room_addr: int) -> None:
     rom.write_int32s(room_addr, [0x18000000, seg])
 
 
-def verify_remap(scenes: List[Scene]) -> None:
+def verify_remap(scenes: list[Scene]) -> None:
     def test_remap(file: File) -> bool:
         if file.remap is not None:
             if file.start < file.remap:
@@ -535,7 +536,7 @@ def update_scene_table(rom: Rom, scene_id: int, start: int, end: int) -> None:
     rom.write_int32s(cur, [start, end])
 
 
-def write_actor_data(rom: Rom, cur: int, actors: List[List[int]]) -> None:
+def write_actor_data(rom: Rom, cur: int, actors: list[list[int]]) -> None:
     for actor in actors:
         rom.write_int16s(cur, actor)
         cur += 0x10
@@ -662,7 +663,7 @@ def insert_space(rom: Rom, file: File, vram_start: int, insert_section: int, ins
     file.end += insert_size
 
 
-def add_relocations(rom: Rom, file: File, addresses: List[Union[int, Tuple[int, int]]]) -> None:
+def add_relocations(rom: Rom, file: File, addresses: list[int | tuple[int, int]]) -> None:
     relocations = []
     sections = []
     header_size = rom.read_int32(file.end - 4)

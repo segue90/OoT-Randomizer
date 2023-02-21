@@ -1,5 +1,6 @@
+from __future__ import annotations
 from enum import Enum, unique
-from typing import TYPE_CHECKING, List, Optional
+from typing import TYPE_CHECKING, Optional
 
 if TYPE_CHECKING:
     from Dungeon import Dungeon
@@ -32,14 +33,14 @@ class TimeOfDay:
 
 
 class Region:
-    def __init__(self, world: "World", name: str, region_type: RegionType = RegionType.Overworld) -> None:
-        self.world: "World" = world
+    def __init__(self, world: World, name: str, region_type: RegionType = RegionType.Overworld) -> None:
+        self.world: World = world
         self.name: str = name
         self.type: RegionType = region_type
-        self.entrances: "List[Entrance]" = []
-        self.exits: "List[Entrance]" = []
-        self.locations: "List[Location]" = []
-        self.dungeon: "Optional[Dungeon]" = None
+        self.entrances: list[Entrance] = []
+        self.exits: list[Entrance] = []
+        self.locations: list[Location] = []
+        self.dungeon: Optional[Dungeon] = None
         self.hint_name: Optional[str] = None
         self.alt_hint_name: Optional[str] = None
         self.price: Optional[int] = None
@@ -47,9 +48,9 @@ class Region:
         self.provides_time: int = TimeOfDay.NONE
         self.scene: Optional[str] = None
         self.is_boss_room: bool = False
-        self.savewarp: "Optional[Entrance]" = None
+        self.savewarp: Optional[Entrance] = None
 
-    def copy(self, new_world: "World") -> 'Region':
+    def copy(self, new_world: World) -> Region:
         new_region = Region(new_world, self.name, self.type)
         new_region.price = self.price
         new_region.hint_name = self.hint_name
@@ -67,7 +68,7 @@ class Region:
         return new_region
 
     @property
-    def hint(self) -> "Optional[HintArea]":
+    def hint(self) -> Optional[HintArea]:
         from Hints import HintArea
 
         if self.hint_name is not None:
@@ -76,13 +77,13 @@ class Region:
             return self.dungeon.hint
 
     @property
-    def alt_hint(self) -> "Optional[HintArea]":
+    def alt_hint(self) -> Optional[HintArea]:
         from Hints import HintArea
 
         if self.alt_hint_name is not None:
             return HintArea[self.alt_hint_name]
 
-    def can_fill(self, item: "Item", manual: bool = False) -> bool:
+    def can_fill(self, item: Item, manual: bool = False) -> bool:
         from Hints import HintArea
 
         if not manual and self.world.settings.empty_dungeons_mode != 'none' and item.dungeonitem:

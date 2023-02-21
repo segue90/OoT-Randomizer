@@ -1,4 +1,6 @@
-from typing import TYPE_CHECKING, Dict, List, Iterable, Optional, Union, Any
+from __future__ import annotations
+from collections.abc import Iterable
+from typing import TYPE_CHECKING, Optional, Any
 
 from Item import Item, ItemInfo
 from RulesCommon import escape_name
@@ -16,12 +18,12 @@ Piece_of_Heart: int = ItemInfo.solver_ids['Piece_of_Heart']
 
 
 class State:
-    def __init__(self, parent: "World") -> None:
-        self.solv_items: List[int] = [0] * len(ItemInfo.solver_ids)
-        self.world: "World" = parent
-        self.search: "Optional[Search]" = None
+    def __init__(self, parent: World) -> None:
+        self.solv_items: list[int] = [0] * len(ItemInfo.solver_ids)
+        self.world: World = parent
+        self.search: Optional[Search] = None
 
-    def copy(self, new_world: "Optional[World]" = None) -> 'State':
+    def copy(self, new_world: Optional[World] = None) -> State:
         if not new_world:
             new_world = self.world
         new_state = State(new_world)
@@ -29,7 +31,7 @@ class State:
             new_state.solv_items[i] = val
         return new_state
 
-    def item_name(self, location: "Union[str, Location]") -> Optional[str]:
+    def item_name(self, location: str | Location) -> Optional[str]:
         location = self.world.get_location(location)
         if location.item is None:
             return None
@@ -96,10 +98,10 @@ class State:
         return (self.count_of(ItemInfo.medallion_ids) + self.count_of(ItemInfo.stone_ids)) >= count
 
     # TODO: Store the item's solver id in the goal
-    def has_item_goal(self, item_goal: Dict[str, Any]) -> bool:
+    def has_item_goal(self, item_goal: dict[str, Any]) -> bool:
         return self.solv_items[ItemInfo.solver_ids[escape_name(item_goal['name'])]] >= item_goal['minimum']
 
-    def has_full_item_goal(self, category: "GoalCategory", goal: "Goal", item_goal: Dict[str, Any]) -> bool:
+    def has_full_item_goal(self, category: GoalCategory, goal: Goal, item_goal: dict[str, Any]) -> bool:
         local_goal = self.world.goal_categories[category.name].get_goal(goal.name)
         per_world_max_quantity = local_goal.get_item(item_goal['name'])['quantity']
         return self.solv_items[ItemInfo.solver_ids[escape_name(item_goal['name'])]] >= per_world_max_quantity
@@ -170,13 +172,13 @@ class State:
     def region_has_shortcuts(self, region_name: str) -> bool:
         return self.world.region_has_shortcuts(region_name)
 
-    def __getstate__(self) -> Dict[str, Any]:
+    def __getstate__(self) -> dict[str, Any]:
         return self.__dict__.copy()
 
-    def __setstate__(self, state: Dict[str, Any]) -> None:
+    def __setstate__(self, state: dict[str, Any]) -> None:
         self.__dict__.update(state)
 
-    def get_prog_items(self) -> Dict[str, int]:
+    def get_prog_items(self) -> dict[str, int]:
         return {
             **{item.name: self.solv_items[item.solver_id]
                 for item in ItemInfo.items.values()
