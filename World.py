@@ -1040,36 +1040,39 @@ class World:
             return self._region_cache[region_name]
         except KeyError:
             for region in self.regions:
-                if region.name == region_name:
-                    self._region_cache[region_name] = region
-                    return region
-            raise KeyError('No such region %s' % region_name)
+                self._region_cache[region.name] = region
+            region = self._region_cache.get(region_name, None)
+            if region is not None:
+                return region
+        raise KeyError('No such region %s' % region_name)
 
-    def get_entrance(self, entrance: str | Entrance) -> Entrance:
-        if isinstance(entrance, Entrance):
-            return entrance
+    def get_entrance(self, entrance_name: str | Entrance) -> Entrance:
+        if isinstance(entrance_name, Entrance):
+            return entrance_name
         try:
-            return self._entrance_cache[entrance]
+            return self._entrance_cache[entrance_name]
         except KeyError:
             for region in self.regions:
-                for exit in region.exits:
-                    if exit.name == entrance:
-                        self._entrance_cache[entrance] = exit
-                        return exit
-            raise KeyError('No such entrance %s' % entrance)
+                for entrance in region.exits:
+                    self._entrance_cache[entrance.name] = entrance
+            entrance = self._entrance_cache.get(entrance_name, None)
+            if entrance is not None:
+                return entrance
+        raise KeyError('No such entrance %s' % entrance_name)
 
-    def get_location(self, location: str | Location) -> Location:
-        if isinstance(location, Location):
-            return location
+    def get_location(self, location_name: str | Location) -> Location:
+        if isinstance(location_name, Location):
+            return location_name
         try:
-            return self._location_cache[location]
+            return self._location_cache[location_name]
         except KeyError:
             for region in self.regions:
-                for r_location in region.locations:
-                    if r_location.name == location:
-                        self._location_cache[location] = r_location
-                        return r_location
-        raise KeyError('No such location %s' % location)
+                for location in region.locations:
+                    self._location_cache[location.name] = location
+            location = self._location_cache.get(location_name, None)
+            if location is not None:
+                return location
+        raise KeyError('No such location %s' % location_name)
 
     def get_items(self) -> list[Item]:
         return [loc.item for loc in self.get_filled_locations()] + self.itempool
