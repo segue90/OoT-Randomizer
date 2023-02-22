@@ -169,6 +169,8 @@ def get_item_generic_name(item: Item) -> str:
 
 
 def is_restricted_dungeon_item(item: Item) -> bool:
+    if item.world is None:
+        return False
     return (
         ((item.map or item.compass) and item.world.settings.shuffle_mapcompass == 'dungeon') or
         (item.type == 'SmallKey' and item.world.settings.shuffle_smallkeys == 'dungeon') or
@@ -214,6 +216,7 @@ def add_hint(spoiler: Spoiler, world: World, groups: list[list[int]], gossip_tex
                                 event_item = make_event_item(stone_name, stone_locations[i], event_item)
                             else:
                                 make_event_item(stone_name, stone_locations[i], event_item)
+                        assert event_item is not None
 
                         # This mostly guarantees that we don't lock the player out of an item hint
                         # by establishing a (hint -> item) -> hint -> item -> (first hint) loop

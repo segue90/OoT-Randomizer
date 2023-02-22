@@ -1,10 +1,11 @@
 from __future__ import annotations
 import random
+from collections import Counter
 from collections.abc import Sequence
 from decimal import Decimal, ROUND_UP
 from typing import TYPE_CHECKING, Optional
 
-from Item import ItemInfo, ItemFactory
+from Item import Item, ItemInfo, ItemFactory
 from Location import DisableType
 
 if TYPE_CHECKING:
@@ -408,14 +409,14 @@ def generate_itempool(world: World) -> None:
     (pool, placed_items) = get_pool_core(world)
     placed_items_count = {}
     world.itempool = ItemFactory(pool, world)
+    world.initialize_items(world.itempool + list(placed_items.values()))
     placed_locations = list(filter(lambda loc: loc.name in placed_items, world.get_locations()))
     for location in placed_locations:
         item = placed_items[location.name]
-        placed_items_count[item] = placed_items_count.get(item, 0) + 1
-        world.push_item(location, ItemFactory(item, world))
+        placed_items_count[item.name] = placed_items_count.get(item.name, 0) + 1
+        world.push_item(location, item)
         world.get_location(location).locked = True
 
-    world.initialize_items()
     world.distribution.set_complete_itempool(world.itempool)
 
     # make sure that there are enough gold skulltulas for bridge/ganon boss key/lacs
@@ -426,7 +427,7 @@ def generate_itempool(world: World) -> None:
         raise ValueError(f"Not enough available Gold Skulltula Tokens to meet requirements. Available: {world.available_tokens}, Required: {world.max_progressions['Gold Skulltula Token']}.")
 
 
-def get_pool_core(world: World) -> tuple[list[str], dict[str, str]]:
+def get_pool_core(world: World) -> tuple[list[str], dict[str, Item]]:
     pool = []
     placed_items = {}
     remain_shop_items = []
@@ -511,6 +512,7 @@ def get_pool_core(world: World) -> tuple[list[str], dict[str, str]]:
         pending_junk_pool.extend(['Triforce Piece'] * world.settings.triforce_count_per_world)
 
     # Use the vanilla items in the world's locations when appropriate.
+    vanilla_items_processed = Counter()
     for location in world.get_locations():
         if location.vanilla_item is None:
             continue
@@ -652,7 +654,7 @@ def get_pool_core(world: World) -> tuple[list[str], dict[str, str]]:
         # Child Trade Quest Items
         elif location.vanilla_item in child_trade_items:
             if location.vanilla_item == 'Weird Egg' and world.skip_child_zelda:
-                world.state.collect(ItemFactory(location.vanilla_item))
+                world.state.collect(ItemFactory(location.vanilla_item, world))
                 item = IGNORE_LOCATION
                 shuffle_item = False
             elif not world.settings.shuffle_child_trade:
@@ -676,7 +678,7 @@ def get_pool_core(world: World) -> tuple[list[str], dict[str, str]]:
                 item = IGNORE_LOCATION
                 shuffle_item = False
             if shuffle_item and world.settings.gerudo_fortress == 'normal' and 'Thieves Hideout' in world.settings.key_rings:
-                item = get_junk_item()[0] if location.name != 'Hideout 1 Torch Jail Gerudo Key' else 'Small Key Ring (Thieves Hideout)'
+                item = get_junk_item()[0] if vanilla_items_processed[location.vanilla_item] else 'Small Key Ring (Thieves Hideout)'
 
         # Treasure Chest Game Key Shuffle
         elif location.vanilla_item != 'Piece of Heart (Treasure Chest Game)' and location.scene == 0x10:
@@ -745,7 +747,9 @@ def get_pool_core(world: World) -> tuple[list[str], dict[str, str]]:
 
             # Boss Key
             if location.vanilla_item == dungeon.item_name("Boss Key"):
-                if world.settings.shuffle_smallkeys in ['any_dungeon', 'overworld', 'keysanity', 'regional'] and dungeon.name in world.settings.key_rings and world.settings.keyring_give_bk and dungeon.name in ['Forest Temple', 'Fire Temple', 'Water Temple', 'Shadow Temple', 'Spirit Temple']:
+                if (world.settings.shuffle_smallkeys in ['any_dungeon', 'overworld', 'keysanity', 'regional']
+                        and dungeon.name in world.settings.key_rings and world.settings.keyring_give_bk
+                        and dungeon.name in ['Forest Temple', 'Fire Temple', 'Water Temple', 'Shadow Temple', 'Spirit Temple']):
                     item = get_junk_item()[0]
                     shuffle_item = True
                 else:
@@ -765,7 +769,7 @@ def get_pool_core(world: World) -> tuple[list[str], dict[str, str]]:
                 dungeon_collection = dungeon.small_keys
                 if shuffle_setting == 'vanilla':
                     shuffle_item = False
-                elif dungeon.name in world.settings.key_rings and not dungeon.small_keys:
+                elif dungeon.name in world.settings.key_rings and not vanilla_items_processed[location.vanilla_item]:
                     item = dungeon.item_name("Small Key Ring")
                 elif dungeon.name in world.settings.key_rings:
                     item = get_junk_item()[0]
@@ -779,7 +783,7 @@ def get_pool_core(world: World) -> tuple[list[str], dict[str, str]]:
                     shuffle_item = False
                 elif puzzle in world.settings.silver_rupee_pouches:
                     item = f'Silver Rupee Pouch ({puzzle})'
-                    if any(rupee.name == item for rupee in dungeon.silver_rupees):
+                    if vanilla_items_processed[location.vanilla_item]:
                         item = get_junk_item()[0]
                         shuffle_item = True
             # Any other item in a dungeon.
@@ -788,13 +792,14 @@ def get_pool_core(world: World) -> tuple[list[str], dict[str, str]]:
 
             # Handle dungeon item.
             if shuffle_setting is not None and dungeon_collection is not None and not shuffle_item:
-                dungeon_collection.append(ItemFactory(item))
                 if shuffle_setting in ['remove', 'startwith']:
-                    world.state.collect(dungeon_collection[-1])
+                    world.state.collect(ItemFactory(item, world))
                     item = get_junk_item()[0]
                     shuffle_item = True
-                elif shuffle_setting in ['any_dungeon', 'overworld', 'regional']:
-                    dungeon_collection[-1].priority = True
+                elif shuffle_setting in ['any_dungeon', 'overworld', 'keysanity', 'regional', 'anywhere'] and not world.empty_dungeons[dungeon.name].empty:
+                    shuffle_item = True
+                elif shuffle_item is None:
+                    dungeon_collection.append(ItemFactory(item, world))
 
         # The rest of the overworld items.
         elif location.type in ["Chest", "NPC", "Song", "Collectable", "Cutscene", "BossHeart"]:
@@ -804,11 +809,9 @@ def get_pool_core(world: World) -> tuple[list[str], dict[str, str]]:
         if shuffle_item:
             pool.append(item)
         elif shuffle_item is not None:
-            placed_items[location.name] = item
+            placed_items[location.name] = ItemFactory(item, world)
+        vanilla_items_processed[location.vanilla_item] += 1
     # End of Locations loop.
-
-    # add unrestricted dungeon items to main item pool
-    pool.extend([item.name for item in world.get_unrestricted_dungeon_items()])
 
     if world.settings.shopsanity != 'off':
         pool.extend(min_shop_items)
@@ -832,10 +835,10 @@ def get_pool_core(world: World) -> tuple[list[str], dict[str, str]]:
                 pending_junk_pool.append(rupee)
 
     if world.settings.free_scarecrow:
-        world.state.collect(ItemFactory('Scarecrow Song'))
+        world.state.collect(ItemFactory('Scarecrow Song', world))
 
     if world.settings.no_epona_race:
-        world.state.collect(ItemFactory('Epona', event=True))
+        world.state.collect(ItemFactory('Epona', world, event=True))
 
     if world.settings.shuffle_smallkeys == 'vanilla':
         # Logic cannot handle vanilla key layout in some dungeons
@@ -844,26 +847,26 @@ def get_pool_core(world: World) -> tuple[list[str], dict[str, str]]:
         # We can resolve this by starting with some extra keys
         if world.dungeon_mq['Spirit Temple']:
             # Yes somehow you need 3 keys. This dungeon is bonkers
-            world.state.collect(ItemFactory('Small Key (Spirit Temple)'))
-            world.state.collect(ItemFactory('Small Key (Spirit Temple)'))
-            world.state.collect(ItemFactory('Small Key (Spirit Temple)'))
+            world.state.collect(ItemFactory('Small Key (Spirit Temple)', world))
+            world.state.collect(ItemFactory('Small Key (Spirit Temple)', world))
+            world.state.collect(ItemFactory('Small Key (Spirit Temple)', world))
         if 'Shadow Temple' in world.settings.dungeon_shortcuts:
             # Reverse Shadow is broken with vanilla keys in both vanilla/MQ
-            world.state.collect(ItemFactory('Small Key (Shadow Temple)'))
-            world.state.collect(ItemFactory('Small Key (Shadow Temple)'))
+            world.state.collect(ItemFactory('Small Key (Shadow Temple)', world))
+            world.state.collect(ItemFactory('Small Key (Shadow Temple)', world))
 
     if (not world.keysanity or (world.empty_dungeons['Fire Temple'].empty and world.settings.shuffle_smallkeys != 'remove'))\
         and not world.dungeon_mq['Fire Temple']:
-        world.state.collect(ItemFactory('Small Key (Fire Temple)'))
+        world.state.collect(ItemFactory('Small Key (Fire Temple)', world))
 
     if world.settings.shuffle_ganon_bosskey == 'on_lacs':
-        placed_items['ToT Light Arrows Cutscene'] = 'Boss Key (Ganons Castle)'
+        placed_items['ToT Light Arrows Cutscene'] = ItemFactory('Boss Key (Ganons Castle)', world)
 
     if world.settings.shuffle_ganon_bosskey in ['stones', 'medallions', 'dungeons', 'tokens', 'hearts', 'triforce']:
-        placed_items['Gift from Sages'] = 'Boss Key (Ganons Castle)'
+        placed_items['Gift from Sages'] = ItemFactory('Boss Key (Ganons Castle)', world)
         pool.extend(get_junk_item())
     else:
-        placed_items['Gift from Sages'] = IGNORE_LOCATION
+        placed_items['Gift from Sages'] = ItemFactory(IGNORE_LOCATION, world)
 
     if world.settings.junk_ice_traps == 'off':
         replace_max_item(pool, 'Ice Trap', 0)

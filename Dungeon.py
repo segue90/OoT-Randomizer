@@ -45,6 +45,14 @@ class Dungeon:
     def item_name(self, text: str) -> str:
         return f"{text} ({self.name})"
 
+    def get_silver_rupee_names(self) -> set[str]:
+        from Item import ItemInfo
+        return {name for name, item in ItemInfo.items.items() if item.type == 'SilverRupee' and self.name in name}
+
+    def get_item_names(self) -> set[str]:
+        return (self.get_silver_rupee_names() |
+                {self.item_name(name) for name in ["Map", "Compass", "Small Key", "Boss Key", "Small Key Ring"]})
+
     def is_dungeon_item(self, item: Item) -> bool:
         return item.name in [dungeon_item.name for dungeon_item in self.all_items]
 

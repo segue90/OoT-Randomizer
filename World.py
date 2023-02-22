@@ -4,7 +4,7 @@ import json
 import logging
 import os
 import random
-from collections import OrderedDict
+from collections import OrderedDict, defaultdict
 from collections.abc import Iterable
 from typing import Any, Optional
 
@@ -633,17 +633,40 @@ class World:
             for location in region.locations:
                 location.world = self
 
-    def initialize_items(self) -> None:
-        for item in self.itempool:
-            item.world = self
+    def initialize_items(self, items: Optional[list[Item]] = None) -> None:
+        items = self.itempool if items is None else items
+        item_dict = defaultdict(list)
+        for item in items:
+            item_dict[item.name].append(item)
             if (self.settings.shuffle_hideoutkeys in ['fortress', 'regional'] and item.type == 'HideoutSmallKey') or (self.settings.shuffle_tcgkeys == 'regional' and item.type == 'TCGSmallKey'):
                 item.priority = True
-        for region in self.regions:
-            for location in region.locations:
-                if location.item is not None:
-                    location.item.world = self
-        for item in [item for dungeon in self.dungeons for item in dungeon.all_items]:
-            item.world = self
+
+        for dungeon in self.dungeons:
+            dungeon_items = []
+            for item_name in dungeon.get_item_names():
+                dungeon_items.extend(item_dict[item_name])
+
+            for item in dungeon_items:
+                shuffle_setting = None
+                dungeon_collection = None
+
+                if item.map or item.compass:
+                    dungeon_collection = dungeon.dungeon_items
+                    shuffle_setting = self.settings.shuffle_mapcompass
+                elif item.smallkey:
+                    dungeon_collection = dungeon.small_keys
+                    shuffle_setting = self.settings.shuffle_smallkeys
+                elif item.bosskey:
+                    dungeon_collection = dungeon.boss_key
+                    shuffle_setting = self.settings.shuffle_bosskeys
+                elif item.type == 'SilverRupee':
+                    dungeon_collection = dungeon.silver_rupees
+                    shuffle_setting = self.settings.shuffle_silver_rupees
+
+                if dungeon_collection is not None and item not in dungeon_collection:
+                    dungeon_collection.append(item)
+                if shuffle_setting in ['any_dungeon', 'overworld', 'regional']:
+                    item.priority = True
 
     def random_shop_prices(self) -> None:
         shop_item_indexes = ['7', '5', '8', '6']

@@ -631,7 +631,7 @@ class WorldDistribution:
     def collect_starters(self, state: State) -> None:
         for (name, record) in self.starting_items.items():
             for _ in range(record.count):
-                item = ItemFactory("Bottle" if name == "Bottle with Milk (Half)" else name)
+                item = ItemFactory("Bottle" if name == "Bottle with Milk (Half)" else name, state.world)
                 state.collect(item)
 
     def pool_replace_item(self, item_pools: list[list[Item]], item_group: str, player_id: int, new_item: str, worlds: list[World]) -> Item:
