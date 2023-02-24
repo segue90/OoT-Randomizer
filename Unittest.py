@@ -8,10 +8,9 @@ import logging
 import os
 import random
 import re
-import sys
 import unittest
 from collections import Counter, defaultdict
-from typing import Optional, Any, overload
+from typing import Literal, Optional, Any, overload
 
 from EntranceShuffle import EntranceShuffleError
 from Fill import ShuffleError
@@ -23,13 +22,6 @@ from Main import main, resolve_settings, build_world_graphs
 from Messages import Message
 from Settings import Settings, get_preset_files
 from Spoiler import Spoiler
-
-if sys.version_info >= (3, 8):
-    from typing import Literal
-    LiteralTrue = Literal[True]
-    LiteralFalse = Literal[False]
-else:
-    LiteralTrue = LiteralFalse = bool
 
 test_dir = os.path.join(os.path.dirname(__file__), 'tests')
 output_dir = os.path.join(test_dir, 'Output')
@@ -100,12 +92,12 @@ def load_spoiler(json_file: str) -> Any:
 
 
 @overload
-def generate_with_plandomizer(filename: str, live_copy: LiteralFalse = False, max_attempts: int = 10) -> tuple[dict[str, Any], dict[str, Any]]:
+def generate_with_plandomizer(filename: str, live_copy: Literal[False] = False, max_attempts: int = 10) -> tuple[dict[str, Any], dict[str, Any]]:
     pass
 
 
 @overload
-def generate_with_plandomizer(filename: str, live_copy: LiteralTrue, max_attempts: int = 10) -> tuple[dict[str, Any], Spoiler]:
+def generate_with_plandomizer(filename: str, live_copy: Literal[True], max_attempts: int = 10) -> tuple[dict[str, Any], Spoiler]:
     pass
 
 
