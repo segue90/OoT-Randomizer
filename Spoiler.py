@@ -2,7 +2,7 @@ from __future__ import annotations
 from collections import OrderedDict
 import logging
 import random
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, Any
 
 from Item import Item
 from LocationList import location_sort_order
@@ -118,8 +118,8 @@ class Spoiler:
             self.entrances[world.id] = spoiler_entrances
 
     def copy_worlds(self) -> list[World]:
-        worlds = [world.copy() for world in self.worlds]
-        Item.fix_worlds_after_copy(worlds)
+        copy_dict: dict[int, Any] = {}
+        worlds = [world.copy(copy_dict=copy_dict) for world in self.worlds]
         return worlds
 
     def find_misc_hint_items(self) -> None:
@@ -137,11 +137,10 @@ class Spoiler:
 
     def create_playthrough(self) -> None:
         logger = logging.getLogger('')
-        worlds = self.worlds
-        if worlds[0].check_beatable_only and not Search([world.state for world in worlds]).can_beat_game():
+        if self.worlds[0].check_beatable_only and not Search([world.state for world in self.worlds]).can_beat_game():
             raise RuntimeError('Game unbeatable after placing all items.')
+
         # create a copy as we will modify it
-        old_worlds = worlds
         worlds = self.copy_worlds()
 
         # if we only check for beatable, we can do this sanity check first before writing down spheres

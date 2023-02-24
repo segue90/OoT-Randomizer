@@ -1,6 +1,6 @@
 from __future__ import annotations
 from enum import Enum, unique
-from typing import TYPE_CHECKING, Optional
+from typing import TYPE_CHECKING, Optional, Any
 
 if TYPE_CHECKING:
     from Dungeon import Dungeon
@@ -41,6 +41,7 @@ class Region:
         self.exits: list[Entrance] = []
         self.locations: list[Location] = []
         self.dungeon: Optional[Dungeon] = None
+        self.dungeon_name: Optional[str] = None
         self.hint_name: Optional[str] = None
         self.alt_hint_name: Optional[str] = None
         self.price: Optional[int] = None
@@ -50,20 +51,31 @@ class Region:
         self.is_boss_room: bool = False
         self.savewarp: Optional[Entrance] = None
 
-    def copy(self, new_world: World) -> Region:
-        new_region = Region(new_world, self.name, self.type)
-        new_region.price = self.price
+    def copy(self, *, copy_dict: Optional[dict[int, Any]] = None) -> Region:
+        copy_dict = {} if copy_dict is None else copy_dict
+        if (new_region := copy_dict.get(id(self), None)) and isinstance(new_region, Region):
+            return new_region
+
+        new_region = Region(world=self.world.copy(copy_dict=copy_dict), name=self.name, region_type=self.type)
+        copy_dict[id(self)] = new_region
+
+        new_region.exits = [entrance.copy(copy_dict=copy_dict) for entrance in self.exits]
+        new_region.locations = [location.copy(copy_dict=copy_dict) for location in self.locations]
+
+        # TODO: Why does this not work?
+        # new_region.entrances = [entrance.copy(copy_dict=copy_dict) for entrance in self.entrances]
+
+        if self.dungeon:
+            new_region.dungeon = self.dungeon.copy(copy_dict=copy_dict)
+        new_region.dungeon_name = self.dungeon_name
         new_region.hint_name = self.hint_name
         new_region.alt_hint_name = self.alt_hint_name
+        new_region.price = self.price
         new_region.time_passes = self.time_passes
         new_region.provides_time = self.provides_time
         new_region.scene = self.scene
-        new_region.savewarp = None if self.savewarp is None else self.savewarp.copy(new_region)
-
-        if self.dungeon:
-            new_region.dungeon = self.dungeon.name
-        new_region.locations = [location.copy(new_region) for location in self.locations]
-        new_region.exits = [exit.copy(new_region) for exit in self.exits]
+        new_region.is_boss_room = self.is_boss_room
+        new_region.savewarp = None if self.savewarp is None else self.savewarp.copy(copy_dict=copy_dict)
 
         return new_region
 

@@ -333,8 +333,14 @@ class World:
         self.locked_goal_categories: dict[str, GoalCategory] = {name: category for (name, category) in self.goal_categories.items() if category.lock_entrances}
         self.unlocked_goal_categories: dict[str, GoalCategory] = {name: category for (name, category) in self.goal_categories.items() if not category.lock_entrances}
 
-    def copy(self) -> 'World':
+    def copy(self, *, copy_dict: Optional[dict[int, Any]] = None) -> World:
+        copy_dict = {} if copy_dict is None else copy_dict
+        if (new_world := copy_dict.get(id(self), None)) and isinstance(new_world, World):
+            return new_world
+
         new_world = World(self.id, self.settings, False)
+        copy_dict[id(self)] = new_world
+
         new_world.skipped_trials = copy.copy(self.skipped_trials)
         new_world.dungeon_mq = copy.copy(self.dungeon_mq)
         new_world.empty_dungeons = copy.copy(self.empty_dungeons)
@@ -345,14 +351,15 @@ class World:
         new_world.maximum_wallets = self.maximum_wallets
         new_world.distribution = self.distribution
 
-        new_world.regions = [region.copy(new_world) for region in self.regions]
+        new_world.dungeons = [dungeon.copy(copy_dict=copy_dict) for dungeon in self.dungeons]
+        new_world.regions = [region.copy(copy_dict=copy_dict) for region in self.regions]
+        new_world.itempool = [item.copy(copy_dict=copy_dict) for item in self.itempool]
+        new_world.state = self.state.copy(new_world)
+
+        # TODO: Why is this necessary over copying region.entrances on region copy?
         for region in new_world.regions:
             for exit in region.exits:
                 exit.connect(new_world.get_region(exit.connected_region))
-
-        new_world.dungeons = [dungeon.copy(new_world) for dungeon in self.dungeons]
-        new_world.itempool = [item.copy(new_world) for item in self.itempool]
-        new_world.state = self.state.copy(new_world)
 
         # copy any randomized settings to match the original copy
         new_world.randomized_list = list(self.randomized_list)
@@ -553,7 +560,7 @@ class World:
             if 'alt_hint' in region:
                 new_region.alt_hint_name = region['alt_hint']
             if 'dungeon' in region:
-                new_region.dungeon = region['dungeon']
+                new_region.dungeon_name = region['dungeon']
             if 'is_boss_room' in region:
                 new_region.is_boss_room = region['is_boss_room']
             if 'time_passes' in region:

@@ -24,8 +24,7 @@ class State:
         self.search: Optional[Search] = None
 
     def copy(self, new_world: Optional[World] = None) -> State:
-        if not new_world:
-            new_world = self.world
+        new_world = new_world if new_world else self.world
         new_state = State(new_world)
         for i, val in enumerate(self.solv_items):
             new_state.solv_items[i] = val

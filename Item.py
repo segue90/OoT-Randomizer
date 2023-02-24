@@ -77,9 +77,7 @@ class Item:
         if event:
             if name not in ItemInfo.events:
                 ItemInfo.events[name] = ItemInfo(name, event=True)
-            self.info: ItemInfo = ItemInfo.events[name]
-        else:
-            self.info: ItemInfo = ItemInfo.items[name]
+        self.info: ItemInfo = ItemInfo.events[name] if event else ItemInfo.items[name]
         self.price: Optional[int] = self.info.special.get('price', None)
         self.world: Optional[World] = world
         self.looks_like_item: Optional[Item] = None
@@ -94,28 +92,21 @@ class Item:
         # Do not alias to junk--it has no solver id!
         self.alias_id: Optional[int] = ItemInfo.solver_ids[escape_name(self.alias[0])] if self.alias else None
 
-    item_worlds_to_fix: dict[Item, int] = {}
+    def copy(self, *, copy_dict: Optional[dict[int, Any]] = None) -> Item:
+        copy_dict = {} if copy_dict is None else copy_dict
+        if (new_item := copy_dict.get(id(self), None)) and isinstance(new_item, Item):
+            return new_item
 
-    def copy(self, new_world: Optional[World] = None) -> Item:
-        if new_world is not None and self.world is not None and new_world.id != self.world.id:
-            new_world = None
+        new_item = Item(name=self.name, world=self.world.copy(copy_dict=copy_dict), event=self.event)
+        copy_dict[id(self)] = new_item
 
-        new_item = Item(self.name, new_world, self.event)
+        if self.location:
+            new_item.location = self.location.copy(copy_dict=copy_dict)
         new_item.price = self.price
-
-        if new_world is None and self.world is not None:
-            Item.item_worlds_to_fix[new_item] = self.world.id
+        if self.looks_like_item:
+            new_item.looks_like_item = self.looks_like_item.copy(copy_dict=copy_dict)
 
         return new_item
-
-    @classmethod
-    def fix_worlds_after_copy(cls, worlds: list[World]) -> None:
-        items_fixed = []
-        for item, world_id in cls.item_worlds_to_fix.items():
-            item.world = worlds[world_id]
-            items_fixed.append(item)
-        for item in items_fixed:
-            del cls.item_worlds_to_fix[item]
 
     @property
     def key(self) -> bool:

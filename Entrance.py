@@ -26,14 +26,24 @@ class Entrance:
         self.never: bool = False
         self.rule_string: Optional[str] = None
 
-    def copy(self, new_region: Region) -> Entrance:
-        new_entrance = Entrance(self.name, new_region)
-        new_entrance.connected_region = self.connected_region.name  # TODO: Revamp World/Region copying such that this is not a type error.
+    def copy(self, *, copy_dict: Optional[dict[int, Any]] = None) -> Entrance:
+        copy_dict = {} if copy_dict is None else copy_dict
+        if (new_entrance := copy_dict.get(id(self), None)) and isinstance(new_entrance, Entrance):
+            return new_entrance
+
+        new_entrance = Entrance(self.name, self.parent_region.copy(copy_dict=copy_dict) if self.parent_region else None)
+        copy_dict[id(self)] = new_entrance
+
+        if self.connected_region is not None:
+            new_entrance.connected_region = self.connected_region.copy(copy_dict=copy_dict)
         new_entrance.access_rule = self.access_rule
         new_entrance.access_rules = list(self.access_rules)
-        new_entrance.reverse = self.reverse
-        new_entrance.replaces = self.replaces
-        new_entrance.assumed = self.assumed
+        if self.reverse:
+            new_entrance.reverse = self.reverse.copy(copy_dict=copy_dict)
+        if self.replaces:
+            new_entrance.replaces = self.replaces.copy(copy_dict=copy_dict)
+        if self.assumed:
+            new_entrance.assumed = self.assumed.copy(copy_dict=copy_dict)
         new_entrance.type = self.type
         new_entrance.shuffled = self.shuffled
         new_entrance.data = self.data

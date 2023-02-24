@@ -2,7 +2,7 @@ from __future__ import annotations
 import logging
 from collections.abc import Callable, Iterable
 from enum import Enum
-from typing import TYPE_CHECKING, Optional, overload
+from typing import TYPE_CHECKING, Optional, Any, overload
 
 from HintList import misc_item_hint_table, misc_location_hint_table
 from LocationList import location_table, location_is_viewable, LocationAddress, LocationDefault, LocationFilterTags
@@ -36,7 +36,6 @@ class Location:
         self.type: str = location_type
         self.scene: Optional[int] = scene
         self.internal: bool = internal
-        self.staleness_count: int = 0
         self.access_rule: AccessRule = lambda state, **kwargs: True
         self.access_rules: list[AccessRule] = []
         self.item_rule: Callable[[Location, Item], bool] = lambda location, item: True
@@ -50,12 +49,19 @@ class Location:
         self.filter_tags: Optional[tuple[str, ...]] = (filter_tags,) if isinstance(filter_tags, str) else filter_tags
         self.rule_string: Optional[str] = None
 
-    def copy(self, new_region: Region) -> Location:
-        new_location = Location(self.name, self.address, self.address2, self.default, self.type, self.scene, new_region,
-                                self.filter_tags, self.internal, self.vanilla_item)
-        new_location.world = new_region.world
+    def copy(self, *, copy_dict: Optional[dict[int, Any]] = None) -> Location:
+        copy_dict = {} if copy_dict is None else copy_dict
+        if (new_location := copy_dict.get(id(self), None)) and isinstance(new_location, Location):
+            return new_location
+
+        new_location = Location(name=self.name, address=self.address, address2=self.address2, default=self.default,
+                                location_type=self.type, scene=self.scene, parent=self.parent_region.copy(copy_dict=copy_dict) if self.parent_region else None,
+                                filter_tags=self.filter_tags, internal=self.internal, vanilla_item=self.vanilla_item)
+        copy_dict[id(self)] = new_location
+
+        new_location.world = self.world.copy(copy_dict=copy_dict)
         if self.item:
-            new_location.item = self.item.copy(new_region.world)
+            new_location.item = self.item.copy(copy_dict=copy_dict)
             new_location.item.location = new_location
         new_location.access_rule = self.access_rule
         new_location.access_rules = list(self.access_rules)
