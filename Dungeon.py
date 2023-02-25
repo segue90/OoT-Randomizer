@@ -1,4 +1,5 @@
 from __future__ import annotations
+from collections.abc import Iterator
 from typing import TYPE_CHECKING, Optional, Any
 
 if TYPE_CHECKING:
@@ -43,6 +44,26 @@ class Dungeon:
         return new_dungeon
 
     @property
+    def shuffle_mapcompass(self) -> str:
+        return self.world.settings.shuffle_mapcompass
+
+    @property
+    def shuffle_smallkeys(self) -> str:
+        return self.world.settings.shuffle_smallkeys
+
+    @property
+    def shuffle_bosskeys(self) -> str:
+        return self.world.settings.shuffle_bosskeys if self.name != 'Ganons Castle' else self.world.settings.shuffle_ganon_bosskey
+
+    @property
+    def shuffle_silver_rupees(self) -> str:
+        return self.world.settings.shuffle_silver_rupees
+
+    @property
+    def empty(self) -> bool:
+        return self.world.empty_dungeons[self.name].empty
+
+    @property
     def keys(self) -> list[Item]:
         return self.small_keys + self.boss_key
 
@@ -63,6 +84,29 @@ class Dungeon:
 
     def is_dungeon_item(self, item: Item) -> bool:
         return item.name in [dungeon_item.name for dungeon_item in self.all_items]
+
+    def get_restricted_dungeon_items(self) -> Iterator[Item]:
+        if self.shuffle_mapcompass == 'dungeon' or (self.empty and self.shuffle_mapcompass in ['any_dungeon', 'overworld', 'keysanity', 'regional']):
+            yield from self.dungeon_items
+        if self.shuffle_smallkeys == 'dungeon' or (self.empty and self.shuffle_smallkeys in ['any_dungeon', 'overworld', 'keysanity', 'regional']):
+            yield from self.small_keys
+        if self.shuffle_bosskeys == 'dungeon' or (self.empty and self.shuffle_bosskeys in ['any_dungeon', 'overworld', 'keysanity', 'regional']):
+            yield from self.boss_key
+        if self.shuffle_silver_rupees == 'dungeon' or (self.empty and self.shuffle_silver_rupees in ['any_dungeon', 'overworld', 'anywhere', 'regional']):
+            yield from self.silver_rupees
+
+    # get a list of items that don't have to be in their proper dungeon
+    def get_unrestricted_dungeon_items(self) -> Iterator[Item]:
+        if self.empty:
+            return
+        if self.shuffle_mapcompass in ['any_dungeon', 'overworld', 'keysanity', 'regional']:
+            yield from self.dungeon_items
+        if self.shuffle_smallkeys in ['any_dungeon', 'overworld', 'keysanity', 'regional']:
+            yield from self.small_keys
+        if self.shuffle_bosskeys in ['any_dungeon', 'overworld', 'keysanity', 'regional']:
+            yield from self.boss_key
+        if self.shuffle_silver_rupees in ['any_dungeon', 'overworld', 'anywhere', 'regional']:
+            yield from self.silver_rupees
 
     def __str__(self) -> str:
         return str(self.__unicode__())

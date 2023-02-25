@@ -37,7 +37,7 @@ validColors: list[str] = [
 
 class Goal:
     def __init__(self, world: World, name: str, hint_text: str | dict[str, str], color: str, items: Optional[list[dict[str, Any]]] = None,
-                 locations=None, lock_locations=None, lock_entrances: list[str] = None, required_locations=None, create_empty: bool = False) -> None:
+                 locations=None, lock_locations=None, lock_entrances: Optional[list[str]] = None, required_locations=None, create_empty: bool = False) -> None:
         # early exit if goal initialized incorrectly
         if not items and not locations and not create_empty:
             raise Exception('Invalid goal: no items or destinations set')
@@ -51,7 +51,7 @@ class Goal:
         self.items: list[GoalItem] = items or []
         self.locations = locations  # Unused?
         self.lock_locations = lock_locations  # Unused?
-        self.lock_entrances: list[str] = lock_entrances
+        self.lock_entrances: list[str] = lock_entrances or []
         self.required_locations: list[tuple[Location, int, int, list[int]]] = required_locations or []
         self.weight: int = 0
         self.category: Optional[GoalCategory] = None

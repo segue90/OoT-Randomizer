@@ -62,7 +62,7 @@ class Region:
         new_region.exits = [entrance.copy(copy_dict=copy_dict) for entrance in self.exits]
         new_region.locations = [location.copy(copy_dict=copy_dict) for location in self.locations]
 
-        # TODO: Why does this not work?
+        # Why does this not work properly?
         # new_region.entrances = [entrance.copy(copy_dict=copy_dict) for entrance in self.entrances]
 
         if self.dungeon:

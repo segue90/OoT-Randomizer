@@ -5,7 +5,7 @@ import logging
 import os
 import random
 from collections import OrderedDict, defaultdict
-from collections.abc import Iterable
+from collections.abc import Iterable, Iterator
 from typing import Any, Optional
 
 from Dungeon import Dungeon
@@ -357,9 +357,7 @@ class World:
         new_world.state = self.state.copy(new_world)
 
         # TODO: Why is this necessary over copying region.entrances on region copy?
-        for region in new_world.regions:
-            for exit in region.exits:
-                exit.connect(new_world.get_region(exit.connected_region))
+        new_world.initialize_entrances()
 
         # copy any randomized settings to match the original copy
         new_world.randomized_list = list(self.randomized_list)
@@ -616,8 +614,7 @@ class World:
     def create_dungeons(self) -> list[tuple[Entrance, str]]:
         savewarps_to_connect = []
         for hint_area in HintArea:
-            if hint_area.is_dungeon:
-                name = hint_area.dungeon_name
+            if (name := hint_area.dungeon_name) is not None:
                 logic_folder = 'Glitched World' if self.settings.logic_rules == 'glitched' else 'World'
                 file_name = name + (' MQ.json' if self.dungeon_mq[name] else '.json')
                 savewarps_to_connect += self.load_regions_from_json(os.path.join(data_path(logic_folder), file_name))
@@ -631,7 +628,8 @@ class World:
     def initialize_entrances(self) -> None:
         for region in self.regions:
             for exit in region.exits:
-                exit.connect(self.get_region(exit.connected_region))
+                if exit.connected_region:
+                    exit.connect(self.get_region(exit.connected_region))
                 exit.world = self
 
     def initialize_regions(self) -> None:
@@ -649,14 +647,10 @@ class World:
                 item.priority = True
 
         for dungeon in self.dungeons:
-            dungeon_items = []
-            for item_name in dungeon.get_item_names():
-                dungeon_items.extend(item_dict[item_name])
-
+            dungeon_items = [item for item_name in dungeon.get_item_names() for item in item_dict[item_name]]
             for item in dungeon_items:
                 shuffle_setting = None
                 dungeon_collection = None
-
                 if item.map or item.compass:
                     dungeon_collection = dungeon.dungeon_items
                     shuffle_setting = self.settings.shuffle_mapcompass
@@ -1043,98 +1037,54 @@ class World:
     def get_region(self, region_name: str | Region) -> Region:
         if isinstance(region_name, Region):
             return region_name
-        try:
-            return self._region_cache[region_name]
-        except KeyError:
-            for region in self.regions:
-                self._region_cache[region.name] = region
-            region = self._region_cache.get(region_name, None)
-            if region is not None:
-                return region
+        if (region := self._region_cache.get(region_name, None)) is not None:
+            return region
+
+        for region in self.regions:
+            self._region_cache[region.name] = region
+        if (region := self._region_cache.get(region_name, None)) is not None:
+            return region
         raise KeyError('No such region %s' % region_name)
 
     def get_entrance(self, entrance_name: str | Entrance) -> Entrance:
         if isinstance(entrance_name, Entrance):
             return entrance_name
-        try:
-            return self._entrance_cache[entrance_name]
-        except KeyError:
-            for region in self.regions:
-                for entrance in region.exits:
-                    self._entrance_cache[entrance.name] = entrance
-            entrance = self._entrance_cache.get(entrance_name, None)
-            if entrance is not None:
-                return entrance
+        if (entrance := self._entrance_cache.get(entrance_name, None)) is not None:
+            return entrance
+
+        for region in self.regions:
+            for entrance in region.exits:
+                self._entrance_cache[entrance.name] = entrance
+        if (entrance := self._entrance_cache.get(entrance_name, None)) is not None:
+            return entrance
         raise KeyError('No such entrance %s' % entrance_name)
 
     def get_location(self, location_name: str | Location) -> Location:
         if isinstance(location_name, Location):
             return location_name
-        try:
-            return self._location_cache[location_name]
-        except KeyError:
-            for region in self.regions:
-                for location in region.locations:
-                    self._location_cache[location.name] = location
-            location = self._location_cache.get(location_name, None)
-            if location is not None:
-                return location
+        if (location := self._location_cache.get(location_name, None)) is not None:
+            return location
+
+        for region in self.regions:
+            for location in region.locations:
+                self._location_cache[location.name] = location
+        if (location := self._location_cache.get(location_name, None)) is not None:
+            return location
         raise KeyError('No such location %s' % location_name)
 
-    def get_items(self) -> list[Item]:
-        return [loc.item for loc in self.get_filled_locations()] + self.itempool
-
-    def get_itempool_with_dungeon_items(self) -> list[Item]:
-        return self.get_restricted_dungeon_items() + self.itempool
+    def get_itempool_with_dungeon_items(self) -> Iterator[Item]:
+        yield from self.get_restricted_dungeon_items()
+        yield from self.itempool
 
     # get a list of items that should stay in their proper dungeon
-    def get_restricted_dungeon_items(self) -> list[Item]:
-        itempool = []
-
-        if self.settings.shuffle_mapcompass == 'dungeon':
-            itempool.extend([item for dungeon in self.dungeons for item in dungeon.dungeon_items])
-        elif self.settings.shuffle_mapcompass in ['any_dungeon', 'overworld', 'keysanity', 'regional']:
-            itempool.extend([item for dungeon in self.dungeons if self.empty_dungeons[dungeon.name].empty for item in dungeon.dungeon_items])
-
-        if self.settings.shuffle_smallkeys == 'dungeon':
-            itempool.extend([item for dungeon in self.dungeons for item in dungeon.small_keys])
-        elif self.settings.shuffle_smallkeys in ['any_dungeon', 'overworld', 'keysanity', 'regional']:
-            itempool.extend([item for dungeon in self.dungeons if self.empty_dungeons[dungeon.name].empty for item in dungeon.small_keys])
-
-        if self.settings.shuffle_bosskeys == 'dungeon':
-            itempool.extend([item for dungeon in self.dungeons if dungeon.name != 'Ganons Castle' for item in dungeon.boss_key])
-        elif self.settings.shuffle_bosskeys in ['any_dungeon', 'overworld', 'keysanity', 'regional']:
-            itempool.extend([item for dungeon in self.dungeons if self.empty_dungeons[dungeon.name].empty for item in dungeon.boss_key])
-
-        if self.settings.shuffle_ganon_bosskey == 'dungeon':
-            itempool.extend([item for dungeon in self.dungeons if dungeon.name == 'Ganons Castle' for item in dungeon.boss_key])
-
-        if self.settings.shuffle_silver_rupees == 'dungeon':
-            itempool.extend([item for dungeon in self.dungeons for item in dungeon.silver_rupees])
-        elif self.settings.shuffle_silver_rupees in ['any_dungeon', 'overworld', 'anywhere', 'regional']:
-            itempool.extend([item for dungeon in self.dungeons if self.empty_dungeons[dungeon.name].empty for item in dungeon.silver_rupees])
-
-        for item in itempool:
-            item.world = self
-        return itempool
+    def get_restricted_dungeon_items(self) -> Iterator[Item]:
+        for dungeon in self.dungeons:
+            yield from dungeon.get_restricted_dungeon_items()
 
     # get a list of items that don't have to be in their proper dungeon
-    def get_unrestricted_dungeon_items(self) -> list[Item]:
-        itempool = []
-        if self.settings.shuffle_mapcompass in ['any_dungeon', 'overworld', 'keysanity', 'regional']:
-            itempool.extend([item for dungeon in self.dungeons if not self.empty_dungeons[dungeon.name].empty for item in dungeon.dungeon_items])
-        if self.settings.shuffle_smallkeys in ['any_dungeon', 'overworld', 'keysanity', 'regional']:
-            itempool.extend([item for dungeon in self.dungeons if not self.empty_dungeons[dungeon.name].empty for item in dungeon.small_keys])
-        if self.settings.shuffle_bosskeys in ['any_dungeon', 'overworld', 'keysanity', 'regional']:
-            itempool.extend([item for dungeon in self.dungeons if (dungeon.name != 'Ganons Castle' and not self.empty_dungeons[dungeon.name].empty) for item in dungeon.boss_key])
-        if self.settings.shuffle_ganon_bosskey in ['any_dungeon', 'overworld', 'keysanity', 'regional']:
-            itempool.extend([item for dungeon in self.dungeons if dungeon.name == 'Ganons Castle' for item in dungeon.boss_key])
-        if self.settings.shuffle_silver_rupees in ['any_dungeon', 'overworld', 'anywhere', 'regional']:
-            itempool.extend([item for dungeon in self.dungeons if not self.empty_dungeons[dungeon.name].empty for item in dungeon.silver_rupees])
-
-        for item in itempool:
-            item.world = self
-        return itempool
+    def get_unrestricted_dungeon_items(self) -> Iterator[Item]:
+        for dungeon in self.dungeons:
+            yield from dungeon.get_unrestricted_dungeon_items()
 
     def silver_rupee_puzzles(self) -> list[str]:
         return ([
@@ -1157,7 +1107,7 @@ class World:
             location = self.get_location(location)
 
         # This check should never be false normally, but is here as a sanity check
-        if location.can_fill_fast(item, manual):
+        if location.can_fill_fast(item, manual) and item.world:
             location.item = item
             item.location = location
             item.price = location.price if location.price is not None else item.price
@@ -1196,7 +1146,7 @@ class World:
         dungeon_name = HintArea.at(region).dungeon_name
         return dungeon_name in self.settings.dungeon_shortcuts
 
-    # Function to run exactly once after after placing items in drop locations for each world
+    # Function to run exactly once after placing items in drop locations for each world
     # Sets all Drop locations to a unique name in order to avoid name issues and to identify locations in the spoiler
     def set_drop_location_names(self):
         for location in self.get_locations():
