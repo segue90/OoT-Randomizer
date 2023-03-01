@@ -38,7 +38,7 @@ void get_chest_override(z64_actor_t *actor) {
                 item_row = get_item_row(override.value.base.item_id);
             }
             if (CHEST_SIZE_MATCH_CONTENTS || CHEST_SIZE_TEXTURE) {
-                if (item_row->chest_type == BROWN_CHEST || item_row->chest_type == SILVER_CHEST || item_row->chest_type == SKULL_CHEST_SMALL) {
+                if (item_row->chest_type == BROWN_CHEST || item_row->chest_type == SILVER_CHEST || item_row->chest_type == SKULL_CHEST_SMALL || item_row->chest_type == HEART_CHEST_SMALL) {
                     // Small chest
                     size = SMALL_CHEST;
                 }
