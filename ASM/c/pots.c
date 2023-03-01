@@ -93,7 +93,8 @@ void draw_pot(z64_actor_t *actor, z64_game_t *game) {
             side_texture = get_texture(TEXTURE_ID_POT_SKULL);
             break;
 
-        case HEART_CHEST:
+        case HEART_CHEST_SMALL:
+        case HEART_CHEST_BIG:
             side_texture = get_texture(TEXTURE_ID_POT_SIDE_HEART);
             top_texture = get_texture(TEXTURE_ID_POT_TOP_HEART);
             break;
