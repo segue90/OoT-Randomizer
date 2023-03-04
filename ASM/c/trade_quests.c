@@ -146,11 +146,12 @@ uint32_t SaveFile_TradeItemIsTraded(uint16_t itemId) {
     // because of timers. Some hacks still need to know if the item was
     // traded independent of story flags. Child trade quest does not have
     // this limitation because duping by re-trading isn't possible there.
-    if (itemId >= Z64_ITEM_POCKET_EGG && itemId <= Z64_ITEM_CLAIM_CHECK && !CFG_ADULT_TRADE_SHUFFLE) {
-        return itemId < z64_file.items[Z64_SLOT_ADULT_TRADE];
-    }
     uint16_t tradeItemNum = GetTradeItemIndex(itemId);
-    return (z64_file.scene_flags[0x61].unk_00_ & (0x1 << tradeItemNum)) != 0;
+    uint32_t traded = (z64_file.scene_flags[0x61].unk_00_ & (0x1 << tradeItemNum)) != 0;
+    if (itemId >= Z64_ITEM_POCKET_EGG && itemId <= Z64_ITEM_CLAIM_CHECK && !CFG_ADULT_TRADE_SHUFFLE) {
+        return itemId < z64_file.items[Z64_SLOT_ADULT_TRADE] || traded;
+    }
+    return traded;
 }
 
 // Goron, Zora, Gerudo, and Mask of Truth masks have no need for Traded flags.
