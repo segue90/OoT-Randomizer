@@ -3513,3 +3513,10 @@ courtyard_guards_kill:
 .orga 0xD7C864
     lhu     t3, 0x0EDC(v0)
     andi    t4, t3, 0x0200
+;===================================================================================================
+; Various speedups
+;===================================================================================================
+; patch skulls spawn when the insect digs in and not 3sec after
+; Replaces: slti    $at, t7, 0x003C
+.orga 0xEFA318
+    slti    $at, t7, 0x0001
