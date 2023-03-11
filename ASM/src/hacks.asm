@@ -3513,3 +3513,11 @@ courtyard_guards_kill:
 .orga 0xD7C864
     lhu     t3, 0x0EDC(v0)
     andi    t4, t3, 0x0200
+
+;===================================================================================================
+; Various speedups
+;===================================================================================================
+; Forest Red/Blue poe painting hit cutscene removed
+; Replaces jal     func_8006B6FC
+.orga 0xCE1600
+    nop
