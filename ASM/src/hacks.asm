@@ -3513,3 +3513,27 @@ courtyard_guards_kill:
 .orga 0xD7C864
     lhu     t3, 0x0EDC(v0)
     andi    t4, t3, 0x0200
+
+;===================================================================================================
+; Various speedups
+;===================================================================================================
+; Forest Basement pillars cutscenes removed
+; Replaces jal     func_8006B6FC
+.orga 0xCC5DE8
+    nop
+; Replaces jal     func_8006B6FC
+.orga 0xCC5DF4
+    nop
+; Replaces jal     func_8006B6FC
+.orga 0xCC5F70
+    nop
+; Replaces jal     func_8006B6FC
+.orga 0xCC604C
+    nop
+; Forest Basement pillars speed 3.0 by increments of 1.0 instead of 0.6 by increments of 0.02
+; Replaces lui     a1, 0x3F19
+.orga 0xCC5F14
+    lui     a1, 0x4040
+; Replaces lui     a2, 0x3CA3
+.orga 0xCC5F18
+    lui     a2, 0x3F80
