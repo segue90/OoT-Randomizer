@@ -3513,3 +3513,15 @@ courtyard_guards_kill:
 .orga 0xD7C864
     lhu     t3, 0x0EDC(v0)
     andi    t4, t3, 0x0200
+
+;===================================================================================================
+; Various speedups
+;===================================================================================================
+; Biggoron puts the eyedrops
+; Put eyedrops animation timer at 0 and skip the cutscene
+; Replaces sh      t2, 0x0582(s0)
+.orga 0xED665C
+    sh      $zero, 0x0582(s0)
+; Replaces jal     func_8006B6FC
+.orga 0xED6670
+    nop
