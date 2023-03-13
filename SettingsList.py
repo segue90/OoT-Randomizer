@@ -3073,9 +3073,6 @@ setting_infos = [
         gui_params     = {
             "hide_when_disabled": True,
         },
-        disable={
-            True: {'settings' : ['shuffle_bosskeys']},
-        },
     ),
     Combobox(
         name           = 'shuffle_mapcompass',
