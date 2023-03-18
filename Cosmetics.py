@@ -1019,7 +1019,9 @@ patch_sets[0x1F073FD9] = {
 
 # 7.1.79
 patch_sets[0x1F073FDA] = {
-    "patches": patch_sets[0x1F073FD9]["patches"],
+    "patches": patch_sets[0x1F073FD9]["patches"] + [
+        patch_sfx,
+    ],
     "symbols": {
         **patch_sets[0x1F073FD9]["symbols"],
         "GET_ITEM_SEQ_ID": 0x0056,
