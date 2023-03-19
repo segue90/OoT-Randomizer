@@ -5959,6 +5959,18 @@ setting_infos = [
         ''',
         default        = False,
     ),
+    Checkbutton(
+        name           = 'speedup_music_for_last_triforce_piece',
+        gui_text       = 'Speed Up Music For Last Triforce Piece',
+        shared         = False,
+        cosmetic       = True,
+        gui_tooltip    = '''\
+            In Triforce Hunt, the music will speed up slightly
+            at one piece from the goal to make it more hype !
+            Does not apply on the standard battle enemy music.
+        ''',
+        default        = False,
+    ),
     Combobox(
         name           = 'background_music',
         gui_text       = 'Background Music',
@@ -6410,6 +6422,17 @@ setting_infos = [
                 ('random-ear-safe', 1),
             ]
         }
+    ),
+    Checkbutton(
+        name           = 'slowdown_music_when_lowhp',
+        gui_text       = 'Slow Down Music When Low HP',
+        shared         = False,
+        cosmetic       = True,
+        gui_tooltip    = '''\
+            The music will slow down slightly when being low on HP.
+            Does not apply on the standard battle enemy music.
+        ''',
+        default        = False,
     ),
     Combobox(
         name           = 'sfx_silver_rupee',

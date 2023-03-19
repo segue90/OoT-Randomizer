@@ -487,7 +487,8 @@
           "row_span": [2,2,2],
           "settings": [
             "randomize_all_sfx",
-            "disable_battle_music"
+            "disable_battle_music",
+            "speedup_music_for_last_triforce_piece"
           ]
         },
         {
@@ -566,6 +567,7 @@
             "sfx_menu_cursor",
             "sfx_menu_select",
             "sfx_low_hp",
+            "slowdown_music_when_lowhp",
             "sfx_silver_rupee",
             "sfx_get_small_item"
           ]

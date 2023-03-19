@@ -900,6 +900,20 @@ def patch_voices(rom, settings, log, symbols):
         # Write the setting to the log
         log.sfx[log_key] = voice_setting
 
+def patch_music_changes(rom, settings, log, symbols):
+    # Music tempo changes
+    if settings.speedup_music_for_last_triforce_piece:
+        rom.write_byte(symbols['CFG_SPEEDUP_MUSIC_FOR_LAST_TRIFORCE_PIECE'], 0x01)
+    else:
+        rom.write_byte(symbols['CFG_SPEEDUP_MUSIC_FOR_LAST_TRIFORCE_PIECE'], 0x00)
+    log.speedup_music_for_last_triforce_piece = settings.speedup_music_for_last_triforce_piece
+
+    if settings.slowdown_music_when_lowhp:
+        rom.write_byte(symbols['CFG_SLOWDOWN_MUSIC_WHEN_LOWHP'], 0x01)
+    else:
+        rom.write_byte(symbols['CFG_SLOWDOWN_MUSIC_WHEN_LOWHP'], 0x00)
+    log.slowdown_music_when_lowhp = settings.slowdown_music_when_lowhp
+
 
 legacy_cosmetic_data_headers = [
     0x03481000,
@@ -1025,6 +1039,18 @@ patch_sets[0x1F073FDA] = {
     "symbols": {
         **patch_sets[0x1F073FD9]["symbols"],
         "GET_ITEM_SEQ_ID": 0x0056,
+    }
+}
+
+# 7.1.81
+patch_sets[0x1F073FDB] = {
+    "patches": patch_sets[0x1F073FDA]["patches"] + [
+        patch_music_changes,
+    ],
+    "symbols": {
+        **patch_sets[0x1F073FDA]["symbols"],
+        "CFG_SPEEDUP_MUSIC_FOR_LAST_TRIFORCE_PIECE": 0x0058,
+        "CFG_SLOWDOWN_MUSIC_WHEN_LOWHP": 0x0059,
     }
 }
 
