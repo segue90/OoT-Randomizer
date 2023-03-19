@@ -443,7 +443,7 @@ void get_item(z64_actor_t *from_actor, z64_link_t *link, int8_t incoming_item_id
         // do not to avoid tripping the shop hack to only allow purchasing
         // a shop item once.
         if (row) {
-            if (row->action_id >= Z64_ITEM_KEATON_MASK && row->action_id <= Z64_ITEM_MASK_OF_TRUTH) {
+            if (row->action_id >= Z64_ITEM_KEATON_MASK && row->action_id <= Z64_ITEM_MASK_OF_TRUTH && CFG_CHILD_TRADE_SHUFFLE) {
                 call_effect_function(row);
             }
         }
