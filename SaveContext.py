@@ -1046,7 +1046,10 @@ class SaveContext():
             'double_magic'          : [False, True],
         },
         "Rupee"                     : {'rupees' : None},
-        "Rupee (Treasure Chest Game)" : {'rupees' : None},
+        "Green Rupee (Treasure Chest Game)" : {'rupees' : None},
+        "Blue Rupee (Treasure Chest Game)" : {'rupees' : None},
+        "Red Rupee (Treasure Chest Game)" : {'rupees' : None},
+        "Purple Rupee (Treasure Chest Game)" : {'rupees' : None},
         "Rupees"                    : {'rupees' : None},
         "Magic Bean Pack" : {
             'item_slot.beans'       : 'beans',

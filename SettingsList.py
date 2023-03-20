@@ -3006,6 +3006,31 @@ setting_infos = [
         },
     ),
     Combobox(
+        name           = 'shuffle_tcgkeys',
+        gui_text       = 'Treasure Chest Game Keys',
+        default        = 'vanilla',
+        choices        = {
+            'vanilla':     "Vanilla Locations",
+            'keysanity':   "Anywhere (Keysanity)",
+            'remove':      "Remove (Keysy)",
+        },
+        gui_tooltip    = '''\
+            "Vanilla": Treasure Chest Game Keys will have vanilla
+            behavior (one random per room).   Treasure Chest Game
+            will also have vanilla behavior.
+
+            "Anywhere": Treasure Chest Game Keys can appear anywhere
+            in the world.
+
+            "Remove": All Treasure Chest Game Keys will be removed
+            and all doors will remained unlocked.
+        ''',
+        shared         = True,
+        gui_params     = {
+            'randomize_key': 'randomize_settings',
+        },
+    ),
+    Combobox(
         name           = 'key_rings_choice',
         gui_text       = 'Key Rings Mode',
         default        = 'off',

@@ -214,6 +214,7 @@
             "shuffle_mapcompass",
             "shuffle_smallkeys",
             "shuffle_hideoutkeys",
+            "shuffle_tcgkeys",
             "key_rings_choice",
             "key_rings",
             "keyring_give_bk",

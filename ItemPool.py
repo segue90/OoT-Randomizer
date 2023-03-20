@@ -612,6 +612,17 @@ def get_pool_core(world):
             if shuffle_item and world.settings.gerudo_fortress == 'normal' and 'Thieves Hideout' in world.settings.key_rings:
                 item = get_junk_item()[0] if location.name != 'Hideout 1 Torch Jail Gerudo Key' else 'Small Key Ring (Thieves Hideout)'
 
+        # Treasure Chest Game Key Shuffle
+        elif location.vanilla_item in ['Small Key (Treasure Chest Game)', 'Green Rupee (Treasure Chest Game)', 'Blue Rupee (Treasure Chest Game)', 'Red Rupee (Treasure Chest Game)'] and location.scene == 0x10:
+            if world.settings.shuffle_tcgkeys == 'vanilla':
+                item = IGNORE_LOCATION
+                shuffle_item = False
+            elif world.settings.shuffle_tcgkeys == 'remove' and location.vanilla_item == 'Small Key (Treasure Chest Game)':
+                item = get_junk_item()[0]
+                shuffle_item = True
+            else:
+                shuffle_item = True
+
         # Freestanding Rupees and Hearts
         elif location.type in ['ActorOverride', 'Freestanding', 'RupeeTower']:
             if world.settings.shuffle_freestanding_items == 'all':

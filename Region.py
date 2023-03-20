@@ -97,10 +97,11 @@ class Region(object):
         is_dungeon_restricted = False
         is_overworld_restricted = False
 
-        if item.type in ['Map', 'Compass', 'SmallKey', 'HideoutSmallKey', 'BossKey', 'GanonBossKey']:
+        if item.type in ['Map', 'Compass', 'SmallKey', 'HideoutSmallKey', 'TCGSmallKey', 'BossKey', 'GanonBossKey']:
             shuffle_setting = (self.world.settings.shuffle_mapcompass if item.type in ['Map', 'Compass'] else
                                self.world.settings.shuffle_smallkeys if item.type == 'SmallKey' else
                                self.world.settings.shuffle_hideoutkeys if item.type == 'HideoutSmallKey' else
+                               self.world.settings.shuffle_tcgkeys if item.type == 'TCGSmallKey' else
                                self.world.settings.shuffle_bosskeys if item.type == 'BossKey' else
                                self.world.settings.shuffle_ganon_bosskey if item.type == 'GanonBossKey' else None)
 
