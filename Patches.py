@@ -34,7 +34,7 @@ def patch_rom(spoiler:Spoiler, world:World, rom:Rom):
             address, value = [int(x, 16) for x in line.split(',')]
             rom.write_int32(address, value)
     rom.scan_dmadata_update()
-
+    
     # Binary patches of certain assets.
     bin_patches = [
         (data_path('title.bin'),  0x01795300),  # Randomizer title screen logo
@@ -2119,6 +2119,9 @@ def patch_rom(spoiler:Spoiler, world:World, rom:Rom):
             item_text = getHint(getItemGenericName(location.item), True).text
             update_message_by_id(messages, 0x500C, "How about \x05\x41100 Rupees\x05\x40 for\x01\x05\x41"+ item_text +"\x05\x40?\x01\x1B\x05\x42Buy\x01Don't buy\x05\x40\x02")
 
+    if world.settings.shuffle_tcgkeys:
+        rom.write_byte(rom.sym('SHUFFLE_CHEST_GAME'), 0x01)
+
     if world.settings.shuffle_pots != 'off': # Update the first BK door in ganon's castle to use a separate flag so it can be unlocked to get to the pots
         patch_ganons_tower_bk_door(rom, 0x15) # Using flag 0x15 for the door. GBK doors normally use 0x14.
     locked_doors = get_doors_to_unlock(rom, world)
@@ -2405,6 +2408,25 @@ def patch_rom(spoiler:Spoiler, world:World, rom:Rom):
         save_context.equip_default_items('child')
     save_context.equip_current_items(world.settings.starting_age)
     save_context.write_save_table(rom)
+    
+    # Convert temporary flags used for locked doors in Treasure Chest Game to permanent flags namely (0x1A-0x1F)
+    if world.settings.shuffle_tcgkeys != 'vanilla':
+        rom.write_byte(0x33A6070 +15, 0xDF)
+        rom.write_byte(0x33A6080 +15, 0xDE)
+        rom.write_byte(0x33A6090 +15, 0xDD)
+        rom.write_byte(0x33A60A0 +15, 0xDC)
+        rom.write_byte(0x33A60B0 +15, 0xDB)
+        rom.write_byte(0x33A60C0 +15, 0xDA)
+    
+        # Remove Locks From Treasure Chest Game doors if Keysy is turned on
+        if world.settings.shuffle_tcgkeys == 'remove':
+            rom.write_byte(0x33A6070 +15, 0x80)
+            rom.write_byte(0x33A6080 +15, 0x80)
+            rom.write_byte(0x33A6090 +15, 0x80)
+            rom.write_byte(0x33A60A0 +15, 0x80)
+            rom.write_byte(0x33A60B0 +15, 0x80)
+            rom.write_byte(0x33A60C0 +15, 0x80)
+
 
     # Write numeric seed truncated to 32 bits for rng seeding
     # Overwritten with new seed every time a new rng value is generated
@@ -2935,3 +2957,5 @@ def patch_ganons_tower_bk_door(rom: Rom, flag):
     var = (0x05 << 6) + (flag & 0x3F)
     bytes = [(var & 0xFF00) >> 8, var & 0xFF]
     rom.write_bytes(0x2EE30FE, bytes)
+
+
