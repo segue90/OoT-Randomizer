@@ -14,3 +14,4 @@ chestgame_buy_item_hook:
 @@return:
 jr      ra
 sw      $zero, 0x0118(s0)
+

@@ -3296,10 +3296,24 @@ courtyard_guards_kill:
 .orga 0xE1F794
 @medigoron_check_return:
 
-;.orga 0xE94C14
- ;   nop
+;Allow TCG chests to open separately
+.orga 0xE4386C
+    jr ra
+    nop
+
+;Skip instruction to reset TCG chest flags
+.orga 0xE9474C
+    nop
+
+
+;Skip instruction to set TCG keys to 0 every reload
+.orga 0xE94760
+    nop
    ; jal     chestgame_buy_item_hook
     ;sh      t8, 0x0204(s0)
+
+.orga 0xE7CDB0
+    nop 
 
 ;==================================================================================================
 ; Bombchu Ticking Color
