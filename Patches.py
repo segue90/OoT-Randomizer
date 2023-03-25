@@ -2769,7 +2769,7 @@ def get_doors_to_unlock(rom, world):
         if world.settings.shuffle_smallkeys == 'remove':
             if actor_id == 0x0009 and door_type == 0x02:
                 return [0x00D4 + scene * 0x1C + 0x04 + flag_byte, flag_bits]
-            if actor_id == 0x002E and door_type == 0x0B:
+            if actor_id == 0x002E and door_type == 0x0B and scene != 0x10:
                 return [0x00D4 + scene * 0x1C + 0x04 + flag_byte, flag_bits]
 
         # Return Boss Doors that should be unlocked

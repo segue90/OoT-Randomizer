@@ -3309,11 +3309,14 @@ courtyard_guards_kill:
 ;Skip instruction to set TCG keys to 0 every reload
 .orga 0xE94760
     nop
-   ; jal     chestgame_buy_item_hook
-    ;sh      t8, 0x0204(s0)
 
-.orga 0xE7CDB0
+;Change Chests so items don't change 50/50 between the room
+.orga 0xE435D0
     nop 
+
+;Change GetItemID that TCG Salesman gives while title card is up
+.orga 0xE94C14
+    addiu   a2, $zero, 0x0071
 
 ;==================================================================================================
 ; Bombchu Ticking Color
