@@ -313,6 +313,7 @@ for dungeon_name, max_keys in (
     ("the \x05\x46Gerudo Training\x01Ground\x05\x40", 9),
     ("the \x05\x46Thieves' Hideout\x05\x40", 4),
     ("\x05\x41Ganon's Castle\x05\x40", 3),
+    ("the \x05\x44Treasure Box Shop\x05\x40", 6),
 ):
     KEYSANITY_MESSAGES[i] = f"\x13\x77\x08You found a \x05\x41Small Key\x05\x40\x01for {dungeon_name}!\x09"
     i += 1
