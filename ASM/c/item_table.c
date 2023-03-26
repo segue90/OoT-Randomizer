@@ -249,6 +249,8 @@ item_row_t item_table[] = {
     [0x00D4] = ITEM_ROW(0x53,      GILDED_CHEST, 0x41, -1, 0x9019, 0x0197, 0x7E, no_upgrade, give_bombchus, 20, -1), // Bombchu Bag (20)
     [0x00D5] = ITEM_ROW(0x53,      GILDED_CHEST, 0x41, -1, 0x9019, 0x0197, 0x7E, no_upgrade, give_bombchus, 10, -1), // Bombchu Bag (10)
     [0x00D6] = ITEM_ROW(0x53,      GILDED_CHEST, 0x41, -1, 0x9019, 0x0197, 0x7E, no_upgrade, give_bombchus,  5, -1), // Bombchu Bag (5)
+
+    [0x00D7] = ITEM_ROW(0x53,      SILVER_CHEST, 0x41, -1, 0x901B, 0x0195, 0x77, no_upgrade, give_small_key_ring, TCG_ID, -1), // Treasure Chest Game Small Key Ring
 };
 
 item_row_t *get_item_row(uint16_t item_id) {
@@ -264,7 +266,7 @@ item_row_t *get_item_row(uint16_t item_id) {
 
 uint16_t resolve_item_text_id(uint16_t item_id, bool is_outgoing) {
     item_row_t *item_row = get_item_row(item_id);
-    if ((item_id >= 0xAF && item_id < 0xB8) || item_id == 0x71 && !is_outgoing) {
+    if (((item_id >= 0xAF && item_id < 0xB8) || item_id == 0x71) && !is_outgoing) {
         return item_row->text_id + (z64_file.scene_flags[item_row->effect_arg1].unk_00_ >> 0x10); // Dynamically select the text box based on key count
     }
     return item_row->text_id;

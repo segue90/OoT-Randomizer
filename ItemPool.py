@@ -427,6 +427,11 @@ def get_pool_core(world):
                 pending_junk_pool.extend(['Small Key Ring (Thieves Hideout)'])
             else:
                 pending_junk_pool.append('Small Key (Thieves Hideout)')
+        if world.settings.shuffle_tcgkeys == 'keysanity':
+            if 'Treasure Chest Game' in world.settings.key_rings:
+                pending_junk_pool.extend(['Small Key Ring (Treasure Chest Game)'])
+            else:
+                pending_junk_pool.append('Small Key (Treasure Chest Game)')
         if world.settings.shuffle_gerudo_card:
             pending_junk_pool.append('Gerudo Membership Card')
         if world.settings.shuffle_smallkeys in ['any_dungeon', 'overworld', 'keysanity', 'regional']:
@@ -614,14 +619,14 @@ def get_pool_core(world):
 
         # Treasure Chest Game Key Shuffle
         elif location.vanilla_item in ['Small Key (Treasure Chest Game)', 'Green Rupee (Treasure Chest Game)', 'Blue Rupee (Treasure Chest Game)', 'Red Rupee (Treasure Chest Game)'] and location.scene == 0x10:
-            if world.settings.shuffle_tcgkeys == 'vanilla':
+            shuffle_item = world.settings.shuffle_tcgkeys != 'vanilla'
+            if not shuffle_item:
                 item = IGNORE_LOCATION
                 shuffle_item = False
-            elif world.settings.shuffle_tcgkeys == 'remove' and location.vanilla_item == 'Small Key (Treasure Chest Game)':
+            if shuffle_item and 'Treasure Chest Game' in world.settings.key_rings and location.vanilla_item == 'Small Key (Treasure Chest Game)':
+                item = 'Small Key Ring (Treasure Chest Game)'
+            if world.settings.shuffle_tcgkeys == 'remove' and location.vanilla_item == 'Small Key (Treasure Chest Game)':
                 item = get_junk_item()[0]
-                shuffle_item = True
-            else:
-                shuffle_item = True
 
         # Freestanding Rupees and Hearts
         elif location.type in ['ActorOverride', 'Freestanding', 'RupeeTower']:

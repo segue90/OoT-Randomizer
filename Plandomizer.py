@@ -348,6 +348,11 @@ class WorldDistribution(object):
                             self.major_group.append('Small Key Ring (Thieves Hideout)')
                         else:
                             self.major_group.append('Small Key (Thieves Hideout)')
+                    if self.distribution.settings.shuffle_tcgkeys == 'keysanity':
+                        if 'Treasure Chest Game' in self.distribution.settings.key_rings:
+                            self.major_group.append('Small Key Ring (Treasure Chest Game)')
+                        else:
+                            self.major_group.append('Small Key (Treasure Chest Game)')
                     if self.distribution.settings.shuffle_bosskeys == 'keysanity':
                         keys = [name for name, item in ItemInfo.items.items() if item.type == 'BossKey' and name != 'Boss Key']
                         self.major_group.extend(keys)

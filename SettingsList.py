@@ -3036,9 +3036,9 @@ setting_infos = [
         default        = 'off',
         choices        = {
             'off':       'Off',
-            'choice':    'Choose dungeons',
-            'all':       'All dungeons',
-            'random':    'Random dungeons'
+            'choice':    'Choose dungeons/Treasure Chest Game',
+            'all':       'All dungeons + Treasure Chest Game',
+            'random':    'Random selection'
         },
         gui_tooltip     = '''\
             Selected dungeons will have all of their keys found
@@ -3069,6 +3069,7 @@ setting_infos = [
         gui_text        = 'Key Rings',
         choices         = {
             'Thieves Hideout':        "Thieves' Hideout",
+            'Treasure Chest Game':    "Treasure Chest Game",
             'Forest Temple':          "Forest Temple",
             'Fire Temple':            "Fire Temple",
             'Water Temple':           "Water Temple",
