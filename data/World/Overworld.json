@@ -1385,9 +1385,10 @@
     {
         "region_name": "Market Treasure Chest Game",
         "scene": "Market Treasure Chest Game",
+        "hint": "MARKET",
         "locations": {
             "Market Treasure Chest Game Reward": "(shuffle_tcgkeys == 'vanilla' and can_use(Lens_of_Truth)) or (shuffle_tcgkeys == 'keysanity' and (Small_Key_Treasure_Chest_Game, 6)) or shuffle_tcgkeys == 'remove'",
-            "TCG Sales Man": "True",
+            "TCG Sales Man": "is_child and at_night",
             "Market Treasure Chest Game Room 1 Bottom": "(shuffle_tcgkeys == 'keysanity' and (Small_Key_Treasure_Chest_Game, 1)) or shuffle_tcgkeys == 'remove'",
             "Market Treasure Chest Game Room 1 Top": "(shuffle_tcgkeys == 'keysanity' and (Small_Key_Treasure_Chest_Game, 1)) or shuffle_tcgkeys == 'remove'",
             "Market Treasure Chest Game Room 2 Bottom": "(shuffle_tcgkeys == 'keysanity' and (Small_Key_Treasure_Chest_Game, 2)) or shuffle_tcgkeys == 'remove'",
