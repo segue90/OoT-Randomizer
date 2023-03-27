@@ -623,8 +623,8 @@ def get_pool_core(world):
             if not shuffle_item:
                 item = IGNORE_LOCATION
                 shuffle_item = False
-            if shuffle_item and 'Treasure Chest Game' in world.settings.key_rings and location.vanilla_item == 'Small Key (Treasure Chest Game)':
-                item = 'Small Key Ring (Treasure Chest Game)'
+            if world.settings.shuffle_tcgkeys == 'keysanity' and 'Treasure Chest Game' in world.settings.key_rings:
+                item = get_junk_item()[0] if location.name != 'TCG Sales Man' else 'Small Key Ring (Treasure Chest Game)'
             if world.settings.shuffle_tcgkeys == 'remove' and location.vanilla_item == 'Small Key (Treasure Chest Game)':
                 item = get_junk_item()[0]
 
