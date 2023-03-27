@@ -2121,7 +2121,8 @@ def patch_rom(spoiler:Spoiler, world:World, rom:Rom):
 
     if world.settings.shuffle_tcgkeys:
         rom.write_byte(rom.sym('SHUFFLE_CHEST_GAME'), 0x01)
-        update_message_by_id(messages, 0x6D, "I seem to have misplaced my keys.\x01I have another fun item to sell though.\x04How about \x05\x4110 Rupees\x05\x40?\x01\x01\x1B\x05\x42Buy\x01Don't Buy\x05\x40\x02")
+        # Update Chest Game Salesman to better fit the fact he sells a randomized item
+        update_message_by_id(messages, 0x6D, "I seem to have misplaced my keys, but\x01I have a fun item to sell instead.\x04How about \x05\x4110 Rupees\x05\x40?\x01\x01\x1B\x05\x42Buy\x01Don't Buy\x05\x40\x02")
         update_message_by_id(messages, 0x2D, "That's OK!\x01More fun for me.\x02")
         update_message_by_id(messages, 0x6E, "Wait, that room was off limits!\x02")
         update_message_by_id(messages, 0x704C, "I hope you like it!\x02")

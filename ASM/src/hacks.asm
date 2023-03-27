@@ -3296,23 +3296,49 @@ courtyard_guards_kill:
 .orga 0xE1F794
 @medigoron_check_return:
 
+
+;==================================================================================================
+; Chest Game Keysanity
+;==================================================================================================
+; Replaces: sh     t8, 0x0204(s0)
+;           sw     $zero, 0x0118(s0)
+
+.orga 0xE94B30
+    jal     chestgame_buy_item_hook
+    sh      t8, 0x0204(s0)
+
+; Replaces: sw     t3, 0x0014($sp)
+            sw     t2, 0x0010($sp)
+.orga 0xE94774
+    jal     chestgame_initial_message
+    sw      t3,0x0014($sp)
+
 ;Allow TCG chests to open separately
-.orga 0xE4386C
-    jr ra
+;Skips this entire function func_80AC3A2C:
+.orga 0xE43874
+    jal     chestgame_open_chests_separately
     nop
 
 ;Skip instruction to reset TCG chest flags
+; Replaces: sw     $zero, 0x1D38(t8)
+;           lhu    t0, 0x1402(v0)
 .orga 0xE9474C
+    jal     chestgame_no_reset_flag
     nop
 
 
 ;Skip instruction to set TCG keys to 0 every reload
+; Replaces: sb      t9, 0x00BC(t1)
+;           addiu   t2, s0, 0x0184
 .orga 0xE94760
+    jal     chestgame_no_reset_keys
     nop
 
 ;Change Chests so items don't change 50/50 between the room
-.orga 0xE435D0
-    nop 
+;Inserts additonal code at: mtc1    $at, $f8
+.orga 0xE435B4
+    jal     chestgame_remove_chest_rng
+
 
 ;Change GetItemID that TCG Salesman gives while title card is up
 .orga 0xE94C14
