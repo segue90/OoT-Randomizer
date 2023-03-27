@@ -42,7 +42,9 @@ enum dungeon {
     GTG_ID     = 11,
     FORT_ID    = 12,
     CASTLE_ID  = 13,
-    TCG_ID     = 14,
+    TOWER_COL_ID = 14,
+    CASTLE_COL_ID = 15,
+    TCG_ID     = 16,
 };
 
 #endif

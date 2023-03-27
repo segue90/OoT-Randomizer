@@ -34,7 +34,7 @@ dungeon_entry_t dungeons[] = {
     { 12, 1, 0, 1, 0, 0x00, "Hideout" },
     { 11, 1, 0, 0, 0, 0x00, "GTG"     },
     { 13, 1, 1, 0, 0, 0x00, "Ganon"   },
-    { 14, 1, 0, 1, 0, 0x00, "Chest Game" },
+    { 16, 1, 0, 0, 0, 0x00, "Chest Game" },
 };
 
 int dungeon_count = 14;

@@ -2119,7 +2119,7 @@ def patch_rom(spoiler:Spoiler, world:World, rom:Rom):
             item_text = getHint(getItemGenericName(location.item), True).text
             update_message_by_id(messages, 0x500C, "How about \x05\x41100 Rupees\x05\x40 for\x01\x05\x41"+ item_text +"\x05\x40?\x01\x1B\x05\x42Buy\x01Don't buy\x05\x40\x02")
 
-    if world.settings.shuffle_tcgkeys:
+    if world.settings.shuffle_tcgkeys != 'vanilla':
         rom.write_byte(rom.sym('SHUFFLE_CHEST_GAME'), 0x01)
         # Update Chest Game Salesman to better fit the fact he sells a randomized item
         update_message_by_id(messages, 0x6D, "I seem to have misplaced my keys, but\x01I have a fun item to sell instead.\x04How about \x05\x4110 Rupees\x05\x40?\x01\x01\x1B\x05\x42Buy\x01Don't Buy\x05\x40\x02")
