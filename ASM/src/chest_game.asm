@@ -32,11 +32,11 @@ chestgame_initial_message:
     sw     t2, 0x0010($sp)      ; displaced code
 
 chestgame_no_reset_flag:
-    lhu     t0, 0x1402(v0)       ;removed code due to nop after jal
+    lhu     t0, 0x1402(v0)      ; removed code due to nop after jal
     lb      t1, SHUFFLE_CHEST_GAME
     bnez    t1, @@return        ; skip if chest game isn't randomized
     nop
-    sw     $zero, 0x1D38(t8)      ; displaced code
+    sw     $zero, 0x1D38(t8)    ; displaced code
 
 @@return:
     jr      ra

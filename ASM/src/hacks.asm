@@ -3342,7 +3342,7 @@ courtyard_guards_kill:
 
 ;Change GetItemID that TCG Salesman gives while title card is up
 .orga 0xE94C14
-    addiu   a2, $zero, 0x0071
+    addiu   a2, $zero, 0x0071   ;replaces 0x0042 (generic key) with 0x0071 (chest game key)
 
 ;==================================================================================================
 ; Bombchu Ticking Color
