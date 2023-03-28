@@ -76,4 +76,4 @@ chestgame_open_chests_separately:
 
 @@return:
     jr      ra
-    nop
+    or      a3, a1, $zero

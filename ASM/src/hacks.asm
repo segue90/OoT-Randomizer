@@ -3317,7 +3317,7 @@ courtyard_guards_kill:
 ;Skips this entire function func_80AC3A2C:
 .orga 0xE43874
     jal     chestgame_open_chests_separately
-    nop
+    or      a2, a0, $zero
 
 ;Skip instruction to reset TCG chest flags
 ; Replaces: sw     $zero, 0x1D38(t8)
