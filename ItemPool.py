@@ -619,16 +619,14 @@ def get_pool_core(world):
 
         # Treasure Chest Game Key Shuffle
         elif location.vanilla_item in ['Small Key (Treasure Chest Game)', 'Green Rupee (Treasure Chest Game)', 'Blue Rupee (Treasure Chest Game)', 'Red Rupee (Treasure Chest Game)'] and location.scene == 0x10:
-            if world.settings.shuffle_tcgkeys == 'vanilla':
-                shuffle_item = False
-            elif world.settings.shuffle_tcgkeys == 'keysanity' and 'Treasure Chest Game' in world.settings.key_rings and location.vanilla_item == 'Small Key (Treasure Chest Game)':
+            if world.settings.shuffle_tcgkeys == 'keysanity' and 'Treasure Chest Game' in world.settings.key_rings and location.vanilla_item == 'Small Key (Treasure Chest Game)':
                 item = get_junk_item()[0] if location.name != 'TCG Sales Man' else 'Small Key Ring (Treasure Chest Game)'
                 shuffle_item = True
             elif world.settings.shuffle_tcgkeys == 'remove' and location.vanilla_item == 'Small Key (Treasure Chest Game)':
                 item = get_junk_item()[0]
                 shuffle_item = True
             else:
-                shuffle_item = True
+                shuffle_item = False
 
         # Freestanding Rupees and Hearts
         elif location.type in ['ActorOverride', 'Freestanding', 'RupeeTower']:

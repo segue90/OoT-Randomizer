@@ -105,7 +105,7 @@ class Region(object):
                                self.world.settings.shuffle_bosskeys if item.type == 'BossKey' else
                                self.world.settings.shuffle_ganon_bosskey if item.type == 'GanonBossKey' else None)
 
-            is_self_dungeon_restricted = shuffle_setting in ['dungeon', 'vanilla'] and item.type != 'HideoutSmallKey'
+            is_self_dungeon_restricted = shuffle_setting in ['dungeon', 'vanilla'] and item.type not in ['HideoutSmallKey', 'TCGSmallKey']
             is_self_region_restricted = [HintArea.GERUDO_FORTRESS] if shuffle_setting == 'fortress' else None
             is_hint_color_restricted = [HintArea.for_dungeon(item.name).color] if shuffle_setting == 'regional' else None
             is_dungeon_restricted = shuffle_setting == 'any_dungeon'
