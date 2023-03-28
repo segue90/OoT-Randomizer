@@ -64,7 +64,7 @@ extern uint32_t CFG_DUNGEON_INFO_REWARD_NEED_COMPASS;
 extern uint32_t CFG_DUNGEON_INFO_REWARD_NEED_ALTAR;
 extern uint32_t CFG_DUNGEON_INFO_REWARD_SUMMARY_ENABLE;
 
-extern int8_t CFG_DUNGEON_REWARDS[13];
+extern int8_t CFG_DUNGEON_REWARDS[14];
 extern char CFG_DUNGEON_REWARD_AREAS[9][0x17];
 
 void draw_background(z64_disp_buf_t *db, int bg_left, int bg_top, int bg_width, int bg_height) {
