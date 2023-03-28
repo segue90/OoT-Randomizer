@@ -9,6 +9,7 @@ extern uint32_t CHEST_SIZE_MATCH_CONTENTS;
 extern uint32_t CHEST_TEXTURE_MATCH_CONTENTS;
 extern uint32_t CHEST_SIZE_TEXTURE;
 extern uint32_t CHEST_LENS_ONLY;
+extern uint8_t SHUFFLE_CHEST_GAME;
 
 struct EnBox;
 
