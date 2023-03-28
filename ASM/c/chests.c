@@ -39,13 +39,9 @@ void get_chest_override(z64_actor_t *actor) {
             }
             if (CHEST_SIZE_MATCH_CONTENTS || CHEST_SIZE_TEXTURE) {
                 if (item_row->chest_type == BROWN_CHEST || item_row->chest_type == SILVER_CHEST || item_row->chest_type == SKULL_CHEST_SMALL || item_row->chest_type == HEART_CHEST_SMALL) {
-                    // Force chest_type to small chests with special conditions for TCG shuffle
-                    size = scene == 0x10 ? (SHUFFLE_CHEST_GAME ? SMALL_CHEST : BROWN_CHEST) : SMALL_CHEST;
+                    // Chest size based on CAMC and TCG Shuffle   // Big Chest  // Small Chest
+                    size = (scene == 0x10 && !SHUFFLE_CHEST_GAME) ? BROWN_CHEST : SMALL_CHEST;
                 } 
-                else {
-                    // Set remaining chest_type to big chests
-                    size = BROWN_CHEST;
-                }
             }
             color = item_row->chest_type;
         }
