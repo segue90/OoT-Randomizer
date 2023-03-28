@@ -4,8 +4,6 @@
 #include "sys_matrix.h"
 #include "textures.h"
 
-extern uint8_t SHUFFLE_CHEST_GAME;
-
 #define BROWN_FRONT_TEXTURE 0x06001798
 #define BROWN_BASE_TEXTURE 0x06002798
 #define GOLD_FRONT_TEXTURE 0x06002F98
