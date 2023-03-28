@@ -4,6 +4,8 @@
 #include "sys_matrix.h"
 #include "textures.h"
 
+extern uint8_t SHUFFLE_CHEST_GAME;
+
 #define BROWN_FRONT_TEXTURE 0x06001798
 #define BROWN_BASE_TEXTURE 0x06002798
 #define GOLD_FRONT_TEXTURE 0x06002F98
@@ -38,7 +40,11 @@ void get_chest_override(z64_actor_t *actor) {
                 item_row = get_item_row(override.value.base.item_id);
             }
             if (CHEST_SIZE_MATCH_CONTENTS || CHEST_SIZE_TEXTURE) {
-                if ((item_row->chest_type == BROWN_CHEST || item_row->chest_type == SILVER_CHEST || item_row->chest_type == SKULL_CHEST_SMALL || item_row->chest_type == HEART_CHEST_SMALL) && scene != 0x010) {
+                if ((item_row->chest_type == BROWN_CHEST || item_row->chest_type == SILVER_CHEST || item_row->chest_type == SKULL_CHEST_SMALL || item_row->chest_type == HEART_CHEST_SMALL) && (SHUFFLE_CHEST_GAME && scene == 0x010)) {
+                    // Small chest (Compatibility w/ Treasure Box Shop)
+                    size = SMALL_CHEST;
+                }
+                if (item_row->chest_type == BROWN_CHEST || item_row->chest_type == SILVER_CHEST || item_row->chest_type == SKULL_CHEST_SMALL || item_row->chest_type == HEART_CHEST_SMALL) {
                     // Small chest
                     size = SMALL_CHEST;
                 }
