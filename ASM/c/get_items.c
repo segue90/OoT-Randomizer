@@ -401,12 +401,10 @@ void handle_pending_items() {
         pop_ice_trap();
         // don't apply ice traps while playing the treasure chest game when it isn't shuffled, since that would allow cheesing it
         // (dying there lets you buy another key but doesn't lock already unlocked doors)
-        if (!SHUFFLE_CHEST_GAME) {
-            if (ice_trap_is_pending() && (z64_game.scene_index != 0x0010 || z64_game.chest_flags & 0x00000400)) {
-                give_ice_trap();
-            } else {
-                try_pending_item();
-            }
+        if (ice_trap_is_pending() && (SHUFFLE_CHEST_GAME || z64_game.scene_index != 0x0010 || z64_game.chest_flags & 0x00000400)) {
+            give_ice_trap();
+        } else {
+            try_pending_item();
         }
     }
 }
