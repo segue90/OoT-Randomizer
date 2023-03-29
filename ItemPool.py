@@ -103,6 +103,7 @@ ludicrous_items_extended = [
     'Boss Key (Shadow Temple)',
     'Boss Key (Spirit Temple)',
     'Gerudo Membership Card',
+    'Small Key (Treasure Chest Game)',
     'Small Key (Thieves Hideout)',
     'Small Key (Shadow Temple)',
     'Small Key (Ganons Castle)',
@@ -112,6 +113,7 @@ ludicrous_items_extended = [
     'Small Key (Water Temple)',
     'Small Key (Bottom of the Well)',
     'Small Key (Gerudo Training Ground)',
+    'Small Key Ring (Treasure Chest Game)',
     'Small Key Ring (Thieves Hideout)',
     'Small Key Ring (Shadow Temple)',
     'Small Key Ring (Ganons Castle)',
@@ -427,7 +429,7 @@ def get_pool_core(world):
                 pending_junk_pool.extend(['Small Key Ring (Thieves Hideout)'])
             else:
                 pending_junk_pool.append('Small Key (Thieves Hideout)')
-        if world.settings.shuffle_tcgkeys == 'keysanity':
+        if world.settings.shuffle_tcgkeys in ['keysanity', 'any_dungeon', 'overworld', 'regional']:
             if 'Treasure Chest Game' in world.settings.key_rings:
                 pending_junk_pool.extend(['Small Key Ring (Treasure Chest Game)'])
             else:
@@ -619,14 +621,15 @@ def get_pool_core(world):
 
         # Treasure Chest Game Key Shuffle
         elif location.vanilla_item in ['Small Key (Treasure Chest Game)', 'Green Rupee (Treasure Chest Game)', 'Blue Rupee (Treasure Chest Game)', 'Red Rupee (Treasure Chest Game)'] and location.scene == 0x10:
-            if world.settings.shuffle_tcgkeys == 'vanilla':
-                shuffle_item = False
-            elif world.settings.shuffle_tcgkeys == 'keysanity' and 'Treasure Chest Game' in world.settings.key_rings and location.vanilla_item == 'Small Key (Treasure Chest Game)':
-                item = get_junk_item()[0] if location.name != 'TCG Sales Man' else 'Small Key Ring (Treasure Chest Game)'
+            if world.settings.shuffle_tcgkeys in ['regional', 'overworld', 'any_dungeon', 'keysanity']:
+                if 'Treasure Chest Game' in world.settings.key_rings and location.vanilla_item == 'Small Key (Treasure Chest Game)':
+                    item = get_junk_item()[0] if location.name != 'TCG Sales Man' else 'Small Key Ring (Treasure Chest Game)'
                 shuffle_item = True
             elif world.settings.shuffle_tcgkeys == 'remove' and location.vanilla_item == 'Small Key (Treasure Chest Game)':
                 item = get_junk_item()[0]
                 shuffle_item = True
+            elif world.settings.shuffle_tcgkeys == 'vanilla':
+                shuffle_item = False
             else:
                 shuffle_item = True
 

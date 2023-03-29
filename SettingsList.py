@@ -3010,7 +3010,6 @@ setting_infos = [
         gui_text       = 'Treasure Box Shop Keys',
         default        = 'vanilla',
         choices        = {
-            
             'remove':      "Remove (Keysy)",
             'vanilla':     "Vanilla Locations",
             'regional':    "Regional",
@@ -3019,10 +3018,10 @@ setting_infos = [
             'keysanity':   "Anywhere (Keysanity)",
         },
         gui_tooltip    = '''\
-            "Remove": All Treasure Box Shop Keys will be removed
+            'Remove': All Treasure Box Shop Keys will be removed
             and all doors will remained unlocked.
 
-            "Vanilla": Treasure Box Shop Keys will have vanilla
+            'Vanilla': Treasure Box Shop Keys will have vanilla
             behavior (one random per room). Treasure Chest Game
             will also have vanilla behavior.
 
@@ -3040,7 +3039,7 @@ setting_infos = [
             A difficult mode since it is more likely to need to enter the minigame 
             multiples times.
 
-            "Anywhere": Treasure Box Shop Keys can appear anywhere
+            'Anywhere': Treasure Box Shop Keys can appear anywhere
             in the world.
         ''',
         shared         = True,
