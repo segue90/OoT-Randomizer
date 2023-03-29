@@ -623,7 +623,7 @@ def get_pool_core(world):
         elif location.vanilla_item in ['Small Key (Treasure Chest Game)', 'Green Rupee (Treasure Chest Game)', 'Blue Rupee (Treasure Chest Game)', 'Red Rupee (Treasure Chest Game)'] and location.scene == 0x10:
             if world.settings.shuffle_tcgkeys in ['regional', 'overworld', 'any_dungeon', 'keysanity']:
                 if 'Treasure Chest Game' in world.settings.key_rings and location.vanilla_item == 'Small Key (Treasure Chest Game)':
-                    item = get_junk_item()[0] if location.name != 'TCG Sales Man' else 'Small Key Ring (Treasure Chest Game)'
+                    item = get_junk_item()[0] if location.name != 'Market Treasure Chest Game Salesman' else 'Small Key Ring (Treasure Chest Game)'
                 shuffle_item = True
             elif world.settings.shuffle_tcgkeys == 'remove' and location.vanilla_item == 'Small Key (Treasure Chest Game)':
                 item = get_junk_item()[0]

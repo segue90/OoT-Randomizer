@@ -348,7 +348,7 @@ class WorldDistribution(object):
                             self.major_group.append('Small Key Ring (Thieves Hideout)')
                         else:
                             self.major_group.append('Small Key (Thieves Hideout)')
-                    if self.distribution.settings.shuffle_tcgkeys == 'keysanity':
+                    if self.distribution.settings.shuffle_tcgkeys in ['regional', 'overworld', 'any_dungeon', 'keysanity']:
                         if 'Treasure Chest Game' in self.distribution.settings.key_rings:
                             self.major_group.append('Small Key Ring (Treasure Chest Game)')
                         else:

@@ -204,7 +204,7 @@ location_table = OrderedDict([
     ("Market Bombchu Bowling Bombchus",                              ("NPC",          0x4B,  0x03, None,                            'Bombchus (10)',                         ("Market", "Minigames"))),
     ("Market Bombchu Bowling Bomb",                                  ("NPC",          0x4B,  0x65, None,                            'Bomb (1)',                              ("Market", "Minigames"))),
     ("Market Lost Dog",                                              ("NPC",          0x35,  0x3E, None,                            'Piece of Heart',                        ("Market", "NPCs",))),
-    ("TCG Sales Man",                                                ("NPC",          0x10,  0x71, None,                            'Small Key (Treasure Chest Game)',       ("Market", "Minigames", "NPCs",))),
+    ("Market Treasure Chest Game Salesman",                          ("NPC",          0x10,  0x71, None,                            'Small Key (Treasure Chest Game)',       ("Market", "Minigames", "NPCs",))),
     ("Market Treasure Chest Game Room 1 Bottom",                     ("Chest",        0x10,  0x00, None,                            'Green Rupee (Treasure Chest Game)',     ("Market", "Minigames", "Chests",))),
     ("Market Treasure Chest Game Room 1 Top",                        ("Chest",        0x10,  0x01, None,                            'Small Key (Treasure Chest Game)',       ("Market", "Minigames", "Chests",))),
     ("Market Treasure Chest Game Room 2 Bottom",                     ("Chest",        0x10,  0x02, None,                            'Green Rupee (Treasure Chest Game)',     ("Market", "Minigames", "Chests",))),
