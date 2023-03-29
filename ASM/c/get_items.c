@@ -7,6 +7,7 @@
 #include "util.h"
 #include "z64.h"
 
+extern uint8_t SHUFFLE_CHEST_GAME;
 extern uint8_t FAST_CHESTS;
 extern uint8_t OCARINAS_SHUFFLED;
 extern uint8_t NO_COLLECTIBLE_HEARTS;
@@ -398,12 +399,14 @@ void handle_pending_items() {
     push_coop_item();
     if (link_is_ready()) {
         pop_ice_trap();
-        // don't apply ice traps while playing the treasure chest game, since that would allow cheesing it
+        // don't apply ice traps while playing the treasure chest game when it isn't shuffled, since that would allow cheesing it
         // (dying there lets you buy another key but doesn't lock already unlocked doors)
-        if (ice_trap_is_pending() && (z64_game.scene_index != 0x0010 || z64_game.chest_flags & 0x00000400)) {
-            give_ice_trap();
-        } else {
-            try_pending_item();
+        if (!SHUFFLE_CHEST_GAME) {
+            if (ice_trap_is_pending() && (z64_game.scene_index != 0x0010 || z64_game.chest_flags & 0x00000400)) {
+                give_ice_trap();
+            } else {
+                try_pending_item();
+            }
         }
     }
 }
