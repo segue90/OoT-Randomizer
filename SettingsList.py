@@ -3007,23 +3007,41 @@ setting_infos = [
     ),
     Combobox(
         name           = 'shuffle_tcgkeys',
-        gui_text       = 'Treasure Chest Game Keys',
+        gui_text       = 'Treasure Box Shop Keys',
         default        = 'vanilla',
         choices        = {
-            'vanilla':     "Vanilla Locations",
-            'keysanity':   "Anywhere (Keysanity)",
+            
             'remove':      "Remove (Keysy)",
+            'vanilla':     "Vanilla Locations",
+            'regional':    "Regional",
+            'overworld':   "Overworld Only",
+            'any_dungeon': "Any Dungeon",
+            'keysanity':   "Anywhere (Keysanity)",
         },
         gui_tooltip    = '''\
-            "Vanilla": Treasure Chest Game Keys will have vanilla
-            behavior (one random per room).   Treasure Chest Game
+            "Remove": All Treasure Box Shop Keys will be removed
+            and all doors will remained unlocked.
+
+            "Vanilla": Treasure Box Shop Keys will have vanilla
+            behavior (one random per room). Treasure Chest Game
             will also have vanilla behavior.
 
-            "Anywhere": Treasure Chest Game Keys can appear anywhere
-            in the world.
+            'Regional': Treasure Box Shop Keys can only appear
+            in regions near the minigame (including
+            the minigame itself or other dungeons in the region, such as Ganon's Castle).
+            <a href="https://wiki.ootrandomizer.com/index.php?title=Hints#Hint_Regions" target="_blank">The Wiki has a list of corresponding regions here.</a>
 
-            "Remove": All Treasure Chest Game Keys will be removed
-            and all doors will remained unlocked.
+            'Overworld Only': Treasure Box Shop Keys can only appear 
+            outside of dungeons. You may need to enter the Treasure Box Shop 
+            multiple times to gain items to access the overworld locations
+            with the keys required to clear the minigame.
+
+            'Any Dungeon': Treasure Box Shop Keys can only appear inside of a dungeon.
+            A difficult mode since it is more likely to need to enter the minigame 
+            multiples times.
+
+            "Anywhere": Treasure Box Shop Keys can appear anywhere
+            in the world.
         ''',
         shared         = True,
         gui_params     = {
