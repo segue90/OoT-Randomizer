@@ -64,6 +64,8 @@ extern uint32_t CFG_DUNGEON_INFO_REWARD_NEED_COMPASS;
 extern uint32_t CFG_DUNGEON_INFO_REWARD_NEED_ALTAR;
 extern uint32_t CFG_DUNGEON_INFO_REWARD_SUMMARY_ENABLE;
 
+extern uint8_t SHUFFLE_CHEST_GAME;
+
 extern int8_t CFG_DUNGEON_REWARDS[14];
 extern char CFG_DUNGEON_REWARD_AREAS[9][0x17];
 
@@ -111,7 +113,7 @@ void draw_dungeon_info(z64_disp_buf_t *db) {
         int font_width = 6;
         int font_height = 11;
         int padding = 1;
-        int rows = 14;
+        int rows = SHUFFLE_CHEST_GAME ? 14 : 13;
         int mq_width = show_mq ?
             ((6 * font_width) + padding) :
             0;
@@ -185,16 +187,16 @@ void draw_dungeon_info(z64_disp_buf_t *db) {
             sprite_load(db, &stones_sprite, 0, stones_sprite.tile_count);
 
             for (int i = 0; i < dungeon_count - 1; i++) {
-                dungeon_entry_t *d = &(dungeons[i]);
-                if (CFG_DUNGEON_INFO_REWARD_NEED_COMPASS && !z64_file.dungeon_items[d->index].compass) {
-                    continue;
-                }
-                int reward = CFG_DUNGEON_REWARDS[d->index];
-                if (reward < 0 || reward >= 3) continue;
+            dungeon_entry_t *d = &(dungeons[i]);
+            if (CFG_DUNGEON_INFO_REWARD_NEED_COMPASS && !z64_file.dungeon_items[d->index].compass) {
+                continue;
+            }
+            int reward = CFG_DUNGEON_REWARDS[d->index];
+            if (reward < 0 || reward >= 3) continue;
 
-                int top = start_top + ((icon_size + padding) * i);
-                sprite_draw(db, &stones_sprite, reward,
-                        left, top, icon_size, icon_size);
+            int top = start_top + ((icon_size + padding) * i);
+            sprite_draw(db, &stones_sprite, reward,
+                    left, top, icon_size, icon_size);
             }
         }
 
@@ -202,14 +204,25 @@ void draw_dungeon_info(z64_disp_buf_t *db) {
 
         // Draw dungeon names
 
-        for (int i = 0; i < dungeon_count; i++) {
-            dungeon_entry_t *d = &(dungeons[i]);
-            int top = start_top + ((icon_size + padding) * i) + 1;
-            text_print_size(d->name, left, top, font_width);
-        }
+        if (SHUFFLE_CHEST_GAME) {
+            for (int i = 0; i < dungeon_count; i++) {
+                dungeon_entry_t *d = &(dungeons[i]);
+                int top = start_top + ((icon_size + padding) * i) + 1;
+                text_print_size(d->name, left, top, font_width);
+            }
+            text_flush_size(db, font_width, font_height, 0, 0);
+
+            left += (11 * font_width) + padding;
+        } else {
+            for (int i = 0; i < dungeon_count - 1; i++) {
+                dungeon_entry_t *d = &(dungeons[i]);
+                int top = start_top + ((icon_size + padding) * i) + 1;
+                text_print_size(d->name, left, top, font_width);
+            }
         text_flush_size(db, font_width, font_height, 0, 0);
 
-        left += (11 * font_width) + padding;
+        left += (8 * font_width) + padding;
+        }
 
         // Draw keys
 
@@ -218,27 +231,51 @@ void draw_dungeon_info(z64_disp_buf_t *db) {
 
             sprite_load(db, &quest_items_sprite, 17, 1);
 
-            for (int i = 0; i < dungeon_count; i++) {
-                dungeon_entry_t *d = &(dungeons[i]);
-                if (!d->has_keys) continue;
+            if (SHUFFLE_CHEST_GAME) {
+                for (int i = 0; i < dungeon_count; i++) {
+                    dungeon_entry_t *d = &(dungeons[i]);
+                    if (!d->has_keys) continue;
 
-                int8_t current_keys = z64_file.dungeon_keys[d->index];
-                if (current_keys < 0) current_keys = 0;
-                if (current_keys > 9) current_keys = 9;
+                    int8_t current_keys = z64_file.dungeon_keys[d->index];
+                    if (current_keys < 0) current_keys = 0;
+                    if (current_keys > 9) current_keys = 9;
 
-                int8_t total_keys = z64_file.scene_flags[d->index].unk_00_ >> 0x10;
-                if (total_keys < 0) total_keys = 0;
-                if (total_keys > 9) total_keys = 9;
+                    int8_t total_keys = z64_file.scene_flags[d->index].unk_00_ >> 0x10;
+                    if (total_keys < 0) total_keys = 0;
+                    if (total_keys > 9) total_keys = 9;
 
-                char count[5] = "O(O)";
-                if (current_keys > 0) count[0] = current_keys + '0';
-                if (total_keys > 0) count[2] = total_keys + '0';
-                int top = start_top + ((icon_size + padding) * i) + 1;
-                text_print_size(count, left, top, font_width);
+                    char count[5] = "O(O)";
+                    if (current_keys > 0) count[0] = current_keys + '0';
+                    if (total_keys > 0) count[2] = total_keys + '0';
+                    int top = start_top + ((icon_size + padding) * i) + 1;
+                    text_print_size(count, left, top, font_width);
+                }
+                text_flush_size(db, font_width, font_height, 0, 0);
+
+                left += (4 * font_width) + padding;
+            } else {
+                for (int i = 0; i < dungeon_count - 1; i++) {
+                    dungeon_entry_t *d = &(dungeons[i]);
+                    if (!d->has_keys) continue;
+
+                    int8_t current_keys = z64_file.dungeon_keys[d->index];
+                    if (current_keys < 0) current_keys = 0;
+                    if (current_keys > 9) current_keys = 9;
+
+                    int8_t total_keys = z64_file.scene_flags[d->index].unk_00_ >> 0x10;
+                    if (total_keys < 0) total_keys = 0;
+                    if (total_keys > 9) total_keys = 9;
+
+                    char count[5] = "O(O)";
+                    if (current_keys > 0) count[0] = current_keys + '0';
+                    if (total_keys > 0) count[2] = total_keys + '0';
+                    int top = start_top + ((icon_size + padding) * i) + 1;
+                    text_print_size(count, left, top, font_width);
+                }
+                text_flush_size(db, font_width, font_height, 0, 0);
+
+                left += (4 * font_width) + padding;
             }
-            text_flush_size(db, font_width, font_height, 0, 0);
-
-            left += (4 * font_width) + padding;
 
             // Draw boss keys
 
@@ -434,7 +471,7 @@ void draw_dungeon_info(z64_disp_buf_t *db) {
 
         int icon_size = 16;
         int padding = 1;
-        int rows = 10;
+        int rows = SHUFFLE_CHEST_GAME ? 10 : 9;
         int bg_width =
             (1 * icon_size) +
             (13 * font_sprite.tile_w) +
@@ -451,13 +488,23 @@ void draw_dungeon_info(z64_disp_buf_t *db) {
 
         // Draw dungeon names
 
-        for (int i = 0; i < 10; i++) {
+        if (SHUFFLE_CHEST_GAME) {
+            for (int i = 0; i < 10; i++) {
             dungeon_entry_t *d = &(dungeons[i + (i > 5 ? 4 : 3)]); // skip Deku/DC/Jabu/Ice
             int top = start_top + ((icon_size + padding) * i) + 1;
             text_print(d->name, left, top);
         }
 
         left += (11 * font_sprite.tile_w) + padding;
+        } else {
+            for (int i = 0; i < 9; i++) {
+            dungeon_entry_t *d = &(dungeons[i + (i > 5 ? 4 : 3)]); // skip Deku/DC/Jabu/Ice
+            int top = start_top + ((icon_size + padding) * i) + 1;
+            text_print(d->name, left, top);
+        }
+
+        left += (8 * font_sprite.tile_w) + padding;
+        }
 
         // Draw keys
 
@@ -466,7 +513,8 @@ void draw_dungeon_info(z64_disp_buf_t *db) {
 
             sprite_load(db, &quest_items_sprite, 17, 1);
 
-            for (int i = 0; i < 10; i++) {
+            if (SHUFFLE_CHEST_GAME) {
+                for (int i = 0; i < 10; i++) {
                 dungeon_entry_t *d = &(dungeons[i + (i > 5 ? 4 : 3)]); // skip Deku/DC/Jabu/Ice
                 if (!d->has_keys) continue;
 
@@ -483,6 +531,26 @@ void draw_dungeon_info(z64_disp_buf_t *db) {
                 if (total_keys > 0) count[2] = total_keys + '0';
                 int top = start_top + ((icon_size + padding) * i) + 1;
                 text_print(count, left, top);
+                }
+            } else {
+                for (int i = 0; i < 9; i++) {
+                dungeon_entry_t *d = &(dungeons[i + (i > 5 ? 4 : 3)]); // skip Deku/DC/Jabu/Ice
+                if (!d->has_keys) continue;
+
+                int8_t current_keys = z64_file.dungeon_keys[d->index];
+                if (current_keys < 0) current_keys = 0;
+                if (current_keys > 9) current_keys = 9;
+
+                int8_t total_keys = z64_file.scene_flags[d->index].unk_00_ >> 0x10;
+                if (total_keys < 0) total_keys = 0;
+                if (total_keys > 9) total_keys = 9;
+
+                char count[5] = "O(O)";
+                if (current_keys > 0) count[0] = current_keys + '0';
+                if (total_keys > 0) count[2] = total_keys + '0';
+                int top = start_top + ((icon_size + padding) * i) + 1;
+                text_print(count, left, top);
+                }
             }
 
             left += (4 * font_sprite.tile_w) + padding;

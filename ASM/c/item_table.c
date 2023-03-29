@@ -5,6 +5,8 @@
 #include "util.h"
 #include "z64.h"
 
+extern uint8_t SHUFFLE_CHEST_GAME;
+
 #define ITEM_ROW( \
         base_item_id_, chest_type_, action_id_, collectible_,  text_id_, object_id_, graphic_id_, \
         upgrade_, effect_, effect_arg1_, effect_arg2_) \
@@ -266,7 +268,7 @@ item_row_t *get_item_row(uint16_t item_id) {
 
 uint16_t resolve_item_text_id(uint16_t item_id, bool is_outgoing) {
     item_row_t *item_row = get_item_row(item_id);
-    if (((item_id >= 0xAF && item_id < 0xB8) || item_id == 0x71) && !is_outgoing) {
+    if (((item_id >= 0xAF && item_id < 0xB8) || (SHUFFLE_CHEST_GAME && item_id == 0x71)) && !is_outgoing) {
         return item_row->text_id + (z64_file.scene_flags[item_row->effect_arg1].unk_00_ >> 0x10); // Dynamically select the text box based on key count
     }
     return item_row->text_id;

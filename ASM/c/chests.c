@@ -15,6 +15,7 @@
 #define box_obj_idx(actor) ((int8_t *)actor)[0x015A] // forest_hallway_actor->box_obj_idx
 #define OBJECT_BOX 0x000E
 
+extern uint8_t SHUFFLE_CHEST_GAME;
 uint32_t CHEST_TEXTURE_MATCH_CONTENTS = 0;
 uint32_t CHEST_SIZE_MATCH_CONTENTS = 0;
 uint32_t CHEST_SIZE_TEXTURE = 0;
