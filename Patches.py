@@ -34,7 +34,7 @@ def patch_rom(spoiler:Spoiler, world:World, rom:Rom):
             address, value = [int(x, 16) for x in line.split(',')]
             rom.write_int32(address, value)
     rom.scan_dmadata_update()
-    
+
     # Binary patches of certain assets.
     bin_patches = [
         (data_path('title.bin'),  0x01795300),  # Randomizer title screen logo
@@ -2417,7 +2417,7 @@ def patch_rom(spoiler:Spoiler, world:World, rom:Rom):
         save_context.equip_default_items('child')
     save_context.equip_current_items(world.settings.starting_age)
     save_context.write_save_table(rom)
-    
+
     # Convert temporary flags used for locked doors in Treasure Chest Game to permanent flags namely (0x1A-0x1F)
     if world.settings.shuffle_tcgkeys != 'vanilla':
         rom.write_byte(0x33A6070 +15, 0xDF)
@@ -2426,7 +2426,7 @@ def patch_rom(spoiler:Spoiler, world:World, rom:Rom):
         rom.write_byte(0x33A60A0 +15, 0xDC)
         rom.write_byte(0x33A60B0 +15, 0xDB)
         rom.write_byte(0x33A60C0 +15, 0xDA)
-    
+
         # Remove Locks From Treasure Chest Game doors if Keysy is turned on
         if world.settings.shuffle_tcgkeys == 'remove':
             rom.write_byte(0x33A6070 +15, 0x80)

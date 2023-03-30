@@ -42,7 +42,7 @@ void get_chest_override(z64_actor_t *actor) {
                 if (item_row->chest_type == BROWN_CHEST || item_row->chest_type == SILVER_CHEST || item_row->chest_type == SKULL_CHEST_SMALL || item_row->chest_type == HEART_CHEST_SMALL) {
                     // Chest size based on CAMC and TCG Shuffle   // Big Chest  // Small Chest
                     size = (scene == 0x10 && !SHUFFLE_CHEST_GAME) ? BROWN_CHEST : SMALL_CHEST;
-                } 
+                }
             }
             color = item_row->chest_type;
         }
