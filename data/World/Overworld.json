@@ -1388,7 +1388,7 @@
         "locations": {
             "Market Treasure Chest Game Salesman": "True",
             "Market Treasure Chest Game Reward": "(shuffle_tcgkeys != 'vanilla' or can_use(Lens_of_Truth)) and (Small_Key_Treasure_Chest_Game, 6)",
-            "Market Treasure Chest Game Room 1 Bottom": "(shuffle_tcgkeys != 'vanilla' and (Small_Key_Treasure_Chest_Game, 1))",
+            "Market Treasure Chest Game Room 1 Bottom": "(Small_Key_Treasure_Chest_Game, 1)",
             "Market Treasure Chest Game Room 1 Top": "(shuffle_tcgkeys != 'vanilla' and (Small_Key_Treasure_Chest_Game, 1))",
             "Market Treasure Chest Game Room 2 Bottom": "(shuffle_tcgkeys != 'vanilla' and (Small_Key_Treasure_Chest_Game, 2))",
             "Market Treasure Chest Game Room 2 Top": "(shuffle_tcgkeys != 'vanilla' and (Small_Key_Treasure_Chest_Game, 2))",
