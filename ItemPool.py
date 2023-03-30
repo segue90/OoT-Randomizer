@@ -620,7 +620,7 @@ def get_pool_core(world):
                 item = get_junk_item()[0] if location.name != 'Hideout 1 Torch Jail Gerudo Key' else 'Small Key Ring (Thieves Hideout)'
 
         # Treasure Chest Game Key Shuffle
-        elif location.vanilla_item != 'Piece of Heart (Treasure Chest Gmame)' and location.scene == 0x10:
+        elif location.vanilla_item != 'Piece of Heart (Treasure Chest Game)' and location.scene == 0x10:
             if world.settings.shuffle_tcgkeys in ['regional', 'overworld', 'any_dungeon', 'keysanity']:
                 if 'Treasure Chest Game' in world.settings.key_rings and location.vanilla_item == 'Small Key (Treasure Chest Game)':
                     item = get_junk_item()[0] if location.name != 'Market Treasure Chest Game Salesman' else 'Small Key Ring (Treasure Chest Game)'

@@ -248,7 +248,7 @@ void item_etcetera_draw(z64_actor_t *actor, z64_game_t *game) {
             .flag = 0x0A,
         };
         override = lookup_override_by_key(key);
-    } else if (actor->variable == 0x0008 && SHUFFLE_CHEST_GAME) {
+    } else if (actor->variable == 0x0008 && SHUFFLE_CHEST_GAME != 0) {
         //Chest Game Room 1 Bottom Chest item inside chest
         override_key_t key = {
             .scene = 0x10,
@@ -256,7 +256,7 @@ void item_etcetera_draw(z64_actor_t *actor, z64_game_t *game) {
             .flag = 0x00,
         };
         override = lookup_override_by_key(key);
-    } else if (actor->variable == 0x010D && SHUFFLE_CHEST_GAME) {
+    } else if (actor->variable == 0x010D && SHUFFLE_CHEST_GAME != 0) {
         //Chest Game Room 1 Top Chest item inside chest
         override_key_t key = {
             .scene = 0x10,
@@ -264,7 +264,7 @@ void item_etcetera_draw(z64_actor_t *actor, z64_game_t *game) {
             .flag = 0x01,
         };
         override = lookup_override_by_key(key);
-    } else if (actor->variable == 0x0208 && SHUFFLE_CHEST_GAME) {
+    } else if (actor->variable == 0x0208 && SHUFFLE_CHEST_GAME != 0) {
         //Chest Game Room 2 Bottom Chest item inside chest
         override_key_t key = {
             .scene = 0x10,
@@ -272,7 +272,7 @@ void item_etcetera_draw(z64_actor_t *actor, z64_game_t *game) {
             .flag = 0x02,
         };
         override = lookup_override_by_key(key);
-    } else if (actor->variable == 0x030D && SHUFFLE_CHEST_GAME) {
+    } else if (actor->variable == 0x030D && SHUFFLE_CHEST_GAME != 0) {
         //Chest Game Room 2 Top Chest item inside chest
         override_key_t key = {
             .scene = 0x10,
@@ -280,7 +280,7 @@ void item_etcetera_draw(z64_actor_t *actor, z64_game_t *game) {
             .flag = 0x03,
         };
         override = lookup_override_by_key(key);
-    } else if (actor->variable == 0x0409 && SHUFFLE_CHEST_GAME) {
+    } else if (actor->variable == 0x0409 && SHUFFLE_CHEST_GAME != 0) {
         //Chest Game Room 3 Bottom Chest item inside chest
         override_key_t key = {
             .scene = 0x10,
@@ -288,7 +288,7 @@ void item_etcetera_draw(z64_actor_t *actor, z64_game_t *game) {
             .flag = 0x04,
         };
         override = lookup_override_by_key(key);
-    } else if (actor->variable == 0x050D && SHUFFLE_CHEST_GAME) {
+    } else if (actor->variable == 0x050D && SHUFFLE_CHEST_GAME != 0) {
         //Chest Game Room 3 Top Chest item inside chest
         override_key_t key = {
             .scene = 0x10,
@@ -296,7 +296,7 @@ void item_etcetera_draw(z64_actor_t *actor, z64_game_t *game) {
             .flag = 0x05,
         };
         override = lookup_override_by_key(key);
-    } else if (actor->variable == 0x0609 && SHUFFLE_CHEST_GAME) {
+    } else if (actor->variable == 0x0609 && SHUFFLE_CHEST_GAME != 0) {
         //Chest Game Room 4 Bottom Chest item inside chest
         override_key_t key = {
             .scene = 0x10,
@@ -304,7 +304,7 @@ void item_etcetera_draw(z64_actor_t *actor, z64_game_t *game) {
             .flag = 0x06,
         };
         override = lookup_override_by_key(key);
-    } else if (actor->variable == 0x070D && SHUFFLE_CHEST_GAME) {
+    } else if (actor->variable == 0x070D && SHUFFLE_CHEST_GAME != 0) {
         //Chest Game Room 4 Top Chest item inside chest
         override_key_t key = {
             .scene = 0x10,
@@ -312,7 +312,7 @@ void item_etcetera_draw(z64_actor_t *actor, z64_game_t *game) {
             .flag = 0x07,
         };
         override = lookup_override_by_key(key);
-    } else if (actor->variable == 0x080A && SHUFFLE_CHEST_GAME) {
+    } else if (actor->variable == 0x080A && SHUFFLE_CHEST_GAME != 0) {
         //Chest Game Room 5 Bottom Chest item inside chest
         override_key_t key = {
             .scene = 0x10,
@@ -320,7 +320,7 @@ void item_etcetera_draw(z64_actor_t *actor, z64_game_t *game) {
             .flag = 0x08,
         };
         override = lookup_override_by_key(key);
-    } else if (actor->variable == 0x090D && SHUFFLE_CHEST_GAME) {
+    } else if (actor->variable == 0x090D && SHUFFLE_CHEST_GAME != 0) {
         //Chest Game Room 5 Top Chest item inside chest
         override_key_t key = {
             .scene = 0x10,

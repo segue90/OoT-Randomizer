@@ -2120,7 +2120,10 @@ def patch_rom(spoiler:Spoiler, world:World, rom:Rom):
             update_message_by_id(messages, 0x500C, "How about \x05\x41100 Rupees\x05\x40 for\x01\x05\x41"+ item_text +"\x05\x40?\x01\x1B\x05\x42Buy\x01Don't buy\x05\x40\x02")
 
     if world.settings.shuffle_tcgkeys != 'vanilla':
-        rom.write_byte(rom.sym('SHUFFLE_CHEST_GAME'), 0x01)
+        if world.settings.shuffle_tcgkeys == 'remove':
+            rom.write_byte(rom.sym('SHUFFLE_CHEST_GAME'), 0x02)
+        else:
+            rom.write_byte(rom.sym('SHUFFLE_CHEST_GAME'), 0x01)
         # Update Chest Game Salesman to better fit the fact he sells a randomized item
         update_message_by_id(messages, 0x6D, "I seem to have misplaced my\x01keys, but I have a fun item to\x01sell instead.\x04How about \x05\x4110 Rupees\x05\x40?\x01\x01\x1B\x05\x42Buy\x01Don't Buy\x05\x40\x02")
         update_message_by_id(messages, 0x2D, "That's OK!\x01More fun for me.\x02")
@@ -2143,6 +2146,7 @@ def patch_rom(spoiler:Spoiler, world:World, rom:Rom):
     HEART_CHEST_SMALL = 16
     HEART_CHEST_BIG = 17
     if world.settings.shuffle_tcgkeys == 'vanilla':
+        # Force key chests in Treasure Chest Game to use the default chest texture when not shuffled
         item = read_rom_item(rom, 0x71)
         item['chest_type'] = BROWN_CHEST
         write_rom_item(rom, 0x71, item)

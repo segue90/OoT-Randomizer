@@ -3018,28 +3018,28 @@ setting_infos = [
             'keysanity':   "Anywhere (Keysanity)",
         },
         gui_tooltip    = '''\
-            'Remove': All Treasure Chest Game Keys will be removed
+            'Remove': All Treasure Chest Game keys will be removed
             and all doors will remained unlocked.
 
-            'Vanilla': Treasure Chest Game Keys will have vanilla
+            'Vanilla': Treasure Chest Game keys will have vanilla
             behavior (one random per room). The minigame will
             also have vanilla behavior.
 
-            'Regional': Treasure Chest Game Keys can only appear
+            'Regional': Treasure Chest Game keys can only appear
             in regions near the minigame (including
             the minigame itself or other dungeons in the region, such as Ganon's Castle).
             <a href="https://wiki.ootrandomizer.com/index.php?title=Hints#Hint_Regions" target="_blank">The Wiki has a list of corresponding regions here.</a>
 
-            'Overworld Only': Treasure Chest Game Keys can only appear
+            'Overworld Only': Treasure Chest Game keys can only appear
             outside of dungeons. You may need to enter the Treasure Chest Game
             multiple times to gain items to access the overworld locations
             with the keys required to clear the minigame.
 
-            'Any Dungeon': Treasure Chest Game Keys can only appear inside of a dungeon.
+            'Any Dungeon': Treasure Chest Game keys can only appear inside of a dungeon.
             A difficult mode since it is more likely to need to enter the minigame
             multiples times.
 
-            'Anywhere': Treasure Chest Game Keys can appear anywhere
+            'Anywhere': Treasure Chest Game keys can appear anywhere
             in the world.
         ''',
         shared         = True,
@@ -3053,8 +3053,8 @@ setting_infos = [
         default        = 'off',
         choices        = {
             'off':       'Off',
-            'choice':    'Choose dungeons/Treasure Chest Game',
-            'all':       'All dungeons + Treasure Chest Game',
+            'choice':    'Choose dungeons',
+            'all':       'All dungeons',
             'random':    'Random selection'
         },
         gui_tooltip     = '''\
@@ -3072,6 +3072,11 @@ setting_infos = [
             no effect if Thieves' Hideout keys are in vanilla
             locations or Gerudo's Fortress is set to Rescue
             One Carpenter.
+
+            Similarly, selecting Treasure Chest Game will have
+            no effect if the keys aren't shuffled. Treasure Chest
+            Game will be considered when selecting 'All dungeons'
+            or 'Random selection'.
         ''',
         shared         = True,
         disable={
