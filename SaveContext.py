@@ -1056,7 +1056,7 @@ class SaveContext():
         "Rupee"                     : {'rupees' : None},
         "Green Rupee (Treasure Chest Game)" : {'rupees' : 1},
         "Blue Rupee (Treasure Chest Game)" : {'rupees' : 5},
-        "Red Rupee (Treasure Chest Game)" : {'rupees' : 10},
+        "Red Rupee (Treasure Chest Game)" : {'rupees' : 20},
         "Purple Rupee (Treasure Chest Game)" : {'rupees' : 50},
         "Rupees"                    : {'rupees' : None},
         "Magic Bean Pack" : {
