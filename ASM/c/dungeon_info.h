@@ -5,7 +5,7 @@
 
 void draw_dungeon_info();
 
-extern unsigned char CFG_DUNGEON_IS_MQ[15];
+extern unsigned char CFG_DUNGEON_IS_MQ[14];
 extern uint32_t CFG_DUNGEON_INFO_ENABLE;
 extern uint8_t CFG_DPAD_DUNGEON_INFO_ENABLE;
 

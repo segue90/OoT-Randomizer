@@ -187,16 +187,16 @@ void draw_dungeon_info(z64_disp_buf_t *db) {
             sprite_load(db, &stones_sprite, 0, stones_sprite.tile_count);
 
             for (int i = 0; i < dungeon_count - 1; i++) {
-            dungeon_entry_t *d = &(dungeons[i]);
-            if (CFG_DUNGEON_INFO_REWARD_NEED_COMPASS && !z64_file.dungeon_items[d->index].compass) {
-                continue;
-            }
-            int reward = CFG_DUNGEON_REWARDS[d->index];
-            if (reward < 0 || reward >= 3) continue;
+                dungeon_entry_t *d = &(dungeons[i]);
+                if (CFG_DUNGEON_INFO_REWARD_NEED_COMPASS && !z64_file.dungeon_items[d->index].compass) {
+                    continue;
+                }
+                int reward = CFG_DUNGEON_REWARDS[d->index];
+                if (reward < 0 || reward >= 3) continue;
 
-            int top = start_top + ((icon_size + padding) * i);
-            sprite_draw(db, &stones_sprite, reward,
-                    left, top, icon_size, icon_size);
+                int top = start_top + ((icon_size + padding) * i);
+                sprite_draw(db, &stones_sprite, reward,
+                        left, top, icon_size, icon_size);
             }
         }
 
@@ -220,29 +220,30 @@ void draw_dungeon_info(z64_disp_buf_t *db) {
             // Draw small key counts
 
             sprite_load(db, &quest_items_sprite, 17, 1);
-                for (int i = 0; i < dungeon_count; i++) {
-                    dungeon_entry_t *d = &(dungeons[i]);
-                    if (!d->has_keys) continue;
 
-                    int8_t current_keys = z64_file.dungeon_keys[d->index];
-                    if (current_keys < 0) current_keys = 0;
-                    if (current_keys > 9) current_keys = 9;
+            for (int i = 0; i < dungeon_count; i++) {
+                dungeon_entry_t *d = &(dungeons[i]);
+                if (!d->has_keys) continue;
 
-                    int8_t total_keys = z64_file.scene_flags[d->index].unk_00_ >> 0x10;
-                    if (total_keys < 0) total_keys = 0;
-                    if (total_keys > 9) total_keys = 9;
+                int8_t current_keys = z64_file.dungeon_keys[d->index];
+                if (current_keys < 0) current_keys = 0;
+                if (current_keys > 9) current_keys = 9;
 
-                    char count[5] = "O(O)";
-                    if (SHUFFLE_CHEST_GAME) {
-                        if (current_keys > 0) count[0] = current_keys + '0';
-                        if (total_keys > 0) count[2] = total_keys + '0';
-                    }
-                    int top = start_top + ((icon_size + padding) * i) + 1;
-                    text_print_size(count, left, top, font_width);
+                int8_t total_keys = z64_file.scene_flags[d->index].unk_00_ >> 0x10;
+                if (total_keys < 0) total_keys = 0;
+                if (total_keys > 9) total_keys = 9;
+
+                char count[5] = "O(O)";
+                if (SHUFFLE_CHEST_GAME) {
+                    if (current_keys > 0) count[0] = current_keys + '0';
+                    if (total_keys > 0) count[2] = total_keys + '0';
                 }
-                text_flush_size(db, font_width, font_height, 0, 0);
+                int top = start_top + ((icon_size + padding) * i) + 1;
+                text_print_size(count, left, top, font_width);
+            }
+            text_flush_size(db, font_width, font_height, 0, 0);
 
-                left += (4 * font_width) + padding;
+            left += (4 * font_width) + padding;
 
             // Draw boss keys
 
