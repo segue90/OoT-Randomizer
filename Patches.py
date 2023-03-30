@@ -2966,5 +2966,3 @@ def patch_ganons_tower_bk_door(rom: Rom, flag):
     var = (0x05 << 6) + (flag & 0x3F)
     bytes = [(var & 0xFF00) >> 8, var & 0xFF]
     rom.write_bytes(0x2EE30FE, bytes)
-
-

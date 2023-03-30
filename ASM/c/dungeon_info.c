@@ -216,9 +216,7 @@ void draw_dungeon_info(z64_disp_buf_t *db) {
         // Draw keys
 
         if (show_keys) {
-
             // Draw small key counts
-
             sprite_load(db, &quest_items_sprite, 17, 1);
 
             for (int i = 0; i < dungeon_count; i++) {
