@@ -3519,3 +3519,12 @@ courtyard_guards_kill:
 .orga 0xD7C864
     lhu     t3, 0x0EDC(v0)
     andi    t4, t3, 0x0200
+
+;===================================================================================================
+; Prevent Gohma from being stunned when climbing
+;===================================================================================================
+; Replaces lui     a1, 0x40A0
+;          lui     a2, 0x3F00
+.orga 0xC48BD4
+    jal     gohma_climb
+    nop
