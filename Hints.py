@@ -406,9 +406,6 @@ class HintArea(Enum):
             # Special case for Thieves' Hideout - change this if it gets its own hint area.
             return HintArea.GERUDO_FORTRESS
 
-        if dungeon_name == "Treasure Chest Game":
-            return HintArea.MARKET
-
         for hint_area in cls:
             if hint_area.dungeon_name == dungeon_name:
                 return hint_area
