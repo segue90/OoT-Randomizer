@@ -613,7 +613,7 @@ class World(object):
     def initialize_items(self):
         for item in self.itempool:
             item.world = self
-            if (self.settings.shuffle_hideoutkeys in ['fortress', 'regional'] and item.type == 'HideoutSmallKey') or (self.settings.shuffle_tcgkeys == 'regional' and item.type == 'TCGSmallKey'):
+            if (self.settings.shuffle_hideoutkeys in ['fortress', 'regional'] and item.type == 'HideoutSmallKey') or (self.settings.shuffle_tcgkeys != 'vanilla' and self.settings.junk_ice_traps != 'off' and item.name == 'Ice Trap'):
                 item.priority = True
         for region in self.regions:
             for location in region.locations:
