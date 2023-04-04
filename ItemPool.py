@@ -625,14 +625,14 @@ def get_pool_core(world):
                 if 'Treasure Chest Game' in world.settings.key_rings and location.vanilla_item == 'Small Key (Treasure Chest Game)':
                     item = get_junk_item()[0] if location.name != 'Market Treasure Chest Game Salesman' else 'Small Key Ring (Treasure Chest Game)'
                 shuffle_item = True
-            elif world.settings.shuffle_tcgkeys == 'remove' and location.vanilla_item == 'Small Key (Treasure Chest Game)':
-                world.state.collect(ItemFactory(item))
-                item = get_junk_item()[0]
+            elif world.settings.shuffle_tcgkeys == 'remove':
+                if location.vanilla_item == 'Small Key (Treasure Chest Game)':
+                    world.state.collect(ItemFactory(item))
+                    item = get_junk_item()[0]
                 shuffle_item = True
-            elif world.settings.shuffle_tcgkeys == 'vanilla':
-                shuffle_item = False
             else:
-                shuffle_item = True
+                shuffle_item = False
+                location.disabled = DisableType.DISABLED
 
         # Freestanding Rupees and Hearts
         elif location.type in ['ActorOverride', 'Freestanding', 'RupeeTower']:
