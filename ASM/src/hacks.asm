@@ -3352,7 +3352,7 @@ courtyard_guards_kill:
     or      a0, s1, $zero
 
 ;Replaces: lh      a1, 0x014E(s0)
-;          or      a0, s1, $zero 
+;          or      a0, s1, $zero
 .orga 0xE437BC
     jal     chestgame_fix_top_chest
     or      a0, s1, $zero
