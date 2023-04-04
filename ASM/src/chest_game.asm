@@ -13,7 +13,7 @@ chestgame_buy_item_hook:
 
 @@return:
     jr      ra
-    sw     $zero, 0x0118(s0)
+    sw     $zero, 0x0118(s0)    ; displaced code
 
 chestgame_initial_message:
     lb      t0, SHUFFLE_CHEST_GAME
@@ -76,4 +76,23 @@ chestgame_open_chests_separately:
 
 @@return:
     jr      ra
-    or      a3, a1, $zero
+    or      a3, a1, $zero       ; displaced code
+
+chestgame_fix_bottom_chest:
+    lb      t0, SHUFFLE_CHEST_GAME
+    beqz    t0, @@return        ; skip if the chest game isn't randomized
+    nop
+
+@@return:
+    jr      ra
+    lh      a1, 0x014C(s0)    ; displaced code
+
+chestgame_fix_top_chest:
+    lb      t1, SHUFFLE_CHEST_GAME
+    bnez    t1, @@return        ; skip if the chest game isn't randomized
+    nop
+    lh      a1, 0x014E(s0)    ; displaced code
+
+@@return:
+    jr      ra
+    nop

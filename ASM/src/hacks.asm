@@ -3344,6 +3344,19 @@ courtyard_guards_kill:
 .orga 0xE94C14
     addiu   a2, $zero, 0x0071   ;replaces 0x0042 (generic key) with 0x0071 (chest game key)
 
+;Skip instructions to open unopened chests in previous rooms (next two hacks).
+;Replaces lh    a1, 0x014C(s0)
+;         or    a0, s1, $zero
+.orga 0xE436CC
+    jal     chestgame_fix_bottom_chest
+    or      a0, s1, $zero
+
+;Replaces: lh      a1, 0x014E(s0)
+;          or      a0, s1, $zero 
+.orga 0xE437BC
+    jal     chestgame_fix_top_chest
+    or      a0, s1, $zero
+
 ;==================================================================================================
 ; Bombchu Ticking Color
 ;==================================================================================================
