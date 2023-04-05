@@ -1198,6 +1198,7 @@ def patch_rom(spoiler:Spoiler, world:World, rom:Rom):
     save_context.write_bits(0x00D4 + 0x5B * 0x1C + 0x04 + 0x3, 0x80) # Lost Woods switch flag (Owl)
     save_context.write_bits(0x00D4 + 0x5C * 0x1C + 0x04 + 0x0, 0x80) # Desert Colossus switch flag (Owl)
     save_context.write_bits(0x00D4 + 0x5F * 0x1C + 0x04 + 0x3, 0x20) # Hyrule Castle switch flag (Owl)
+    save_context.write_bits(0x0F2B, 0x20) # Spoke to Lake Hylia Owl once
 
     save_context.write_bits(0x0ED4, 0x10) # "Met Deku Tree"
     save_context.write_bits(0x0ED5, 0x20) # "Deku Tree Opened Mouth"
