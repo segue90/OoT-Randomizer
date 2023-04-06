@@ -54,11 +54,11 @@ chestgame_no_reset_keys:
     nop
 
 chestgame_remove_chest_rng:
-    mtc1    $at, $f8            ;Line replaced with jal
+    mtc1    $at, $f8            ; Line replaced with jal
     lb      t1, SHUFFLE_CHEST_GAME
     beqz    t1, @@chestgame_run_chest_rng        ; skip if chest game isn't randomized and run rng
     nop
-    mtc1    $zero, $f8          ;modify comparison registers
+    mtc1    $zero, $f8          ; modify comparison registers
     ori     t2, $zero, 0x0001
     mtc1    t2, $f0
 
@@ -80,7 +80,7 @@ chestgame_open_chests_separately:
 
 chestgame_delayed_chest_open:
     lb      t1, SHUFFLE_CHEST_GAME
-    beqz    t1, @@return        ; skip if the chest game isn't randomized
+    beqz    t3, @@return        ; skip if the chest game isn't randomized
     nop
     or      t9, $zero, $zero    ; set t9 to 0 so conditional always fails
     lw      a0, 0x004C($sp)      ; displaced code

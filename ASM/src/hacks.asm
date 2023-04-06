@@ -3313,36 +3313,36 @@ courtyard_guards_kill:
     jal     chestgame_initial_message
     sw      t3,0x0014($sp)
 
-;Allow TCG chests to open separately
-;Skips this entire function func_80AC3A2C:
+; Allow TCG chests to open separately
+; Skips this entire function func_80AC3A2C:
 .orga 0xE43874
     jal     chestgame_open_chests_separately
     or      a2, a0, $zero
 
-;Skip instruction to reset TCG chest flags
+; Skip instruction to reset TCG chest flags
 ; Replaces: sw     $zero, 0x1D38(t8)
 ;           lhu    t0, 0x1402(v0)
 .orga 0xE9474C
     jal     chestgame_no_reset_flag
     nop
 
-;Skip instruction to set TCG keys to 0 every reload
+; Skip instruction to set TCG keys to 0 every reload
 ; Replaces: sb      t9, 0x00BC(t1)
 ;           addiu   t2, s0, 0x0184
 .orga 0xE94760
     jal     chestgame_no_reset_keys
     nop
 
-;Change Chests so items don't change 50/50 between the room
-;Inserts additonal code at: mtc1    $at, $f8
+; Change Chests so items don't change 50/50 between the room
+; Inserts additonal code at: mtc1    $at, $f8
 .orga 0xE435B4
     jal     chestgame_remove_chest_rng
 
-;Change GetItemID that TCG Salesman gives while title card is up
+; Change GetItemID that TCG Salesman gives while title card is up
 .orga 0xE94C14
     addiu   a2, $zero, 0x0071   ;replaces 0x0042 (generic key) with 0x0071 (chest game key)
 
-;Skip instructions to open unopened chests in previous rooms.
+; Skip instructions to open unopened chests in previous rooms.
 ; Replaces lh     t9, 0x0158(s0)
 ;          lw     a0, 0x004C($sp)
 
