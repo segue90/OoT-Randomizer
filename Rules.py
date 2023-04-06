@@ -64,10 +64,6 @@ def set_rules(world):
         if location.name in world.always_hints:
             location.add_rule(guarantee_hint)
 
-        # Forbid Ice Traps from being in Treasure Chest Game chests when shuffled. Causes inconsistent/unknown crashes for some reason
-        if location.scene == 0x10 and world.settings.shuffle_tcgkeys != 'vanilla':
-            forbid_item(location, 'Ice Trap')
-
     for location in world.settings.disabled_locations:
         try:
             world.get_location(location).disabled = DisableType.PENDING

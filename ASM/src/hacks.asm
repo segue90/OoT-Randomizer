@@ -3326,7 +3326,6 @@ courtyard_guards_kill:
     jal     chestgame_no_reset_flag
     nop
 
-
 ;Skip instruction to set TCG keys to 0 every reload
 ; Replaces: sb      t9, 0x00BC(t1)
 ;           addiu   t2, s0, 0x0184
@@ -3339,23 +3338,17 @@ courtyard_guards_kill:
 .orga 0xE435B4
     jal     chestgame_remove_chest_rng
 
-
 ;Change GetItemID that TCG Salesman gives while title card is up
 .orga 0xE94C14
     addiu   a2, $zero, 0x0071   ;replaces 0x0042 (generic key) with 0x0071 (chest game key)
 
-;Skip instructions to open unopened chests in previous rooms (next two hacks).
-;Replaces lh    a1, 0x014C(s0)
-;         or    a0, s1, $zero
-.orga 0xE436CC
-    jal     chestgame_fix_bottom_chest
-    or      a0, s1, $zero
+;Skip instructions to open unopened chests in previous rooms.
+; Replaces lh     t9, 0x0158(s0)
+;          lw     a0, 0x004C($sp)
 
-;Replaces: lh      a1, 0x014E(s0)
-;          or      a0, s1, $zero
-.orga 0xE437BC
-    jal     chestgame_fix_top_chest
-    or      a0, s1, $zero
+.orga 0xE437A8
+    jal     chestgame_delayed_chest_open
+    nop
 
 ;==================================================================================================
 ; Bombchu Ticking Color

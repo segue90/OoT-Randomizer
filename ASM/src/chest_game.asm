@@ -43,7 +43,7 @@ chestgame_no_reset_flag:
     nop
 
 chestgame_no_reset_keys:
-    addiu   t2, s0, 0x0184      ;removed code due to nop after jal
+    addiu   t2, s0, 0x0184      ; removed code due to nop after jal
     lb      t0, SHUFFLE_CHEST_GAME
     bnez    t0, @@return        ; skip if chest game isn't randomized
     nop
@@ -78,21 +78,13 @@ chestgame_open_chests_separately:
     jr      ra
     or      a3, a1, $zero       ; displaced code
 
-chestgame_fix_bottom_chest:
-    lb      t0, SHUFFLE_CHEST_GAME
-    beqz    t0, @@return        ; skip if the chest game isn't randomized
-    nop
-
-@@return:
-    jr      ra
-    lh      a1, 0x014C(s0)    ; displaced code
-
-chestgame_fix_top_chest:
+chestgame_delayed_chest_open:
     lb      t1, SHUFFLE_CHEST_GAME
-    bnez    t1, @@return        ; skip if the chest game isn't randomized
+    beqz    t1, @@return        ; skip if the chest game isn't randomized
     nop
-    lh      a1, 0x014E(s0)    ; displaced code
+    or      t9, $zero, $zero    ; set t9 to 0 so conditional always fails
+    lw      a0, 0x004C($sp)      ; displaced code
 
 @@return:
     jr      ra
-    nop
+    lw      a0, 0x004C($sp)      ; displaced code
