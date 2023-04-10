@@ -2424,21 +2424,21 @@ def patch_rom(spoiler:Spoiler, world:World, rom:Rom):
 
     # Convert temporary flags used for locked doors in Treasure Chest Game to permanent flags namely (0x1A-0x1F)
     if world.settings.shuffle_tcgkeys != 'vanilla':
-        rom.write_byte(0x33A6070 +15, 0xDF)
-        rom.write_byte(0x33A6080 +15, 0xDE)
-        rom.write_byte(0x33A6090 +15, 0xDD)
-        rom.write_byte(0x33A60A0 +15, 0xDC)
-        rom.write_byte(0x33A60B0 +15, 0xDB)
-        rom.write_byte(0x33A60C0 +15, 0xDA)
+        rom.write_byte(0x33A607F, 0xDF)
+        rom.write_byte(0x33A608F, 0xDE)
+        rom.write_byte(0x33A609F, 0xDD)
+        rom.write_byte(0x33A60AF, 0xDC)
+        rom.write_byte(0x33A60BF, 0xDB)
+        rom.write_byte(0x33A60CF, 0xDA)
 
         # Remove Locks From Treasure Chest Game doors if Keysy is turned on
         if world.settings.shuffle_tcgkeys == 'remove':
-            rom.write_byte(0x33A6070 +15, 0x80)
-            rom.write_byte(0x33A6080 +15, 0x80)
-            rom.write_byte(0x33A6090 +15, 0x80)
-            rom.write_byte(0x33A60A0 +15, 0x80)
-            rom.write_byte(0x33A60B0 +15, 0x80)
-            rom.write_byte(0x33A60C0 +15, 0x80)
+            rom.write_byte(0x33A607F, 0x80)
+            rom.write_byte(0x33A608F, 0x80)
+            rom.write_byte(0x33A609F, 0x80)
+            rom.write_byte(0x33A60AF, 0x80)
+            rom.write_byte(0x33A60BF, 0x80)
+            rom.write_byte(0x33A60CF, 0x80)
 
 
     # Write numeric seed truncated to 32 bits for rng seeding
