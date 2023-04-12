@@ -3519,3 +3519,12 @@ courtyard_guards_kill:
 .orga 0xD7C864
     lhu     t3, 0x0EDC(v0)
     andi    t4, t3, 0x0200
+
+;===================================================================================================
+; Prevent crash when diving in shallow water due to poorly initialized camera data
+;===================================================================================================
+; Replaces sw      v0, 0x011C(s0)
+;          lh      t2, 0x014C(s0)
+.orga 0xABDD10
+    jal     camera_init
+    nop
