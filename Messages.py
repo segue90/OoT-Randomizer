@@ -322,6 +322,14 @@ for dungeon_name, max_keys in (
     KEYSANITY_MESSAGES[i] = f"\x13\x77\x08You found a \x05\x41Small Key\x05\x40\x01for {dungeon_name}!\x01You already have enough keys.\x09"
     i += 1
 
+# Adjust key rings messages when they have boss keys.
+def update_keyrings_messages_when_bosskeys():
+    KEYSANITY_MESSAGES[0x9010] = f"\x13\x77\x08You found a \x05\x41Key Ring\x05\x40\x01for the \x05\x42Forest Temple\x05\x40!\x09\x01It includes the \x05\x41Boss Key\x05\x40!"
+    KEYSANITY_MESSAGES[0x9011] = f"\x13\x77\x08You found a \x05\x41Key Ring\x05\x40\x01for the \x05\x41Fire Temple\x05\x40!\x09\x01It includes the \x05\x41Boss Key\x05\x40!"
+    KEYSANITY_MESSAGES[0x9012] = f"\x13\x77\x08You found a \x05\x41Key Ring\x05\x40\x01for the \x05\x43Water Temple\x05\x40!\x09\x01It includes the \x05\x41Boss Key\x05\x40!"
+    KEYSANITY_MESSAGES[0x9013] = f"\x13\x77\x08You found a \x05\x41Key Ring\x05\x40\x01for the \x05\x46Spirit Temple\x05\x40!\x09\x01It includes the \x05\x41Boss Key\x05\x40!"
+    KEYSANITY_MESSAGES[0x9014] = f"\x13\x77\x08You found a \x05\x41Key Ring\x05\x40\x01for the \x05\x45Shadow Temple\x05\x40!\x09\x01It includes the \x05\x41Boss Key\x05\x40!"
+
 COLOR_MAP = {
     'White':      '\x40',
     'Red':        '\x41',
@@ -904,10 +912,11 @@ def make_player_message(text):
 
     return new_text
 
-
 # reduce item message sizes and add new item messages
 # make sure to call this AFTER move_shop_item_messages()
 def update_item_messages(messages, world):
+    if world.settings.keyring_give_bk:
+        update_keyrings_messages_when_bosskeys()
     new_item_messages = {**ITEM_MESSAGES, **KEYSANITY_MESSAGES}
     for id, text in new_item_messages.items():
         if world.settings.world_count > 1:
@@ -918,12 +927,10 @@ def update_item_messages(messages, world):
     for id, (text, opt) in MISC_MESSAGES.items():
         update_message_by_id(messages, id, text, opt)
 
-
 # run all keysanity related patching to add messages for dungeon specific items
 def add_item_messages(messages, shop_items, world):
     move_shop_item_messages(messages, shop_items)
     update_item_messages(messages, world)
-
 
 # reads each of the game's messages into a list of Message objects
 def read_messages(rom):
