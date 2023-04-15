@@ -92,19 +92,11 @@ def patch_tunic_icon(rom, tunic, color):
 def patch_tunic_colors(rom, settings, log, symbols):
     # patch tunic colors
     
+    tunic_address = rom.sym("CFG_TUNIC_COLORS")
     tunics = [
-        ('Kokiri Tunic', 'kokiri_color', 0x00B6DA38),
-        ('Goron Tunic',  'goron_color',  0x00B6DA3B),
-        ('Zora Tunic',   'zora_color',   0x00B6DA3E),
-    ]
-    logging.getLogger('').warning(symbols)
-    if symbols.get("CFG_TUNIC_COLORS") is not None:
-        tunic_address = symbols.get("CFG_TUNIC_COLORS")
-        tunics = [
         ('Kokiri Tunic', 'kokiri_color', tunic_address),
         ('Goron Tunic',  'goron_color',  tunic_address+3),
         ('Zora Tunic',   'zora_color',   tunic_address+6),
-
     ]
 
     tunic_color_list = get_tunic_colors()
@@ -138,8 +130,8 @@ def patch_tunic_colors(rom, settings, log, symbols):
             color = hex_to_color(tunic_option)
             tunic_option = 'Custom'
         # "Weird" weirdshots will crash if the Kokiri Tunic Green value is > 0x99 and possibly 0x98. Brickwall it.
-        if settings.logic_rules != 'glitchless' and tunic == 'Kokiri Tunic':
-            color[1] = min(color[1], 0x97)
+        #if settings.logic_rules != 'glitchless' and tunic == 'Kokiri Tunic':
+        #    color[1] = min(color[1], 0x97)
         rom.write_bytes(address, color)
 
         # patch the tunic icon
