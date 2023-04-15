@@ -133,7 +133,7 @@ def patch_tunic_colors(rom, settings, log, symbols):
             color = list(tunic_colors[tunic_option])
         # build color from hex code
         elif tunic_option == 'Rainbow':
-            color = Color(0x00, 0x00, 0x00)
+            color = list(Color(0x00, 0x00, 0x00))
         else:
             color = hex_to_color(tunic_option)
             tunic_option = 'Custom'
