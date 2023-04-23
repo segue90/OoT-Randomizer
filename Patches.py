@@ -1279,15 +1279,15 @@ def patch_rom(spoiler:Spoiler, world:World, rom:Rom):
     if world.settings.open_kakariko != 'closed':
         rom.write_byte(rom.sym('OPEN_KAKARIKO'), 1)
 
-    # Mark starting trade items as owned, filtered for only shuffled items
+    # Mark starting trade items as owned
     # The effective starting item seen in the player inventory will be the
     # latest shuffled item in the trade sequence, calculated in
     # Plandomizer.WorldDistribution.configure_effective_starting_items.
     owned_flags = 0
     for item_name in world.distribution.starting_items.keys():
-        if item_name in world.settings.shuffle_child_trade:
+        if item_name in child_trade_items:
             owned_flags += 0x1 << (child_trade_items.index(item_name))
-        if item_name in world.settings.adult_trade_start:
+        if item_name in trade_items:
             owned_flags += 0x1 << (trade_items.index(item_name) + 11)
     save_context.write_permanent_flags(Scenes.DEATH_MOUNTAIN_TRAIL, FlagType.UNK00, owned_flags)
 
@@ -1323,7 +1323,8 @@ def patch_rom(spoiler:Spoiler, world:World, rom:Rom):
         rom.write_byte(rom.sym('COMPLETE_MASK_QUEST'), 1)
 
     if world.skip_child_zelda:
-        save_context.write_bits(0x0ED7, 0x04) # "Obtained Malon's Item"
+        if all(trade_item not in world.settings.shuffle_child_trade for trade_item in ['Weird Egg', 'Chicken']):
+            save_context.write_bits(0x0ED7, 0x04) # "Obtained Malon's Item"
         save_context.write_bits(0x0ED7, 0x08) # "Woke Talon in castle"
         save_context.write_bits(0x0ED7, 0x10) # "Talon has fled castle"
         save_context.write_bits(0x0EDD, 0x01) # "Obtained Zelda's Letter"
