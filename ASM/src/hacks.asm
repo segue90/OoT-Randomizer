@@ -3566,3 +3566,8 @@ courtyard_guards_kill:
 ; Replaces jal     func_8006B6FC
 .orga 0xED6670
     nop
+
+; Scrub leader hiding for 1 frame instead of 300 when you show Skull Mask
+; Replaces addiu   a1, $zero, 0x012C
+.orga 0xEC8D20
+    addiu   a1, $zero, 0x0001
