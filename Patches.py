@@ -1317,7 +1317,7 @@ def patch_rom(spoiler:Spoiler, world:World, rom:Rom):
                 else:
                     return traded_flags
             return traded_flags
-        save_context.write_permanent_flags(Scenes.DEATH_MOUNTAIN_CRATER, FlagType.UNK00, calculate_traded_flags(world))
+        save_context.write_permanent_flags(Scenes.GORON_CITY, FlagType.UNK00, calculate_traded_flags(world))
 
     if world.settings.complete_mask_quest:
         rom.write_byte(rom.sym('COMPLETE_MASK_QUEST'), 1)
