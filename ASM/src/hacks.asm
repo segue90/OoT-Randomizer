@@ -3527,3 +3527,15 @@ courtyard_guards_kill:
 ; Replaces jal     func_8006BA10
 .orga 0xEF502C
     nop
+
+; Water Temple Entrance Gate cutscene and timer
+; Replaces addiu   t6, $zero, 0x0064
+.orga 0xD5B53C
+    addiu   t6, $zero, 0x0000
+; Replaces jal     func_8006B6FC
+.orga 0xD5B940
+    nop
+; x3 Speed on gate opening
+; Replaces lui     a2, 0x3F19
+.orga 0xD5B5FC
+    lui     a2, 0x3FE6
