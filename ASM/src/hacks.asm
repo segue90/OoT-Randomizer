@@ -3539,3 +3539,16 @@ courtyard_guards_kill:
 ; Replaces lui     a2, 0x3F19
 .orga 0xD5B5FC
     lui     a2, 0x3FE6
+
+; Gerudo Gate opening
+; Replaces lui     a1, 0x3FCC
+;          lui     a2, 0x3CF5
+.orga 0xEB8ED8
+   lui     a1, 0x41A0
+   lui     a2, 0x41A0
+; Replaces jal     func_8006B6FC
+.orga 0xEB8E4C
+    nop
+; Replaces addiu   t7, $zero, 0x0028
+.orga 0xEB8E6C
+    addiu   t7, $zero, 0x0000
