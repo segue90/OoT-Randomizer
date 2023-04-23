@@ -3552,3 +3552,8 @@ courtyard_guards_kill:
 ; Replaces addiu   t7, $zero, 0x0028
 .orga 0xEB8E6C
     addiu   t7, $zero, 0x0000
+
+; Forest Red/Blue poe painting hit cutscene removed
+; Replaces jal     func_8006B6FC
+.orga 0xCE1600
+    nop
