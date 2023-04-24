@@ -3571,3 +3571,12 @@ courtyard_guards_kill:
 ; Replaces addiu   a1, $zero, 0x012C
 .orga 0xEC8D20
     addiu   a1, $zero, 0x0001
+
+;===================================================================================================
+; Prevent Gohma from being stunned when climbing
+;===================================================================================================
+; Replaces lui     a1, 0x40A0
+;          lui     a2, 0x3F00
+.orga 0xC48BD4
+    jal     gohma_climb
+    nop

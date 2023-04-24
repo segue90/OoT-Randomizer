@@ -139,6 +139,7 @@ issue. You should always Hard Reset to avoid this issue entirely.
   * Fix the file path for custom music on some Linux machines.
   * Fix "Spirit Temple MQ Beamos Room Chest" having an incorrect vanilla item.
   * Starting with Magic Beans will now properly start you with 10 beans instead of 9. 
+  * A rare softlock when fighting Gohma present in the original game has been fixed.
 * **Hints**
   * Fix the cryptic hint for Ganon's Castle Boss Key.
   * Fix missing punctuation in dual hints.
