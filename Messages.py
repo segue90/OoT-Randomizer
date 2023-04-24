@@ -301,6 +301,11 @@ KEYSANITY_MESSAGES = {
     0x9016: "\x13\x77\x08You found a \x05\x41Small Key Ring\x05\x40\x01for the \x05\x46Gerudo Training\x01Ground\x05\x40!\x09",
     0x9017: "\x13\x77\x08You found a \x05\x41Small Key Ring\x05\x40\x01for the \x05\x46Thieves' Hideout\x05\x40!\x09",
     0x9018: "\x13\x77\x08You found a \x05\x41Small Key Ring\x05\x40\x01for \x05\x41Ganon's Castle\x05\x40!\x09",
+    0x9019: "\x13\x77\x08You found a \x05\x41Key Ring\x05\x40\x01for the \x05\x42Forest Temple\x05\x40!\x09\x01It includes the \x05\x41Boss Key\x05\x40!",
+    0x901A: "\x13\x77\x08You found a \x05\x41Key Ring\x05\x40\x01for the \x05\x41Fire Temple\x05\x40!\x09\x01It includes the \x05\x41Boss Key\x05\x40!",
+    0x901B: "\x13\x77\x08You found a \x05\x41Key Ring\x05\x40\x01for the \x05\x43Water Temple\x05\x40!\x09\x01It includes the \x05\x41Boss Key\x05\x40!",
+    0x901C: "\x13\x77\x08You found a \x05\x41Key Ring\x05\x40\x01for the \x05\x46Spirit Temple\x05\x40!\x09\x01It includes the \x05\x41Boss Key\x05\x40!",
+    0x901D: "\x13\x77\x08You found a \x05\x41Key Ring\x05\x40\x01for the \x05\x45Shadow Temple\x05\x40!\x09\x01It includes the \x05\x41Boss Key\x05\x40!"
 }
 i = 0x9101
 for dungeon_name, max_keys in (
@@ -321,14 +326,6 @@ for dungeon_name, max_keys in (
         i += 1
     KEYSANITY_MESSAGES[i] = f"\x13\x77\x08You found a \x05\x41Small Key\x05\x40\x01for {dungeon_name}!\x01You already have enough keys.\x09"
     i += 1
-
-# Adjust key rings messages when they have boss keys.
-def update_keyrings_messages_when_bosskeys():
-    KEYSANITY_MESSAGES[0x9010] = f"\x13\x77\x08You found a \x05\x41Key Ring\x05\x40\x01for the \x05\x42Forest Temple\x05\x40!\x09\x01It includes the \x05\x41Boss Key\x05\x40!"
-    KEYSANITY_MESSAGES[0x9011] = f"\x13\x77\x08You found a \x05\x41Key Ring\x05\x40\x01for the \x05\x41Fire Temple\x05\x40!\x09\x01It includes the \x05\x41Boss Key\x05\x40!"
-    KEYSANITY_MESSAGES[0x9012] = f"\x13\x77\x08You found a \x05\x41Key Ring\x05\x40\x01for the \x05\x43Water Temple\x05\x40!\x09\x01It includes the \x05\x41Boss Key\x05\x40!"
-    KEYSANITY_MESSAGES[0x9013] = f"\x13\x77\x08You found a \x05\x41Key Ring\x05\x40\x01for the \x05\x46Spirit Temple\x05\x40!\x09\x01It includes the \x05\x41Boss Key\x05\x40!"
-    KEYSANITY_MESSAGES[0x9014] = f"\x13\x77\x08You found a \x05\x41Key Ring\x05\x40\x01for the \x05\x45Shadow Temple\x05\x40!\x09\x01It includes the \x05\x41Boss Key\x05\x40!"
 
 COLOR_MAP = {
     'White':      '\x40',
@@ -915,8 +912,6 @@ def make_player_message(text):
 # reduce item message sizes and add new item messages
 # make sure to call this AFTER move_shop_item_messages()
 def update_item_messages(messages, world):
-    if world.settings.keyring_give_bk:
-        update_keyrings_messages_when_bosskeys()
     new_item_messages = {**ITEM_MESSAGES, **KEYSANITY_MESSAGES}
     for id, text in new_item_messages.items():
         if world.settings.world_count > 1:

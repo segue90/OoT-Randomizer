@@ -267,6 +267,10 @@ uint16_t resolve_item_text_id(uint16_t item_id, bool is_outgoing) {
     if (item_id >= 0xAF && item_id < 0xB8 && !is_outgoing) {
         return item_row->text_id + (z64_file.scene_flags[item_row->effect_arg1].unk_00_ >> 0x10); // Dynamically select the text box based on key count
     }
+    // Change message for key rings when they include boss keys
+    if (item_id >= 0x00CB && item_id < 0x00D0 && KEYRING_BOSSKEY_CONDITION) {
+        return item_row->text_id + 9;
+    }
     return item_row->text_id;
 }
 
