@@ -96,7 +96,7 @@
             "altar",
             "dampe_diary",
             "ganondorf",
-            "warp_songs"
+            "warp_songs_and_owls"
         ],
         "text_shuffle": "none",
         "damage_multiplier": "normal",
@@ -232,7 +232,7 @@
         "misc_hints": [
             "altar",
             "ganondorf",
-            "warp_songs"
+            "warp_songs_and_owls"
         ],
         "text_shuffle": "none",
         "damage_multiplier": "normal",
@@ -368,7 +368,7 @@
         "misc_hints": [
             "altar",
             "ganondorf",
-            "warp_songs",
+            "warp_songs_and_owls",
             "40_skulltulas",
             "50_skulltulas"
         ],
@@ -499,7 +499,7 @@
         "misc_hints": [
             "altar",
             "ganondorf",
-            "warp_songs"
+            "warp_songs_and_owls"
         ],
         "text_shuffle": "none",
         "damage_multiplier": "normal",
@@ -640,7 +640,7 @@
         "misc_hints": [
             "altar",
             "ganondorf",
-            "warp_songs"
+            "warp_songs_and_owls"
         ],
         "text_shuffle": "none",
         "damage_multiplier": "normal",
@@ -793,7 +793,7 @@
         "misc_hints": [
             "altar",
             "ganondorf",
-            "warp_songs"
+            "warp_songs_and_owls"
         ],
         "text_shuffle": "none",
         "damage_multiplier": "normal",
@@ -1207,7 +1207,7 @@
         "misc_hints": [
             "altar",
             "ganondorf",
-            "warp_songs"
+            "warp_songs_and_owls"
         ],
         "text_shuffle": "none",
         "damage_multiplier": "normal",
@@ -1373,7 +1373,7 @@
         "misc_hints": [
             "altar",
             "ganondorf",
-            "warp_songs",
+            "warp_songs_and_owls",
             "30_skulltulas",
             "40_skulltulas",
             "50_skulltulas"
@@ -1503,7 +1503,7 @@
         "misc_hints": [
             "altar",
             "ganondorf",
-            "warp_songs"
+            "warp_songs_and_owls"
         ],
         "text_shuffle": "none",
         "damage_multiplier": "normal",

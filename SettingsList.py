@@ -4824,7 +4824,7 @@ setting_infos = [
             'altar':       'Temple of Time Altar',
             'dampe_diary': "Dampé's Diary (Hookshot)",
             'ganondorf':   'Ganondorf (Light Arrows)',
-            'warp_songs':  'Warp Songs',
+            'warp_songs_and_owls':  'Warp Songs and Owls',
             '10_skulltulas':  'House of Skulltula: 10',
             '20_skulltulas':  'House of Skulltula: 20',
             '30_skulltulas':  'House of Skulltula: 30',
@@ -4863,6 +4863,8 @@ setting_infos = [
             Playing a warp song will tell you where
             it leads. (If warp song destinations
             are vanilla, this is always enabled.)
+            The two Owls at Lake Hylia and Death Mountain
+            that move you around will tell you where they go.
 
             Talking to a cursed House of Skulltula
             resident will tell you the reward they will
@@ -4886,7 +4888,7 @@ setting_infos = [
             the 60 Rupees item.
         ''',
         shared         = True,
-        default        = ['altar', 'ganondorf', 'warp_songs'],
+        default        = ['altar', 'ganondorf', 'warp_songs_and_owls'],
     ),
     Combobox(
         name           = 'text_shuffle',
