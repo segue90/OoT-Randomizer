@@ -122,6 +122,8 @@ issue. You should always Hard Reset to avoid this issue entirely.
   * New Misc. Hint `Frogs Ocarina Game` which tells you what item you'll get from the Zora's River frog minigame. The hint appears in the dialog box that's printed before they jump onto the log.
   * Add a goal category for the items required to open the Door of Time, if it's closed.
   * New `MW Season 3 (WotH)` hint distribution which is similar to the `MW Season 3` hint distribution except with Way of the Hero hints instead of goal hints.
+  * New Misc. Hint for unique merchants: Bean Salesman, Medigoron, Wasteland Bombchu Salesman, Granny's Potion Shop.
+  * Owls are now included in the Warp Songs misc hint and will tell you where they go when enabled.
 * **Other**
   * When picking up a small key after the first, the text box will now inform you how many you've found total.
   * The longstanding vanilla bug where using Din's Fire on a white bubble crashes the game has been fixed.
