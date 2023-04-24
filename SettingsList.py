@@ -4832,6 +4832,7 @@ setting_infos = [
             '50_skulltulas':  'House of Skulltula: 50',
             'frogs2':         'Frogs Ocarina Game',
             'mask_shop':  'Shuffled Mask Shop',
+            'unique_merchants':  'Unique Merchants',
         },
         gui_tooltip    = '''\
             This setting adds some hints at locations
@@ -4876,6 +4877,13 @@ setting_infos = [
             shop will be visible but not obtainable
             before completing the child trade quest.
             Mask of Truth's shelf slot is always visible.
+
+            If Shuffle Expensive Merchants is enabled, the
+            three characters that sell a new item will tell
+            what the reward is for buying their item.
+            If Shuffle Magic Beans is enabled, the Magic bean
+            salesman will tell what the reward is for buying
+            the 60 Rupees item.
         ''',
         shared         = True,
         default        = ['altar', 'ganondorf', 'warp_songs'],
