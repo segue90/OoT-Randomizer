@@ -3580,3 +3580,12 @@ courtyard_guards_kill:
 .orga 0xC48BD4
     jal     gohma_climb
     nop
+
+;===================================================================================================
+; Prevent crash when diving in shallow water due to poorly initialized camera data
+;===================================================================================================
+; Replaces sw      v0, 0x011C(s0)
+;          lh      t2, 0x014C(s0)
+.orga 0xABDD10
+    jal     camera_init
+    nop
