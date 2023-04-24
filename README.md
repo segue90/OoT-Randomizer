@@ -161,7 +161,7 @@ issue. You should always Hard Reset to avoid this issue entirely.
 * D-Pad mask icons will now enlarge when the mask is equipped, similarly to D-Pad boots.
 * Fix a vanilla bug where jumpslashing into Bongo Bongo's chamber on the last possible frame will not properly skip the cutscene when it should be skipped.
 * Various cutscenes removed or shortened, such as Water Temple and Gerudo Fortress gates and scarecrow spawn cutscenes.
-
+* Heart Containers and Pieces of Heart will no longer be directly hinted by Way of the Hero or Path hints, which is consistent with Triforce Pieces and Gold Skulltula Tokens.
 #### Plandomizer
 * Plandomizer now allows you to specify locations that are valid but do not exist in your current seed, for example, an MQ-specific location when that dungeon is Vanilla.
 * Error messages for conflicting settings have been improved.
