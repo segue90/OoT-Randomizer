@@ -13,7 +13,7 @@ chestgame_buy_item_hook:
 
 @@return:
     jr      ra
-    sw     $zero, 0x0118(s0)    ; displaced code
+    sw      $zero, 0x0118(s0)   ; displaced code
 
 chestgame_initial_message:
     lb      t0, SHUFFLE_CHEST_GAME
@@ -29,14 +29,14 @@ chestgame_initial_message:
 
 @@return:
     jr      ra
-    sw     t2, 0x0010($sp)      ; displaced code
+    sw      t2, 0x0010($sp)     ; displaced code
 
 chestgame_no_reset_flag:
     lhu     t0, 0x1402(v0)      ; removed code due to nop after jal
     lb      t1, SHUFFLE_CHEST_GAME
     bnez    t1, @@return        ; skip if chest game isn't randomized
     nop
-    sw     $zero, 0x1D38(t8)    ; displaced code
+    sw      $zero, 0x1D38(t8)   ; displaced code
 
 @@return:
     jr      ra
@@ -83,8 +83,8 @@ chestgame_delayed_chest_open:
     beqz    t3, @@return        ; skip if the chest game isn't randomized
     nop
     or      t9, $zero, $zero    ; set t9 to 0 so conditional always fails
-    lw      a0, 0x004C($sp)      ; displaced code
+    lw      a0, 0x004C($sp)     ; displaced code
 
 @@return:
     jr      ra
-    lw      a0, 0x004C($sp)      ; displaced code
+    lw      a0, 0x004C($sp)     ; displaced code

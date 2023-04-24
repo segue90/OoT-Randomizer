@@ -36,12 +36,12 @@ With `shuffle_cows`, the flags representing which cows have been talked to are s
 * LLR Tower Right Cow: scene 0x4c, bit 0100_0000
 * GV Cow: scene 0x5a, bit 0100_0000
 
-With `shuffle_beans`, `shuffle_expensive_merchants` or `shuffle_tcgkeys`, flags for the bean salesman or Medigoron and the carpet salesman, respectively, are similarly stored in collectibles fields:
+With `shuffle_beans`, `shuffle_expensive_merchants`, or `shuffle_tcgkeys`, flags for the bean salesman or Medigoron and the carpet salesman, respectively, are similarly stored in collectibles fields:
 
+* Chest Mini Game: scene 0x10, bit 0000_0002
 * ZR Magic Bean Salesman: scene 0x54, bit 0000_0002
 * Wasteland Bombchu Salesman: scene 0x5e, bit 0000_0002
 * GC Medigoron: scene 0x62, bit 0000_0002
-* Chest Mini Game: scene 0x10, bit 0000_0002
 
 Bombchu Bowling uses collectible flags 0 - 5 for each of the possible prizes in its scene flags (0x4B).
 

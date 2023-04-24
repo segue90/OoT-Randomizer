@@ -3026,18 +3026,15 @@ setting_infos = [
             also have vanilla behavior.
 
             'Regional': Treasure Chest Game keys can only appear
-            in regions near the minigame (including
-            the minigame itself or other dungeons in the region, such as Ganon's Castle).
-            <a href="https://wiki.ootrandomizer.com/index.php?title=Hints#Hint_Regions" target="_blank">The Wiki has a list of corresponding regions here.</a>
+            in Hyrule Field, Lon Lon Ranch, the Market, the Temple
+            of Time, Hyrule Castle, outside Ganon's Castle, or
+            inside Ganon's Castle.
 
             'Overworld Only': Treasure Chest Game keys can only appear
-            outside of dungeons. You may need to enter the Treasure Chest Game
-            multiple times to gain items to access the overworld locations
-            with the keys required to clear the minigame.
+            outside of dungeons.
 
-            'Any Dungeon': Treasure Chest Game keys can only appear inside of a dungeon.
-            A difficult mode since it is more likely to need to enter the minigame
-            multiples times.
+            'Any Dungeon': Treasure Chest Game keys can only appear
+            inside of dungeons.
 
             'Anywhere': Treasure Chest Game keys can appear anywhere
             in the world.

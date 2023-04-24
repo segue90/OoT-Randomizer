@@ -1054,11 +1054,9 @@ class SaveContext():
             'double_magic'          : [False, True],
         },
         "Rupee"                     : {'rupees' : None},
-        "Rupee (Treasure Chest Game) (1)" : {'rupees' : 1},
-        "Rupees (Treasure Chest Game) (5)" : {'rupees' : 5},
-        "Rupees (Treasure Chest Game) (20)" : {'rupees' : 20},
-        "Rupees (Treasure Chest Game) (50)" : {'rupees' : 50},
         "Rupees"                    : {'rupees' : None},
+        "Rupee (Treasure Chest Game)" : {'rupees' : None},
+        "Rupees (Treasure Chest Game)" : {'rupees' : None},
         "Magic Bean Pack" : {
             'item_slot.beans'       : 'beans',
             'ammo.beans'            : 10

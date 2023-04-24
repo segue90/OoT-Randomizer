@@ -3311,7 +3311,7 @@ courtyard_guards_kill:
             sw     t2, 0x0010($sp)
 .orga 0xE94774
     jal     chestgame_initial_message
-    sw      t3,0x0014($sp)
+    sw      t3, 0x0014($sp)
 
 ; Allow TCG chests to open separately
 ; Skips this entire function func_80AC3A2C:
@@ -3340,11 +3340,11 @@ courtyard_guards_kill:
 
 ; Change GetItemID that TCG Salesman gives while title card is up
 .orga 0xE94C14
-    addiu   a2, $zero, 0x0071   ;replaces 0x0042 (generic key) with 0x0071 (chest game key)
+    addiu   a2, $zero, 0x0071   ; replaces 0x0042 (generic key) with 0x0071 (chest game key)
 
 ; Skip instructions to open unopened chests in previous rooms.
-; Replaces lh     t9, 0x0158(s0)
-;          lw     a0, 0x004C($sp)
+; Replaces: lh     t9, 0x0158(s0)
+;           lw     a0, 0x004C($sp)
 
 .orga 0xE437A8
     jal     chestgame_delayed_chest_open
