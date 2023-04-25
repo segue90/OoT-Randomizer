@@ -429,7 +429,7 @@ def get_pool_core(world):
                 pending_junk_pool.extend(['Small Key Ring (Thieves Hideout)'])
             else:
                 pending_junk_pool.append('Small Key (Thieves Hideout)')
-        if world.settings.shuffle_tcgkeys in ['keysanity', 'any_dungeon', 'overworld', 'regional']:
+        if world.settings.shuffle_tcgkeys in ['any_dungeon', 'overworld', 'keysanity', 'regional']:
             if 'Treasure Chest Game' in world.settings.key_rings:
                 pending_junk_pool.extend(['Small Key Ring (Treasure Chest Game)'])
             else:

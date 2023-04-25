@@ -1387,17 +1387,17 @@
         "scene": "Market Treasure Chest Game",
         "locations": {
             "Market Treasure Chest Game Salesman": "True",
-            "Market Treasure Chest Game Reward": "(shuffle_tcgkeys != 'vanilla' and (Small_Key_Treasure_Chest_Game, 6)) or (shuffle_tcgkeys == 'vanilla' and can_use(Lens_of_Truth))",
-            "Market Treasure Chest Game Room 1 Bottom": "(shuffle_tcgkeys != 'vanilla' and (Small_Key_Treasure_Chest_Game, 1))",
-            "Market Treasure Chest Game Room 1 Top": "(shuffle_tcgkeys != 'vanilla' and (Small_Key_Treasure_Chest_Game, 1))",
-            "Market Treasure Chest Game Room 2 Bottom": "(shuffle_tcgkeys != 'vanilla' and (Small_Key_Treasure_Chest_Game, 2))",
-            "Market Treasure Chest Game Room 2 Top": "(shuffle_tcgkeys != 'vanilla' and (Small_Key_Treasure_Chest_Game, 2))",
-            "Market Treasure Chest Game Room 3 Bottom": "(shuffle_tcgkeys != 'vanilla' and (Small_Key_Treasure_Chest_Game, 3))",
-            "Market Treasure Chest Game Room 3 Top": "(shuffle_tcgkeys != 'vanilla' and (Small_Key_Treasure_Chest_Game, 3))",
-            "Market Treasure Chest Game Room 4 Bottom": "(shuffle_tcgkeys != 'vanilla' and (Small_Key_Treasure_Chest_Game, 4))",
-            "Market Treasure Chest Game Room 4 Top": "(shuffle_tcgkeys != 'vanilla' and (Small_Key_Treasure_Chest_Game, 4))",
-            "Market Treasure Chest Game Room 5 Bottom": "(shuffle_tcgkeys != 'vanilla' and (Small_Key_Treasure_Chest_Game, 5))",
-            "Market Treasure Chest Game Room 5 Top": "(shuffle_tcgkeys != 'vanilla' and (Small_Key_Treasure_Chest_Game, 5))"
+            "Market Treasure Chest Game Room 1 Bottom": "(Small_Key_Treasure_Chest_Game, 1) and (shuffle_tcgkeys != 'vanilla' or can_use(Lens_of_Truth))",
+            "Market Treasure Chest Game Room 1 Top": "(Small_Key_Treasure_Chest_Game, 1) and (shuffle_tcgkeys != 'vanilla' or can_use(Lens_of_Truth))",
+            "Market Treasure Chest Game Room 2 Bottom": "(Small_Key_Treasure_Chest_Game, 2) and (shuffle_tcgkeys != 'vanilla' or can_use(Lens_of_Truth))",
+            "Market Treasure Chest Game Room 2 Top": "(Small_Key_Treasure_Chest_Game, 2) and (shuffle_tcgkeys != 'vanilla' or can_use(Lens_of_Truth))",
+            "Market Treasure Chest Game Room 3 Bottom": "(Small_Key_Treasure_Chest_Game, 3) and (shuffle_tcgkeys != 'vanilla' or can_use(Lens_of_Truth))",
+            "Market Treasure Chest Game Room 3 Top": "(Small_Key_Treasure_Chest_Game, 3) and (shuffle_tcgkeys != 'vanilla' or can_use(Lens_of_Truth))",
+            "Market Treasure Chest Game Room 4 Bottom": "(Small_Key_Treasure_Chest_Game, 4) and (shuffle_tcgkeys != 'vanilla' or can_use(Lens_of_Truth))",
+            "Market Treasure Chest Game Room 4 Top": "(Small_Key_Treasure_Chest_Game, 4) and (shuffle_tcgkeys != 'vanilla' or can_use(Lens_of_Truth))",
+            "Market Treasure Chest Game Room 5 Bottom": "(Small_Key_Treasure_Chest_Game, 5) and (shuffle_tcgkeys != 'vanilla' or can_use(Lens_of_Truth))",
+            "Market Treasure Chest Game Room 5 Top": "(Small_Key_Treasure_Chest_Game, 5) and (shuffle_tcgkeys != 'vanilla' or can_use(Lens_of_Truth))",
+            "Market Treasure Chest Game Reward": "(Small_Key_Treasure_Chest_Game, 6)"
         },
         "exits": {
             "Market": "True"

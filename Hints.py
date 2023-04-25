@@ -407,6 +407,7 @@ class HintArea(Enum):
             return HintArea.GERUDO_FORTRESS
 
         if dungeon_name == "Treasure Chest Game":
+            # Special case for Treasure Chest Game keys: treat them as part of the market hint area regardless of where the treasure box shop actually is.
             return HintArea.MARKET
 
         for hint_area in cls:
