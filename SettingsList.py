@@ -546,16 +546,6 @@ logic_tricks = {
                     PoH without needing Longshot. You will take
                     fall damage.
                     '''},
-    'Gerudo\'s Fortress Ledge Jumps': {
-        'name'    : 'logic_gf_jump',
-        'tags'    : ("Gerudo's Fortress", "Overworld", "Child", "Adult",),
-        'tooltip' : '''\
-                    Allows both ages to use a jump to reach the second
-                    floor of the fortress from the southern roof with
-                    the guard, and adult to jump to the top roof from
-                    there, without going through the interiors of the
-                    Thieves' Hideout.
-                    '''},
     'Thieves\' Hideout "Kitchen" with No Additional Items': {
         'name'    : 'logic_gerudo_kitchen',
         'tags'    : ("Thieves' Hideout", "Gerudo's Fortress", "Overworld", "Child", "Adult",),
@@ -568,10 +558,13 @@ logic_tricks = {
                     '''},
     'Gerudo\'s Fortress Ledge Jumps': {
         'name'    : 'logic_gf_jump',
-        'tags'    : ("Gerudo's Fortress", "Overworld", "Adult",),
+        'tags'    : ("Gerudo's Fortress", "Overworld", "Child", "Adult",),
         'tooltip' : '''\
-                    Adult can jump onto the top roof of the fortress
-                    without going through the interior of the hideout.
+                    Allows both ages to use a jump to reach the second
+                    floor of the fortress from the southern roof with
+                    the guard, and adult to jump to the top roof from
+                    there, without going through the interiors of the
+                    Thieves' Hideout.
                     '''},
     'Wasteland Crossing without Hover Boots or Longshot': {
         'name'    : 'logic_wasteland_crossing',
