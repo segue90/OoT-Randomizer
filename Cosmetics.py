@@ -108,11 +108,16 @@ def patch_tunic_colors(rom, settings, log, symbols):
         if log.src_dict.get('equipment_colors', {}).get(tunic, {}).get('color', '') and log.src_dict['equipment_colors'][tunic][':option'] != 'Rainbow':
             tunic_option = log.src_dict['equipment_colors'][tunic]['color']
 
-	   # handle rainbow
+	   # Handle rainbow
         if tunic_option == 'Rainbow':
-            #get symbol
+            bit_shifts = {'Kokiri Tunic': 0, 'Goron Tunic': 1, 'Zora Tunic': 2}
+            # get symbol
             rainbow_tunic_symbol = rom.sym('CFG_RAINBOW_TUNIC_ENABLED')
-            rom.write_byte(rainbow_tunic_symbol, 0x01)
+            # read the current value
+            setting = rom.read_byte(rainbow_tunic_symbol)
+            # Write bits for each tunic
+            setting |= 1 << bit_shifts[tunic]
+            rom.write_byte(rainbow_tunic_symbol, setting)
         
         # handle random
         if tunic_option == 'Random Choice':
