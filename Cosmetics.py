@@ -105,7 +105,7 @@ def patch_tunic_colors(rom, settings, log, symbols):
         tunic_option = settings.__dict__[tunic_setting]
 
         # Handle Plando
-        if log.src_dict.get('equipment_colors', {}).get(tunic, {}).get('color', ''):
+        if log.src_dict.get('equipment_colors', {}).get(tunic, {}).get('color', '') and log.src_dict['equipment_colors'][tunic][':option'] != 'Rainbow':
             tunic_option = log.src_dict['equipment_colors'][tunic]['color']
 
 	   # handle rainbow
