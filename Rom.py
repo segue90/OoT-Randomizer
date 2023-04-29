@@ -18,7 +18,7 @@ DMADATA_START = 0x7430
 
 class Rom(BigStream):
 
-    def __init__(self, file=None):
+    def __init__(self, file=None, skip_decompress=False):
         super().__init__([])
 
         self.original = None
@@ -49,7 +49,8 @@ class Rom(BigStream):
             self.read_rom(file)
 
         # decompress rom, or check if it's already decompressed
-        self.decompress_rom_file(file, decomp_file)
+        if not skip_decompress:
+            self.decompress_rom_file(file, decomp_file)
 
         # Add file to maximum size
         self.buffer.extend(bytearray([0x00] * (0x4000000 - len(self.buffer))))
@@ -198,6 +199,12 @@ class Rom(BigStream):
         size = end-start
         return start, end, size
 
+    def _get_dmadata_record_full(self, cur):
+        start = self.read_int32(cur)
+        end = self.read_int32(cur+0x04)
+        physical_start = self.read_int32(cur + 0x08)
+        physical_end = self.read_int32(cur + 0x0C)
+        return start, end, physical_start, physical_end
 
     def get_dmadata_record_by_key(self, key):
         cur = DMADATA_START
@@ -210,6 +217,19 @@ class Rom(BigStream):
             cur += 0x10
             dma_start, dma_end, dma_size = self._get_dmadata_record(cur)
 
+    def get_dmadata_record_by_index(self, index):
+        return self._get_dmadata_record_full(DMADATA_START + 0x10*index)
+
+    def get_full_dmadata_record_by_key(self, key):
+        cur = DMADATA_START
+        dma_start, dma_end, physical_start, physical_end = self._get_dmadata_record_full(cur)
+        while True:
+            if dma_start == 0 and dma_end == 0:
+                return None
+            if dma_start == key:
+                return dma_start, dma_end, physical_start, physical_end
+            cur += 0x10
+            dma_start, dma_end, physical_start, physical_end = self._get_dmadata_record_full(cur)
 
     def verify_dmadata(self):
         cur = DMADATA_START
@@ -266,7 +286,7 @@ class Rom(BigStream):
                 else:
                     from_file = key
             self.changed_dma[dma_index] = (from_file, start, end - start)
-
+        return dma_index
 
     def get_dma_table_range(self):
         cur = DMADATA_START
@@ -327,7 +347,6 @@ class Rom(BigStream):
         if size < original_size:
             self.changed_address.update(zip(range(size, original_size-1), [0]*(original_size-size)))
 
-
     # gets the last used byte of rom defined in the DMA table
     def free_space(self):
         cur = DMADATA_START
@@ -343,3 +362,13 @@ class Rom(BigStream):
             cur += 0x10
         max_end = ((max_end + 0x0F) >> 4) << 4
         return max_end
+
+    def print_dma_table(self):
+        cur = DMADATA_START
+
+        while True:
+            start, end, p_start, p_end = self._get_dmadata_record_full(cur)
+            print((start, end, p_start, p_end))
+            if start == 0 and end == 0:
+                break
+            cur += 0x10

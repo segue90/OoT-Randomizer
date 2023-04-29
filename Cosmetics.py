@@ -1160,6 +1160,8 @@ class CosmeticsLog(object):
         self.sfx = {}
         self.bgm = {}
         self.bgm_groups = {}
+        self.bank_dma_index = None
+        self.instr_dma_index = None
 
         self.src_dict = {}
         self.errors = []

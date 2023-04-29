@@ -26,6 +26,7 @@ from ItemPool import song_list, trade_items, child_trade_items
 from SceneFlags import get_alt_list_bytes, get_collectible_flag_table, get_collectible_flag_table_bytes
 from texture_util import ci4_rgba16patch_to_ci8, rgba16_patch
 from SettingsList import setting_infos
+from Sounds import move_audiobank_table
 
 
 def patch_rom(spoiler:Spoiler, world:World, rom:Rom):
@@ -1614,6 +1615,9 @@ def patch_rom(spoiler:Spoiler, world:World, rom:Rom):
         shop_item_file.end,
         shop_item_vram_start,
         shop_item_vram_start + (shop_item_file.end - shop_item_file.start)])
+
+    # Relocate Audiobank_table
+    move_audiobank_table(rom, 0xB896A0, rom.sym('AUDIOBANK_TABLE_EXTENDED'))
 
     # Update DMA Table
     update_dmadata(rom, shop_item_file)

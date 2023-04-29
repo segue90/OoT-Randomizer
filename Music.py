@@ -3,8 +3,9 @@
 import itertools
 import random
 import os
+import zipfile
+import io
 from Utils import compare_version, data_path
-
 
 # Format: (Title, Sequence ID)
 bgm_sequence_ids = (
@@ -90,20 +91,53 @@ ocarina_sequence_ids = (
     ("Song of Storms", 0x49)
 )
 
+class Bank(object):
+    def __init__(self, index, meta, data):
+        self.index = index
+        self.meta = meta
+        self.data = data
+        self.zsounds = {}
+
+    def add_zsound(self, tempaddr, zsound):
+        self.zsounds[tempaddr] = zsound
+
+    def get_entry(self, offset):
+        bank_entry = offset.to_bytes(4, 'big')
+        bank_entry += len(self.data).to_bytes(4, 'big')
+        bank_entry += self.meta
+        return bank_entry
+
+    def update_zsound_pointers(self):
+        for zsound_tempaddr in self.zsounds.keys():
+            self.data = self.data.replace(zsound_tempaddr.to_bytes(4, byteorder='big'), self.zsounds[zsound_tempaddr]['offset'].to_bytes(4, byteorder='big'))
 
 # Represents the information associated with a sequence, aside from the sequence data itself
 class Sequence(object):
-    def __init__(self, name, cosmetic_name, type = 0x0202, instrument_set = 0x03, replaces = -1, vanilla_id = -1):
+    def __init__(self, name, cosmetic_name, type = 0x0202, instrument_set = 0x03, replaces = -1, vanilla_id = -1, seq_file = None, new_instrument_set = False, zsounds = None):
         self.name = name
+        self.seq_file = seq_file
         self.cosmetic_name = cosmetic_name
         self.replaces = replaces
         self.vanilla_id = vanilla_id
         self.type = type
-        self.instrument_set = instrument_set
+        self.new_instrument_set = new_instrument_set
+        self.zsounds = zsounds
+        self.zbank_file = None
+        self.bankmeta = None
 
+        if isinstance(instrument_set, str):
+            if instrument_set == '-':
+                self.instrument_set = 0x0
+                self.new_instrument_set = True
+            else:
+                self.instrument_set = int(instrument_set, 16)
+        else:
+            self.instrument_set = instrument_set
 
     def copy(self):
-        copy = Sequence(self.name, self.cosmetic_name, self.type, self.instrument_set, self.replaces, self.vanilla_id)
+        copy = Sequence(self.name, self.cosmetic_name, self.type, self.instrument_set, self.replaces, self.vanilla_id, self.seq_file, self.new_instrument_set, self.zsounds)
+        copy.zbank_file = self.zbank_file
+        copy.bankmeta = self.bankmeta
         return copy
 
 
@@ -156,44 +190,87 @@ def process_sequences(rom, ids, seq_type='bgm', disabled_source_sequences=None, 
     # Process music data in data/Music/
     # Each sequence requires a valid .seq sequence file and a .meta metadata file
     # Current .meta format: Cosmetic Name\nInstrument Set\nPool
+
     for dirpath, _, filenames in os.walk(os.path.join(data_path(), 'Music'), followlinks=True):
         for fname in filenames:
             # Skip if included in exclusion file
             if fname in seq_exclusion_list:
                 continue
 
-            # Find meta file and check if corresponding seq file exists
-            if fname.endswith('.meta') and os.path.isfile(os.path.join(dirpath, f'{fname[:-5]}.seq')):
-                # Read meta info
-                try:
-                    with open(os.path.join(dirpath, fname), 'r') as stream:
-                        lines = stream.readlines()
-                    # Strip newline(s)
-                    lines = [line.rstrip() for line in lines]
-                except FileNotFoundError as ex:
-                    raise FileNotFoundError(f'No meta file for: "{fname}". This should never happen')
+            # Find .ootrs zip files
+            if fname.endswith('.ootrs'):
+                # Open zip file
+                filepath = os.path.join(dirpath, fname)
+                with zipfile.ZipFile(filepath) as zip:
+                    # Make sure meta file and seq file exists
+                    meta_file = None
+                    seq_file = None
+                    zbank_file = None
+                    bankmeta_file = None
+                    for f in zip.namelist():
+                        if f.endswith(".meta"):
+                            meta_file = f
+                            continue
+                        if f.endswith(".seq"):
+                            seq_file = f
+                            continue
+                        if f.endswith(".zbank"):
+                            zbank_file = f
+                        if f.endswith(".bankmeta"):
+                            bankmeta_file = f
+                    if not meta_file:
+                        raise FileNotFoundError(f'No .meta file in: "{fname}". This should never happen')
+                    if not seq_file:
+                        raise FileNotFoundError(f'No .seq file in: "{fname}". This should never happen')
+                    if zbank_file and not bankmeta_file:
+                        raise FileNotFoundError(f'Custom track "{fname}" contains .zbank but no .bankmeta')
 
-                # Create new sequence, checking third line for correct type
-                if (len(lines) > 2 and (lines[2].lower() == seq_type.lower() or lines[2] == '')) or (len(lines) <= 2 and seq_type == 'bgm'):
-                    seq = Sequence(os.path.join(dirpath, fname[:-5]), lines[0], instrument_set = int(lines[1], 16))
+                    # Read meta info
+                    try:
+                        with zip.open(meta_file, 'r') as stream:
+                            lines = io.TextIOWrapper(stream).readlines() # Use TextIOWrapper in order to get text instead of binary from the seq.
+                        # Strip newline(s)
+                        lines = [line.rstrip() for line in lines]
+                    except Exception as ex:
+                        raise FileNotFoundError(f'Error reading meta file for: "{fname}". This should never happen')
 
-                    if seq.instrument_set < 0x00 or seq.instrument_set > 0x25:
-                        raise Exception(f'{seq.name}: Sequence instrument must be in range [0x00, 0x25]')
-                    if seq.cosmetic_name == "None":
-                        raise Exception(f'{seq.name}: Sequences should not be named "None" as that is used for disabled music.')
-                    if seq.cosmetic_name in sequences:
-                        raise Exception(f'{seq.name} Sequence names should be unique. Duplicate sequence name: {seq.cosmetic_name}')
+                    # Create new sequence, checking third line for correct type
+                    if (len(lines) > 2 and (lines[2].lower() == seq_type.lower() or lines[2] == '')) or (len(lines) <= 2 and seq_type == 'bgm'):
+                        seq = Sequence(filepath, lines[0], seq_file = seq_file, instrument_set = lines[1])
+                        if zbank_file:
+                            seq.zbank_file = zbank_file
+                            seq.bankmeta = bankmeta_file
+                        seq.zsounds = []
+                        if seq.instrument_set < 0x00 or seq.instrument_set > 0x25:
+                            raise Exception(f'{seq.name}: Sequence instrument must be in range [0x00, 0x25]')
+                        if seq.cosmetic_name == "None":
+                            raise Exception(f'{seq.name}: Sequences should not be named "None" as that is used for disabled music.')
+                        if seq.cosmetic_name in sequences:
+                            raise Exception(f'{seq.name} Sequence names should be unique. Duplicate sequence name: {seq.cosmetic_name}')
 
-                    if seq.cosmetic_name not in disabled_source_sequences:
-                        sequences[seq.cosmetic_name] = seq
+                        if seq.cosmetic_name not in disabled_source_sequences:
+                            sequences[seq.cosmetic_name] = seq
 
-                    if len(lines) >= 4:
-                        seq_groups = lines[3].split(',')
-                        for group in seq_groups:
-                            group = group.strip()
-                            if group not in groups:
-                                groups[group] = []
-                            groups[group].append(seq.cosmetic_name)
+                        if len(lines) >= 4:
+                            seq_groups = lines[3].split(',')
+                            for group in seq_groups:
+                                group = group.strip()
+                                if group not in groups:
+                                    groups[group] = []
+                                groups[group].append(seq.cosmetic_name)
+
+                        # Process ZSOUND lines. Make these lines in the format of ZSOUND:file_path:temp_addr
+                        for line in lines:
+                            tokens = line.split(":")
+                            if tokens[0] == "ZSOUND":
+                                zsound_file = tokens[1]
+                                zsound_tempaddr = tokens[2]
+                                zsound = {
+                                    "file": tokens[1],
+                                    "tempaddr": tokens[2]
+                                }
+                                seq.zsounds.append(zsound)
+
 
     return sequences, target_sequences, groups
 
@@ -232,7 +309,7 @@ def shuffle_music(log, source_sequences, target_sequences, music_mapping, type="
     return sequences
 
 
-def rebuild_sequences(rom, sequences):
+def rebuild_sequences(rom, sequences, log):
     replacement_dict = {seq.replaces: seq for seq in sequences}
     # List of sequences (actual sequence data objects) containing the vanilla sequence data
     old_sequences = []
@@ -285,9 +362,10 @@ def rebuild_sequences(rom, sequences):
             else:
                 # Read sequence info
                 try:
-                    with open(f'{seq.name}.seq', 'rb') as stream:
-                        new_entry.data = bytearray(stream.read())
-                    new_entry.size = len(new_entry.data)
+                    with zipfile.ZipFile(seq.name) as zip:
+                        with zip.open(seq.seq_file, 'r') as stream:
+                            new_entry.data = bytearray(stream.read())
+                            new_entry.size = len(new_entry.data)
                     if new_entry.size <= 0x10:
                         raise Exception(f'Invalid sequence file "{seq.name}.seq"')
                     new_entry.data[1] = 0x20
@@ -317,7 +395,7 @@ def rebuild_sequences(rom, sequences):
 
         # Find free space and update dmatable
         new_address = rom.free_space()
-        rom.update_dmadata_record(0x029DE0, new_address, new_address + address)
+        dma_addr = rom.update_dmadata_record(0x029DE0, new_address, new_address + address)
 
     # Write new audio sequence file
     rom.write_bytes(new_address, new_audio_sequence)
@@ -338,7 +416,126 @@ def rebuild_sequences(rom, sequences):
             rom.write_byte(base, j.instrument_set)
 
 
-def rebuild_pointers_table(rom, sequences):
+    # Patch new instrument sets (banks) and add new instrument sounds
+    added_banks = [] # Store copies of all of the banks we've added
+    added_instruments = [] #Store copies of all of the instruments we've added
+    new_bank_index = 0x26
+    instr_data = bytearray(0) # Store all of the new instrument data that will be added to the end of audiotable
+
+    audiobank_start, audiobank_end, audiobank_size = rom.get_dmadata_record_by_key(0xD390)
+    audiotable_start, audiotable_end, audiotable_size = rom.get_dmadata_record_by_key(0x79470)
+
+    instr_offset_in_file = audiotable_size
+    for i in range(0x6E):
+        bank_table_base = rom.sym('AUDIOBANK_TABLE_EXTENDED')
+        seq_bank_base = 0xB89911 + 0xDD + (i * 2)
+        j = replacement_dict.get(i if new_sequences[i].size else new_sequences[i].address, None)
+        if(j is not None and j.new_instrument_set):
+            # Open the .ootrs file
+            with zipfile.ZipFile(j.name) as zip:
+
+                # Load the .zbank file
+                with zip.open(j.zbank_file, 'r') as stream:
+                    bankdata = stream.read()
+                    bank = None
+
+                # Check if we have already added this bank
+                for added_bank in added_banks:
+                    if added_bank.data == bankdata:
+                        bank = added_bank
+
+                if not bank:
+                    bank_meta = bytearray(zip.open(j.bankmeta, 'r').read())
+                    bank = Bank(new_bank_index, bank_meta, bankdata)
+
+                    # Handle any new instruments
+                    for zsound in j.zsounds:
+                        instrument = None
+                        tempaddr = int(zsound["tempaddr"], 16)
+                        curr_instrument_data = zip.open(zsound["file"], 'r').read()
+                        already_added = False
+                        for added_instrument in added_instruments:
+                            if(added_instrument['data'] == curr_instrument_data):
+                                # Already added this instrument. Just add it to the bank
+                                instrument = added_instrument
+                                bank.add_zsound(tempaddr, instrument)
+                                already_added = True
+                        if not already_added:
+                            instrument = {}
+                            instrument['offset'] = instr_offset_in_file
+                            instrument['data'] = curr_instrument_data
+                            instrument['size'] = len(curr_instrument_data)
+                            instrument['name'] = zsound["file"]
+                            instr_data += curr_instrument_data
+
+                            # Align instrument data to 0x10
+                            if len(instr_data) % 0x10 != 0:
+                                padding_length = 0x10 - (len(instr_data) % 0x10)
+                                instr_data += (bytearray(padding_length))
+                                instrument['size'] += padding_length
+                            bank.add_zsound(tempaddr, instrument)
+                            added_instruments.append(instrument)
+                            instr_offset_in_file += instrument['size']
+                    added_banks.append(bank)
+                    new_bank_index += 1
+
+                # Update the sequence's bank (instrument set)
+                rom.write_byte(seq_bank_base, bank.index)
+
+    # Patch the new instrument data into the ROM in a new file.
+    # If there is any instrument data to add, move the entire audiotable file to a new location in the ROM.
+    if len(instr_data) > 0:
+        # Read the original audiotable data
+        audiotable_data = rom.read_bytes(audiotable_start, audiotable_size)
+        # Zeroize existing file
+        rom.write_bytes(audiotable_start, [0] * audiotable_size)
+        # Get new address for the file
+        new_audiotable_start = rom.free_space()
+        # Add the new data
+        audiotable_data += instr_data
+        # Write the file to the new address
+        rom.write_bytes(new_audiotable_start, audiotable_data)
+        # Update DMA
+        instr_dma_index = rom.update_dmadata_record(audiotable_start, new_audiotable_start, new_audiotable_start + len(audiotable_data))
+        log.instr_dma_index = instr_dma_index
+
+    # Add new audio banks
+    new_bank_data = bytearray(0)
+    # Read the original audiobank data
+    audiobank_data = rom.read_bytes(audiobank_start, audiobank_size)
+    new_bank_offset = len(audiobank_data)
+    for bank in added_banks:
+        bank.update_zsound_pointers()
+        bank.offset = new_bank_offset
+        #absolute_offset = new_audio_banks_addr + new_bank_offset
+        bank_entry = bank.get_entry(new_bank_offset)
+        rom.write_bytes(bank_table_base + 0x10 + bank.index * 0x10, bank_entry)
+        new_bank_data += bank.data
+        new_bank_offset += len(bank.data)
+
+    # If we have new banks to add, move the entire audiobank file to a new place in ROM. Update the existing dmadata record
+    if len(new_bank_data) > 0:
+        # Zeroize existing file
+        rom.write_bytes(audiobank_start, [0] * audiobank_size)
+        # Get new address for the file
+        new_audio_banks_addr = rom.free_space()
+        # Add the new data
+        audiobank_data += new_bank_data
+        # Write the file to the new address
+        rom.write_bytes(new_audio_banks_addr, audiobank_data)
+        # Update DMA
+        bank_dma_index = rom.update_dmadata_record(audiobank_start, new_audio_banks_addr, new_audio_banks_addr + len(audiobank_data))
+        log.bank_dma_index = new_audio_banks_addr
+        # Update size of bank table in the Audiobank table header.
+        rom.write_bytes(bank_table_base, new_bank_index.to_bytes(2, 'big'))
+
+    # Update the init heap size. This size is normally hardcoded based on the number of audio banks.
+    init_heap_size = rom.read_int32(0xB80118)
+    init_heap_size += (new_bank_index - 0x26)*0x20
+    rom.write_int32(0xB80118, init_heap_size)
+    log.added_banks = added_banks
+
+def rebuild_pointers_table(rom, sequences, log):
     for sequence in [s for s in sequences if s.vanilla_id and s.replaces]:
         bgm_sequence = rom.original.read_bytes(0xB89AE0 + (sequence.vanilla_id * 0x10), 0x10)
         bgm_instrument = rom.original.read_int16(0xB89910 + 0xDD + (sequence.vanilla_id * 2))
@@ -502,7 +699,7 @@ def randomize_music(rom, settings, log):
 
     # Patch the randomized sequences into the ROM.
     patch_music = rebuild_sequences if custom_sequences_enabled else rebuild_pointers_table
-    patch_music(rom, shuffled_sequences + shuffled_fanfare_sequences)
+    patch_music(rom, shuffled_sequences + shuffled_fanfare_sequences, log)
 
     if disabled_target_sequences:
         disable_music(rom, log, disabled_target_sequences.values())
