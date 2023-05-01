@@ -31,8 +31,13 @@ void draw_gi_blue_fire_candle(z64_game_t *game, uint32_t draw_id);
 void draw_gi_fairy_lantern(z64_game_t *game, uint32_t draw_id);
 void draw_gi_poe_bottles(z64_game_t *game, uint32_t draw_id);
 void draw_gi_song_notes(z64_game_t *game, uint32_t draw_id);
+void draw_gi_chubag(z64_game_t *game, uint32_t draw_id);
 void draw_gi_small_keys(z64_game_t *game, uint32_t draw_id);
+void draw_gi_shrink_keys(z64_game_t *game, uint32_t draw_id);
 void draw_gi_boss_keys(z64_game_t *game, uint32_t draw_id);
 void draw_gi_silver_rupee_pouch(z64_game_t *game, uint32_t draw_id);
+void draw_gi_boss_altered(z64_game_t *game, uint32_t draw_id);
+void draw_gi_boss_altflip(z64_game_t *game, uint32_t draw_id);
+
 
 #endif
