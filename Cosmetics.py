@@ -44,7 +44,7 @@ def patch_music(rom, settings, log, symbols):
     # patch music
     if settings.background_music != 'normal' or settings.fanfares != 'normal' or log.src_dict.get('bgm', {}):
         music.restore_music(rom)
-        music.randomize_music(rom, settings, log)
+        music.randomize_music(rom, settings, log, symbols)
     else:
         music.restore_music(rom)
     # Remove battle music
@@ -1091,6 +1091,17 @@ patch_sets[0x1F073FDC] = {
         "CFG_SLOWDOWN_MUSIC_WHEN_LOWHP": 0x0059,
         "CFG_RAINBOW_TUNIC_ENABLED": 0x005A,
         "CFG_TUNIC_COLORS": 0x005B,
+    }
+}
+
+# 7.2.0
+patch_sets[0x1F073FDD] = {
+    "patches": patch_sets[0x1F073FDC]["patches"] + [
+        patch_music, # Patch music needs to be moved into a versioned patch after introducing custom instrument sets in order for older patches to still work. This should work because when running the global patches we make sure they're not in the versioned patch set.
+    ],
+    "symbols": {
+        **patch_sets[0x1F073FDC]["symbols"],
+        "CFG_AUDIOBANK_TABLE_EXTENDED_ADDR": 0x005A
     }
 }
 

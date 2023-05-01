@@ -149,7 +149,7 @@ class SequenceData(object):
         self.data = []
 
 
-def process_sequences(rom, ids, seq_type='bgm', disabled_source_sequences=None, disabled_target_sequences=None, include_custom=True, sequences=None, target_sequences=None, groups=None):
+def process_sequences(rom, ids, seq_type='bgm', disabled_source_sequences=None, disabled_target_sequences=None, include_custom=True, sequences=None, target_sequences=None, groups=None, include_custom_audiobanks=False):
     disabled_source_sequences = [] if disabled_source_sequences is None else disabled_source_sequences
     disabled_target_sequences = {} if disabled_target_sequences is None else disabled_target_sequences
     sequences = {} if sequences is None else sequences
@@ -199,6 +199,7 @@ def process_sequences(rom, ids, seq_type='bgm', disabled_source_sequences=None, 
 
             # Find .ootrs zip files
             if fname.endswith('.ootrs'):
+                skip = False
                 # Open zip file
                 filepath = os.path.join(dirpath, fname)
                 with zipfile.ZipFile(filepath) as zip:
@@ -215,9 +216,18 @@ def process_sequences(rom, ids, seq_type='bgm', disabled_source_sequences=None, 
                             seq_file = f
                             continue
                         if f.endswith(".zbank"):
+                            if not include_custom_audiobanks: # Check if we are excluding sequences with custom banks
+                                skip = True
+                                break
                             zbank_file = f
+                            continue
                         if f.endswith(".bankmeta"):
                             bankmeta_file = f
+                            continue
+
+                    if skip:
+                        continue
+
                     if not meta_file:
                         raise FileNotFoundError(f'No .meta file in: "{fname}". This should never happen')
                     if not seq_file:
@@ -309,7 +319,7 @@ def shuffle_music(log, source_sequences, target_sequences, music_mapping, type="
     return sequences
 
 
-def rebuild_sequences(rom, sequences, log):
+def rebuild_sequences(rom, sequences, log, symbols):
     replacement_dict = {seq.replaces: seq for seq in sequences}
     # List of sequences (actual sequence data objects) containing the vanilla sequence data
     old_sequences = []
@@ -417,6 +427,9 @@ def rebuild_sequences(rom, sequences, log):
 
 
     # Patch new instrument sets (banks) and add new instrument sounds
+    # Only if we were passed CFG_AUDIOBANK_TABLE_EXTENDED_ADDR via symbols which means we're on the right version.
+    if not "CFG_AUDIOBANK_TABLE_EXTENDED_ADDR" in symbols.keys():
+        return
     added_banks = [] # Store copies of all of the banks we've added
     added_instruments = [] #Store copies of all of the instruments we've added
     new_bank_index = 0x26
@@ -427,7 +440,7 @@ def rebuild_sequences(rom, sequences, log):
 
     instr_offset_in_file = audiotable_size
     for i in range(0x6E):
-        bank_table_base = rom.sym('AUDIOBANK_TABLE_EXTENDED')
+        bank_table_base = (rom.read_int32(symbols['CFG_AUDIOBANK_TABLE_EXTENDED_ADDR']) - 0x80400000) + 0x3480000
         seq_bank_base = 0xB89911 + 0xDD + (i * 2)
         j = replacement_dict.get(i if new_sequences[i].size else new_sequences[i].address, None)
         if(j is not None and j.new_instrument_set):
@@ -535,7 +548,7 @@ def rebuild_sequences(rom, sequences, log):
     rom.write_int32(0xB80118, init_heap_size)
     log.added_banks = added_banks
 
-def rebuild_pointers_table(rom, sequences, log):
+def rebuild_pointers_table(rom, sequences, log, symbols):
     for sequence in [s for s in sequences if s.vanilla_id and s.replaces]:
         bgm_sequence = rom.original.read_bytes(0xB89AE0 + (sequence.vanilla_id * 0x10), 0x10)
         bgm_instrument = rom.original.read_int16(0xB89910 + 0xDD + (sequence.vanilla_id * 2))
@@ -546,7 +559,7 @@ def rebuild_pointers_table(rom, sequences, log):
     rom.write_int16(0xB89910 + 0xDD + (0x57 * 2), rom.read_int16(0xB89910 + 0xDD + (0x28 * 2)))
 
 
-def randomize_music(rom, settings, log):
+def randomize_music(rom, settings, log, symbols):
     shuffled_sequences = shuffled_fanfare_sequences = []
     sequences = fanfare_sequences = target_sequences = target_fanfare_sequences = bgm_groups = fanfare_groups = {}
     disabled_source_sequences = log.src_dict.get('bgm_groups', {}).get('exclude', []).copy()
@@ -558,6 +571,7 @@ def randomize_music(rom, settings, log):
 
     # If generating a patch file, disallow custom sequences.
     custom_sequences_enabled = not settings.generating_patch_file
+    custom_audiobanks_enabled = True
     if not custom_sequences_enabled and (settings.background_music == 'random_custom_only' or settings.fanfares == 'random_custom_only'):
         log.errors.append("Custom music is disabled when creating patch files. Only randomizing vanilla music.")
 
@@ -565,6 +579,8 @@ def randomize_music(rom, settings, log):
     if settings.patch_file != '':
         rom_version_bytes = rom.read_version_bytes()
         rom_version = f'{rom_version_bytes[0]}.{rom_version_bytes[1]}.{rom_version_bytes[2]}'
+        if compare_version(rom_version, '7.2.0') < 0: # Check if custom sequences with custom banks are supported
+            custom_audiobanks_enabled = False
         if compare_version(rom_version, '4.11.13') < 0:
             log.errors.append("Custom music is not supported by this patch version. Only randomizing vanilla music.")
             custom_sequences_enabled = False
@@ -608,12 +624,12 @@ def randomize_music(rom, settings, log):
 
     # Grab our lists of sequences.
     if settings.background_music in ['random', 'random_custom_only'] or bgm_mapped:
-        sequences, target_sequences, bgm_groups = process_sequences(rom, bgm_ids.values(), 'bgm', disabled_source_sequences, disabled_target_sequences, custom_sequences_enabled)
+        sequences, target_sequences, bgm_groups = process_sequences(rom, bgm_ids.values(), 'bgm', disabled_source_sequences, disabled_target_sequences, custom_sequences_enabled, include_custom_audiobanks=custom_audiobanks_enabled)
         if settings.background_music == 'random_custom_only':
             sequences = {name: seq for name, seq in sequences.items() if name not in bgm_ids or name in music_mapping.values()}
 
     if settings.fanfares in ['random', 'random_custom_only'] or ff_mapped or ocarina_mapped:
-        fanfare_sequences, target_fanfare_sequences, fanfare_groups = process_sequences(rom, ff_ids.values(), 'fanfare', disabled_source_sequences, disabled_target_sequences, custom_sequences_enabled)
+        fanfare_sequences, target_fanfare_sequences, fanfare_groups = process_sequences(rom, ff_ids.values(), 'fanfare', disabled_source_sequences, disabled_target_sequences, custom_sequences_enabled, include_custom_audiobanks=custom_audiobanks_enabled)
         if settings.fanfares == 'random_custom_only':
             fanfare_sequences = {name: seq for name, seq in fanfare_sequences.items() if name not in ff_ids or name in music_mapping.values()}
 
@@ -699,7 +715,7 @@ def randomize_music(rom, settings, log):
 
     # Patch the randomized sequences into the ROM.
     patch_music = rebuild_sequences if custom_sequences_enabled else rebuild_pointers_table
-    patch_music(rom, shuffled_sequences + shuffled_fanfare_sequences, log)
+    patch_music(rom, shuffled_sequences + shuffled_fanfare_sequences, log, symbols)
 
     if disabled_target_sequences:
         disable_music(rom, log, disabled_target_sequences.values())
