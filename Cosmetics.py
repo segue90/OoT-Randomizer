@@ -94,10 +94,7 @@ def patch_tunic_colors(rom, settings, log, symbols):
     
     # Need to check for the existence of the CFG_TUNIC_COLORS symbol. 
     # This was added with rainbow tunic but custom tunic colors should still support older patch versions.
-    if "CFG_TUNIC_COLORS" in symbols.keys():
-        tunic_address = symbols["CFG_TUNIC_COLORS"] # Use new tunic color ROM address
-    else:
-        tunic_address = 0x00B6DA38 # Use vanilla tunic color ROM address
+    tunic_address = symbols.get('CFG_TUNIC_COLORS', 0x00B6DA38) # Use new tunic color ROM address. Fall back to vanilla tunic color ROM address.
     tunics = [
         ('Kokiri Tunic', 'kokiri_color', tunic_address),
         ('Goron Tunic',  'goron_color',  tunic_address+3),
@@ -108,40 +105,45 @@ def patch_tunic_colors(rom, settings, log, symbols):
 
     for tunic, tunic_setting, address in tunics:
         tunic_option = settings.__dict__[tunic_setting]
+        rainbow_error = None
 
         # Handle Plando
         if log.src_dict.get('equipment_colors', {}).get(tunic, {}).get('color', '') and log.src_dict['equipment_colors'][tunic][':option'] != 'Rainbow':
             tunic_option = log.src_dict['equipment_colors'][tunic]['color']
         
-        # handle random
+        # Handle random
         if tunic_option == 'Random Choice':
             tunic_option = random.choice(tunic_color_list)
+
+        # Handle Rainbow Tunic
+        if tunic_option == 'Rainbow':
+            # Check to make sure that rainbow tunic is supported by the current patch version
+            if 'CFG_RAINBOW_TUNIC_ENABLED' in symbols:
+                bit_shifts = {'Kokiri Tunic': 0, 'Goron Tunic': 1, 'Zora Tunic': 2}
+                # get symbol
+                rainbow_tunic_symbol = symbols['CFG_RAINBOW_TUNIC_ENABLED']
+                # read the current value
+                setting = rom.read_byte(rainbow_tunic_symbol)
+                # Write bits for each tunic
+                setting |= 1 << bit_shifts[tunic]
+                rom.write_byte(rainbow_tunic_symbol, setting)
+            else:
+                rainbow_error = "Rainbow Tunics are not supported by this patch version. Using 'Completely Random' as a substitute."
+                tunic_option = 'Completely Random'
+
         # handle completely random
         if tunic_option == 'Completely Random':
             color = generate_random_color()
         # grab the color from the list
         elif tunic_option in tunic_colors:
             color = list(tunic_colors[tunic_option])
-        # Handle Rainbow Tunic
         elif tunic_option == 'Rainbow':
-            if not 'CFG_RAINBOW_TUNIC_ENABLED' in symbols:
-                raise Exception("Rainbow tunic not supported by this patch version")
-            bit_shifts = {'Kokiri Tunic': 0, 'Goron Tunic': 1, 'Zora Tunic': 2}
-            # get symbol
-            rainbow_tunic_symbol = symbols['CFG_RAINBOW_TUNIC_ENABLED']
-            # read the current value
-            setting = rom.read_byte(rainbow_tunic_symbol)
-            # Write bits for each tunic
-            setting |= 1 << bit_shifts[tunic]
-            rom.write_byte(rainbow_tunic_symbol, setting)
             color = list(Color(0x00, 0x00, 0x00))
         # build color from hex code
         else:
             color = hex_to_color(tunic_option)
             tunic_option = 'Custom'
-        # "Weird" weirdshots will crash if the Kokiri Tunic Green value is > 0x99 and possibly 0x98. Brickwall it.
-        #if settings.logic_rules != 'glitchless' and tunic == 'Kokiri Tunic':
-        #    color[1] = min(color[1], 0x97)
+
         rom.write_bytes(address, color)
 
         # patch the tunic icon
@@ -154,6 +156,9 @@ def patch_tunic_colors(rom, settings, log, symbols):
             ':option': tunic_option,
             'color': color_to_hex(color),
         })
+
+        if rainbow_error:
+            log.errors.append(rainbow_error)
 
 
 def patch_navi_colors(rom, settings, log, symbols):
