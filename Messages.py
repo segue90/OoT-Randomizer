@@ -314,7 +314,7 @@ for dungeon_name, max_keys in (
     ("the \x05\x46Thieves' Hideout\x05\x40", 4),
     ("\x05\x41Ganon's Castle\x05\x40", 3),
 ):
-    KEYSANITY_MESSAGES[i] = f"\x13\x77\x08You found a \x05\x41Small Key\x05\x40\x01for {dungeon_name}!\x09"
+    KEYSANITY_MESSAGES[i] = f"\x13\x77\x08You found a \x05\x41Small Key\x05\x40\x01for {dungeon_name}!\x01It's your \x05\x41first\x05\x40 one!\x09"
     i += 1
     for num_keys in range(2, max_keys + 1):
         KEYSANITY_MESSAGES[i] = f"\x13\x77\x08You found a \x05\x41Small Key\x05\x40\x01for {dungeon_name}!\x01You've collected \x05\x41{num_keys}\x05\x40 of them.\x09"
