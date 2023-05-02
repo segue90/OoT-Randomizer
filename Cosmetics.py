@@ -92,7 +92,7 @@ def patch_tunic_icon(rom, tunic, color):
 def patch_tunic_colors(rom, settings, log, symbols):
     # patch tunic colors
     
-    tunic_address = rom.sym("CFG_TUNIC_COLORS")
+    tunic_address = symbols["CFG_TUNIC_COLORS"]
     tunics = [
         ('Kokiri Tunic', 'kokiri_color', tunic_address),
         ('Goron Tunic',  'goron_color',  tunic_address+3),
@@ -112,7 +112,7 @@ def patch_tunic_colors(rom, settings, log, symbols):
         if tunic_option == 'Rainbow':
             bit_shifts = {'Kokiri Tunic': 0, 'Goron Tunic': 1, 'Zora Tunic': 2}
             # get symbol
-            rainbow_tunic_symbol = rom.sym('CFG_RAINBOW_TUNIC_ENABLED')
+            rainbow_tunic_symbol = symbols['CFG_RAINBOW_TUNIC_ENABLED']
             # read the current value
             setting = rom.read_byte(rainbow_tunic_symbol)
             # Write bits for each tunic
@@ -1041,6 +1041,18 @@ patch_sets[0x1F073FDA] = {
     "symbols": {
         **patch_sets[0x1F073FD9]["symbols"],
         "GET_ITEM_SEQ_ID": 0x0056,
+    }
+}
+
+# 7.x.x
+patch_sets[0x1F073FDB] = {
+    "patches": patch_sets[0x1F073FDA]["patches"] + [
+        patch_tunic_colors
+    ],
+    "symbols": {
+        **patch_sets[0x1F073FDA]["symbols"],
+        "CFG_RAINBOW_TUNIC_ENABLED": 0x005A,
+        "CFG_TUNIC_COLORS": 0x005B
     }
 }
 
