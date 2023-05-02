@@ -1241,8 +1241,10 @@ def patch_rom(spoiler: Spoiler, world: World, rom: Rom) -> Rom:
     save_context.write_bits(0x0F09, 0x10)  # "Met Child Malon at Castle or Market"
     save_context.write_bits(0x0F09, 0x20)  # "Child Malon Said Epona Was Scared of You"
 
-    save_context.write_bits(0x0F21, 0x04)  # "Ruto in JJ (M3) Talk First Time"
-    save_context.write_bits(0x0F21, 0x02)  # "Ruto in JJ (M2) Meet Ruto"
+    save_context.write_bits(0x0F21, 0x04) # "Ruto in JJ (M3) Talk First Time"
+    save_context.write_bits(0x0F21, 0x02) # "Ruto in JJ (M2) Meet Ruto"
+    if world.settings.ruto_already_f1_jabu and not world.dungeon_mq['Jabu Jabus Belly']:
+        save_context.write_bits(0x0F21, 0x80) # Ruto in JJ, Spawns on F1 instead of B1
 
     save_context.write_bits(0x0EE2, 0x01)  # "Began Ganondorf Battle"
     save_context.write_bits(0x0EE3, 0x80)  # "Began Bongo Bongo Battle"
