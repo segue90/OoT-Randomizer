@@ -21,6 +21,7 @@
 #include "scene.h"
 #include "music.h"
 #include "uninvertYaxis.h"
+#include "debug.h"
 
 void Gameplay_InitSkybox(z64_game_t* globalCtx, int16_t skyboxId);
 
