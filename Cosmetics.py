@@ -73,7 +73,7 @@ def patch_model_colors(rom, color, model_addresses):
         rom.write_bytes(address, lightened_color)
 
 
-def patch_tunic_icon(rom, tunic, color):
+def patch_tunic_icon(rom, tunic, color, rainbow=False):
     # patch tunic icon colors
     icon_locations = {
         'Kokiri Tunic': 0x007FE000,
@@ -82,7 +82,7 @@ def patch_tunic_icon(rom, tunic, color):
     }
 
     if color is not None:
-        tunic_icon = icon.generate_tunic_icon(color)
+        tunic_icon = icon.generate_rainbow_tunic_icon() if rainbow else icon.generate_tunic_icon(color)
     else:
         tunic_icon = rom.original.read_bytes(icon_locations[tunic], 0x1000)
 
@@ -147,8 +147,8 @@ def patch_tunic_colors(rom, settings, log, symbols):
         rom.write_bytes(address, color)
 
         # patch the tunic icon
-        if (tunic_option != 'Rainbow') and [tunic, tunic_option] not in [['Kokiri Tunic', 'Kokiri Green'], ['Goron Tunic', 'Goron Red'], ['Zora Tunic', 'Zora Blue']]:
-            patch_tunic_icon(rom, tunic, color)
+        if [tunic, tunic_option] not in [['Kokiri Tunic', 'Kokiri Green'], ['Goron Tunic', 'Goron Red'], ['Zora Tunic', 'Zora Blue']]:
+            patch_tunic_icon(rom, tunic, color, tunic_option == 'Rainbow')
         else:
             patch_tunic_icon(rom, tunic, None)
 
