@@ -91,7 +91,6 @@ void give_small_key(z64_file_t *save, int16_t dungeon_id, int16_t arg2) {
     }
 }
 
-uint8_t KEYRING_BOSSKEY_CONDITION = 0;
 void give_small_key_ring(z64_file_t *save, int16_t dungeon_id, int16_t arg2) {
     int8_t current_keys = save->dungeon_keys[dungeon_id] > 0 ? save->dungeon_keys[dungeon_id] : 0;
     save->dungeon_keys[dungeon_id] = current_keys + key_counts[dungeon_id][CFG_DUNGEON_IS_MQ[dungeon_id]];

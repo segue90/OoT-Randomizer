@@ -301,6 +301,11 @@ KEYSANITY_MESSAGES = {
     0x9016: "\x13\x77\x08You found a \x05\x41Small Key Ring\x05\x40\x01for the \x05\x46Gerudo Training\x01Ground\x05\x40!\x09",
     0x9017: "\x13\x77\x08You found a \x05\x41Small Key Ring\x05\x40\x01for the \x05\x46Thieves' Hideout\x05\x40!\x09",
     0x9018: "\x13\x77\x08You found a \x05\x41Small Key Ring\x05\x40\x01for \x05\x41Ganon's Castle\x05\x40!\x09",
+    0x9019: "\x13\x77\x08You found a \x05\x41Key Ring\x05\x40\x01for the \x05\x42Forest Temple\x05\x40!\x09\x01It includes the \x05\x41Boss Key\x05\x40!",
+    0x901A: "\x13\x77\x08You found a \x05\x41Key Ring\x05\x40\x01for the \x05\x41Fire Temple\x05\x40!\x09\x01It includes the \x05\x41Boss Key\x05\x40!",
+    0x901B: "\x13\x77\x08You found a \x05\x41Key Ring\x05\x40\x01for the \x05\x43Water Temple\x05\x40!\x09\x01It includes the \x05\x41Boss Key\x05\x40!",
+    0x901C: "\x13\x77\x08You found a \x05\x41Key Ring\x05\x40\x01for the \x05\x46Spirit Temple\x05\x40!\x09\x01It includes the \x05\x41Boss Key\x05\x40!",
+    0x901D: "\x13\x77\x08You found a \x05\x41Key Ring\x05\x40\x01for the \x05\x45Shadow Temple\x05\x40!\x09\x01It includes the \x05\x41Boss Key\x05\x40!"
 }
 i = 0x9101
 for dungeon_name, max_keys in (
@@ -904,7 +909,6 @@ def make_player_message(text):
 
     return new_text
 
-
 # reduce item message sizes and add new item messages
 # make sure to call this AFTER move_shop_item_messages()
 def update_item_messages(messages, world):
@@ -918,12 +922,10 @@ def update_item_messages(messages, world):
     for id, (text, opt) in MISC_MESSAGES.items():
         update_message_by_id(messages, id, text, opt)
 
-
 # run all keysanity related patching to add messages for dungeon specific items
 def add_item_messages(messages, shop_items, world):
     move_shop_item_messages(messages, shop_items)
     update_item_messages(messages, world)
-
 
 # reads each of the game's messages into a list of Message objects
 def read_messages(rom):
