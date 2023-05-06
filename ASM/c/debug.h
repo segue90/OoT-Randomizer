@@ -2,7 +2,8 @@
 #include "gfx.h"
 #include "text.h"
 
-void draw_debug_number(int whichNumber, int numberToShow);
+void draw_debug_int(int whichNumber, int numberToShow);
+void draw_debug_float(int whichNumber, float numberToShow);
 void draw_debug_numbers(z64_disp_buf_t *db);
 
 // Input viewer functions
