@@ -166,6 +166,7 @@ issue. You should always Hard Reset to avoid this issue entirely.
 * Fix a vanilla bug where jumpslashing into Bongo Bongo's chamber on the last possible frame will not properly skip the cutscene when it should be skipped.
 * Heart Containers and Pieces of Heart will no longer be directly hinted by Way of the Hero or Path hints, which is consistent with Triforce Pieces and Gold Skulltula Tokens.
 * Junk items being sent to another world will now float up into the air to indicate this.
+* An unnecessary polygon check function is skipped to increase game performance.
 
 #### New Speedups
 * Various cutscenes removed or shortened, such as Water Temple and Gerudo Fortress gates and scarecrow spawn cutscenes.

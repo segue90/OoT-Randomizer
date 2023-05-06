@@ -158,6 +158,40 @@ Gameplay_InitSkybox:
 .org 0x80108CEC
 .word @transition_0_jump
 
+;==================================================================================================
+; Skip using collision poly check table (performance optimization)
+;==================================================================================================
+; Instead some polys may be checked multiple times in a single line check, which is faster than
+; using the table, particularly in large scenes.
+
+; Skip loading the address of the table
+; Replaces lw       a3, 0x004C(s2)
+.org 0x8002D1E8
+    nop
+
+; Skip lookup
+; Replaces lbu      t8, 0x0000(v1)
+.org 0x8002D210
+    li      t8, 0
+
+; Skip updating the table
+; Replaces beqz     v0, 0x8002D264
+.org 0x8002D238
+    beqz    v0, 0x8002D26C
+; Replaces bnezl    t6, 0x8002D268
+.org 0x8002D248
+    bnezl   t6, 0x8002D26C
+
+; Skip resetting the table
+; Replaces:
+;   lw      t0, 0x0000(s2)
+;   jal     0x80033FF0
+;   lhu     a1, 0x0014(t0)
+.org 0x800302E8
+    nop
+    nop
+    nop
+
 .headersize 0
 
 ;==================================================================================================
