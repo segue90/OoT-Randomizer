@@ -170,6 +170,7 @@ issue. You should always Hard Reset to avoid this issue entirely.
 
 #### New Speedups
 * Skulltulas will now pop out of their soil patches instantly (once the bugs enter the hole) instead of waiting 3 seconds.
+* The cutscene of the Gerudo's Fortress carpenters running out when you free them will be skipped.
 
 #### Plandomizer
 * Plandomizer now allows you to specify locations that are valid but do not exist in your current seed, for example, an MQ-specific location when that dungeon is Vanilla.

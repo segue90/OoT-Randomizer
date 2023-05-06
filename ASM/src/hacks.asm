@@ -3664,6 +3664,25 @@ courtyard_guards_kill:
 .orga 0xEFA318
     slti    $at, t7, 0x0001
 
+; Carpenter Escape
+; Timer before they escape succesfully
+; Replaces 0x00000064
+.orga 0xE10794
+    .word 0x00000001
+; Replaces 0x0000006E
+.orga 0xE107A4
+    .word 0x00000001
+; Replaces 0x00000064
+.orga 0xE107B4
+    .word 0x00000001
+; Replaces 0x00000078
+.orga 0xE107C4
+   .word 0x00000001
+; Cutscene
+; Replaces jal     func_800218EC
+.orga 0xE0FF64
+    nop
+
 ;===================================================================================================
 ; Prevent Gohma from being stunned when climbing
 ;===================================================================================================
@@ -3691,3 +3710,25 @@ courtyard_guards_kill:
 ;    lui     T9, hi(tunic_colors)
 ;    ori   T9, T9, lo(tunic_colors)
     li	T9, CFG_TUNIC_COLORS
+
+;===================================================================================================
+; Various speedups
+;===================================================================================================
+; Carpenter Escape
+; Timer before they escape succesfully
+; Replaces 0x00000064
+.orga 0xE10794
+    .word 0x00000001
+; Replaces 0x0000006E
+.orga 0xE107A4
+    .word 0x00000001
+; Replaces 0x00000064
+.orga 0xE107B4
+    .word 0x00000001
+; Replaces 0x00000078
+.orga 0xE107C4
+   .word 0x00000001
+; Cutscene
+; Replaces jal     func_800218EC
+.orga 0xE0FF64
+    nop
