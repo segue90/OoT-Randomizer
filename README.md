@@ -168,6 +168,9 @@ issue. You should always Hard Reset to avoid this issue entirely.
 * Heart Containers and Pieces of Heart will no longer be directly hinted by Way of the Hero or Path hints, which is consistent with Triforce Pieces and Gold Skulltula Tokens.
 * Junk items being sent to another world will now float up into the air to indicate this.
 
+#### New Speedups
+* Skulltulas will now pop out of their soil patches instantly (once the bugs enter the hole) instead of waiting 3 seconds.
+
 #### Plandomizer
 * Plandomizer now allows you to specify locations that are valid but do not exist in your current seed, for example, an MQ-specific location when that dungeon is Vanilla.
 * Error messages for conflicting settings have been improved.
