@@ -126,7 +126,7 @@ issue. You should always Hard Reset to avoid this issue entirely.
   * New Misc. Hint for unique merchants: Bean Salesman, Medigoron, Wasteland Bombchu Salesman, Granny's Potion Shop.
   * Owls are now included in the Warp Songs misc hint and will tell you where they go when enabled.
 * **Other**
-  * When picking up a small key after the first, the text box will now inform you how many you've found total.
+  * When picking up a small key, the text box will now inform you how many you've found total.
   * The longstanding vanilla bug where using Din's Fire on a white bubble crashes the game has been fixed.
   * There are new chest, pot, and crate textures for Pieces of Heart and Heart Containers.
 
