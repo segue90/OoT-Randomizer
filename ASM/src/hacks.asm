@@ -3589,3 +3589,13 @@ courtyard_guards_kill:
 .orga 0xABDD10
     jal     camera_init
     nop
+
+;===================================================================================================
+;Update tunic color code to point to new table
+;===================================================================================================
+.orga 0xAEFFD0
+;    lui     T9, 0x8040
+;    ori   T9, T9, 0xC6EC
+;    lui     T9, hi(tunic_colors)
+;    ori   T9, T9, lo(tunic_colors)
+    li	T9, CFG_TUNIC_COLORS
