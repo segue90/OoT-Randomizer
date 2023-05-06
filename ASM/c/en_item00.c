@@ -9,7 +9,7 @@ void EnItem00_OutgoingAction(EnItem00* this, z64_game_t* globalCtx) {
         z64_ActorKill(&this->actor);
         return;
     }
-    
+
     this->actor.pos_world = player->common.pos_world;
 
     this->actor.rot_2.y += 960;

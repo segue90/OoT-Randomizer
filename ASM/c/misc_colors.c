@@ -261,14 +261,14 @@ extern colorRGB8_t CFG_TUNIC_COLORS[3];
 
 void update_tunic_colors()
 {
-	//colorRGB8_t* ptr_tunic_colors = (colorRGB8_t*)(0x800F7AD8);
-	colorRGB8_t tunic_color = get_rainbow_color(frames, TUNIC_CYCLE_FRAMES);
-	if(CFG_RAINBOW_TUNIC_ENABLED & CFG_RAINBOW_TUNIC_KOKIRI)
+    //colorRGB8_t* ptr_tunic_colors = (colorRGB8_t*)(0x800F7AD8);
+    colorRGB8_t tunic_color = get_rainbow_color(frames, TUNIC_CYCLE_FRAMES);
+    if(CFG_RAINBOW_TUNIC_ENABLED & CFG_RAINBOW_TUNIC_KOKIRI)
         CFG_TUNIC_COLORS[0] = tunic_color; //Update kokiri tunic color
-	if(CFG_RAINBOW_TUNIC_ENABLED & CFG_RAINBOW_TUNIC_GORON)
-	    CFG_TUNIC_COLORS[1] = tunic_color; //Update goron tunic color
-	if(CFG_RAINBOW_TUNIC_ENABLED & CFG_RAINBOW_TUNIC_ZORA)
-	    CFG_TUNIC_COLORS[2] = tunic_color; //Update zora tunic color
+    if(CFG_RAINBOW_TUNIC_ENABLED & CFG_RAINBOW_TUNIC_GORON)
+        CFG_TUNIC_COLORS[1] = tunic_color; //Update goron tunic color
+    if(CFG_RAINBOW_TUNIC_ENABLED & CFG_RAINBOW_TUNIC_ZORA)
+        CFG_TUNIC_COLORS[2] = tunic_color; //Update zora tunic color
 }
 
 void update_misc_colors()

@@ -3546,7 +3546,7 @@ courtyard_guards_kill:
 ;    ori   T9, T9, 0xC6EC
 ;    lui     T9, hi(tunic_colors)
 ;    ori   T9, T9, lo(tunic_colors)
-    li	T9, CFG_TUNIC_COLORS
+    li  T9, CFG_TUNIC_COLORS
 
 ;===================================================================================================
 ; Various speedups
@@ -3676,4 +3676,4 @@ courtyard_guards_kill:
 ;    ori   T9, T9, 0xC6EC
 ;    lui     T9, hi(tunic_colors)
 ;    ori   T9, T9, lo(tunic_colors)
-    li	T9, CFG_TUNIC_COLORS
+    li  T9, CFG_TUNIC_COLORS

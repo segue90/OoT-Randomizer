@@ -91,8 +91,8 @@ def patch_tunic_icon(rom, tunic, color, rainbow=False):
 
 def patch_tunic_colors(rom, settings, log, symbols):
     # patch tunic colors
-    
-    # Need to check for the existence of the CFG_TUNIC_COLORS symbol. 
+
+    # Need to check for the existence of the CFG_TUNIC_COLORS symbol.
     # This was added with rainbow tunic but custom tunic colors should still support older patch versions.
     tunic_address = symbols.get('CFG_TUNIC_COLORS', 0x00B6DA38) # Use new tunic color ROM address. Fall back to vanilla tunic color ROM address.
     tunics = [
@@ -110,7 +110,7 @@ def patch_tunic_colors(rom, settings, log, symbols):
         # Handle Plando
         if log.src_dict.get('equipment_colors', {}).get(tunic, {}).get('color', '') and log.src_dict['equipment_colors'][tunic][':option'] != 'Rainbow':
             tunic_option = log.src_dict['equipment_colors'][tunic]['color']
-        
+
         # Handle random
         if tunic_option == 'Random Choice':
             tunic_option = random.choice(tunic_color_list)

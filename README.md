@@ -178,6 +178,7 @@ issue. You should always Hard Reset to avoid this issue entirely.
 * Plandomizer now allows you to specify locations that are valid but do not exist in your current seed, for example, an MQ-specific location when that dungeon is Vanilla.
 * Error messages for conflicting settings have been improved.
 * Gossip stone text colors are no longer specified in reverse order.
+* Music groups will now add to each other if you have multiple groups of the same name, instead of the last one simply overwriting the others.
 
 ### 7.1
 
