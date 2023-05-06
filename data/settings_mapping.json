@@ -487,7 +487,9 @@
           "row_span": [2,2,2],
           "settings": [
             "randomize_all_sfx",
-            "disable_battle_music"
+            "disable_battle_music",
+            "speedup_music_for_last_triforce_piece",
+            "slowdown_music_when_lowhp"
           ]
         },
         {
