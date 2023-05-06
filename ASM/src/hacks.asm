@@ -3683,6 +3683,11 @@ courtyard_guards_kill:
 .orga 0xE0FF64
     nop
 
+; Lake Hylia Shot the sun cutscene trigger
+; Replaces sb      t8, -0x461C($at)
+.orga 0xE9E268
+    nop
+
 ;===================================================================================================
 ; Prevent Gohma from being stunned when climbing
 ;===================================================================================================
@@ -3731,4 +3736,12 @@ courtyard_guards_kill:
 ; Cutscene
 ; Replaces jal     func_800218EC
 .orga 0xE0FF64
+    nop
+
+;===================================================================================================
+; Various speedups
+;===================================================================================================
+; Lake Hylia Shot the sun cutscene trigger
+; Replaces sb      t8, -0x461C($at)
+.orga 0xE9E268
     nop
