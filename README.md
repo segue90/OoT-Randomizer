@@ -172,6 +172,7 @@ issue. You should always Hard Reset to avoid this issue entirely.
 * Skulltulas will now pop out of their soil patches instantly (once the bugs enter the hole) instead of waiting 3 seconds.
 * The cutscene of the Gerudo's Fortress carpenters running out when you free them will be skipped.
 * The cutscene that plays when shooting the sun over Lake Hylia has been skipped.
+* The spinning room in the Forest Temple basement now moves faster, and does not lock Link in place while spinning.
 
 #### Plandomizer
 * Plandomizer now allows you to specify locations that are valid but do not exist in your current seed, for example, an MQ-specific location when that dungeon is Vanilla.

@@ -3519,65 +3519,6 @@ courtyard_guards_kill:
 .orga 0xD7C864
     lhu     t3, 0x0EDC(v0)
     andi    t4, t3, 0x0200
-;===================================================================================================
-; Various speedups
-;===================================================================================================
-; patch skulls spawn when the insect digs in and not 3sec after
-; Replaces: slti    $at, t7, 0x003C
-.orga 0xEFA318
-    slti    $at, t7, 0x0001
-
-;===================================================================================================
-; Various speedups
-;===================================================================================================
-; Scarecrow spawn cutscene
-; Replaces jal     func_8006BA10
-.orga 0xEF502C
-    nop
-
-; Water Temple Entrance Gate cutscene and timer
-; Replaces addiu   t6, $zero, 0x0064
-.orga 0xD5B53C
-    addiu   t6, $zero, 0x0000
-; Replaces jal     func_8006B6FC
-.orga 0xD5B940
-    nop
-; x3 Speed on gate opening
-; Replaces lui     a2, 0x3F19
-.orga 0xD5B5FC
-    lui     a2, 0x3FE6
-
-; Gerudo Gate opening
-; Replaces lui     a1, 0x3FCC
-;          lui     a2, 0x3CF5
-.orga 0xEB8ED8
-   lui     a1, 0x41A0
-   lui     a2, 0x41A0
-; Replaces jal     func_8006B6FC
-.orga 0xEB8E4C
-    nop
-; Replaces addiu   t7, $zero, 0x0028
-.orga 0xEB8E6C
-    addiu   t7, $zero, 0x0000
-
-; Forest Red/Blue poe painting hit cutscene removed
-; Replaces jal     func_8006B6FC
-.orga 0xCE1600
-    nop
-
-; Biggoron puts the eyedrops
-; Put eyedrops animation timer at 0 and skip the cutscene
-; Replaces sh      t2, 0x0582(s0)
-.orga 0xED665C
-    sh      $zero, 0x0582(s0)
-; Replaces jal     func_8006B6FC
-.orga 0xED6670
-    nop
-
-; Scrub leader hiding for 1 frame instead of 300 when you show Skull Mask
-; Replaces addiu   a1, $zero, 0x012C
-.orga 0xEC8D20
-    addiu   a1, $zero, 0x0001
 
 ;===================================================================================================
 ; Prevent Gohma from being stunned when climbing
@@ -3688,6 +3629,27 @@ courtyard_guards_kill:
 .orga 0xE9E268
     nop
 
+; Forest Basement pillars cutscenes removed
+; Replaces jal     func_8006B6FC
+.orga 0xCC5DE8
+    nop
+; Replaces jal     func_8006B6FC
+.orga 0xCC5DF4
+    nop
+; Replaces jal     func_8006B6FC
+.orga 0xCC5F70
+    nop
+; Replaces jal     func_8006B6FC
+.orga 0xCC604C
+    nop
+; Forest Basement pillars speed 3.0 by increments of 1.0 instead of 0.6 by increments of 0.02
+; Replaces lui     a1, 0x3F19
+.orga 0xCC5F14
+    lui     a1, 0x4040
+; Replaces lui     a2, 0x3CA3
+.orga 0xCC5F18
+    lui     a2, 0x3F80
+
 ;===================================================================================================
 ; Prevent Gohma from being stunned when climbing
 ;===================================================================================================
@@ -3715,33 +3677,3 @@ courtyard_guards_kill:
 ;    lui     T9, hi(tunic_colors)
 ;    ori   T9, T9, lo(tunic_colors)
     li	T9, CFG_TUNIC_COLORS
-
-;===================================================================================================
-; Various speedups
-;===================================================================================================
-; Carpenter Escape
-; Timer before they escape succesfully
-; Replaces 0x00000064
-.orga 0xE10794
-    .word 0x00000001
-; Replaces 0x0000006E
-.orga 0xE107A4
-    .word 0x00000001
-; Replaces 0x00000064
-.orga 0xE107B4
-    .word 0x00000001
-; Replaces 0x00000078
-.orga 0xE107C4
-   .word 0x00000001
-; Cutscene
-; Replaces jal     func_800218EC
-.orga 0xE0FF64
-    nop
-
-;===================================================================================================
-; Various speedups
-;===================================================================================================
-; Lake Hylia Shot the sun cutscene trigger
-; Replaces sb      t8, -0x461C($at)
-.orga 0xE9E268
-    nop
