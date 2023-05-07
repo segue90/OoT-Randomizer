@@ -1069,6 +1069,8 @@ class WorldDistribution(object):
         skipped_locations = ['Links Pocket']
         if world.skip_child_zelda:
             skipped_locations += ['HC Zeldas Letter', 'Song from Impa']
+        if world.settings.gerudo_fortress == 'open' and not world.settings.shuffle_gerudo_card:
+            skipped_locations.append('Hideout Gerudo Membership Card')
         if world.settings.empty_dungeons_mode != 'none':
             skipped_locations_from_dungeons = []
             if True: #TODO dungeon rewards not shuffled

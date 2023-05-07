@@ -5,6 +5,7 @@
 #include "item_table.h"
 #include "stdbool.h"
 #include "util.h"
+#include "en_item00.h"
 #include "z64.h"
 
 extern uint8_t SHUFFLE_CHEST_GAME;
@@ -351,7 +352,13 @@ void after_item_received() {
 }
 
 inline uint32_t link_is_ready() {
-    if ((z64_link.state_flags_1 & 0xFCAC2485) == 0 &&
+    if ((z64_logo_state != 0x802C5880) &&
+        (z64_logo_state != 0) &&
+        (z64_file.game_mode == 0) &&
+        (z64_game.pause_ctxt.state == 0) &&
+        // don't receive items in shops to avoid a softlock when buying an item at the same time as receiving one
+        ((z64_game.scene_index < 0x002C || z64_game.scene_index > 0x0033) && z64_game.scene_index != 0x0042 && z64_game.scene_index != 0x004B) &&
+        (z64_link.state_flags_1 & 0xFCAC2485) == 0 &&
         (z64_link.common.unk_flags_00 & 0x0001) &&
         (z64_link.state_flags_2 & 0x000C0000) == 0 &&
         (z64_event_state_1 & 0x20) == 0 &&
@@ -392,6 +399,7 @@ void try_pending_item() {
 
     z64_link.incoming_item_actor = dummy_actor;
     z64_link.incoming_item_id = active_item_row->base_item_id;
+
 }
 
 void handle_pending_items() {
@@ -841,6 +849,21 @@ uint8_t item_give_collectible(uint8_t item, z64_link_t *link, z64_actor_t *from_
             uint16_t sfxId = GET_ITEM_SEQ_ID;
             if (item_row->collectible <= ITEM00_RUPEE_RED || item_row->collectible == ITEM00_RUPEE_PURPLE || item_row->collectible == ITEM00_RUPEE_ORANGE) {
                 sfxId = NA_SE_SY_GET_RUPY;
+            }
+
+            // If the item is for another player, use a custom action to make the item fly off the screen
+            if(player != PLAYER_ID)
+            {
+                pItem->timeToLive = 15; // same time to live as regular bounce effect.
+                pItem->unk_154 = 35;     // not quite sure but this is what the vanilla game does.
+                pItem->actor.rot_2.z = 0;
+                pItem->actor.xz_speed = 0;
+                pItem->actor.vel_1.y = 0;
+                pItem->actor.gravity = 0;
+                pItem->actionFunc = EnItem00_OutgoingAction; // Set our action function
+                sfxId = NA_SE_SY_FSEL_DECIDE_L; // Play a different sound effect for outgoing items. This is one from the file select screen.
+                z64_Audio_PlaySoundGeneral(sfxId, (void *)0x80104394, 4, (float *)0x801043A0, (float *)0x801043A0, (uint8_t *)0x801043A8);
+                return 1;  // Return to the end of the Update function
             }
             z64_Audio_PlaySoundGeneral(sfxId, (void *)0x80104394, 4, (float *)0x801043A0, (float *)0x801043A0, (uint8_t *)0x801043A8);
             return 3; // Return to the original function so it can draw the collectible above our head.

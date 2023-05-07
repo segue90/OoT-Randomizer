@@ -216,6 +216,7 @@ conditional_always = {
     'Kak 40 Gold Skulltula Reward': lambda world: tokens_required_by_settings(world) < 40 and '40_skulltulas' not in world.settings.misc_hints,
     'Kak 50 Gold Skulltula Reward': lambda world: tokens_required_by_settings(world) < 50 and '50_skulltulas' not in world.settings.misc_hints,
     'ZR Frogs Ocarina Game':        lambda world: 'frogs2' not in world.settings.misc_hints,
+    'LH Loach Fishing':             lambda world: world.settings.shuffle_loach_reward=='vanilla',
 }
 
 # Entrance hints required under certain settings
@@ -634,6 +635,7 @@ hintTable = {
     'ZD Diving Minigame':                                          ("an #unsustainable business model# gifts", "those who #dive for Zora rupees# will find", 'exclude'),
     'LH Child Fishing':                                            ("#fishing in youth# bestows", None, 'exclude'),
     'LH Adult Fishing':                                            ("#fishing in maturity# bestows", None, 'exclude'),
+    'LH Loach Fishing':                                            ("#catching the legendary fish# bestows", None, 'exclude'),
     'GC Rolling Goron as Adult':                                   ("#comforting yourself# provides", "#reassuring a young Goron# is rewarded with", 'exclude'),
     'Market Bombchu Bowling First Prize':                          ("the #first explosive prize# is", None, 'exclude'),
     'Market Bombchu Bowling Second Prize':                         ("the #second explosive prize# is", None, 'exclude'),
@@ -965,8 +967,8 @@ hintTable = {
     'Forest Temple Phantom Ganon Heart':                           ("the #Evil Spirit from Beyond# holds", "#Phantom Ganon# holds", 'exclude'),
     'Fire Temple Volvagia Heart':                                  ("the #Subterranean Lava Dragon# holds", "#Volvagia# holds", 'exclude'),
     'Water Temple Morpha Heart':                                   ("the #Giant Aquatic Amoeba# holds", "#Morpha# holds", 'exclude'),
-    'Spirit Temple Twinrova Heart':                                ("the #Sorceress Sisters# hold", "#Twinrova# holds", 'exclude'),
     'Shadow Temple Bongo Bongo Heart':                             ("the #Phantom Shadow Beast# holds", "#Bongo Bongo# holds", 'exclude'),
+    'Spirit Temple Twinrova Heart':                                ("the #Sorceress Sisters# hold", "#Twinrova# holds", 'exclude'),
 
     'Queen Gohma':                                                 ("the #Parasitic Armored Arachnid# holds", "#Queen Gohma# holds", 'exclude'),
     'King Dodongo':                                                ("the #Infernal Dinosaur# holds", "#King Dodongo# holds", 'exclude'),
@@ -974,8 +976,8 @@ hintTable = {
     'Phantom Ganon':                                               ("the #Evil Spirit from Beyond# holds", "#Phantom Ganon# holds", 'exclude'),
     'Volvagia':                                                    ("the #Subterranean Lava Dragon# holds", "#Volvagia# holds", 'exclude'),
     'Morpha':                                                      ("the #Giant Aquatic Amoeba# holds", "#Morpha# holds", 'exclude'),
-    'Bongo Bongo':                                                 ("the #Sorceress Sisters# hold", "#Twinrova# holds", 'exclude'),
-    'Twinrova':                                                    ("the #Phantom Shadow Beast# holds", "#Bongo Bongo# holds", 'exclude'),
+    'Bongo Bongo':                                                 ("the #Phantom Shadow Beast# holds", "#Bongo Bongo# holds", 'exclude'),
+    'Twinrova':                                                    ("the #Sorceress Sisters# hold", "#Twinrova# holds", 'exclude'),
     'Links Pocket':                                                ("#@'s pocket# holds", "@ already has", 'exclude'),
 
     'Deku Tree GS Basement Back Room':                             ("a #spider deep within the Deku Tree# hides", None, 'exclude'),
