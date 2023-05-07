@@ -2119,6 +2119,22 @@ def patch_rom(spoiler:Spoiler, world:World, rom:Rom):
             item_text = getHint(getItemGenericName(location.item), True).text
             update_message_by_id(messages, 0x500C, "How about \x05\x41100 Rupees\x05\x40 for\x01\x05\x41"+ item_text +"\x05\x40?\x01\x1B\x05\x42Buy\x01Don't buy\x05\x40\x02")
 
+    if world.settings.shuffle_tcgkeys != 'vanilla':
+        if world.settings.shuffle_tcgkeys == 'remove':
+            rom.write_byte(rom.sym('SHUFFLE_CHEST_GAME'), 0x02)
+        else:
+            rom.write_byte(rom.sym('SHUFFLE_CHEST_GAME'), 0x01)
+        # Update Chest Game Salesman to better fit the fact he sells a randomized item
+        if 'unique_merchants' not in world.settings.misc_hints:
+            update_message_by_id(messages, 0x6D, "I seem to have misplaced my\x01keys, but I have a fun item to\x01sell instead.\x04How about \x05\x4110 Rupees\x05\x40?\x01\x01\x1B\x05\x42Buy\x01Don't Buy\x05\x40\x02")
+        else:
+            location = world.get_location("Market Treasure Chest Game Salesman")
+            item_text = getHint(getItemGenericName(location.item), True).text
+            update_message_by_id(messages, 0x6D, "I seem to have misplaced my\x01keys, but I have a fun item to\x01sell instead.\x04How about \x05\x4110 Rupees\x05\x40 for\x01\x05\x41" + item_text + "\x05\x40?\x01\x1B\x05\x42Buy\x01Don't Buy\x05\x40\x02")
+        update_message_by_id(messages, 0x2D, "That's OK!\x01More fun for me.\x02")
+        update_message_by_id(messages, 0x6E, "Wait, that room was off limits!\x02")
+        update_message_by_id(messages, 0x704C, "I hope you like it!\x02")
+
     if world.settings.shuffle_pots != 'off': # Update the first BK door in ganon's castle to use a separate flag so it can be unlocked to get to the pots
         patch_ganons_tower_bk_door(rom, 0x15) # Using flag 0x15 for the door. GBK doors normally use 0x14.
     locked_doors = get_doors_to_unlock(rom, world)
@@ -2134,6 +2150,11 @@ def patch_rom(spoiler:Spoiler, world:World, rom:Rom):
     SKULL_CHEST_BIG =  15
     HEART_CHEST_SMALL = 16
     HEART_CHEST_BIG = 17
+    if world.settings.shuffle_tcgkeys == 'vanilla':
+        # Force key chests in Treasure Chest Game to use the default chest texture when not shuffled
+        item = read_rom_item(rom, 0x71)
+        item['chest_type'] = BROWN_CHEST
+        write_rom_item(rom, 0x71, item)
     if world.settings.free_bombchu_drops or world.settings.minor_items_as_major_chest:
         bombchu_ids = [0x6A, 0x03, 0x6B]
         for i in bombchu_ids:
@@ -2435,6 +2456,25 @@ def patch_rom(spoiler:Spoiler, world:World, rom:Rom):
         save_context.equip_default_items('child')
     save_context.equip_current_items(world.settings.starting_age)
     save_context.write_save_table(rom)
+
+    # Convert temporary flags used for locked doors in Treasure Chest Game to permanent flags namely (0x1A-0x1F)
+    if world.settings.shuffle_tcgkeys != 'vanilla':
+        rom.write_byte(0x33A607F, 0xDF)
+        rom.write_byte(0x33A608F, 0xDE)
+        rom.write_byte(0x33A609F, 0xDD)
+        rom.write_byte(0x33A60AF, 0xDC)
+        rom.write_byte(0x33A60BF, 0xDB)
+        rom.write_byte(0x33A60CF, 0xDA)
+
+        # Remove Locks From Treasure Chest Game doors if Keysy is turned on
+        if world.settings.shuffle_tcgkeys == 'remove':
+            rom.write_byte(0x33A607F, 0x80)
+            rom.write_byte(0x33A608F, 0x80)
+            rom.write_byte(0x33A609F, 0x80)
+            rom.write_byte(0x33A60AF, 0x80)
+            rom.write_byte(0x33A60BF, 0x80)
+            rom.write_byte(0x33A60CF, 0x80)
+
 
     # Write numeric seed truncated to 32 bits for rng seeding
     # Overwritten with new seed every time a new rng value is generated
@@ -2777,7 +2817,7 @@ def get_doors_to_unlock(rom, world):
         if world.settings.shuffle_smallkeys == 'remove':
             if actor_id == 0x0009 and door_type == 0x02:
                 return [0x00D4 + scene * 0x1C + 0x04 + flag_byte, flag_bits]
-            if actor_id == 0x002E and door_type == 0x0B:
+            if actor_id == 0x002E and door_type == 0x0B and scene != 0x10:
                 return [0x00D4 + scene * 0x1C + 0x04 + flag_byte, flag_bits]
 
         # Return Boss Doors that should be unlocked

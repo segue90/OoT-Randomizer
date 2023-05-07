@@ -305,7 +305,8 @@ KEYSANITY_MESSAGES = {
     0x901A: "\x13\x77\x08You found a \x05\x41Key Ring\x05\x40\x01for the \x05\x41Fire Temple\x05\x40!\x09\x01It includes the \x05\x41Boss Key\x05\x40!",
     0x901B: "\x13\x77\x08You found a \x05\x41Key Ring\x05\x40\x01for the \x05\x43Water Temple\x05\x40!\x09\x01It includes the \x05\x41Boss Key\x05\x40!",
     0x901C: "\x13\x77\x08You found a \x05\x41Key Ring\x05\x40\x01for the \x05\x46Spirit Temple\x05\x40!\x09\x01It includes the \x05\x41Boss Key\x05\x40!",
-    0x901D: "\x13\x77\x08You found a \x05\x41Key Ring\x05\x40\x01for the \x05\x45Shadow Temple\x05\x40!\x09\x01It includes the \x05\x41Boss Key\x05\x40!"
+    0x901D: "\x13\x77\x08You found a \x05\x41Key Ring\x05\x40\x01for the \x05\x45Shadow Temple\x05\x40!\x09\x01It includes the \x05\x41Boss Key\x05\x40!",
+    0x901E: "\x13\x77\x08You found a \x05\x41Small Key Ring\x05\x40\x01for the \x05\x44Treasure Box Shop\x05\x40!\x09",
 }
 i = 0x9101
 for dungeon_name, max_keys in (
@@ -318,6 +319,7 @@ for dungeon_name, max_keys in (
     ("the \x05\x46Gerudo Training\x01Ground\x05\x40", 9),
     ("the \x05\x46Thieves' Hideout\x05\x40", 4),
     ("\x05\x41Ganon's Castle\x05\x40", 3),
+    ("the \x05\x44Treasure Box Shop\x05\x40", 6),
 ):
     KEYSANITY_MESSAGES[i] = f"\x13\x77\x08You found a \x05\x41Small Key\x05\x40\x01for {dungeon_name}!\x01It's your \x05\x41first\x05\x40 one!\x09"
     i += 1

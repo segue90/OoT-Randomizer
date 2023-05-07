@@ -3006,6 +3006,45 @@ setting_infos = [
         },
     ),
     Combobox(
+        name           = 'shuffle_tcgkeys',
+        gui_text       = 'Treasure Chest Game Keys',
+        default        = 'vanilla',
+        choices        = {
+            'remove':      "Remove (Keysy)",
+            'vanilla':     "Vanilla Locations",
+            'regional':    "Regional",
+            'overworld':   "Overworld Only",
+            'any_dungeon': "Any Dungeon",
+            'keysanity':   "Anywhere (Keysanity)",
+        },
+        gui_tooltip    = '''\
+            'Remove': All Treasure Chest Game keys will be removed
+            and all doors will remained unlocked.
+
+            'Vanilla': Treasure Chest Game keys will have vanilla
+            behavior (one random per room). The minigame will
+            also have vanilla behavior.
+
+            'Regional': Treasure Chest Game keys can only appear
+            in Hyrule Field, Lon Lon Ranch, the Market, the Temple
+            of Time, Hyrule Castle, outside Ganon's Castle, or
+            inside Ganon's Castle.
+
+            'Overworld Only': Treasure Chest Game keys can only appear
+            outside of dungeons.
+
+            'Any Dungeon': Treasure Chest Game keys can only appear
+            inside of dungeons.
+
+            'Anywhere': Treasure Chest Game keys can appear anywhere
+            in the world.
+        ''',
+        shared         = True,
+        gui_params     = {
+            'randomize_key': 'randomize_settings',
+        },
+    ),
+    Combobox(
         name           = 'key_rings_choice',
         gui_text       = 'Key Rings Mode',
         default        = 'off',
@@ -3013,7 +3052,7 @@ setting_infos = [
             'off':       'Off',
             'choice':    'Choose dungeons',
             'all':       'All dungeons',
-            'random':    'Random dungeons'
+            'random':    'Random selection'
         },
         gui_tooltip     = '''\
             Selected dungeons will have all of their keys found
@@ -3030,6 +3069,11 @@ setting_infos = [
             no effect if Thieves' Hideout keys are in vanilla
             locations or Gerudo's Fortress is set to Rescue
             One Carpenter.
+
+            Similarly, selecting Treasure Chest Game will have
+            no effect if the keys aren't shuffled. Treasure Chest
+            Game will be considered when selecting 'All dungeons'
+            or 'Random selection'.
         ''',
         shared         = True,
         disable={
@@ -3044,6 +3088,7 @@ setting_infos = [
         gui_text        = 'Key Rings',
         choices         = {
             'Thieves Hideout':        "Thieves' Hideout",
+            'Treasure Chest Game':    "Treasure Chest Game",
             'Forest Temple':          "Forest Temple",
             'Fire Temple':            "Fire Temple",
             'Water Temple':           "Water Temple",
