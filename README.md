@@ -173,6 +173,7 @@ issue. You should always Hard Reset to avoid this issue entirely.
 * Heart Containers and Pieces of Heart will no longer be directly hinted by Way of the Hero or Path hints, which is consistent with Triforce Pieces and Gold Skulltula Tokens.
 * Junk items being sent to another world will now float up into the air to indicate this.
 * An unnecessary polygon check function is skipped to increase game performance.
+* In Triforce Hunt, your current and goal number of triforce pieces are now displayed on the file select screen.
 
 #### New Speedups
 * Various cutscenes removed or shortened, such as Water Temple and Gerudo Fortress gates and scarecrow spawn cutscenes.
