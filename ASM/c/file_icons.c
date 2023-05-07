@@ -36,6 +36,7 @@ static int get_top(tile_position pos) {
 
 static const colorRGBA8_t WHITE = {0xFF, 0xFF, 0xFF, 0xFF};
 static const colorRGBA8_t DIM   = {0x40, 0x40, 0x40, 0x90};
+static int hasTriforceGoalBeenReached = 0;
 
 // Approximate product of two colors. Result is within 1 of true product.
 static uint8_t color_product(uint8_t c1, uint8_t c2) {
@@ -383,6 +384,7 @@ static void populate_counts(const z64_file_t* file, counter_tile_info_t* counts)
     make_digits(counts->digits[SLOT_TRIFORCE_CURRENT], TRIFORCE_HUNT_ENABLED ? num_triforce_pieces : -1);
     int16_t total_triforce_pieces = TRIFORCE_PIECES_REQUIRED;
     make_digits(counts->digits[SLOT_TRIFORCE_TOTAL], TRIFORCE_HUNT_ENABLED ? total_triforce_pieces : -1);
+    hasTriforceGoalBeenReached = num_triforce_pieces >= total_triforce_pieces;
 
     // Hearts
     counts->double_defense = (uint8_t)file->double_defense;
@@ -550,16 +552,23 @@ static void draw_triforce_count_fileselect(z64_disp_buf_t* db, const uint8_t* di
 
     int top = get_top(dataCurrent->pos) + dataCurrent->counter_voffset;
 
+    // If the goal has been reached, color current number in yellow instead of white.
+    if (hasTriforceGoalBeenReached) {
+        gDPSetPrimColor(db->p++, 0, 0, 0xF4, 0xEC, 0x30, bright_alpha);
+    }
+
     for (int i = 0; i < 3; ++i) {
         if (digitsCurrent[i] <= 9) {
             sprite_draw(db, &item_digit_sprite, digitsCurrent[i], left + digit_left[i], top, 8, 8);
         }
     }
 
+    gDPSetPrimColor(db->p++, 0, 0, 0xFF, 0xFF, 0xFF, bright_alpha);
     text_print_size("/", get_left(dataCurrent->pos) + 4, top, 8);
     text_flush_size(db, 8, 8, 0, 0);
 
     sprite_load(db, &item_digit_sprite, 0, 10);
+    // Triforce goal number is always in yellow.
     gDPSetPrimColor(db->p++, 0, 0, 0xF4, 0xEC, 0x30, bright_alpha);
 
     for (int i = 0; i < 3; ++i) {
