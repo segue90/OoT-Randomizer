@@ -457,6 +457,7 @@ SRAM_SLOTS:
     bnez    v0, 0x80012C78 ; if v0 != 0 the player isn't in proximity, branch inside the original if where it calls Actor_HasParent before returning.
     lui     t6, 0x0001
     b       0x80012C64
+    nop
 
 ; Hack EnItem00 Action Function (func_8001E304 from decomp, 0x8001251C in 1.0) used by Item_DropCollectible to not increment the time to live if its < 0
 ; replaces
