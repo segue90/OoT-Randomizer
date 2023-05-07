@@ -2639,6 +2639,15 @@ courtyard_guards_kill:
     nop
 
 ;==================================================================================================
+; Getting caught by Gerudo NPCs after obtaining Gerudo Card
+;==================================================================================================
+; Use unused message ID 0x6013 as our replacement text with two choice options
+; Set custom callback to handle the new textbox choices
+.orga 0xE1216C  ; White-clothed Gerudo
+    jal     offer_jail_hook
+    nop
+
+;==================================================================================================
 ; Song of Storms Effect Trigger Changes
 ;==================================================================================================
 ; Allow a storm to be triggered with the song in any environment
