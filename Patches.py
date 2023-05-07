@@ -2398,6 +2398,36 @@ def patch_rom(spoiler:Spoiler, world:World, rom:Rom):
     # Fix crash when hitting white bubbles enemies with Dins Fire
     rom.write_byte(0xCB4397, 0x00)
 
+    # Behavior Modifications to make the loach easier to catch
+    if world.settings.shuffle_loach_reward == 'easy':
+        # Make the loach always spawn
+        # Rather than just nop the branch, replace it with instruction 'sb at, 0xB057(s0)'
+        # this stores a non-zero value to an unused byte in the fishing overlay
+        # that byte can then be used as a flag to tell whether the setting is enabled or not
+        rom.write_int32(0xDBF1E4, 0xA201B057)
+
+        # Make sinking lure available immediately
+        rom.write_int32(0xDC2F00, 0x00000000)
+        rom.write_int32(0xDC2F10, 0x00000000)
+        # Don't set sinking lure position after recieving child/adult fishing prizes
+        rom.write_int32(0xDCC064, 0x00000000)
+        rom.write_int32(0xDCC06C, 0x00000000)
+        rom.write_int32(0xDCC12C, 0x00000000)
+        rom.write_int32(0xDCC134, 0x00000000)
+
+        # Give the child/adult fishing prizes even if using the sinking lure
+        rom.write_int32(0xDCBEBC, 0x00000000)
+        rom.write_int32(0xDCBEC0, 0x00000000)
+        rom.write_int32(0xDCBF1C, 0x00000000)
+        rom.write_int32(0xDCBF20, 0x00000000)
+        # Display the normal text when getting the prize, instead of text saying the sinking lure is in violation of the rules
+        rom.write_byte(0xDCBBDB, 0x86)
+
+        # In case 1: of Fishing_UpdateFish, set unk_1A2 = 200 instead of 20000
+        rom.write_int32(0xDC652C, 0x240100c8) # replace 'mtc1 zero, f10' with 'addiu at, zero, 0x00c8'
+        rom.write_int32(0xDC6540, 0xa6010192) # replace 'sh v0, 0x0192(s0)' with 'sh at, 0x0192(s0)'
+        rom.write_int32(0xDC6550, 0xE60601AC) # replace 'swc1 f10, 0x01ac(s0)' with 'swc1 f6, 0x01ac(s0)'
+
     # actually write the save table to rom
     world.distribution.give_items(world, save_context)
     if world.settings.starting_age == 'adult':

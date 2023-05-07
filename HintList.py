@@ -216,6 +216,7 @@ conditional_always = {
     'Kak 40 Gold Skulltula Reward': lambda world: tokens_required_by_settings(world) < 40 and '40_skulltulas' not in world.settings.misc_hints,
     'Kak 50 Gold Skulltula Reward': lambda world: tokens_required_by_settings(world) < 50 and '50_skulltulas' not in world.settings.misc_hints,
     'ZR Frogs Ocarina Game':        lambda world: 'frogs2' not in world.settings.misc_hints,
+    'LH Loach Fishing':             lambda world: world.settings.shuffle_loach_reward=='vanilla',
 }
 
 # Entrance hints required under certain settings
@@ -628,6 +629,7 @@ hintTable = {
     'ZD Diving Minigame':                                          ("an #unsustainable business model# gifts", "those who #dive for Zora rupees# will find", 'exclude'),
     'LH Child Fishing':                                            ("#fishing in youth# bestows", None, 'exclude'),
     'LH Adult Fishing':                                            ("#fishing in maturity# bestows", None, 'exclude'),
+    'LH Loach Fishing':                                            ("#catching the legendary fish# bestows", None, 'exclude'),
     'GC Rolling Goron as Adult':                                   ("#comforting yourself# provides", "#reassuring a young Goron# is rewarded with", 'exclude'),
     'Market Bombchu Bowling First Prize':                          ("the #first explosive prize# is", None, 'exclude'),
     'Market Bombchu Bowling Second Prize':                         ("the #second explosive prize# is", None, 'exclude'),

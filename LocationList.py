@@ -644,6 +644,7 @@ location_table = OrderedDict([
     ("LH Underwater Item",                                           ("NPC",          0x57,  0x15, None,                            'Rutos Letter',                          ("Lake Hylia", "Freestandings",))),
     ("LH Child Fishing",                                             ("NPC",          0x49,  0x3E, None,                            'Piece of Heart',                        ("Lake Hylia", "Minigames",))),
     ("LH Adult Fishing",                                             ("NPC",          0x49,  0x38, None,                            'Progressive Scale',                     ("Lake Hylia", "Minigames",))),
+    ("LH Loach Fishing",                                             ("NPC",          0x49,  0x56, None,                            'Rupees (50)',                           ("Lake Hylia", "Minigames"))),
     ("LH Lab Dive",                                                  ("NPC",          0x38,  0x3E, None,                            'Piece of Heart',                        ("Lake Hylia", "NPCs",))),
     ("LH Trade Eyeball Frog",                                        ("NPC",          0x38,  0x25, None,                            'Eyedrops',                              ("Lake Hylia",))),
     ("LH Freestanding PoH",                                          ("Collectable",  0x57,  0x1E, None,                            'Piece of Heart',                        ("Lake Hylia", "Freestandings",))),

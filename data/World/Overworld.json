@@ -501,7 +501,8 @@
         "scene": "LH Fishing Hole",
         "locations": {
             "LH Child Fishing": "is_child",
-            "LH Adult Fishing": "is_adult"
+            "LH Adult Fishing": "is_adult",
+            "LH Loach Fishing": "True"
         },
         "exits": {
             "LH Fishing Island": "True"

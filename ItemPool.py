@@ -562,6 +562,10 @@ def get_pool_core(world):
         elif location.scene == 0x54 and location.vanilla_item == 'Rupees (50)':
             shuffle_item = world.settings.shuffle_frog_song_rupees
 
+        # Hyrule Loach Reward
+        elif location.scene == 0x49 and location.vanilla_item == 'Rupees (50)':
+            shuffle_item = world.settings.shuffle_loach_reward != 'off'
+
         # Adult Trade Quest Items
         elif location.vanilla_item in trade_items:
             if not world.settings.adult_trade_shuffle:
