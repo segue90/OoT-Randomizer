@@ -850,8 +850,8 @@ def patch_rom(spoiler:Spoiler, world:World, rom:Rom):
         rom.write_byte(address,0x01)
 
     # Allow Warp Songs in additional places
-    rom.write_byte(0xB6D3D2, 0x00) # Gerudo Training Ground
-    rom.write_byte(0xB6D42A, 0x00) # Inside Ganon's Castle
+    #rom.write_byte(0xB6D3D2, 0x00) # Gerudo Training Ground
+    #rom.write_byte(0xB6D42A, 0x00) # Inside Ganon's Castle
 
     #Tell Sheik at Ice Cavern we are always an Adult
     rom.write_int32(0xC7B9C0, 0x00000000)
@@ -859,8 +859,8 @@ def patch_rom(spoiler:Spoiler, world:World, rom:Rom):
     rom.write_int32(0xc7BCA4, 0x00000000)
 
     # Allow Farore's Wind in dungeons where it's normally forbidden
-    rom.write_byte(0xB6D3D3, 0x00) # Gerudo Training Ground
-    rom.write_byte(0xB6D42B, 0x00) # Inside Ganon's Castle
+    #rom.write_byte(0xB6D3D3, 0x00) # Gerudo Training Ground
+    #rom.write_byte(0xB6D42B, 0x00) # Inside Ganon's Castle
 
     # Allow Ocarina in some places
     rom.write_byte(0xB6D346, 0x11) # Granny's Potion Shop
