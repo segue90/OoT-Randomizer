@@ -465,7 +465,7 @@ void draw_gi_boss_keys(z64_game_t *game, uint32_t draw_id) {
 
     colorRGBA8_t prim_color_key = item_draw_table[draw_id].args[4].color;
     colorRGBA8_t env_color_key = item_draw_table[draw_id].args[5].color;
-        
+
     translate_sys_matrix(0, 15, 0, 1);
     scale_sys_matrix(1.25f, 1.25f, 1.25f, 1);
 
