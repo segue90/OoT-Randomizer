@@ -1071,24 +1071,26 @@ patch_sets[0x1F073FDA] = {
 # 7.1.96
 patch_sets[0x1F073FDB] = {
     "patches": patch_sets[0x1F073FDA]["patches"] + [
-        patch_tunic_colors
+        patch_tunic_colors,
     ],
     "symbols": {
         **patch_sets[0x1F073FDA]["symbols"],
         "CFG_RAINBOW_TUNIC_ENABLED": 0x005A,
-        "CFG_TUNIC_COLORS": 0x005B
+        "CFG_TUNIC_COLORS": 0x005B,
     }
 }
 
-# 7.1.108
+# 7.1.110
 patch_sets[0x1F073FDC] = {
-    "patches": patch_sets[0x1F073FDA]["patches"] + [
+    "patches": patch_sets[0x1F073FDB]["patches"] + [
         patch_music_changes,
     ],
     "symbols": {
-        **patch_sets[0x1F073FDA]["symbols"],
+        **patch_sets[0x1F073FDB]["symbols"],
         "CFG_SPEEDUP_MUSIC_FOR_LAST_TRIFORCE_PIECE": 0x0058,
         "CFG_SLOWDOWN_MUSIC_WHEN_LOWHP": 0x0059,
+        "CFG_RAINBOW_TUNIC_ENABLED": 0x005A,
+        "CFG_TUNIC_COLORS": 0x005B,
     }
 }
 
