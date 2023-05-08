@@ -849,22 +849,10 @@ def patch_rom(spoiler:Spoiler, world:World, rom:Rom):
     for address in Suns_scenes:
         rom.write_byte(address,0x01)
 
-    # Allow Warp Songs in additional places
-    #rom.write_byte(0xB6D3D2, 0x00) # Gerudo Training Ground
-    #rom.write_byte(0xB6D42A, 0x00) # Inside Ganon's Castle
-
     #Tell Sheik at Ice Cavern we are always an Adult
     rom.write_int32(0xC7B9C0, 0x00000000)
     rom.write_int32(0xC7BAEC, 0x00000000)
     rom.write_int32(0xc7BCA4, 0x00000000)
-
-    # Allow Farore's Wind in dungeons where it's normally forbidden
-    #rom.write_byte(0xB6D3D3, 0x00) # Gerudo Training Ground
-    #rom.write_byte(0xB6D42B, 0x00) # Inside Ganon's Castle
-
-    # Allow Ocarina in some places
-    #rom.write_byte(0xB6D346, 0x11) # Granny's Potion Shop
-    #rom.write_byte(0xB6D30A, 0x51) # Archery
 
     # Remove disruptive text from Gerudo Training Ground and early Shadow Temple (vanilla)
     Wonder_text = [0x27C00BC, 0x27C00CC, 0x27C00DC, 0x27C00EC, 0x27C00FC, 0x27C010C, 0x27C011C, 0x27C012C, 0x27CE080,
