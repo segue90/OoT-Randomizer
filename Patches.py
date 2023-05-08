@@ -863,8 +863,8 @@ def patch_rom(spoiler:Spoiler, world:World, rom:Rom):
     #rom.write_byte(0xB6D42B, 0x00) # Inside Ganon's Castle
 
     # Allow Ocarina in some places
-    rom.write_byte(0xB6D346, 0x11) # Granny's Potion Shop
-    rom.write_byte(0xB6D30A, 0x51) # Archery
+    #rom.write_byte(0xB6D346, 0x11) # Granny's Potion Shop
+    #rom.write_byte(0xB6D30A, 0x51) # Archery
 
     # Remove disruptive text from Gerudo Training Ground and early Shadow Temple (vanilla)
     Wonder_text = [0x27C00BC, 0x27C00CC, 0x27C00DC, 0x27C00EC, 0x27C00FC, 0x27C010C, 0x27C011C, 0x27C012C, 0x27CE080,
