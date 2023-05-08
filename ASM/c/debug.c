@@ -25,6 +25,12 @@ void draw_debug_float(int whichNumber, float numberToShow) {
 
 void draw_debug_numbers(z64_disp_buf_t *db) {
 
+    // Press L to levitate
+    // Shoutouts to glankk
+    if (z64_game.common.input[0].raw.pad.l) {
+        z64_link.common.vel_1.y = 6.34375f;
+    }
+
     gSPDisplayList(db->p++, &setup_db);
     gDPPipeSync(db->p++);
     gDPSetCombineMode(db->p++, G_CC_MODULATEIA_PRIM, G_CC_MODULATEIA_PRIM);

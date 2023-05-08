@@ -1,3 +1,6 @@
+#ifndef DEBUG_H
+#define DEBUG_H
+
 #include "z64.h"
 #include "gfx.h"
 #include "text.h"
@@ -20,3 +23,5 @@ void draw_l(z64_disp_buf_t *db);
 void draw_r(z64_disp_buf_t *db);
 void draw_x_stick(z64_disp_buf_t *db);
 void draw_y_stick(z64_disp_buf_t *db);
+
+#endif
