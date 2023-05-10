@@ -30,7 +30,8 @@ def add_hue(image: MutableSequence[int], color: Sequence[int], tiff: bool = Fals
             pass
     return image
 
-def add_rainbow(img, width, tiff=False):
+
+def add_rainbow(img: MutableSequence[int], width: int, tiff: bool = False) -> MutableSequence[int]:
     # Define the colors of the rainbow
     colors = [(255, 0, 0), (255, 165, 0), (255, 255, 0),
               (0, 128, 0), (0, 0, 255), (75, 0, 130),
@@ -49,6 +50,7 @@ def add_rainbow(img, width, tiff=False):
                 pass
     return img
 
+
 # Function for adding belt to tunic
 def add_belt(tunic: MutableSequence[int], belt: MutableSequence[int], tiff: bool = False) -> MutableSequence[int]:
     start = 154 if tiff else 0
@@ -62,6 +64,7 @@ def add_belt(tunic: MutableSequence[int], belt: MutableSequence[int], tiff: bool
             pass
     return tunic
 
+
 # Function for putting tunic colors together
 def generate_tunic_icon(color: Sequence[int]) -> MutableSequence[int]:
     with open(data_path('icons/grey.tiff'), 'rb') as grey_fil, open(data_path('icons/belt.tiff'), 'rb') as belt_fil:
@@ -69,7 +72,8 @@ def generate_tunic_icon(color: Sequence[int]) -> MutableSequence[int]:
         belt = list(belt_fil.read())
         return add_belt(add_hue(grey, color, True), belt, True)[154:]
 
-def generate_rainbow_tunic_icon():
+
+def generate_rainbow_tunic_icon() -> MutableSequence[int]:
     with open(data_path('icons/grey.tiff'), 'rb') as grey_fil, open(data_path('icons/belt.tiff'), 'rb') as belt_fil:
         grey = list(grey_fil.read())
         belt = list(belt_fil.read())

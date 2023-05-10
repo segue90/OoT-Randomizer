@@ -1089,6 +1089,7 @@ def make_player_message(text: str) -> str:
 
     return new_text
 
+
 # reduce item message sizes and add new item messages
 # make sure to call this AFTER move_shop_item_messages()
 def update_item_messages(messages: list[Message], world: World) -> None:
@@ -1103,8 +1104,9 @@ def update_item_messages(messages: list[Message], world: World) -> None:
     for id, (text, opt) in MISC_MESSAGES.items():
         update_message_by_id(messages, id, text, opt)
 
+
 # Check the message table to ensure no duplicate entries exist.
-def check_message_dupes(new_item_messages):
+def check_message_dupes(new_item_messages: list[tuple[int, str]]) -> None:
     for i in range(0, len(new_item_messages)):
         for j in range(1, len(new_item_messages)):
             if i != j:
@@ -1113,10 +1115,12 @@ def check_message_dupes(new_item_messages):
                 if message_id1 == message_id2:
                     raise Exception("Duplicate MessageID found: " + hex(message_id1) + ", " + message1 + ", " + message2)
 
+
 # run all keysanity related patching to add messages for dungeon specific items
 def add_item_messages(messages: list[Message], shop_items: Iterable[ShopItem], world: World) -> None:
     move_shop_item_messages(messages, shop_items)
     update_item_messages(messages, world)
+
 
 # reads each of the game's messages into a list of Message objects
 def read_messages(rom: Rom) -> list[Message]:

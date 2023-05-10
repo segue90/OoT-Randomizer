@@ -933,7 +933,8 @@ def patch_voices(rom: Rom, settings: Settings, log: CosmeticsLog, symbols: dict[
         # Write the setting to the log
         log.sfx[log_key] = voice_setting
 
-def patch_music_changes(rom, settings, log, symbols):
+
+def patch_music_changes(rom: Rom, settings: Settings, log: CosmeticsLog, symbols: dict[str, int]) -> None:
     # Music tempo changes
     if settings.speedup_music_for_last_triforce_piece:
         rom.write_byte(symbols['CFG_SPEEDUP_MUSIC_FOR_LAST_TRIFORCE_PIECE'], 0x01)

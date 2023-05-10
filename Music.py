@@ -437,8 +437,8 @@ def randomize_music(rom: Rom, settings: Settings, log: CosmeticsLog) -> None:
 
     # Handle groups.
     plando_groups = {n: s for n, s in log.src_dict.get('bgm_groups', {}).get('groups', {}).items()}
-    bgm_groups_full = chain_groups([{n: s} for n, s in itertools.chain(bgm_groups.items(), plando_groups.items())], sequences)
-    ff_groups_full = chain_groups([{n: s} for n, s in itertools.chain(fanfare_groups.items(), plando_groups.items())], fanfare_sequences)
+    bgm_groups_full = chain_groups([(n, s) for n, s in itertools.chain(bgm_groups.items(), plando_groups.items())], sequences)
+    ff_groups_full = chain_groups([(n, s) for n, s in itertools.chain(fanfare_groups.items(), plando_groups.items())], fanfare_sequences)
     bgm_groups = {n: s.copy() for n, s in bgm_groups_full.items()}
     ff_groups = {n: s.copy() for n, s in ff_groups_full.items()}
     for target, mapping in music_mapping.copy().items():
@@ -556,12 +556,11 @@ def restore_music(rom: Rom) -> None:
         dma_entry.update(orig_start, orig_end, start)
 
 
-def chain_groups(group_list, sequences):
+def chain_groups(group_list: list[tuple[str, list[str] | str]], sequences: dict[str, Sequence]) -> dict[str, list[str]]:
     result = {}
-    for iterator in group_list:
-        for n, s in iterator.items():
-            if isinstance(s, list):
-                result.setdefault(n, []).extend(ns for ns in s if ns in sequences)
-            else:
-                result.setdefault(n, []).append(ns for ns in s if ns in sequences)
+    for group_name, sequence_names in group_list:
+        if isinstance(sequence_names, list):
+            result.setdefault(group_name, []).extend(ns for ns in sequence_names if ns in sequences)
+        elif sequence_names in sequences:
+            result.setdefault(group_name, []).append(sequence_names)
     return result
