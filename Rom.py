@@ -195,7 +195,7 @@ class Rom(BigStream):
 
             dma_data.append((this_start, this_end, this_size))
 
-        dma_data.sort(key=lambda v: v[0])
+        dma_data.sort()
 
         for i in range(0, len(dma_data) - 1):
             this_start, this_end, this_size = dma_data[i]
@@ -279,6 +279,10 @@ class DMAEntry:
         start, end = self.start, self.end
         return start, end, end - start
 
+    def file_bytes(self) -> bytearray:
+        start, end, size = self.as_tuple()
+        return self.rom.read_bytes(start, size)
+
     def update(self, start: int, end: int, from_file: Optional[int] = None):
         if from_file is None:
             if self.index in self.rom.changed_dma:
@@ -332,11 +336,39 @@ class DMAIterator:
                 return dma_entry
         raise Exception(f"`get_dmadata_record_by_key`: DMA Start '{key}' not found in the DMA Table.")
 
-    # gets the last used byte of rom defined in the DMA table
-    def free_space(self) -> int:
+    # Gets the last used byte of rom defined in the DMA table
+    def end_of_data(self) -> int:
         max_end = 0
         for dma_entry in self:
             max_end = max(max_end, dma_entry.end)
 
         max_end = ((max_end + 0x0F) >> 4) << 4
         return max_end
+
+    # Finds the smallest suitable place between current files. If size is None, find the largest span of free space.
+    def free_space(self, size: Optional[int] = None) -> int:
+        free_space = []  # List of tuples containing size of free space and start of free space.
+
+        # Get DMA entries in tuple form and then sort them.
+        files = sorted([dma_entry.as_tuple() for dma_entry in self])
+
+        # Find free space between files.
+        for i in range(len(files)):
+            end_current = ((files[i][1] + 0x0F) >> 4) << 4
+            start_next = ((files[i+1][0] + 0x0F) >> 4) << 4 if i+1 < len(files) else len(self.rom.buffer)
+            if end_current < start_next:
+                free_space.append((start_next - end_current, end_current))
+
+        free_space.sort()
+        if not free_space:
+            raise Exception("No free space in ROM. This should never happen.")
+
+        if size is None:
+            # Return the largest free space.
+            return free_space[-1][1]
+        else:
+            # Return the smallest area of free space that fits size.
+            try:
+                return next(filter(lambda f: f[0] >= size, free_space))[1]
+            except StopIteration:
+                raise Exception(f"Not enough free space in ROM to fit a file of size {size}. Largest region of free space available: {free_space[-1][0]}.")

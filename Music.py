@@ -331,7 +331,7 @@ def rebuild_sequences(rom: Rom, sequences: list[Sequence]) -> None:
         rom.buffer[audioseq_start:audioseq_end] = [0] * audioseq_size
 
         # Find free space and update dmatable
-        new_address = rom.dma.free_space()
+        new_address = rom.dma.free_space(address)
         dma_entry.update(new_address, new_address + address)
 
     # Write new audio sequence file
