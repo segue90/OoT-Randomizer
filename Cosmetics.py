@@ -948,6 +948,12 @@ def patch_music_changes(rom, settings, log, symbols):
         rom.write_byte(symbols['CFG_SLOWDOWN_MUSIC_WHEN_LOWHP'], 0x00)
     log.slowdown_music_when_lowhp = settings.slowdown_music_when_lowhp
 
+def patch_correct_model_colors(rom, settings, log, symbols):
+    if settings.correct_model_colors:
+        rom.write_byte(symbols['CFG_CORRECT_MODEL_COLORS'], 0x01)
+    else:
+        rom.write_byte(symbols['CFG_CORRECT_MODEL_COLORS'], 0x00)
+    log.correct_model_colors = settings.correct_model_colors
 
 legacy_cosmetic_data_headers: list[int] = [
     0x03481000,

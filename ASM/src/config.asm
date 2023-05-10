@@ -67,7 +67,17 @@ CFG_RAINBOW_NAVI_PROP_OUTER_ENABLED:
 CFG_DPAD_DUNGEON_INFO_ENABLE:
 .byte 0x01
 GET_ITEM_SEQ_ID:
-.word 0x00
+.halfword 0x0000
+CFG_SPEEDUP_MUSIC_FOR_LAST_TRIFORCE_PIECE:
+.byte 0x00
+CFG_SLOWDOWN_MUSIC_WHEN_LOWHP:
+.byte 0x00
+CFG_RAINBOW_TUNIC_ENABLED:
+.byte 0x00
+CFG_TUNIC_COLORS:
+.byte 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+CFG_CORRECT_MODEL_COLORS:
+.byte 0x00
 
 CFG_AUDIOBANK_TABLE_EXTENDED_ADDR:
 .word AUDIOBANK_TABLE_EXTENDED
@@ -119,7 +129,7 @@ INITIAL_SAVE_DATA:
 EXTENDED_INITIAL_SAVE_DATA:
 .endarea
 
-.area 0x40, 0 ; size must be at least 8 * ((max object_id parameter Patches.add_to_extended_object_table is called with) - 0x192)
+.area 0xA0, 0 ; size must be at least 8 * ((max object_id parameter Patches.add_to_extended_object_table is called with) - 0x192)
 EXTENDED_OBJECT_TABLE:
 .endarea
 
@@ -171,7 +181,11 @@ PLANDOMIZER_USED:
 .byte 0x00
 POTCRATE_TEXTURES_MATCH_CONTENTS:
 .byte 0x00
-CORRECT_MODEL_COLORS:
+KEYRING_BOSSKEY_CONDITION:
+.byte 0x00
+SHUFFLE_SILVER_RUPEES:
+.byte 0x00
+CFG_DUNGEON_INFO_SILVER_RUPEES:
 .byte 0x00
 .align 4
 
