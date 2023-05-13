@@ -954,7 +954,7 @@
             "Wasteland Chest": "has_fire_source",
             "Wasteland Bombchu Salesman": "
                 Progressive_Wallet and can_jumpslash and
-                (shuffle_expensive_merchants or has_bombchus)",
+                (shuffle_expensive_merchants or not free_bombchu_drops or has_bombchus)",
             "Wasteland Near GS Pot 1": "True",
             "Wasteland Near GS Pot 2": "True",
             "Wasteland Near GS Pot 3": "True",
