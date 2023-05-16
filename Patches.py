@@ -14,7 +14,7 @@ from HintList import getHint
 from Hints import GossipText, HintArea, writeGossipStoneHints, buildAltarHints, \
         buildGanonText, buildMiscItemHints, buildMiscLocationHints, getSimpleHintNoPrefix, getItemGenericName
 from Utils import data_path
-from Messages import read_messages, update_message_by_id, read_shop_items, update_warp_song_text, \
+from Messages import read_messages, update_message_by_id, check_message_duplicates, read_shop_items, update_warp_song_text, \
         write_shop_items, remove_unused_messages, make_player_message, \
         add_item_messages, repack_messages, shuffle_messages, \
         get_message_by_id, Text_Code
@@ -2265,6 +2265,9 @@ def patch_rom(spoiler:Spoiler, world:World, rom:Rom):
     }
     symbol = rom.sym('POTCRATE_TEXTURES_MATCH_CONTENTS')
     rom.write_byte(symbol, ptmc_options[world.settings.correct_potcrate_appearances])
+
+    # Check for duplicated message IDs
+    check_message_duplicates()
 
     # give dungeon items the correct messages
     add_item_messages(messages, shop_items, world)
