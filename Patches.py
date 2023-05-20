@@ -14,10 +14,10 @@ from HintList import getHint
 from Hints import GossipText, HintArea, writeGossipStoneHints, buildAltarHints, \
         buildGanonText, buildMiscItemHints, buildMiscLocationHints, getSimpleHintNoPrefix, getItemGenericName
 from Utils import data_path
-from Messages import read_messages, update_message_by_id, check_message_duplicates, read_shop_items, update_warp_song_text, \
+from Messages import read_messages, update_message_by_id, read_shop_items, update_warp_song_text, \
         write_shop_items, remove_unused_messages, make_player_message, \
         add_item_messages, repack_messages, shuffle_messages, \
-        get_message_by_id, Text_Code
+        get_message_by_id, Text_Code, new_messages
 from OcarinaSongs import replace_songs
 from MQ import patch_files, File, update_dmadata, insert_space, add_relocations
 from SaveContext import SaveContext, Scenes, FlagType
@@ -1644,6 +1644,7 @@ def patch_rom(spoiler:Spoiler, world:World, rom:Rom):
 
     # Load Message and Shop Data
     messages = read_messages(rom)
+    new_messages.clear()
     remove_unused_messages(messages)
     shop_items = read_shop_items(rom, shop_item_file.start + 0x1DEC)
 
@@ -2162,7 +2163,7 @@ def patch_rom(spoiler:Spoiler, world:World, rom:Rom):
             location = world.get_location("Market Treasure Chest Game Salesman")
             item_text = getHint(getItemGenericName(location.item), True).text
             update_message_by_id(messages, 0x6D, "I seem to have misplaced my\x01keys, but I have a fun item to\x01sell instead.\x04How about \x05\x4110 Rupees\x05\x40 for\x01\x05\x41" + item_text + "\x05\x40?\x01\x1B\x05\x42Buy\x01Don't Buy\x05\x40\x02")
-        update_message_by_id(messages, 0x908B, "That's OK!\x01More fun for me.\x0B\x02", 0x00)
+        update_message_by_id(messages, 0x908B, "That's OK!\x01More fun for me.\x0B\x02", 0x00, True)
         update_message_by_id(messages, 0x6E, "Wait, that room was off limits!\x02")
         update_message_by_id(messages, 0x704C, "I hope you like it!\x02")
 
@@ -2265,9 +2266,6 @@ def patch_rom(spoiler:Spoiler, world:World, rom:Rom):
     }
     symbol = rom.sym('POTCRATE_TEXTURES_MATCH_CONTENTS')
     rom.write_byte(symbol, ptmc_options[world.settings.correct_potcrate_appearances])
-
-    # Check for duplicated message IDs
-    check_message_duplicates()
 
     # give dungeon items the correct messages
     add_item_messages(messages, shop_items, world)

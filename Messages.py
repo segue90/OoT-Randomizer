@@ -118,6 +118,8 @@ TEMPLE_HINTS_MESSAGES = [0x7057, 0x707A] # dungeon reward hints from the temple 
 GS_TOKEN_MESSAGES = [0x00B4, 0x00B5] # Get Gold Skulltula Token messages
 ERROR_MESSAGE = 0x0001
 
+new_messages = [] # Used to keep track of new/updated messages to prevent duplicates. Clear it at the start of patches
+
 # messages for shorter item messages
 # ids are in the space freed up by move_shop_item_messages()
 ITEM_MESSAGES = [
@@ -264,7 +266,7 @@ ITEM_MESSAGES = [
     (0x9002, "\x08You are a \x05\x43FOOL\x05\x40!"),
     (0x9003, "\x08You found a piece of the \x05\x41Triforce\x05\x40!"),
     (0x9019, "\x08\x13\x09You found a \x05\x41Bombchu Bag\x05\x40!\x01It has some \x05\x41Bombchus\x05\x40 inside!\x01Find more in tall grass."),
-    (0x901A, "\x08You can't buy Bombchus without a\x01\x05\x41Bombchu Bag\x05\x40!")
+    (0x901A, "\x08You can't buy Bombchus without a\x01\x05\x41Bombchu Bag\x05\x40!"),
 ]
 
 KEYSANITY_MESSAGES = [
@@ -444,7 +446,6 @@ i = 0x9101
 #       0x9101 - Small key messages for the first one collected
 #       0x9112 - Small key messages containing the count
 #       0x9123 - Small key messages for collecting more than enough
-#       0x91
 
 for dungeon_name in dungeon_names:
     if dungeon_name is not None:
@@ -861,7 +862,14 @@ class Message:
 
 # wrapper for updating the text of a message, given its message id
 # if the id does not exist in the list, then it will add it
-def update_message_by_id(messages, id, text, opts=None):
+# Checks if the message being updated is a newly added message in order to prevent duplicates.
+# Use allow_duplicates=True if the same message is purposely updated multiple times
+def update_message_by_id(messages, id, text, opts=None, allow_duplicates=False):
+    # Check is we have previously added/modified this message.
+    if id in new_messages and not allow_duplicates:
+        raise Exception("Attempting to add duplicate message " + hex(id))
+
+    new_messages.append(id)
     # get the message index
     index = next( (m.index for m in messages if m.id == id), -1)
     # update if it was found
@@ -1008,6 +1016,9 @@ def move_shop_item_messages(messages, shop_items):
             raise(TypeError("duplicate id in move_shop_item_messages"))
 
         for message in relevant_messages:
+            if message.id in new_messages: # Check if this was a message we've modified and update its ID in that table.
+                index = new_messages.index(message.id)
+                new_messages[index] |= 0x8000
             message.id |= 0x8000
     # update them in the shop item list
     for shop in shop_items:
@@ -1074,20 +1085,6 @@ def update_item_messages(messages, world):
 
     for id, (text, opt) in MISC_MESSAGES:
         update_message_by_id(messages, id, text, opt)
-
-# Check the message table to ensure no duplicate entries exist.
-def _check_message_duplicates(new_item_messages):
-    for i in range(0, len(new_item_messages)):
-        for j in range(i, len(new_item_messages)):
-            if i != j:
-                message_id1, message1 = new_item_messages[i]
-                message_id2, message2 = new_item_messages[j]
-                if message_id1 == message_id2:
-                    raise Exception("Duplicate MessageID found: " + hex(message_id1) + ", " + message1 + ", " + message2)
-
-def check_message_duplicates():
-    messages = ITEM_MESSAGES + KEYSANITY_MESSAGES + MISC_MESSAGES
-    _check_message_duplicates(messages)
 
 # run all keysanity related patching to add messages for dungeon specific items
 def add_item_messages(messages, shop_items, world):

@@ -12,6 +12,7 @@ import argparse
 import Unittest as Tests
 from SettingsList import logic_tricks, validate_settings
 from Utils import data_path
+from Messages import ITEM_MESSAGES, KEYSANITY_MESSAGES, MISC_MESSAGES
 
 
 def error(msg, can_fix):
@@ -79,6 +80,22 @@ def check_hell_mode_tricks(fix_errors=False):
             print(file=file)
 
 
+# Check the message tables to ensure no duplicate entries exist.
+# This is not a perfect check because it doesn't account for everything that gets manually done in Patches.py
+# For that, we perform additional checking at patch time
+def check_message_duplicates():
+    def check_for_duplicates(new_item_messages):
+        for i in range(0, len(new_item_messages)):
+            for j in range(i, len(new_item_messages)):
+                if i != j:
+                    message_id1, message1 = new_item_messages[i]
+                    message_id2, message2 = new_item_messages[j]
+                    if message_id1 == message_id2:
+                        error("Duplicate MessageID found: " + hex(message_id1) + ", " + message1 + ", " + message2, False)
+
+    messages = ITEM_MESSAGES + KEYSANITY_MESSAGES + MISC_MESSAGES
+    check_for_duplicates(messages)
+
 def check_code_style(fix_errors=False):
     # Check for code style errors
     repo_dir = pathlib.Path(os.path.dirname(os.path.realpath(__file__)))
@@ -143,6 +160,7 @@ def run_ci_checks():
         check_hell_mode_tricks(args.fix)
         check_code_style(args.fix)
         check_presets_formatting(args.fix)
+        check_message_duplicates()
 
     exit_ci(args.fix)
 
