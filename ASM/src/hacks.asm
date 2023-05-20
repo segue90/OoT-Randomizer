@@ -248,7 +248,7 @@ Gameplay_InitSkybox:
 ; In EnAm_Statue, subtract 0x1000 from this->unk_258 instead of 0x800
 ; This value is used as the timer for how long to push for
 ; This halves the number of frames that the push will occur over.
-;replaces 
+;replaces
 ;addiu t0, a2, 0xF800
 .orga 0xC97C68
     addiu t0, a2, 0xF000
@@ -270,7 +270,7 @@ Gameplay_InitSkybox:
     ;mtc1 at, f10
     jal     en_am_calculation_2
     nop
-    
+
 ;==================================================================================================
 ; Item Overrides
 ;==================================================================================================
