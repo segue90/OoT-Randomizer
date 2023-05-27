@@ -4,7 +4,9 @@
         "dungeon": "Ice Cavern",
         "locations":{
             "Ice Cavern Frozen Blue Rupee": "
-                Blue_Fire or logic_ice_frozen_rupee or (logic_boomerang_boulders and Boomerang)"
+            "Ice Cavern Frozen Blue Rupee": "
+                Blue_Fire or logic_ice_frozen_rupee or
+                (logic_boomerang_boulders and can_use(Boomerang))"
         },
         "exits": {
             "ZF Ice Ledge": "True",
