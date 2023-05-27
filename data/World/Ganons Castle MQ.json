@@ -7,7 +7,8 @@
             "Ganons Castle Main": "
                 here(is_adult or
                     (Kokiri_Sword and (Sticks or has_explosives or Nuts or Boomerang)) or
-                    (has_explosives and (Sticks or ((Nuts or Boomerang) and Slingshot))))"
+                    (has_explosives and (Sticks or ((Nuts or Boomerang) and Slingshot))))",
+            "Farores Wind Warp": "can_use(Farores_Wind)"
         }
     },
     {
@@ -19,7 +20,7 @@
             "Ganons Castle Shadow Trial": "is_adult",
             "Ganons Castle Fire Trial": "logic_fewer_tunic_requirements or can_use(Goron_Tunic)",
             "Ganons Castle Light Trial": "can_use(Golden_Gauntlets)",
-            "Ganons Castle Spirit Trial": "can_use(Megaton_Hammer) and (Bow or logic_rusted_switches)",
+            "Ganons Castle Spirit Trial": "can_use(Megaton_Hammer) and (Bow or logic_hammer_through_walls)",
             "Ganons Castle Deku Scrubs": "logic_lens_castle_mq or can_use(Lens_of_Truth)",
             "Ganons Castle Tower": "
                 (skipped_trials[Forest] or 'Forest Trial Clear') and
@@ -58,7 +59,8 @@
         "dungeon": "Ganons Castle",
         "locations": {
             "Ganons Castle MQ Water Trial Chest": "Blue_Fire",
-            "Ganons Castle MQ Water Trial Recovery Heart": "Blue_Fire",
+            "Ganons Castle MQ Water Trial Recovery Heart": "
+                Blue_Fire or (logic_boomerang_boulders and can_use(Boomerang))",
             "Blue Fire": "has_bottle"
         },
         "exits": {
@@ -101,7 +103,7 @@
         },
         "exits": {
             "Ganons Castle Shadow Trial Moving Platform": "
-                (logic_lens_castle_mq or can_use(Lens_of_Truth)) and
+                (logic_lens_shadow_trial_mq or can_use(Lens_of_Truth)) and
                 (Hover_Boots or (Bow and Hookshot))"
         }
     },
