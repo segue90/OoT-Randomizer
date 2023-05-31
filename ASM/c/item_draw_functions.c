@@ -433,6 +433,7 @@ void draw_gi_shrink_keys(z64_game_t *game, uint32_t draw_id) {
 
 void draw_gi_boss_keys(z64_game_t *game, uint32_t draw_id) {
     z64_gfx_t *gfx = game->common.gfx;
+
     colorRGBA8_t prim_color = item_draw_table[draw_id].args[2].color;
     colorRGBA8_t env_color = item_draw_table[draw_id].args[3].color;
 

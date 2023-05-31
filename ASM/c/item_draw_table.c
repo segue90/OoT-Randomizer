@@ -22,7 +22,7 @@ item_draw_table_entry_t item_draw_table[] = {
     [0x06] = { draw_gi_song_notes,          { 0x06000AE0, 0xC832FFFF, 0 } }, // Music Note (Purple)
     [0x07] = { draw_gi_song_notes,          { 0x06000AE0, 0xC8FF00FF, 0 } }, // Music Note (Yellow)
     [0x08] = { draw_gi_recovery_heart,      { 0x060000E0 } }, // Recovery Heart
-    [0x09] = { draw_gi_boss_keys,           { 0x06000CA0, 0x06000F08, 0x6E7467FF, 0x262724FF, 0xFFFFFFFF, 0x8C7800FF } }, // Boss Key
+    [0x09] = { draw_gi_boss_keys,           { 0x06000CA0, 0x06000F08, 0xFFAAFFFF, 0xFF0064FF, 0xFFFFFFFF, 0x8C7800FF, 0x6E7467FF, 0x262724FF } }, // Boss Key
     [0x0A] = { draw_gi_compass,             { 0x06000960, 0x06000C50 } }, // Compass
     [0x0B] = { draw_gi_eggs_and_medallions, { 0x06000CB0, 0x06000E18 } }, // Forest Medallion
     [0x0C] = { draw_gi_eggs_and_medallions, { 0x06001AF0, 0x06000E18 } }, // Fire Medallion
@@ -156,6 +156,7 @@ item_draw_table_entry_t item_draw_table[] = {
     [0x8A] = { draw_gi_boss_altered,        { 0x060008F0, 0x06001790, 0x4C9DEEFF, 0x077AEEFF, 0xFFFFFFFF, 0x8C7800FF } }, // Boss Key (Water)
     [0x8B] = { draw_gi_boss_altflip,        { 0x06000E30, 0x060016D0, 0xFACD8FFF, 0xF5B433FF, 0xFFFFFFFF, 0x8C7800FF } }, // Boss Key (Spirit)
     [0x8C] = { draw_gi_boss_altered,        { 0x06000490, 0x06001350, 0x9454ebFF, 0x7A18DDFF, 0xFFFFFFFF, 0x8C7800FF } }, // Boss Key (Shadow)
+    [0x8D] = { draw_gi_boss_keys,           { 0x06000CA0, 0x06000F08, 0x6E7467FF, 0x262724FF, 0xFFFFFFFF, 0x8C7800FF } }, // Boss Key (Ganon)
     };
 
 void base_draw_gi_model(z64_game_t *game, uint32_t draw_id) {
