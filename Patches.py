@@ -54,22 +54,27 @@ def patch_rom(spoiler:Spoiler, world:World, rom:Rom):
         ('object_gi_keyring',     data_path('items/KeyRing.zobj'),      0x195),  # Key Rings
         ('object_gi_warpsong',    data_path('items/Note.zobj'),         0x196),  # Inverted Music Note
         ('object_gi_chubag',      data_path('items/ChuBag.zobj'),       0x197),  # Bombchu Bag
-        ('object_gi_skeyforest',  data_path('items/SmallForest.zobj'),  0x198),  # Small Key (Forest)
-        ('object_gi_skeyfire',    data_path('items/SmallFire.zobj'),    0x199),  # Small Key (Fire)
-        ('object_gi_skeywater',   data_path('items/SmallWater.zobj'),   0x19A),  # Small Key (Water)
-        ('object_gi_skeyspirit',  data_path('items/SmallSpirit.zobj'),  0x19B),  # Small Key (Spirit)
-        ('object_gi_skeyshadow',  data_path('items/SmallShadow.zobj'),  0x19C),  # Small Key (Shadow)
-        ('object_gi_skeywell',    data_path('items/SmallWell.zobj'),    0x19D),  # Small Key (Well)
-        ('object_gi_skeygtg',     data_path('items/SmallGTG.zobj'),     0x19E),  # Small Key (GTG)
-        ('object_gi_skeythieves', data_path('items/SmallThieves.zobj'), 0x19F),  # Small Key (Thieves)
-        ('object_gi_skeyganon',   data_path('items/SmallGanon.zobj'),   0x1A0),  # Small Key (Ganon)
-        ('object_gi_skeyTCG',     data_path('items/SmallTCG.zobj'),     0x1A1),  # Small Key (Chest Game)
-        ('object_gi_bkforest',    data_path('items/BossForest.zobj'),   0x1A2),  # Boss Key (Forest)
-        ('object_gi_bkfire',      data_path('items/BossFire.zobj'),     0x1A3),  # Boss Key (Fire)
-        ('object_gi_bkwater',     data_path('items/BossWater.zobj'),    0x1A4),  # Boss Key (Water)
-        ('object_gi_bkspirit',    data_path('items/BossSpirit.zobj'),   0x1A5),  # Boss Key (Spirit)
-        ('object_gi_bkshadow',    data_path('items/BossShadow.zobj'),   0x1A6),  # Boss Key (Shadow)
     ]
+
+    if world.settings.key_appearance_match_dungeon:
+        rom.write_byte(rom.sym('CUSTOM_KEY_MODELS'), 0x01)
+        zobj_imports.extend([
+            ('object_gi_skeyforest',  data_path('items/SmallForest.zobj'),  0x198),  # Small Key (Forest)
+            ('object_gi_skeyfire',    data_path('items/SmallFire.zobj'),    0x199),  # Small Key (Fire)
+            ('object_gi_skeywater',   data_path('items/SmallWater.zobj'),   0x19A),  # Small Key (Water)
+            ('object_gi_skeyspirit',  data_path('items/SmallSpirit.zobj'),  0x19B),  # Small Key (Spirit)
+            ('object_gi_skeyshadow',  data_path('items/SmallShadow.zobj'),  0x19C),  # Small Key (Shadow)
+            ('object_gi_skeywell',    data_path('items/SmallWell.zobj'),    0x19D),  # Small Key (Well)
+            ('object_gi_skeygtg',     data_path('items/SmallGTG.zobj'),     0x19E),  # Small Key (GTG)
+            ('object_gi_skeythieves', data_path('items/SmallThieves.zobj'), 0x19F),  # Small Key (Thieves)
+            ('object_gi_skeyganon',   data_path('items/SmallGanon.zobj'),   0x1A0),  # Small Key (Ganon)
+            ('object_gi_skeyTCG',     data_path('items/SmallTCG.zobj'),     0x1A1),  # Small Key (Chest Game)
+            ('object_gi_bkforest',    data_path('items/BossForest.zobj'),   0x1A2),  # Boss Key (Forest)
+            ('object_gi_bkfire',      data_path('items/BossFire.zobj'),     0x1A3),  # Boss Key (Fire)
+            ('object_gi_bkwater',     data_path('items/BossWater.zobj'),    0x1A4),  # Boss Key (Water)
+            ('object_gi_bkspirit',    data_path('items/BossSpirit.zobj'),   0x1A5),  # Boss Key (Spirit)
+            ('object_gi_bkshadow',    data_path('items/BossShadow.zobj'),   0x1A6),  # Boss Key (Shadow)
+        ])
 
     extended_objects_start = start_address = rom.free_space()
     for (name, zobj_path, object_id) in zobj_imports:
