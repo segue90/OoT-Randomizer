@@ -85,6 +85,9 @@ def patch_rom(spoiler: Spoiler, world: World, rom: Rom) -> Rom:
         ('object_gi_bkshadow',    data_path('items/BossShadow.zobj'),   0x1A7),  # Boss Key (Shadow)
     ]
 
+    if world.settings.key_appearance_match_dungeon:
+        rom.write_byte(rom.sym('CUSTOM_KEY_MODELS'), 0x01)
+
     extended_objects_start = start_address = rom.dma.free_space()
     for (name, zobj_path, object_id) in zobj_imports:
         with open(zobj_path, 'rb') as stream:

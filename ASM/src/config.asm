@@ -127,7 +127,7 @@ INITIAL_SAVE_DATA:
 EXTENDED_INITIAL_SAVE_DATA:
 .endarea
 
-.area 0xA0, 0 ; size must be at least 8 * ((max object_id parameter Patches.add_to_extended_object_table is called with) - 0x192)
+.area 0xA8, 0 ; size must be at least 8 * ((max object_id parameter Patches.add_to_extended_object_table is called with) - 0x192)
 EXTENDED_OBJECT_TABLE:
 .endarea
 
@@ -184,6 +184,8 @@ KEYRING_BOSSKEY_CONDITION:
 SHUFFLE_SILVER_RUPEES:
 .byte 0x00
 CFG_DUNGEON_INFO_SILVER_RUPEES:
+.byte 0x00
+CUSTOM_KEY_MODELS:
 .byte 0x00
 .align 4
 

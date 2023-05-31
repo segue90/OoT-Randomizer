@@ -3,6 +3,8 @@
 
 #include "z64.h"
 
+extern uint8_t CUSTOM_KEY_MODELS;
+
 void draw_gi_bombchu_and_masks(z64_game_t *game, uint32_t draw_id);
 void draw_gi_eggs_and_medallions(z64_game_t *game, uint32_t draw_id);
 void draw_gi_sold_out(z64_game_t *game, uint32_t draw_id);
