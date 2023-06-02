@@ -1101,7 +1101,7 @@ patch_sets[0x1F073FDD] = {
     ],
     "symbols": {
         **patch_sets[0x1F073FDC]["symbols"],
-        "CFG_AUDIOBANK_TABLE_EXTENDED_ADDR": 0x005A
+        "CFG_AUDIOBANK_TABLE_EXTENDED_ADDR": 0x0064
     }
 }
 
