@@ -38,7 +38,7 @@ Wave Race 64
 
 There are also tools available to help convert midi files to valid seq64 files.
 
-The instrument list is as follows (from https://sites.google.com/site/deathbasketslair/zelda/ocarina-of-time/instrument-sets-and-sequences and https://github.com/sauraen/seq64):
+The instrument list is as follows (from https://github.com/sauraen/seq64):
 ```
 0x00 - Ocarina Songs?
 0x01 - Actor Sounds
