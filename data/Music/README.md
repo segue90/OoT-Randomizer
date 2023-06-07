@@ -7,11 +7,11 @@ Any sub-directories in this folder will also be read from. Only .ootrs files wit
 
 # .Meta file format
 A .meta file must contain a minimum of two lines.
-Line 1: Sequence Name
-Line 2: Instrument set to use in base 16. Set to `-` if using a custom instrument set
-Line 3: `bgm` or `fanfare` depending on the type of sequence (`bgm` = background music, `fanfare` = non-looping fanfare). If the file is less than 3 lines, `bgm` is assumed
-Line 4 (optional): One or more sequence groups, separated by commas
-Line 5+: Additional metadata. All additional data should use the format COMMAND:DATA:DATA
+  - Line 1: Sequence Name
+  - Line 2: Instrument set to use in base 16. Set to `-` if using a custom instrument set
+  - Line 3: `bgm` or `fanfare` depending on the type of sequence (`bgm` = background music, `fanfare` = non-looping fanfare). If the file is less than 3 lines, `bgm` is assumed
+  - Line 4 (optional): One or more sequence groups, separated by commas
+  - Line 5+: Additional metadata. All additional data should use the format COMMAND:DATA:DATA
     Currently support additional metadata types:
     ZSOUND:path_to_zsound_file:bank_address
 
