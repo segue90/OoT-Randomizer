@@ -31,7 +31,6 @@ data/Models/Adult/*.zobj
 data/Models/Adult/Pieces
 data/Models/Child/*.zobj
 data/Models/Child/Pieces
-data/Music/*
 
 tests/Output
 !tests/*.sav
