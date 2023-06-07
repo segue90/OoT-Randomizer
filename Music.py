@@ -183,13 +183,16 @@ def process_sequences(rom, ids, seq_type='bgm', disabled_source_sequences=None, 
         with open(os.path.join(data_path(), u'custom_music_exclusion.txt')) as excl_in:
             seq_exclusion_list = excl_in.readlines()
         seq_exclusion_list = [seq.rstrip() for seq in seq_exclusion_list if seq[0] != '#']
-        seq_exclusion_list = [seq for seq in seq_exclusion_list if seq.endswith('.meta')]
+        seq_exclusion_list = [seq for seq in seq_exclusion_list if seq.endswith('.ootrs')]
     except FileNotFoundError:
         seq_exclusion_list = []
 
     # Process music data in data/Music/
-    # Each sequence requires a valid .seq sequence file and a .meta metadata file
-    # Current .meta format: Cosmetic Name\nInstrument Set\nPool
+    # Each sequence requires a valid .ootrs zip file
+    # .ootrs files are just .zip files containing at minimum:
+    #   .seq sequence file
+    #   .meta metadata file
+    # And optionally .zbank, .bankmeta, and .zsound files
 
     for dirpath, _, filenames in os.walk(os.path.join(data_path(), 'Music'), followlinks=True):
         for fname in filenames:
