@@ -6,6 +6,7 @@
 ;    /* 0x02 */ u8 flags2;
 ;    /* 0x03 */ u8 flags3;
 ;} RestrictionFlags; // size = 0x4
+;More information can be found here https://wiki.cloudmodding.com/oot/Scenes#Restriction_Flags (https://web.archive.org/web/20230610180549/https://wiki.cloudmodding.com/oot/Scenes)
 
 .orga 0xB6D2B0
 .word 0x51000010 ;SCENE_HYRULE_FIELD
