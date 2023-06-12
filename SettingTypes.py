@@ -64,7 +64,10 @@ class SettingInfo:
         self.name = name
 
     def __get__(self, obj, obj_type=None) -> Any:
-        return obj.settings_dict.get(self.name, self.default)
+        value = obj.settings_dict.get(self.name, self.default)
+        if value is None:
+            return self.default
+        return value
 
     def __set__(self, obj, value: Any) -> None:
         obj.settings_dict[self.name] = value

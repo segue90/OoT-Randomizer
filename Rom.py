@@ -14,7 +14,6 @@ from ntype import BigStream
 from version import base_version, branch_identifier, supplementary_version
 
 DMADATA_START: int = 0x7430  # NTSC 1.0/1.1: 0x7430, NTSC 1.2: 0x7960, Debug: 0x012F70
-DMADATA_INDEX: int = 2
 
 
 class Rom(BigStream):
@@ -25,7 +24,7 @@ class Rom(BigStream):
         self.changed_address: dict[int, int] = {}
         self.changed_dma: dict[int, tuple[int, int, int]] = {}
         self.force_patch: list[int] = []
-        self.dma: DMAIterator = DMAIterator(self, DMADATA_START, DMADATA_INDEX)
+        self.dma: DMAIterator = DMAIterator(self, DMADATA_START)
 
         if file is None:
             return
@@ -46,7 +45,11 @@ class Rom(BigStream):
                 # Decompress the provided file.
                 if not file:
                     raise FileNotFoundError('Must specify path to base ROM')
-                self.read_rom(file)
+                self.read_rom(file, decompressed_file)
+        elif file:
+            self.read_rom(file, decompressed_file)
+        else:
+            raise FileNotFoundError('Must specify path to base ROM')
 
         # Add file to maximum size
         self.buffer.extend(bytearray([0x00] * (0x4000000 - len(self.buffer))))
@@ -296,10 +299,10 @@ class DMAEntry:
 
 
 class DMAIterator:
-    def __init__(self, rom: Rom, dma_start: int, dma_index: int) -> None:
+    def __init__(self, rom: Rom, dma_start: int) -> None:
         self.rom: Rom = rom
         self.dma_start: int = dma_start
-        self.dma_index: int = dma_index
+        self.dma_index: int = 0
         self.dma_end: int = 0
         self._dma_entries: int = 0
 
@@ -310,6 +313,14 @@ class DMAIterator:
         return self._dma_entries
 
     def _calculate_dma_entries(self) -> None:
+        i = start = -1
+        while start != self.dma_start:
+            i += 1
+            if i > 2000:
+                dma_bytes = self.rom.read_bytes(self.rom.dma.dma_start, 160).hex(' ', 4)
+                raise Exception(f"DMA entry for DMA table not found. Attempted to find DMA entry starting at {self.dma_start}. First 160 bytes of DMA table: {dma_bytes}")
+            start = self.rom.read_int32(self.rom.dma.dma_start + (i * 0x10))
+        self.dma_index = i
         self.dma_end = self.rom.read_int32(self.dma_start + (self.dma_index * 0x10) + 0x04)
         self._dma_entries = (self.dma_end - self.dma_start) >> 4
 
@@ -361,7 +372,7 @@ class DMAIterator:
 
         free_space.sort()
         if not free_space:
-            raise Exception("No free space in ROM. This should never happen.")
+            raise Exception(f"No free space in ROM. This should never happen. DMA entries: {self.dma_entries}")
 
         if size is None:
             # Return the largest free space.
