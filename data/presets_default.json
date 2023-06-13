@@ -284,8 +284,7 @@
         "shuffle_overworld_entrances": false,
         "owl_drops": false,
         "warp_songs": false,
-        "spawn_positions": [
-        ],
+        "spawn_positions": [],
         "triforce_hunt": false,
         "free_bombchu_drops": false,
         "one_item_per_dungeon": false,
