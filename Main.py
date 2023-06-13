@@ -542,10 +542,6 @@ def cosmetic_patch(settings: Settings) -> None:
 
     patchfilename = '%s_Cosmetic.zpf' % output_path
     cosmetics_log = patch_cosmetics(settings, rom)
-    if settings.model_adult != "Default" or len(settings.model_adult_filepicker) > 0:
-        patch_model_adult(rom, settings, cosmetics_log)
-    if settings.model_child != "Default" or len(settings.model_child_filepicker) > 0:
-        patch_model_child(rom, settings, cosmetics_log)
 
     # base the new patch file on the base patch file
     rom.original.buffer = patched_base_rom
