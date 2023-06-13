@@ -636,7 +636,7 @@ class TestHints(unittest.TestCase):
     def test_blue_fire_arrows(self):
         # Blue Fire Arrows should be WotH and in the item pool
         _, spoiler = generate_with_plandomizer("plando-blue-fire-arrows-hints")
-        woth = list(spoiler[':woth_locations'].values())
+        woth = [x['item'] if isinstance(x, dict) else x for x in spoiler[':woth_locations'].values()]
         self.assertIn('Blue Fire Arrows', woth)
 
 

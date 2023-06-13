@@ -36,7 +36,7 @@ def run_unit_tests() -> None:
     print(f'Tests run: {result.testsRun}.')
     stream.seek(0)
     print(f'Test output:\n{stream.read()}')
-    if result.errors:
+    if result.errors or result.failures:
         error('Unit Tests had an error, see output above.', False)
 
 
