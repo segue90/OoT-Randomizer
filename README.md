@@ -134,6 +134,7 @@ issue. You should always Hard Reset to avoid this issue entirely.
   * When picking up a small key, the text box will now inform you how many you've found total.
   * The longstanding vanilla bug where using Din's Fire on a white bubble crashes the game has been fixed.
   * There are new chest, pot, and crate textures for Pieces of Heart and Heart Containers.
+  * Custom music has moved to a new format. See `data/Music/README.md` for more details.
 
 #### Bug Fixes
 * **Misc.**

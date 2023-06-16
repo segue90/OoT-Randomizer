@@ -26,6 +26,7 @@ from OcarinaSongs import replace_songs
 from Rom import Rom
 from SaveContext import SaveContext, Scenes, FlagType
 from SceneFlags import get_alt_list_bytes, get_collectible_flag_table, get_collectible_flag_table_bytes
+from Sounds import move_audiobank_table
 from Spoiler import Spoiler
 from Utils import data_path
 from World import World
@@ -1608,6 +1609,9 @@ def patch_rom(spoiler: Spoiler, world: World, rom: Rom) -> Rom:
                                                shop_item_file.end,
                                                shop_item_vram_start,
                                                shop_item_vram_start + (shop_item_file.end - shop_item_file.start)])
+
+    # Relocate Audiobank_table
+    move_audiobank_table(rom, 0xB896A0, rom.sym('AUDIOBANK_TABLE_EXTENDED'))
 
     # Update DMA Table
     update_dmadata(rom, shop_item_file)
