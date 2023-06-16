@@ -183,6 +183,7 @@ issue. You should always Hard Reset to avoid this issue entirely.
 * The cutscene of the Gerudo's Fortress carpenters running out when you free them will be skipped.
 * The cutscene that plays when shooting the sun over Lake Hylia has been skipped.
 * The spinning room in the Forest Temple basement now moves faster, and does not lock Link in place while spinning.
+* Link is now powerful enough to push armos statues more quickly.
 
 #### Plandomizer
 * Plandomizer now allows you to specify locations that are valid but do not exist in your current seed, for example, an MQ-specific location when that dungeon is Vanilla.
