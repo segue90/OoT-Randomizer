@@ -175,6 +175,7 @@ issue. You should always Hard Reset to avoid this issue entirely.
 * An unnecessary polygon check function is skipped to increase game performance.
 * In Triforce Hunt, your current and goal number of triforce pieces are now displayed on the file select screen.
 * Python 3.6 and 3.7 are no longer supported.
+* Some inescapable entrances are no longer valid targets for Overworld Spawn entrances.
 
 #### New Speedups
 * Various cutscenes removed or shortened, such as Water Temple and Gerudo Fortress gates and scarecrow spawn cutscenes.
