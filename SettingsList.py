@@ -3239,7 +3239,8 @@ class SettingInfos:
             Beehives will wiggle until their item is collected.
         ''',
         shared         = True,
-    ),
+    )
+
     key_appearance_match_dungeon = Checkbutton(
         gui_text       = 'Key Appearance Matches Dungeon',
         gui_tooltip    = '''\
@@ -3247,7 +3248,8 @@ class SettingInfos:
             will use custom models to match their dungeon.
         ''',
         shared         = True,
-    ),
+    )
+
     clearer_hints = Checkbutton(
         gui_text       = 'Clearer Hints',
         gui_tooltip    = '''\
