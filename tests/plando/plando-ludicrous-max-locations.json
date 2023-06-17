@@ -30,9 +30,10 @@
     "shuffle_mapcompass":                      "keysanity",
     "shuffle_smallkeys":                       "keysanity",
     "shuffle_hideoutkeys":                     "keysanity",
+    "shuffle_tcgkeys":                         "keysanity",
     "shuffle_bosskeys":                        "keysanity",
     "disabled_locations":                      [],
-    "starting_items":                          [],
+    "starting_inventory":                      [],
     "ice_trap_appearance":                     "junk_only",
     "junk_ice_traps":                          "normal"
   }

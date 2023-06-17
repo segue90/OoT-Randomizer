@@ -32,6 +32,12 @@
 ; New code region
 ;==================================================================================================
 
+;==================================================================================================
+; Item restriction table
+;==================================================================================================
+.include "item_restriction_flags.asm"
+
+
 .headersize (0x80400000 - 0x03480000)
 
 .org    0x80400000
@@ -105,6 +111,7 @@ RANDO_CONTEXT:
 .include "mask_deequip.asm"
 .include "trade_quests.asm"
 .include "blue_fire_arrows.asm"
+.include "gerudo_guard.asm"
 .include "save.asm"
 .include "drop_overrides/obj_mure3.asm"
 .include "drop_overrides/bg_haka_tubo.asm"
@@ -114,6 +121,11 @@ RANDO_CONTEXT:
 .include "rand_seed.asm"
 .include "messages.asm"
 .include "player_save_mask.asm"
+.include "gohma.asm"
+.include "camera_init.asm"
+.include "chest_game.asm"
+.include "en_item00.asm"
+.include "armos.asm"
 
 .align 0x10
 .importobj "../build/bundle.o"

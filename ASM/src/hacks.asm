@@ -71,6 +71,114 @@ Gameplay_InitSkybox:
 .endarea
 
 ;==================================================================================================
+; Increase Number of Audio Banks, and Audiotable (samples)
+;==================================================================================================
+
+.org 0x800B8888
+    lui     t2, hi(AUDIOBANK_TABLE_EXTENDED)
+.org 0x800B8898
+    addiu   t2, t2, lo(AUDIOBANK_TABLE_EXTENDED)
+
+; Hacks to increase the number of audio banks from 0x30 to 0x80
+; Hacks in AudioHeap_ResetLoadStatus
+; This loop is annoying because it hardcodes the start and end addresses of fontLoadStatus array instead of calculating it.
+; v0 - start of array
+; v1 - end of array
+.org 0x800B3540
+    ; Replaces
+    ; lui   v1, 0x8012
+    ; lui   v0, 0x8012
+    ; addiu v0, v0 0x5660
+    ; addiu v1, v1, 0x5630
+    li      v1, FONTLOADSTATUS_EXTENDED
+    li      v0, FONTLOADSTATUS_EXTENDED + 0x80
+
+.org 0x800B3554
+    ; Replaces:
+    ; lbu   t6, 0x3468(v1)
+    lbu     t6, 0x00(v1)
+
+.org 0x800B3560
+    ; Replaces:
+    ; sb    r0, 0x3468(v1)
+    sb      r0, 0x00(v1)
+
+; Hacks in AudioHeap_PopPersistentCache (I think)
+.org 0x800B3AB8
+    ; Replaces:
+    ; lui   t7, 0x8013
+    ; addiu t7, t7, 0x8A98
+    li  t7, FONTLOADSTATUS_EXTENDED
+
+; Hacks in AudioHeap_AllocCached (I think)
+.org 0x800B3F00
+    ; Replaces:
+    ; lui   t3, 0x8013
+    lui     t3, hi(FONTLOADSTATUS_EXTENDED)
+.org 0x800B3F0C
+    ; Replaces:
+    ; addiu t3, t3, 0x8A98
+    addiu   t3, t3, lo(FONTLOADSTATUS_EXTENDED)
+
+; Hacks in AudioLoad_IsFontLoadComplete
+.org 0x800B6E8C
+; Replaces:
+;   lui     t6, 0x8013
+;   addu    t6, t6, a1
+;   lbu     t6, 0x8A98(t6)
+    lui     t6, hi(FONTLOADSTATUS_EXTENDED)
+    addu    t6, t6, a1
+    lbu     t6, lo(FONTLOADSTATUS_EXTENDED)(t6)
+.org 0x800B6EB4
+; Replaces:
+;   lui     t7, 0x8013
+;   addu    t7, t7, v0
+;   lbu     t7, 0x8A98(t7)
+    lui     t7, hi(FONTLOADSTATUS_EXTENDED)
+    addu    t7, t7, v0
+    lbu     t7, lo(FONTLOADSTATUS_EXTENDED)(t7)
+
+; Hacks in AudioLoad_SetFontLoadStatus
+.org 0x800B6FE0
+; Replaces:
+;   lui     t6, 0x8012
+;   addiu   t6, t6, 0x5630
+;   skip
+;   lbu     t7, 0x3468(v0)
+;   skip
+;   skip
+;   skip
+;   sb      a1, 0x3468(v0)
+    li      t6, FONTLOADSTATUS_EXTENDED
+    .skip   4
+    lbu     t7, 0x00(v0)
+    .skip   12
+    sb      a1, 0x00(v0)
+
+; Hacks in AudioLoad_SyncLoadFont
+.org 0x800B7A2C
+; Replaces:
+;   lui     a1, 0x8012
+;   addiu   a1, a1, 0x5630
+;   addu    t6, a1, v0
+    jal     AudioLoad_SyncLoadFont_StatusHack
+    lui     a1, 0x8012
+    nop
+    lbu     t7, 0x00(t6)
+
+; Hacks in AudioLoad_AsyncLoadInner
+.org 0x800B82D0
+; Replaces:
+;   lui     t7, 0x8013
+    lui     t7, hi(FONTLOADSTATUS_EXTENDED)
+.org 0x800B8310
+; Replaces:
+;   addu    t7, t7, v0
+;   lbu     t7, 0x8A98(t7)
+    addu    t7, t7, v0
+    lbu     t7, lo(FONTLOADSTATUS_EXTENDED)(t7)
+
+;==================================================================================================
 ; Don't Use Sandstorm Transition if gameplay_field_keep is not loaded
 ;==================================================================================================
 
@@ -158,6 +266,40 @@ Gameplay_InitSkybox:
 .org 0x80108CEC
 .word @transition_0_jump
 
+;==================================================================================================
+; Skip using collision poly check table (performance optimization)
+;==================================================================================================
+; Instead some polys may be checked multiple times in a single line check, which is faster than
+; using the table, particularly in large scenes.
+
+; Skip loading the address of the table
+; Replaces lw       a3, 0x004C(s2)
+.org 0x8002D1E8
+    nop
+
+; Skip lookup
+; Replaces lbu      t8, 0x0000(v1)
+.org 0x8002D210
+    li      t8, 0
+
+; Skip updating the table
+; Replaces beqz     v0, 0x8002D264
+.org 0x8002D238
+    beqz    v0, 0x8002D26C
+; Replaces bnezl    t6, 0x8002D268
+.org 0x8002D248
+    bnezl   t6, 0x8002D26C
+
+; Skip resetting the table
+; Replaces:
+;   lw      t0, 0x0000(s2)
+;   jal     0x80033FF0
+;   lhu     a1, 0x0014(t0)
+.org 0x800302E8
+    nop
+    nop
+    nop
+
 .headersize 0
 
 ;==================================================================================================
@@ -206,6 +348,35 @@ Gameplay_InitSkybox:
     lh      t6, 0x00A4(a0)
     li      at, 67
     nop
+    nop
+
+;==================================================================================================
+; Speed up armos push
+;==================================================================================================
+; In EnAm_Statue, subtract 0x1000 from this->unk_258 instead of 0x800
+; This value is used as the timer for how long to push for
+; This halves the number of frames that the push will occur over.
+;replaces
+;addiu t0, a2, 0xF800
+.orga 0xC97C68
+    addiu t0, a2, 0xF000
+
+; 1.00973892212 is used instead of 1 because we are setting a speed based on sin(unk_258). When this is discretized and summed up over the duration movement, 1 does not cause the proper amount of movement.
+
+; In EnAm_Statue, when calculating the speed, multiply by 1.00973892212 instead of 0.5 (first instance, used for collision detection?)
+.orga 0xC97D68
+;   replaces
+;   lui     at, 0x3F00
+;   mtc1    at, f8
+    jal     en_am_calculation_1
+    nop
+
+; In EnAm_Statue, when calculating the speed, multiply by 1.00973892212 instead of 0.5
+.orga 0xC97E20
+    ;replaces
+    ;lui at, 0x3F00
+    ;mtc1 at, f10
+    jal     en_am_calculation_2
     nop
 
 ;==================================================================================================
@@ -369,7 +540,7 @@ SRAM_SLOTS:
 
 ; Increase the size of EnItem00 instances to store the override
 .orga 0xB5D6BE ; Address in ROM of the enitem00 init params
-    .halfword 0x01AC
+    .halfword 0x01BC ; Originally 0x019C
 
 ; Increase the size of pot instances to store chest type
 .orga 0xDE8A5E ; Address in ROM of the ObjTsubo init params
@@ -410,6 +581,21 @@ SRAM_SLOTS:
     nop
 .headersize(0)
 
+; Hack EnItem00_Update when it checks proximity to the player to handle silver rupee collisions differently
+; EnItem00_ProximityCheck_Hook will jump back into EnItem00 as appropriate.
+.headersize (0x800110A0 - 0xA87000)
+.org 0x80012C14 ; In Memory 0x80012C14
+; Replaces
+;   mtc1    at, f18
+;   lwc1    f4, 0x0090(s0)
+    jal     EnItem00_ProximityCheck_Hook
+    nop
+    ; Check our return result in v0. If it's true (actor is in proximity) then continue on the function, otherwise return
+    bnez    v0, 0x80012C78 ; if v0 != 0 the player isn't in proximity, branch inside the original if where it calls Actor_HasParent before returning.
+    lui     t6, 0x0001
+    b       0x80012C64
+    nop
+
 ; Hack EnItem00 Action Function (func_8001E304 from decomp, 0x8001251C in 1.0) used by Item_DropCollectible to not increment the time to live if its < 0
 ; replaces
 ;   lh      t6, 0x014A(s0)
@@ -423,7 +609,7 @@ SRAM_SLOTS:
     nop
     lh      v0, 0x001C(s0)
     addiu   at, r0, 0x0003
-    .skip 4
+.skip 4
     nop
 
 ; Override the drop_id convert function s16 func_8001F404(s16 dropId) from decomp
@@ -443,7 +629,7 @@ SRAM_SLOTS:
 ;   beq     v0, at, 0x80013888
 ;   addiu   t8, r0, 0xFFFF
 ;   sb      t8, 0x0003(s2)
-.orga 0xA897C0; in memory 0x80013860
+.orga 0xA897C0 ; in memory 0x80013860
     jal     drop_collectible_room_hook
     nop
     nop
@@ -488,13 +674,13 @@ SRAM_SLOTS:
 ; Hack Item_DropCollectible call to Actor_Spawn to set override
 ; replaces
 ;   jal     0x80025110
-.orga 0xA8972C; in memory 0x800137B8
+.orga 0xA8972C ; in memory 0x800137B8
     jal     Item_DropCollectible_Actor_Spawn_Override
 
 ; Hack Item_DropCollectible2 call to Actor_Spawn to set override
 ; replaces
 ;   jal     0x80025110
-.orga 0xA89958; in memory 0x800139E0
+.orga 0xA89958 ; in memory 0x800139E0
     jal     Item_DropCollectible_Actor_Spawn_Override
 
 ; Hack ObjTsubo_SpawnCollectible (Pot) to call our overridden spawn function
@@ -517,7 +703,6 @@ SRAM_SLOTS:
 .orga 0xDFA520
     j       EnTuboTrap_DropCollectible_Hack
     nop
-
 
 ; Hack ObjKibako2_Init (Large Crates) to not delete our extended flag
 .orga 0xEC832C
@@ -634,7 +819,6 @@ bg_spot18_basket_rupees_loopstart: ; our new loop branch target
     nop
     nop
 
-
 ; Hook at the end of Actor_SetWorldToHome to zeroize anything we use to store additional flag data
 .orga 0xA96E5C ; In memory: 0x80020EFC
 ; Replaces:
@@ -643,10 +827,19 @@ bg_spot18_basket_rupees_loopstart: ; our new loop branch target
 
 ; Hook Actor_UpdateAll when each actor is being initialized. At the call to Actor_SpawnEntry
 ; Used to set the flag (z-rotation) of the actor to its position in the actor table.
-.orga 0xA99D48; In memory: 0x80023DE8
+.orga 0xA99D48 ; In memory: 0x80023DE8
 ; Replaces:
-;   jal 0x800255C4
-    jal Actor_UpdateAll_Hook
+;   jal     0x800255C4
+    jal     Actor_UpdateAll_Hook
+
+; Hack Actor_SpawnEntry so we can override actors being spawned
+.orga 0xA9B524 ; In memory: 0x800255C4
+; Replaces: Entire function
+    j       Actor_SpawnEntry_Hack
+    nop
+
+.orga 0xA99C98 ; In memory: 0x80023D38
+    jal     Player_SpawnEntry_Hack
 
 ; Runs when storing an incoming item to the player instance
 ; Replaces:
@@ -1293,6 +1486,37 @@ nop
     jal      Shop_Keeper_Init_ID
 .orga 0xC6C920
     jal      Shop_Keeper_Update_ID
+
+; Update object ID and draw ID for progressive items
+.headersize(0x80862C00 - 0xC004E0)
+
+; EnGirlA_InitializeItemAction / func_8086443C
+; Update the IDs
+; Replaces:
+;   lh      t2, 0x0002(v1)
+.org 0x8086476C
+    jal     shop_draw_id_hook
+
+; Remove vanilla line assigning the draw ID.
+; This is handled in the above hook.
+; Replaces:
+;   sh      t2, 0x01BC(s0)
+.org 0x80864778
+    nop
+
+.headersize(0x808CED80 - 0xC6C5E0)
+
+; EnOssan_State_ItemPurchased / func_808D1D08
+; Run update shop items function after an item is purchased.
+; Also reorganize displaced code to preserve $ra
+; Replaces:
+;   lh      t6, 0x001C(s0)
+;   addiu   $at, $zero, 0x000A
+.org 0x808D1D48
+    jal     shop_update_offerings_hook
+    nop
+
+.headersize(0)
 
 ; Override Deku Salescrub sold out check
 ; addiu at, zero, 2
@@ -2561,6 +2785,14 @@ courtyard_guards_kill:
     lw      a1, 0x8000B188
 
 ;==================================================================================================
+; Load Audiobank using dmadata
+;==================================================================================================
+; Replaces: lui     a1, 0x0001
+;           addiu   a1, a1, 0xD390
+.orga 0xB2E840 ; in memory 0x800B88E0
+    lw      a1, 0x8000B178
+
+;==================================================================================================
 ; Load Audiotable using dmadata
 ;==================================================================================================
 ; Replaces: lui     a1, 0x0008
@@ -2602,6 +2834,15 @@ courtyard_guards_kill:
 ;           addu    at, at, v0
 .orga 0xEC1120  ; Gerudo Fighter
     jal     gerudo_caught_entrance
+    nop
+
+;==================================================================================================
+; Getting caught by Gerudo NPCs after obtaining Gerudo Card
+;==================================================================================================
+; Use unused message ID 0x6013 as our replacement text with two choice options
+; Set custom callback to handle the new textbox choices
+.orga 0xE1216C  ; White-clothed Gerudo
+    jal     offer_jail_hook
     nop
 
 ;==================================================================================================
@@ -3296,6 +3537,63 @@ courtyard_guards_kill:
 .orga 0xE1F794
 @medigoron_check_return:
 
+
+;==================================================================================================
+; Chest Game Keysanity
+;==================================================================================================
+; Replaces: sh     t8, 0x0204(s0)
+;           sw     $zero, 0x0118(s0)
+
+.orga 0xE94B9C ; In Memory 0x80B1946C
+    addiu   t3, $zero, 0x908B ; Replaces text ID 0x002D
+
+.orga 0xE94B30
+    jal     chestgame_buy_item_hook
+    sh      t8, 0x0204(s0)
+
+; Replaces: sw     t3, 0x0014($sp)
+            sw     t2, 0x0010($sp)
+.orga 0xE94774
+    jal     chestgame_initial_message
+    sw      t3, 0x0014($sp)
+
+; Allow TCG chests to open separately
+; Skips this entire function func_80AC3A2C:
+.orga 0xE43874
+    jal     chestgame_open_chests_separately
+    or      a2, a0, $zero
+
+; Skip instruction to reset TCG chest flags
+; Replaces: sw     $zero, 0x1D38(t8)
+;           lhu    t0, 0x1402(v0)
+.orga 0xE9474C
+    jal     chestgame_no_reset_flag
+    nop
+
+; Skip instruction to set TCG keys to 0 every reload
+; Replaces: sb      t9, 0x00BC(t1)
+;           addiu   t2, s0, 0x0184
+.orga 0xE94760
+    jal     chestgame_no_reset_keys
+    nop
+
+; Change Chests so items don't change 50/50 between the room
+; Inserts additonal code at: mtc1    $at, $f8
+.orga 0xE435B4
+    jal     chestgame_remove_chest_rng
+
+; Change GetItemID that TCG Salesman gives while title card is up
+.orga 0xE94C14
+    addiu   a2, $zero, 0x0071   ; replaces 0x0042 (generic key) with 0x0071 (chest game key)
+
+; Skip instructions to open unopened chests in previous rooms.
+; Replaces: lh     t9, 0x0158(s0)
+;           lw     a0, 0x004C($sp)
+
+.orga 0xE437A8
+    jal     chestgame_delayed_chest_open
+    nop
+
 ;==================================================================================================
 ; Bombchu Ticking Color
 ;==================================================================================================
@@ -3519,3 +3817,210 @@ courtyard_guards_kill:
 .orga 0xD7C864
     lhu     t3, 0x0EDC(v0)
     andi    t4, t3, 0x0200
+
+;===================================================================================================
+; Prevent Gohma from being stunned when climbing
+;===================================================================================================
+; Replaces lui     a1, 0x40A0
+;          lui     a2, 0x3F00
+.orga 0xC48BD4
+    jal     gohma_climb
+    nop
+
+;===================================================================================================
+; Prevent crash when diving in shallow water due to poorly initialized camera data
+;===================================================================================================
+; Replaces sw      v0, 0x011C(s0)
+;          lh      t2, 0x014C(s0)
+.orga 0xABDD10
+    jal     camera_init
+    nop
+
+;===================================================================================================
+;Update tunic color code to point to new table
+;===================================================================================================
+.orga 0xAEFFD0
+;    lui     T9, 0x8040
+;    ori   T9, T9, 0xC6EC
+;    lui     T9, hi(tunic_colors)
+;    ori   T9, T9, lo(tunic_colors)
+    li  T9, CFG_TUNIC_COLORS
+
+;===================================================================================================
+; Various speedups
+;===================================================================================================
+; Scarecrow spawn cutscene
+; Replaces jal     func_8006BA10
+.orga 0xEF502C
+    nop
+
+; Water Temple Entrance Gate cutscene and timer
+; Replaces addiu   t6, $zero, 0x0064
+.orga 0xD5B53C
+    addiu   t6, $zero, 0x0000
+; Replaces jal     func_8006B6FC
+.orga 0xD5B940
+    nop
+; x3 Speed on gate opening
+; Replaces lui     a2, 0x3F19
+.orga 0xD5B5FC
+    lui     a2, 0x3FE6
+
+; Gerudo Gate opening
+; Replaces lui     a1, 0x3FCC
+;          lui     a2, 0x3CF5
+.orga 0xEB8ED8
+   lui     a1, 0x41A0
+   lui     a2, 0x41A0
+; Replaces jal     func_8006B6FC
+.orga 0xEB8E4C
+    nop
+; Replaces addiu   t7, $zero, 0x0028
+.orga 0xEB8E6C
+    addiu   t7, $zero, 0x0000
+
+; Forest Red/Blue poe painting hit cutscene removed
+; Replaces jal     func_8006B6FC
+.orga 0xCE1600
+    nop
+
+; Biggoron puts the eyedrops
+; Put eyedrops animation timer at 0 and skip the cutscene
+; Replaces sh      t2, 0x0582(s0)
+.orga 0xED665C
+    sh      $zero, 0x0582(s0)
+; Replaces jal     func_8006B6FC
+.orga 0xED6670
+    nop
+
+; Scrub leader hiding for 1 frame instead of 300 when you show Skull Mask
+; Replaces addiu   a1, $zero, 0x012C
+.orga 0xEC8D20
+    addiu   a1, $zero, 0x0001
+
+; patch skulls spawn when the insect digs in and not 3sec after
+; Replaces: slti    $at, t7, 0x003C
+.orga 0xEFA318
+    slti    $at, t7, 0x0001
+
+; Carpenter Escape
+; Timer before they escape succesfully
+; Replaces 0x00000064
+.orga 0xE10794
+    .word 0x00000001
+; Replaces 0x0000006E
+.orga 0xE107A4
+    .word 0x00000001
+; Replaces 0x00000064
+.orga 0xE107B4
+    .word 0x00000001
+; Replaces 0x00000078
+.orga 0xE107C4
+   .word 0x00000001
+; Cutscene
+; Replaces jal     func_800218EC
+.orga 0xE0FF64
+    nop
+
+; Lake Hylia Shot the sun cutscene trigger
+; Replaces sb      t8, -0x461C($at)
+.orga 0xE9E268
+    nop
+
+; Forest Basement pillars cutscenes removed
+; Replaces jal     func_8006B6FC
+.orga 0xCC5DE8
+    nop
+; Replaces jal     func_8006B6FC
+.orga 0xCC5DF4
+    nop
+; Replaces jal     func_8006B6FC
+.orga 0xCC5F70
+    nop
+; Replaces jal     func_8006B6FC
+.orga 0xCC604C
+    nop
+; Forest Basement pillars speed 3.0 by increments of 1.0 instead of 0.6 by increments of 0.02
+; Replaces lui     a1, 0x3F19
+.orga 0xCC5F14
+    lui     a1, 0x4040
+; Replaces lui     a2, 0x3CA3
+.orga 0xCC5F18
+    lui     a2, 0x3F80
+
+;===================================================================================================
+; Prevent Gohma from being stunned when climbing
+;===================================================================================================
+; Replaces lui     a1, 0x40A0
+;          lui     a2, 0x3F00
+.orga 0xC48BD4
+    jal     gohma_climb
+    nop
+
+;===================================================================================================
+; Prevent crash when diving in shallow water due to poorly initialized camera data
+;===================================================================================================
+; Replaces sw      v0, 0x011C(s0)
+;          lh      t2, 0x014C(s0)
+.orga 0xABDD10
+    jal     camera_init
+    nop
+
+;===================================================================================================
+;Update tunic color code to point to new table
+;===================================================================================================
+.orga 0xAEFFD0
+;    lui     T9, 0x8040
+;    ori   T9, T9, 0xC6EC
+;    lui     T9, hi(tunic_colors)
+;    ori   T9, T9, lo(tunic_colors)
+    li  T9, CFG_TUNIC_COLORS
+
+;==================================================================================================
+; Shuffle Reward for Catching Hyrule Loach
+;==================================================================================================
+; Randomize the loach reward
+; replaces mtc1 zero, f18
+.orga 0xDCC138
+    jal     give_loach_reward
+
+; update sinking lure location so that it is available in any of the four positions
+; replaces
+; subu t2, v1, 2
+; sll t2, t2, 1
+.orga 0xDCC7E4
+    jal     increment_sSinkingLureLocation
+    lbu     t2, 0x34DB(a0)
+
+; Modify loach behavior to pay attention to the sinking lure
+; First call handles when loach is sitting on the bottom of the pond
+; replaces
+; addiu   $at, $zero, 0xFFFE
+; and     t1, t8, at
+.orga 0xdc689c
+    jal     make_loach_follow_lure
+    lw      t8, 0x0134(s0)
+
+; Second call handles when loach periodically surfaces
+; replaces
+; addiu     at, zero, 0xFFFE
+; and       t7, t9, at
+; <skip>
+; sw        t7, 0x0004(s0)
+.orga 0xDC6AF0
+    jal     make_loach_follow_lure
+    lw      t8, 0x0134(s0)
+.skip 4
+    sw      t1, 0x0004(s0)
+;=========================================================================================
+; Add custom message control characters
+;=========================================================================================
+
+; In Message_Decode at the last control code check (0x01 for new line)
+; Replaces
+;   addiu   at, r0, 0x0001
+;   bne     v0, at, 0x800DC580
+.headersize (0x800110A0 - 0xA87000)
+.org 0x800DC568
+    j       Message_Decode_Control_Code_Hook
+    nop
