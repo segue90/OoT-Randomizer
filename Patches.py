@@ -2305,7 +2305,7 @@ def patch_rom(spoiler:Spoiler, world:World, rom:Rom):
                     map_message = "\x13\x76\x08You found the \x05\x41Dungeon Map\x05\x40\x01for %s\x05\x40!\x01It\'s %s!\x09" % (dungeon_name, "masterful" if world.dungeon_mq[dungeon] else "ordinary")
 
                 if world.settings.mq_dungeons_mode == 'random' or world.settings.mq_dungeons_count != 0 and world.settings.mq_dungeons_count != 12:
-                    update_message_by_id(messages, map_id, map_message)
+                    update_message_by_id(messages, map_id, map_message, allow_duplicates=True)
             else:
                 dungeon_name, boss_name, compass_id, map_id = dungeon_list[dungeon]
                 if world.settings.world_count > 1:
@@ -2320,13 +2320,13 @@ def patch_rom(spoiler:Spoiler, world:World, rom:Rom):
                     boss_location = next(filter(lambda loc: loc.type == 'Boss', world.get_entrance(f'{dungeon} Before Boss -> {boss_name} Boss Room').connected_region.locations))
                     dungeon_reward = reward_list[boss_location.item.name]
                     compass_message = "\x13\x75\x08You found the \x05\x41Compass\x05\x40\x01for %s\x05\x40!\x01It holds the %s!\x09" % (dungeon_name, dungeon_reward)
-                update_message_by_id(messages, compass_id, compass_message)
+                update_message_by_id(messages, compass_id, compass_message, allow_duplicates=True)
                 if world.settings.mq_dungeons_mode == 'random' or world.settings.mq_dungeons_count != 0 and world.settings.mq_dungeons_count != 12:
                     if world.settings.world_count > 1:
                         map_message = "\x13\x76\x08\x05\x42\x0F\x05\x40 found the \x05\x41Dungeon Map\x05\x40\x01for %s\x05\x40!\x09" % (dungeon_name)
                     else:
                         map_message = "\x13\x76\x08You found the \x05\x41Dungeon Map\x05\x40\x01for %s\x05\x40!\x01It\'s %s!\x09" % (dungeon_name, "masterful" if world.dungeon_mq[dungeon] else "ordinary")
-                    update_message_by_id(messages, map_id, map_message)
+                    update_message_by_id(messages, map_id, map_message, allow_duplicates=True)
 
     # Set hints on the altar inside ToT
     rom.write_int16(0xE2ADB2, 0x707A)
@@ -2394,7 +2394,7 @@ def patch_rom(spoiler:Spoiler, world:World, rom:Rom):
         bfa_message = "\x08\x13\x0CYou got the \x05\x43Blue Fire Arrow\x05\x40!\x01This is a cool arrow you can\x01use on red ice."
         if world.settings.world_count > 1:
             bfa_message = make_player_message(bfa_message)
-        update_message_by_id(messages, 0x0071, bfa_message, 0x23)
+        update_message_by_id(messages, 0x0071, bfa_message, 0x23, allow_duplicates=True)
 
         with open(data_path('blue_fire_arrow_item_name_eng.ia4'), 'rb') as stream:
             bfa_name_bytes = stream.read()
