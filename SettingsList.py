@@ -3033,6 +3033,19 @@ class SettingInfos:
         shared         = True,
     )
 
+    auto_equip_masks = Checkbutton(
+        gui_text       = 'Maintain Mask Equips through Scene Changes',
+        gui_tooltip    = '''\
+            Keep the currently equipped mask equipped after scene
+            changes. Also persists through savewarps. If equip swap
+            is used to wear a mask as adult and the ability to
+            equip swap masks is lost, travelling through time will
+            unequip the mask as adult.
+        ''',
+        default        = False,
+        shared         = True,
+    )
+
     plant_beans = Checkbutton(
         gui_text       = 'Plant Magic Beans',
         gui_tooltip    = '''\
@@ -3677,20 +3690,6 @@ class SettingInfos:
             one of the D-Pad directions on the pause screen.
         ''',
         default        = True,
-    )
-
-    auto_equip_masks = Checkbutton(
-        gui_text       = 'Maintain Mask Equips through Scene Changes',
-        shared         = False,
-        cosmetic       = True,
-        gui_tooltip    = '''\
-            Keep the currently equipped mask equipped after scene
-            changes. Also persists through savewarps. If equip swap
-            is used to wear a mask as adult and the ability to
-            equip swap masks is lost, travelling through time will
-            unequip the mask as adult.
-        ''',
-        default        = False,
     )
 
     correct_model_colors = Checkbutton(

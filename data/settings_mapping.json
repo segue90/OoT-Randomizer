@@ -333,6 +333,7 @@
             "fast_chests",
             "free_scarecrow",
             "fast_bunny_hood",
+            "auto_equip_masks",
             "plant_beans",
             "chicken_count_random",
             "chicken_count",
@@ -393,7 +394,6 @@
             "default_targeting",
             "display_dpad",
             "dpad_dungeon_menu",
-            "auto_equip_masks",
             "correct_model_colors",
             "randomize_all_cosmetics"
           ]

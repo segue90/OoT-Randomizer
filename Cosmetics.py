@@ -949,27 +949,6 @@ def patch_music_changes(rom: Rom, settings: Settings, log: CosmeticsLog, symbols
     log.slowdown_music_when_lowhp = settings.slowdown_music_when_lowhp
 
 
-def patch_mask_autoequip(rom: Rom, settings: Settings, log: CosmeticsLog, symbols: dict[str, int]) -> None:
-    # Automatically re-equip the current mask on scene change
-    if settings.auto_equip_masks:
-        rom.write_byte(symbols['CFG_MASK_AUTOEQUIP'], 0x01)
-
-        # Remove mask reaction text IDs from all actors not involved in the
-        # mask trading sequence. See z_face_reaction.c in decomp for original
-        # values or https://wiki.cloudmodding.com/oot/Code_(File)/NTSC_1.0#Mask_Reaction_Text.
-        # Text ID 0x0000 is the default if a mask is not being worn.
-        # Convenience hack to allow the player to keep the bunny hood on when interacting
-        # with actors that give items (rolling goron, lab dive, etc.)
-        for mask_segment_id in range(0x00, 0x3C):
-            if mask_segment_id not in [0x05, 0x06, 0x07, 0x0F, 0x15, 0x1C]:
-                rom.write_int16s(0x00B66E60 + mask_segment_id * 0x12, [0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000])
-    else:
-        rom.write_byte(symbols['CFG_MASK_AUTOEQUIP'], 0x00)
-        # 0x3C segments, 0x12 bytes per segment
-        original = rom.original.read_bytes(0x00B66E60, 0x3C * 0x12)
-        rom.write_bytes(0x00B66E60, original)
-
-
 legacy_cosmetic_data_headers: list[int] = [
     0x03481000,
     0x03480810,
@@ -1129,17 +1108,6 @@ patch_sets[0x1F073FDD] = {
     "symbols": {
         **patch_sets[0x1F073FDC]["symbols"],
         "CFG_AUDIOBANK_TABLE_EXTENDED_ADDR": 0x0064
-    }
-}
-
-# 7.1.130
-patch_sets[0x1F073FDE] = {
-    "patches": patch_sets[0x1F073FDD]["patches"] + [
-        patch_mask_autoequip,  # Patch music needs to be moved into a versioned patch after introducing custom instrument sets in order for older patches to still work. This should work because when running the global patches we make sure they're not in the versioned patch set.
-    ],
-    "symbols": {
-        **patch_sets[0x1F073FDD]["symbols"],
-        "CFG_MASK_AUTOEQUIP": 0x0068
     }
 }
 
