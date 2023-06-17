@@ -1291,17 +1291,6 @@ def patch_rom(spoiler: Spoiler, world: World, rom: Rom) -> Rom:
     rom.write_int16(0x00E1F3CA, 0x5036)
     rom.write_int16(0x00E1F3CC, 0x5036)
 
-    # Remove mask reaction text IDs from all actors not involved in the
-    # mask trading sequence. See z_face_reaction.c in decomp for original
-    # values or https://wiki.cloudmodding.com/oot/Code_(File)/NTSC_1.0#Mask_Reaction_Text.
-    # Text ID 0x0000 is the default if a mask is not being worn.
-    # Convenience hack to allow the player to keep the bunny hood on when interacting
-    # with actors that give items (rolling goron, lab dive, etc.)
-    if world.settings.auto_equip_masks:
-        for mask_segment_id in range(0x00, 0x3C):
-            if mask_segment_id not in [0x05, 0x06, 0x07, 0x0F, 0x15, 0x1C]:
-                rom.write_int16s(0x00B66E60 + mask_segment_id * 0x12, [0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000])
-
     # Make the Kakariko Gate not open with the MS
     if world.settings.open_kakariko != 'open':
         rom.write_int32(0xDD3538, 0x34190000)  # li t9, 0
