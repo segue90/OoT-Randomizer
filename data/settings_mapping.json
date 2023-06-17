@@ -393,6 +393,7 @@
             "default_targeting",
             "display_dpad",
             "dpad_dungeon_menu",
+            "auto_equip_masks",
             "correct_model_colors",
             "randomize_all_cosmetics"
           ]

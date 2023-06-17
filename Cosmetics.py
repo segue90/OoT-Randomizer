@@ -949,6 +949,14 @@ def patch_music_changes(rom: Rom, settings: Settings, log: CosmeticsLog, symbols
     log.slowdown_music_when_lowhp = settings.slowdown_music_when_lowhp
 
 
+def patch_mask_autoequip(rom: Rom, settings: Settings, log: CosmeticsLog, symbols: dict[str, int]) -> None:
+    # Automatically re-equip the current mask on scene change
+    if settings.auto_equip_masks:
+        rom.write_byte(symbols['CFG_MASK_AUTOEQUIP'], 0x01)
+    else:
+        rom.write_byte(symbols['CFG_MASK_AUTOEQUIP'], 0x00)
+
+
 legacy_cosmetic_data_headers: list[int] = [
     0x03481000,
     0x03480810,
@@ -1108,6 +1116,17 @@ patch_sets[0x1F073FDD] = {
     "symbols": {
         **patch_sets[0x1F073FDC]["symbols"],
         "CFG_AUDIOBANK_TABLE_EXTENDED_ADDR": 0x0064
+    }
+}
+
+# 7.1.130
+patch_sets[0x1F073FDE] = {
+    "patches": patch_sets[0x1F073FDD]["patches"] + [
+        patch_mask_autoequip,  # Patch music needs to be moved into a versioned patch after introducing custom instrument sets in order for older patches to still work. This should work because when running the global patches we make sure they're not in the versioned patch set.
+    ],
+    "symbols": {
+        **patch_sets[0x1F073FDD]["symbols"],
+        "CFG_MASK_AUTOEQUIP": 0x0068
     }
 }
 
