@@ -3690,7 +3690,7 @@ class SettingInfos:
             equip swap masks is lost, travelling through time will
             unequip the mask as adult.
         ''',
-        default        = True,
+        default        = False,
     )
 
     correct_model_colors = Checkbutton(
