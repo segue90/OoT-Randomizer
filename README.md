@@ -163,7 +163,7 @@ issue. You should always Hard Reset to avoid this issue entirely.
 * The dummy boss key chest on the wall of Forest Temple's twisted hallway now matches the real version of the chest in the straightened version of the room.
 * The Kakariko Well water will no longer be up as adult to facilitate a glitch strategy for entering the well.
 * The message table has been extended to allow further developments which require more added textboxes.
-* Currently worn mask will now be preserved when transitioning scenes or resetting.
+* New timesaver setting `Maintain Mask Equips through Scene Changes` which makes it so the currently worn mask will now be preserved when transitioning scenes or resetting.
 * The ocarina can now be used in some rooms it cannot normally be used in to allow warping out of them.
 * Link the Goron will now give you the item reward regardless of which dialog option you choose.
 * Models created using the newer ModLoder64 pipeline are now compatible with the randomizer.
