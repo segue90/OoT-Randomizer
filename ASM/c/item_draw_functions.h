@@ -39,6 +39,7 @@ void draw_gi_shrink_keys(z64_game_t *game, uint32_t draw_id);
 void draw_gi_boss_keys(z64_game_t *game, uint32_t draw_id);
 void draw_gi_boss_altered(z64_game_t *game, uint32_t draw_id);
 void draw_gi_boss_altflip(z64_game_t *game, uint32_t draw_id);
+void draw_gi_silver_rupee_pouch(z64_game_t *game, uint32_t draw_id);
 
 
 #endif
