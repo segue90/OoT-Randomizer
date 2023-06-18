@@ -971,10 +971,10 @@ def get_pool_core(world: World) -> tuple[list[str], dict[str, Item]]:
     world.distribution.collect_starters(world.state)
 
     if not world.settings.shuffle_individual_ocarina_notes:
-        world.state.collect(ItemFactory('Ocarina A Button'))
-        world.state.collect(ItemFactory('Ocarina C up Button'))
-        world.state.collect(ItemFactory('Ocarina C down Button'))
-        world.state.collect(ItemFactory('Ocarina C left Button'))
-        world.state.collect(ItemFactory('Ocarina C right Button'))
+        world.state.collect(ItemFactory('Ocarina A Button', world))
+        world.state.collect(ItemFactory('Ocarina C up Button', world))
+        world.state.collect(ItemFactory('Ocarina C down Button', world))
+        world.state.collect(ItemFactory('Ocarina C left Button', world))
+        world.state.collect(ItemFactory('Ocarina C right Button', world))
 
     return pool, placed_items

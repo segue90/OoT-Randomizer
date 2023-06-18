@@ -350,7 +350,7 @@
           "text": "Misc",
           "row_span": [1,1,1],
           "settings": [
-            "randomize_ocarina_melodies",
+            "ocarina_songs",
             "correct_chest_appearances",
             "minor_items_as_major_chest",
             "invisible_chests",

@@ -3,6 +3,10 @@
 
 #include "z64.h"
 
+extern uint8_t CFG_CORRECT_MODEL_COLORS;
+extern colorRGB16_t CFG_A_BUTTON_COLOR;
+extern colorRGB16_t CFG_C_BUTTON_COLOR;
+
 void draw_gi_bombchu_and_masks(z64_game_t *game, uint32_t draw_id);
 void draw_gi_eggs_and_medallions(z64_game_t *game, uint32_t draw_id);
 void draw_gi_sold_out(z64_game_t *game, uint32_t draw_id);

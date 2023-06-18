@@ -21,8 +21,8 @@ from Messages import read_messages, update_message_by_id, read_shop_items, updat
         write_shop_items, remove_unused_messages, make_player_message, \
         add_item_messages, repack_messages, shuffle_messages, \
         get_message_by_id, TextCode
+from OcarinaSongs import patch_songs
 from MQ import patch_files, File, update_dmadata, insert_space, add_relocations
-from OcarinaSongs import replace_songs
 from Rom import Rom
 from SaveContext import SaveContext, Scenes, FlagType
 from SceneFlags import get_alt_list_bytes, get_collectible_flag_table, get_collectible_flag_table_bytes
@@ -64,13 +64,13 @@ def patch_rom(spoiler: Spoiler, world: World, rom: Rom) -> Rom:
 
     # Load models into the extended object table.
     zobj_imports = [
-        ('object_gi_triforce', data_path('Triforce.zobj'), 0x193),  # Triforce Piece
-        ('object_gi_keyring',  data_path('KeyRing.zobj'),  0x195),  # Key Rings
-        ('object_gi_warpsong', data_path('Note.zobj'),     0x196),  # Inverted Music Note
-        ('object_gi_chubag',   data_path('ChuBag.zobj'),   0x197),  # Bombchu Bag
-        ('object_gi_abutton',  data_path('A_Button.zobj'), 0x199),  # A button
-        ('object_gi_cbutton',  data_path('C_Button_Horizontal.zobj'), 0x19A),  # C button Horizontal
-        ('object_gi_cbutton',  data_path('C_Button_Vertical.zobj'), 0x19B),  # C button Vertical
+        ('object_gi_triforce', data_path('items/Triforce.zobj'), 0x193),  # Triforce Piece
+        ('object_gi_keyring',  data_path('items/KeyRing.zobj'),  0x195),  # Key Rings
+        ('object_gi_warpsong', data_path('items/Note.zobj'),     0x196),  # Inverted Music Note
+        ('object_gi_chubag',   data_path('items/ChuBag.zobj'),   0x197),  # Bombchu Bag
+        ('object_gi_abutton',  data_path('items/A_Button.zobj'), 0x1A8),  # A button
+        ('object_gi_cbutton',  data_path('items/C_Button_Horizontal.zobj'), 0x1A9),  # C button Horizontal
+        ('object_gi_cbutton',  data_path('items/C_Button_Vertical.zobj'), 0x1AA),  # C button Vertical
     ]
 
     extended_objects_start = start_address = rom.dma.free_space()
@@ -2456,10 +2456,7 @@ def patch_rom(spoiler: Spoiler, world: World, rom: Rom) -> Rom:
     # available number of skulls in the world instead of 100.
     rom.write_int16(0xBB340E, world.available_tokens)
 
-    replace_songs(world, rom,
-        frog=world.settings.ocarina_songs in ('frog', 'all'),
-        warp=world.settings.ocarina_songs in ('warp', 'all'),
-    )
+    patch_songs(world, rom)
 
     if world.settings.shuffle_individual_ocarina_notes:
         rom.write_byte(rom.sym('SHUFFLE_OCARINA_BUTTONS'), 1)

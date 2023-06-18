@@ -462,8 +462,6 @@ void draw_gi_boss_keys(z64_game_t *game, uint32_t draw_id) {
     gSPDisplayList(gfx->poly_xlu.p++, item_draw_table[draw_id].args[1].dlist);
 }
 
-extern uint8_t CFG_CORRECT_MODEL_COLORS;
-extern colorRGB16_t CFG_A_BUTTON_COLOR;
 void draw_gi_a_button(z64_game_t *game, uint32_t draw_id) {
     z64_gfx_t *gfx = game->common.gfx;
     colorRGBA8_t prim_color = item_draw_table[draw_id].args[1].color;
@@ -479,7 +477,6 @@ void draw_gi_a_button(z64_game_t *game, uint32_t draw_id) {
     gSPDisplayList(gfx->poly_xlu.p++, item_draw_table[draw_id].args[0].dlist);
 }
 
-extern colorRGB16_t CFG_C_BUTTON_COLOR;
 void draw_gi_c_button_vertical(z64_game_t *game, uint32_t draw_id) {
     z64_gfx_t *gfx = game->common.gfx;
     colorRGBA8_t prim_color = item_draw_table[draw_id].args[1].color;

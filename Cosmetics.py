@@ -738,7 +738,6 @@ def patch_button_colors(rom: Rom, settings: Settings, log: CosmeticsLog, symbols
             log_dict['colors'][patch] = Colors.color_to_hex(colors[patch])
 
 
-
 def patch_sfx(rom: Rom, settings: Settings, log: CosmeticsLog, symbols: dict[str, int]) -> None:
     # Configurable Sound Effects
     sfx_config = [
@@ -934,7 +933,8 @@ def patch_voices(rom: Rom, settings: Settings, log: CosmeticsLog, symbols: dict[
         # Write the setting to the log
         log.sfx[log_key] = voice_setting
 
-def patch_music_changes(rom, settings, log, symbols):
+
+def patch_music_changes(rom: Rom, settings: Settings, log: CosmeticsLog, symbols: dict[str, int]) -> None:
     # Music tempo changes
     if settings.speedup_music_for_last_triforce_piece:
         rom.write_byte(symbols['CFG_SPEEDUP_MUSIC_FOR_LAST_TRIFORCE_PIECE'], 0x01)
@@ -948,7 +948,7 @@ def patch_music_changes(rom, settings, log, symbols):
         rom.write_byte(symbols['CFG_SLOWDOWN_MUSIC_WHEN_LOWHP'], 0x00)
     log.slowdown_music_when_lowhp = settings.slowdown_music_when_lowhp
 
-def patch_correct_model_colors(rom, settings, log, symbols):
+def patch_correct_model_colors(rom: Rom, settings: Settings, log: CosmeticsLog, symbols: dict[str, int]) -> None:
     if settings.correct_model_colors:
         rom.write_byte(symbols['CFG_CORRECT_MODEL_COLORS'], 0x01)
     else:
@@ -1103,12 +1103,31 @@ patch_sets[0x1F073FDC] = {
         **patch_sets[0x1F073FDB]["symbols"],
         "CFG_SPEEDUP_MUSIC_FOR_LAST_TRIFORCE_PIECE": 0x0058,
         "CFG_SLOWDOWN_MUSIC_WHEN_LOWHP": 0x0059,
-        "CFG_RAINBOW_TUNIC_ENABLED": 0x005A,
-        "CFG_TUNIC_COLORS": 0x005B,
     }
 }
 
-def patch_cosmetics(settings, rom):
+# 7.1.123
+patch_sets[0x1F073FDD] = {
+    "patches": patch_sets[0x1F073FDC]["patches"] + [
+        patch_music,  # Patch music needs to be moved into a versioned patch after introducing custom instrument sets in order for older patches to still work. This should work because when running the global patches we make sure they're not in the versioned patch set.
+    ],
+    "symbols": {
+        **patch_sets[0x1F073FDC]["symbols"],
+        "CFG_AUDIOBANK_TABLE_EXTENDED_ADDR": 0x0064
+    }
+}
+
+# 7.1.134
+patch_sets[0x1F073FDE] = {
+    "patches": patch_sets[0x1F073FDD]["patches"] + [
+        patch_correct_model_colors,
+    ],
+    "symbols": {
+        **patch_sets[0x1F073FDD]["symbols"],
+        "CFG_CORRECT_MODEL_COLORS": 0x0068
+    }
+}
+def patch_cosmetics(settings: Settings, rom: Rom) -> CosmeticsLog:
     # re-seed for aesthetic effects. They shouldn't be affected by the generation seed
     random.seed()
     settings.resolve_random_settings(cosmetic=True)
@@ -1173,8 +1192,6 @@ class CosmeticsLog:
         self.sfx: dict[str, str] = {}
         self.bgm: dict[str, str] = {}
         self.bgm_groups: dict[str, list | dict] = {}
-        self.bank_dma_index: Optional[int] = None
-        self.instr_dma_index: Optional[int] = None
 
         self.src_dict: dict = {}
         self.errors: list[str] = []

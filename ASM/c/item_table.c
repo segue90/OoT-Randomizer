@@ -303,11 +303,11 @@ item_row_t item_table[] = {
     [0x0102] = ITEM_ROW(0x4D,     SILVER_CHEST, 0x41, -1, 0x902F, 0x00D1, 0x7F, no_upgrade, give_silver_rupee_pouch, CASTLE_ID,  0x14, resolve_text_silver_rupee_pouches), // Silver Rupee Pouch (Ganons Castle Water Trial)
     [0x0103] = ITEM_ROW(0x4D,     SILVER_CHEST, 0x41, -1, 0x9030, 0x00D1, 0x7F, no_upgrade, give_silver_rupee_pouch, CASTLE_ID,  0x15, resolve_text_silver_rupee_pouches), // Silver Rupee Pouch (Ganons Castle Forest Trial)
 
-    [0x0104] = ITEM_ROW(0x53,      GILDED_CHEST, 0x41, -1, 0x908B, 0x0199, 0x80, no_upgrade, unlock_ocarina_note, 0, -1, NULL), // Ocarina A
-    [0x0105] = ITEM_ROW(0x53,      GILDED_CHEST, 0x41, -1, 0x908C, 0x019B, 0x81, no_upgrade, unlock_ocarina_note, 1, -1, NULL), // Ocarina C up
-    [0x0106] = ITEM_ROW(0x53,      GILDED_CHEST, 0x41, -1, 0x908D, 0x019B, 0x82, no_upgrade, unlock_ocarina_note, 2, -1, NULL), // Ocarina C down
-    [0x0107] = ITEM_ROW(0x53,      GILDED_CHEST, 0x41, -1, 0x908E, 0x019A, 0x83, no_upgrade, unlock_ocarina_note, 3, -1, NULL), // Ocarina C left
-    [0x0108] = ITEM_ROW(0x53,      GILDED_CHEST, 0x41, -1, 0x908F, 0x019A, 0x84, no_upgrade, unlock_ocarina_note, 4, -1, NULL), // Ocarina C right
+    [0x0104] = ITEM_ROW(0x53,      GILDED_CHEST, 0x41, -1, 0x908C, 0x01A8, 0x90, no_upgrade, unlock_ocarina_note, 0, -1, NULL), // Ocarina A
+    [0x0105] = ITEM_ROW(0x53,      GILDED_CHEST, 0x41, -1, 0x908D, 0x01AA, 0x91, no_upgrade, unlock_ocarina_note, 1, -1, NULL), // Ocarina C up
+    [0x0106] = ITEM_ROW(0x53,      GILDED_CHEST, 0x41, -1, 0x908E, 0x01AA, 0x92, no_upgrade, unlock_ocarina_note, 2, -1, NULL), // Ocarina C down
+    [0x0107] = ITEM_ROW(0x53,      GILDED_CHEST, 0x41, -1, 0x908F, 0x01A9, 0x93, no_upgrade, unlock_ocarina_note, 3, -1, NULL), // Ocarina C left
+    [0x0108] = ITEM_ROW(0x53,      GILDED_CHEST, 0x41, -1, 0x9090, 0x01A9, 0x94, no_upgrade, unlock_ocarina_note, 4, -1, NULL), // Ocarina C right
 };
 
 /*  Determine which message to display based on the number of silver rupees collected.
