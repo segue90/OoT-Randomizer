@@ -123,6 +123,7 @@ issue. You should always Hard Reset to avoid this issue entirely.
   * New shuffle setting `Treasure Chest Game Keys` makes it so the keys from the Treasure Chest Game can be found anywhere in the world rather than just in the game itself, and the chests of the minigame can contain any item. It also makes the shopkeeper sell a random item.
   * New World setting `Shuffle Thieves' Hideout Entrances`, which requires first shuffling interior entrances, shuffles the Thieves' Hideout rooms into the interior entrance pool.
   * New shuffle setting `Shuffle Silver Rupees` shuffles the silver rupees into the item pool. To solve a silver rupee puzzle, you will need to find all the associated silver rupees around the world. You can also use the setting `Silver Rupee Pouches` to make some or all of the silver rupees grouped into pouches so that, similar to key rings, all silver rupees for any given puzzle will be found in a single item location.
+  * New timesaver setting `Ruto Already at F1` which, in Vanilla Jabu Jabu, makes it so that Ruto is already present on the first floor of the dungeon (in the room with all the orifices you fall down) instead of having to carry her up there to set that flag.
 * **Hints**
   * New `Important Checks` hint type which hints at how many major items are in a given region.
   * New Misc. Hint `Frogs Ocarina Game` which tells you what item you'll get from the Zora's River frog minigame. The hint appears in the dialog box that's printed before they jump onto the log.

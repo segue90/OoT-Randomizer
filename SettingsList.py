@@ -3133,6 +3133,17 @@ class SettingInfos:
         },
     )
 
+    ruto_already_f1_jabu = Checkbutton(
+        gui_text       = 'Ruto Already at F1',
+        gui_tooltip    = '''\
+            Ruto in Jabu Jabu's Belly will already be at the top floor.
+            Only applied in the original version of the dungeon, since
+            in Master Quest you don't need to bring Ruto up.
+        ''',
+        default        = False,
+        shared         = True,
+    )
+
     ocarina_songs = Combobox(
         gui_text       = 'Randomize Ocarina Song Notes',
         default        = 'off',
