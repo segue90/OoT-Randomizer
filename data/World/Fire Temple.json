@@ -143,7 +143,7 @@
             "Fire Temple Highest Goron Chest": "
                 Megaton_Hammer and
                 (can_play(Song_of_Time) or
-                    (logic_hammer_through_walls and (Hover_Boots or has_explosives)))",
+                    (logic_rusted_switches and (Hover_Boots or has_explosives)))",
             "Fire Temple Megaton Hammer Chest": "has_explosives",
             "Fire Temple Flame Maze Right Side Pot 1": "True",
             "Fire Temple Flame Maze Right Side Pot 2": "True",

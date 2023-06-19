@@ -60,7 +60,7 @@
             "Spirit Temple Shared": "
                 (Small_Key_Spirit_Temple, 2) and
                 (has_bombchus or at('Adult Spirit Temple', (Small_Key_Spirit_Temple, 7) and
-                    logic_hammer_through_walls and Megaton_Hammer))"
+                    logic_rusted_switches and Megaton_Hammer))"
         }
     },
     {

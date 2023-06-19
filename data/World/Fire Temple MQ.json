@@ -122,7 +122,7 @@
         },
         "exits": {
             "Fire Temple Upper Lizalfos Maze": "
-                ((has_explosives or logic_hammer_through_walls) and Hookshot) or
+                ((has_explosives or logic_rusted_switches) and Hookshot) or
                 (logic_fire_mq_maze_hovers and Hover_Boots) or logic_fire_mq_maze_jump"
         }
     },
@@ -139,7 +139,7 @@
             "Fire Temple Shortcut": "has_explosives",
             "Fire Temple Block On Fire Room": "
                 (Longshot or (can_play(Song_of_Time) and Hookshot)) and
-                (has_explosives or logic_hammer_through_walls or (Longshot and logic_fire_scarecrow))",
+                (has_explosives or logic_rusted_switches or (Longshot and logic_fire_scarecrow))",
             "Fire Temple Shoot Torch On Wall Room": "(Small_Key_Fire_Temple, 3)"
         }
     },
