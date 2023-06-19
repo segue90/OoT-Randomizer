@@ -126,6 +126,7 @@ issue. You should always Hard Reset to avoid this issue entirely.
   * New timesaver setting `Ruto Already at F1` which, in Vanilla Jabu Jabu, makes it so that Ruto is already present on the first floor of the dungeon (in the room with all the orifices you fall down) instead of having to carry her up there to set that flag.
 * **Hints**
   * New `Important Checks` hint type which hints at how many major items are in a given region.
+    * Double Defense and Biggoron's Sword are counted as major for this hint type.
   * New Misc. Hint `Frogs Ocarina Game` which tells you what item you'll get from the Zora's River frog minigame. The hint appears in the dialog box that's printed before they jump onto the log.
   * Add a goal category for the items required to open the Door of Time, if it's closed.
   * New `MW Season 3 (WotH)` hint distribution which is similar to the `MW Season 3` hint distribution except with Way of the Hero hints instead of goal hints.
