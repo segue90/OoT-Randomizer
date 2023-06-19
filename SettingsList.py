@@ -201,8 +201,8 @@ logic_tricks = {
                     - Ice Cavern Frozen Blue Rupee
                     - Ganons Castle MQ Water Trial Recovery Heart
                     '''},
-    'Hammer Objects Through Walls': {
-        'name'    : 'logic_hammer_through_walls',
+    'Hammer Rusted Switches and Boulders Through Walls': {
+        'name'    : 'logic_rusted_switches',
         'tags'    : ("General", "Fire Temple", "Fire Temple MQ", "Spirit Temple MQ", "Ganon's Castle MQ", "Master Quest", "Vanilla Dungeons", "Adult",),
         'tooltip' : '''\
                     Applies to:
@@ -732,8 +732,8 @@ logic_tricks = {
         'name'    : 'logic_dc_chu_eyes',
         'tags'    : ("Dodongo's Cavern", "Vanilla Dungeons", "Child", "Adult",),
         'tooltip' : '''\
-                    Uses Bombchus to skip needing to go
-                    through the dungeon, allowing
+                    You can use Bombchus to skip needing
+                    to go through the dungeon, allowing
                     immediate access to the back areas.
                     '''},
     'Dodongo\'s Cavern Smash the Boss Lobby Floor': {
