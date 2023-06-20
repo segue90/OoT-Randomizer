@@ -142,6 +142,7 @@ issue. You should always Hard Reset to avoid this issue entirely.
   * There are new chest, pot, and crate textures for Pieces of Heart and Heart Containers.
   * Custom music has moved to a new format. See `data/Music/README.md` for more details.
   * New and improved model for key rings.
+  * Several new tricks have been added.
 
 #### Bug Fixes
 * **Misc.**
@@ -155,6 +156,7 @@ issue. You should always Hard Reset to avoid this issue entirely.
   * Starting with Magic Beans will now properly start you with 10 beans instead of 9. 
   * A rare softlock when fighting Gohma present in the original game has been fixed.
   * A crash when diving and resurfacing in very shallow water present in the original game has been fixed.
+  * Various miscellaneous logic issues have been addressed.
 * **Hints**
   * Fix the cryptic hint for Ganon's Castle Boss Key.
   * Fix missing punctuation in dual hints.
@@ -183,6 +185,7 @@ issue. You should always Hard Reset to avoid this issue entirely.
 * In Triforce Hunt, your current and goal number of triforce pieces are now displayed on the file select screen.
 * Python 3.6 and 3.7 are no longer supported.
 * Some inescapable entrances are no longer valid targets for Overworld Spawn entrances.
+* Using Farore's Wind to warp between dungeons is now considered in logic.
 
 #### New Speedups
 * Various cutscenes removed or shortened, such as Water Temple and Gerudo Fortress gates and scarecrow spawn cutscenes.
