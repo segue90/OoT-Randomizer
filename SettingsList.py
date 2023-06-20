@@ -3265,6 +3265,15 @@ class SettingInfos:
         shared         = True,
     )
 
+    key_appearance_match_dungeon = Checkbutton(
+        gui_text       = 'Key Appearance Matches Dungeon',
+        gui_tooltip    = '''\
+            Small keys, key rings, and boss keys
+            will use custom models to match their dungeon.
+        ''',
+        shared         = True,
+    )
+
     clearer_hints = Checkbutton(
         gui_text       = 'Clearer Hints',
         gui_tooltip    = '''\
