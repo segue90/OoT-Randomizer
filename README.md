@@ -125,6 +125,7 @@ issue. You should always Hard Reset to avoid this issue entirely.
   * New shuffle setting `Shuffle Silver Rupees` shuffles the silver rupees into the item pool. To solve a silver rupee puzzle, you will need to find all the associated silver rupees around the world. You can also use the setting `Silver Rupee Pouches` to make some or all of the silver rupees grouped into pouches so that, similar to key rings, all silver rupees for any given puzzle will be found in a single item location.
   * New timesaver setting `Ruto Already at F1` which, in Vanilla Jabu Jabu, makes it so that Ruto is already present on the first floor of the dungeon (in the room with all the orifices you fall down) instead of having to carry her up there to set that flag.
   * New setting `Key Appearance Matches Dungeon` which changes the models for small keys and boss keys to indicate which dungeon the key belongs to.
+  * New setting `Shuffle Individual Ocarina Notes`, which shuffles items representing each of the 5 ocarina notes into the item pool. You cannot play any note on the ocarina until you find its corresponding item.
 * **Hints**
   * New `Important Checks` hint type which hints at how many major items are in a given region.
     * Double Defense and Biggoron's Sword are counted as major for this hint type.

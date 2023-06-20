@@ -303,6 +303,13 @@ item_row_t item_table[] = {
     [0x0102] = ITEM_ROW(0x4D,      SILVER_CHEST, 0x41, -1, 0x902F, 0x00D1, 0x7F, no_upgrade, give_silver_rupee_pouch, CASTLE_ID,  0x14, resolve_text_silver_rupee_pouches), // Silver Rupee Pouch (Ganons Castle Water Trial)
     [0x0103] = ITEM_ROW(0x4D,      SILVER_CHEST, 0x41, -1, 0x9030, 0x00D1, 0x7F, no_upgrade, give_silver_rupee_pouch, CASTLE_ID,  0x15, resolve_text_silver_rupee_pouches), // Silver Rupee Pouch (Ganons Castle Forest Trial)
 
+    // Ocarina button models
+    [0x0104] = ITEM_ROW(0x53,      GILDED_CHEST, 0x41, -1, 0x908C, 0x01A8, 0x90, no_upgrade, unlock_ocarina_note, 0, -1, NULL), // Ocarina A
+    [0x0105] = ITEM_ROW(0x53,      GILDED_CHEST, 0x41, -1, 0x908D, 0x01AA, 0x91, no_upgrade, unlock_ocarina_note, 1, -1, NULL), // Ocarina C up
+    [0x0106] = ITEM_ROW(0x53,      GILDED_CHEST, 0x41, -1, 0x908E, 0x01AA, 0x92, no_upgrade, unlock_ocarina_note, 2, -1, NULL), // Ocarina C down
+    [0x0107] = ITEM_ROW(0x53,      GILDED_CHEST, 0x41, -1, 0x908F, 0x01A9, 0x93, no_upgrade, unlock_ocarina_note, 3, -1, NULL), // Ocarina C left
+    [0x0108] = ITEM_ROW(0x53,      GILDED_CHEST, 0x41, -1, 0x9090, 0x01A9, 0x94, no_upgrade, unlock_ocarina_note, 4, -1, NULL), // Ocarina C right
+
     // Custom Key Models
     [0x0109] = ITEM_ROW(0x53,        GOLD_CHEST, 0x41, -1, 0x0006, 0x01A3, 0x8A, no_upgrade, give_dungeon_item, 0x01, FOREST_ID, NULL ), // Forest Temple Boss Key
     [0x010A] = ITEM_ROW(0x53,        GOLD_CHEST, 0x41, -1, 0x001C, 0x01A4, 0x8B, no_upgrade, give_dungeon_item, 0x01, FIRE_ID,   NULL ), // Fire Temple Boss Key
@@ -320,6 +327,7 @@ item_row_t item_table[] = {
     [0x0116] = ITEM_ROW(0x53,      SILVER_CHEST, 0x41, -1, 0x00A0, 0x01A0, 0x87, no_upgrade, give_small_key, FORT_ID,   -1, NULL), // Thieves' Hideout Small Key
     [0x0117] = ITEM_ROW(0x53,      SILVER_CHEST, 0x41, -1, 0x00A1, 0x01A1, 0x88, no_upgrade, give_small_key, CASTLE_ID, -1, NULL), // Ganon's Castle Small Key
     [0x0118] = ITEM_ROW(0x53,      SILVER_CHEST, 0x41, -1, 0x913E, 0x01A2, 0x89, no_upgrade, give_small_key, TCG_ID,    -1, NULL), // Small Key (Chest Game)
+
 };
 
 /*  Determine which message to display based on the number of silver rupees collected.

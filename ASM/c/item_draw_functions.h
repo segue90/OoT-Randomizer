@@ -4,6 +4,9 @@
 #include "z64.h"
 
 extern uint8_t CUSTOM_KEY_MODELS;
+extern uint8_t CFG_CORRECT_MODEL_COLORS;
+extern colorRGB16_t CFG_A_BUTTON_COLOR;
+extern colorRGB16_t CFG_C_BUTTON_COLOR;
 
 void draw_gi_bombchu_and_masks(z64_game_t *game, uint32_t draw_id);
 void draw_gi_eggs_and_medallions(z64_game_t *game, uint32_t draw_id);
@@ -40,6 +43,9 @@ void draw_gi_boss_keys(z64_game_t *game, uint32_t draw_id);
 void draw_gi_boss_altered(z64_game_t *game, uint32_t draw_id);
 void draw_gi_boss_altflip(z64_game_t *game, uint32_t draw_id);
 void draw_gi_silver_rupee_pouch(z64_game_t *game, uint32_t draw_id);
+void draw_gi_a_button(z64_game_t *game, uint32_t draw_id);
+void draw_gi_c_button_vertical(z64_game_t *game, uint32_t draw_id);
+void draw_gi_c_button_horizontal(z64_game_t *game, uint32_t draw_id);
 
 
 #endif

@@ -158,6 +158,11 @@ item_draw_table_entry_t item_draw_table[] = {
     [0x8C] = { draw_gi_boss_altflip,        { 0x06000E30, 0x060016D0, 0xFACD8FFF, 0xF5B433FF, 0xFFFFFFFF, 0x8C7800FF } }, // Boss Key (Spirit)
     [0x8D] = { draw_gi_boss_altered,        { 0x06000490, 0x06001350, 0x9454ebFF, 0x7A18DDFF, 0xFFFFFFFF, 0x8C7800FF } }, // Boss Key (Shadow)
     [0x8E] = { draw_gi_boss_keys,           { 0x06000CA0, 0x06000F08, 0x6E7467FF, 0x262724FF, 0xFFFFFFFF, 0x8C7800FF } }, // Boss Key (Ganon)
+    [0x8F] = { draw_gi_a_button,            { 0x06000DA0, 0x5A5AFFFF } }, // A button
+    [0x90] = { draw_gi_c_button_vertical,   { 0x06000960, 0xFFA000FF, 0 } }, // Cup button
+    [0x91] = { draw_gi_c_button_vertical,   { 0x06000960, 0xFFA000FF, 1 } }, // Cdown button
+    [0x92] = { draw_gi_c_button_horizontal, { 0x06000E10, 0xFFA000FF, 1 } }, // Cleft button
+    [0x93] = { draw_gi_c_button_horizontal, { 0x06000E10, 0xFFA000FF, 0 } }, // Cright button
 };
 
 void base_draw_gi_model(z64_game_t *game, uint32_t draw_id) {
