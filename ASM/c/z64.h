@@ -1316,8 +1316,9 @@ typedef struct
   char             unk_02_[0x0190];        /* 0x000E0 */
   z64_actor_t     *camera_focus;           /* 0x00270 */
   char             unk_03_[0x00AE];        /* 0x00274 */
-  uint16_t         camera_mode;            /* 0x00322 */
-  char             unk_04_[0x001A];        /* 0x00324 */
+  uint16_t         camera_setting;         /* 0x00322 */
+  uint16_t         camera_mode;            /* 0x00324 */
+  char             unk_04_[0x0018];        /* 0x00326 */
   uint16_t         camera_flag_1;          /* 0x0033E */
   char             unk_05_[0x016C];        /* 0x00340 */
   int16_t          event_flag;             /* 0x004AC */

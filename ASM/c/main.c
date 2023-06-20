@@ -20,6 +20,7 @@
 #include "textures.h"
 #include "scene.h"
 #include "music.h"
+#include "invertYaxis.h"
 
 void Gameplay_InitSkybox(z64_game_t* globalCtx, int16_t skyboxId);
 
@@ -40,6 +41,7 @@ void before_game_state_update() {
     update_hud_colors();
     process_extern_ctxt();
     manage_music_changes();
+    manage_invert_yaxis();
 }
 
 void after_game_state_update() {
