@@ -1,4 +1,4 @@
 #include <stdbool.h>
 #include "z64.h"
 
-void manage_invert_yaxis();
+void manage_uninvert_yaxis();

@@ -956,11 +956,11 @@ def patch_correct_model_colors(rom: Rom, settings: Settings, log: CosmeticsLog, 
     log.correct_model_colors = settings.correct_model_colors
 
 def patch_yaxis(rom: Rom, settings: Settings, log: CosmeticsLog, symbols: dict[str, int]) -> None:
-    if settings.invert_y_axis_in_first_person_camera:
-        rom.write_byte(symbols['CFG_INVERT_YAXIS_IN_FIRST_PERSON_CAMERA'], 0x01)
+    if settings.uninvert_y_axis_in_first_person_camera:
+        rom.write_byte(symbols['CFG_UNINVERT_YAXIS_IN_FIRST_PERSON_CAMERA'], 0x01)
     else:
-        rom.write_byte(symbols['CFG_INVERT_YAXIS_IN_FIRST_PERSON_CAMERA'], 0x00)
-    log.invert_y_axis_in_first_person_camera = settings.invert_y_axis_in_first_person_camera
+        rom.write_byte(symbols['CFG_UNINVERT_YAXIS_IN_FIRST_PERSON_CAMERA'], 0x00)
+    log.uninvert_y_axis_in_first_person_camera = settings.uninvert_y_axis_in_first_person_camera
 
 legacy_cosmetic_data_headers: list[int] = [
     0x03481000,
@@ -1135,14 +1135,14 @@ patch_sets[0x1F073FDE] = {
     }
 }
 
-# 7.1.139
+# 7.1.144
 patch_sets[0x1F073FDF] = {
     "patches": patch_sets[0x1F073FDE]["patches"] + [
         patch_yaxis,
     ],
     "symbols": {
         **patch_sets[0x1F073FDE]["symbols"],
-        "CFG_INVERT_YAXIS_IN_FIRST_PERSON_CAMERA": 0x0069,
+        "CFG_UNINVERT_YAXIS_IN_FIRST_PERSON_CAMERA": 0x0069,
     }
 }
 

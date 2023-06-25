@@ -1,10 +1,10 @@
-#include "invertYaxis.h"
+#include "uninvertYaxis.h"
 
-extern uint8_t CFG_INVERT_YAXIS_IN_FIRST_PERSON_CAMERA;
+extern uint8_t CFG_UNINVERT_YAXIS_IN_FIRST_PERSON_CAMERA;
 
-void manage_invert_yaxis() {
+void manage_uninvert_yaxis() {
 
-    if (CFG_INVERT_YAXIS_IN_FIRST_PERSON_CAMERA) {
+    if (CFG_UNINVERT_YAXIS_IN_FIRST_PERSON_CAMERA) {
         // Never if a choice textbox is on screen.
         if (z64_MessageGetState(((uint8_t *)(&z64_game)) + 0x20D8) == 4) {
             return;
