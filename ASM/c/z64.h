@@ -1895,6 +1895,7 @@ typedef struct EnGSwitch
 #define PlaySFX_addr                            0x800646F0
 #define z64_ScalePitchAndTempo_addr             0x800C64A0
 #define Font_LoadChar_addr                      0x8005BCE4
+#define GetItem_Draw_addr                       0x800570C0
 
 /* rom addresses */
 #define z64_icon_item_static_vaddr              0x007BD000
@@ -1976,6 +1977,7 @@ typedef void(*Message_ContinueTextbox_proc) (z64_game_t *play, uint16_t textId);
 
 typedef void(*PlaySFX_proc) (uint16_t sfxId);
 typedef void(*z64_ScalePitchAndTempo_proc)(float scaleTempoAndFreq, uint8_t duration);
+typedef void(*GetItem_Draw_proc)(z64_game_t *game, int16_t drawId);
 
 /* data */
 #define z64_file_mq             (*(OSMesgQueue*)      z64_file_mq_addr)
@@ -2064,6 +2066,7 @@ typedef void(*z64_ScalePitchAndTempo_proc)(float scaleTempoAndFreq, uint8_t dura
 
 #define PlaySFX ((PlaySFX_proc)PlaySFX_addr)
 #define Font_LoadChar ((Font_LoadChar_proc)Font_LoadChar_addr)
+#define GetItem_Draw            ((GetItem_Draw_proc)GetItem_Draw_addr)
 
 /* macros */
 #define GET_ITEMGETINF(flag) (z64_file.item_get_inf[(flag) >> 4] & (1 << ((flag) & 0xF)))
