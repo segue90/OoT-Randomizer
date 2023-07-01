@@ -350,7 +350,7 @@ KEYSANITY_MESSAGES: list[tuple[int, str]] = [
     (0x9036, "\x08You have found all of the \x05\x44Silver\x01Rupees\x05\x40 for the \x05\x44invisible blade room\x05\x40 in\x01the \x05\x45Shadow Temple\x05\x40!\x09"),
     (0x9037, "\x08You have found all of the \x05\x44Silver\x01Rupees\x05\x40 for the \x05\x46huge pit\x05\x40 in the\x01\x05\x45Shadow Temple\x05\x40!\x09"),
     (0x9038, "\x08You have found all of the \x05\x44Silver\x01Rupees\x05\x40 for the room with \x05\x45invisible\x01spikes\x05\x40 in the \x05\x45Shadow Temple\x05\x40!\x09"),
-    (0x9039, "\x08You have found all of the \x05\x44Silver\x01Rupees\x05\x40 for the \x05\x46sloped room\x05\x40in the\x01\x05\x46Gerudo Training Ground\x05\x40!\x09"),
+    (0x9039, "\x08You have found all of the \x05\x44Silver\x01Rupees\x05\x40 for the \x05\x46sloped room\x05\x40 in the\x01\x05\x46Gerudo Training Ground\x05\x40!\x09"),
     (0x903A, "\x08You have found all of the \x05\x44Silver\x01Rupees\x05\x40 for the \x05\x41lava room\x05\x40 in the\x01\x05\x46Gerudo Training Ground\x05\x40!\x09"),
     (0x903B, "\x08You have found all of the \x05\x44Silver\x01Rupees\x05\x40 for the \x05\x43water room\x05\x40 in the\x01\x05\x46Gerudo Training Ground\x05\x40!\x09"),
     (0x903C, "\x08You have found all of the \x05\x44Silver\x01Rupees\x05\x40 for the \x05\x41torch room\x05\x40 in the\x01child side of the \x05\x46Spirit Temple\x05\x40!\x09"),
