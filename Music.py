@@ -440,7 +440,6 @@ def rebuild_sequences(rom: Rom, sequences: list[Sequence], log: CosmeticsLog, sy
         rom.write_int32(0xB89AE0 + (i * 0x10), new_sequences[i].address)
         rom.write_int32(0xB89AE0 + (i * 0x10) + 0x04, new_sequences[i].size)
         seq = replacement_dict.get(i, None)
-        if seq:
             rom.write_int16(0xB89AE0 + (i * 0x10) + 0x08, seq.type)
 
     # Update instrument sets
