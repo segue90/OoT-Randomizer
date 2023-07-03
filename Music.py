@@ -520,8 +520,6 @@ def rebuild_sequences(rom: Rom, sequences: list[Sequence], log: CosmeticsLog, sy
         rom.write_int32(0xB89AE0 + (i * 0x10), new_sequences[i].address)
         rom.write_int32(0xB89AE0 + (i * 0x10) + 0x04, new_sequences[i].size)
         seq = replacement_dict.get(i, None)
-        #if seq:
-        #    rom.write_int16(0xB89AE0 + (i * 0x10) + 0x08, seq.type) *This breaks fanfares and battle music as this sets the cache load type to 2 for every sequence. There is no need to update this data.
 
     # Update instrument sets for bgm sequences
     for i in bgmlist:
