@@ -874,7 +874,7 @@ def restore_music(rom: Rom) -> None:
         rom.write_bytes(start, [0] * size)
         dma_entry.update(orig_start, orig_end, start)
 
-    # Writes new audiobank index from /data/audioindex.bin to audiobank index
+    # Writes new audiobank index from /data/custom_audiobank_index.bin to audiobank index
 def write_new_bank_index(rom: Rom) -> None:
     file_path = "data/custom_audiobank_index.bin"
     byte_list = []
