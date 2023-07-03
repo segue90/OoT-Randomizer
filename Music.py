@@ -19,6 +19,55 @@ AUDIOSEQ_DMADATA_INDEX: int = 4
 AUDIOBANK_DMADATA_INDEX: int = 3
 AUDIOTABLE_DMADATA_INDEX: int = 5
 
+bgmlist = [
+    0x02,
+    0x18,
+    0x19,
+    0x1A,
+    0x1B,
+    0x1C,
+    0x1D,
+    0x1E,
+    0x1F,
+    0x26,
+    0x27,
+    0x28,
+    0x29,
+    0x2A,
+    0x2C,
+    0x2D,
+    0x2E,
+    0x2F,
+    0x30,
+    0x38,
+    0x3A,
+    0x3C,
+    0x3E,
+    0x3F,
+    0x40,
+    0x42,
+    0x4A,
+    0x4B,
+    0x4C,
+    0x4E,
+    0x4F,
+    0x50,
+    0x55,
+    0x56,
+    0x58,
+    0x5A,
+    0x5B,
+    0x5C,
+    0x5F,
+    0x60,
+    0x61,
+    0x62,
+    0x63,
+    0x64,
+    0x65,
+    0x6B,
+    0x6C
+]
 # Format: (Title, Sequence ID)
 bgm_sequence_ids: tuple[tuple[str, int], ...] = (
     ("Hyrule Field", 0x02),
@@ -70,6 +119,23 @@ bgm_sequence_ids: tuple[tuple[str, int], ...] = (
     ("Mini-game", 0x6C),
 )
 
+fanfarelist = [
+    0x20,
+    0x21,
+    0x22,
+    0x23,
+    0x24,
+    0x2B,
+    0x32,
+    0x39,
+    0x3B,
+    0x3D,
+    0x41,
+    0x43,
+    0x51,
+    0x53,
+    0x59
+]
 fanfare_sequence_ids: tuple[tuple[str, int], ...] = (
     ("Game Over", 0x20),
     ("Boss Defeated", 0x21),
@@ -88,6 +154,20 @@ fanfare_sequence_ids: tuple[tuple[str, int], ...] = (
     ("Door of Time", 0x59),
 )
 
+ocarinalist = [
+    0x25,
+    0x33,
+    0x34,
+    0x35,
+    0x36,
+    0x37,
+    0x44,
+    0x45,
+    0x46,
+    0x47,
+    0x48,
+    0x49
+]
 ocarina_sequence_ids: tuple[tuple[str, int], ...] = (
     ("Prelude of Light", 0x25),
     ("Bolero of Fire", 0x33),
@@ -443,12 +523,27 @@ def rebuild_sequences(rom: Rom, sequences: list[Sequence], log: CosmeticsLog, sy
         #if seq:
         #    rom.write_int16(0xB89AE0 + (i * 0x10) + 0x08, seq.type) *This breaks fanfares and battle music as this sets the cache load type to 2 for every sequence. There is no need to update this data.
 
-    # Update instrument sets
-    for i in range(0x6E):
+    # Update instrument sets for bgm sequences
+    for i in bgmlist:
         base = 0xB89911 + 0xDD + (i * 2)
         j = replacement_dict.get(i if new_sequences[i].size else new_sequences[i].address, None)
         if j:
             rom.write_byte(base, j.instrument_set)
+
+        # Update instrument sets for fanfare sequences
+    for i in fanfarelist:
+        base = 0xB89911 + 0xDD + (i * 2)
+        j = replacement_dict.get(i if new_sequences[i].size else new_sequences[i].address, None)
+        if j:
+            rom.write_byte(base, j.instrument_set + 0x26)
+    write_new_bank_index(rom)
+
+         #Update instrument sets for ocarina fanfare sequences
+    for i in ocarinalist:
+        base = 0xB89911 + 0xDD + (i * 2)
+        j = replacement_dict.get(i if new_sequences[i].size else new_sequences[i].address, None)
+        if j:
+            rom.write_byte(base, j.instrument_set + 0x26)
 
     # Patch new instrument sets (banks) and add new instrument sounds
     # Only if we were passed CFG_AUDIOBANK_TABLE_EXTENDED_ADDR via symbols which means we're on the right version.
@@ -457,7 +552,7 @@ def rebuild_sequences(rom: Rom, sequences: list[Sequence], log: CosmeticsLog, sy
 
     added_banks = []  # Store copies of all the banks we've added
     added_instruments = []  # Store copies of all the instruments we've added
-    new_bank_index = 0x26
+    new_bank_index = 0x4C
     instr_data = bytearray(0)  # Store all the new instrument data that will be added to the end of audiotable
 
     audiobank_dma_entry = rom.dma[AUDIOBANK_DMADATA_INDEX]
@@ -551,8 +646,8 @@ def rebuild_sequences(rom: Rom, sequences: list[Sequence], log: CosmeticsLog, sy
         new_bank_data += bank.data
         new_bank_offset += len(bank.data)
 
-    # If we have new banks to add, move the entire audiobank file to a new place in ROM. Update the existing dmadata record
-    if len(new_bank_data) > 0:
+    # move the entire audiobank file to a new place in ROM. Update the existing dmadata record
+    if len(new_bank_data):
         # Zeroize existing file
         rom.write_bytes(audiobank_start, [0] * audiobank_size)
         # Add the new data
@@ -779,6 +874,18 @@ def restore_music(rom: Rom) -> None:
         rom.write_bytes(start, [0] * size)
         dma_entry.update(orig_start, orig_end, start)
 
+    # Writes new audiobank index from /data/audioindex.bin to audiobank index
+def write_new_bank_index(rom: Rom) -> None:
+    file_path = "data/custom_audiobank_index.bin"
+    byte_list = []
+    with open(file_path, "rb") as file:
+        byte = file.read(1)
+        while byte:
+            byte_list.append(ord(byte))
+            byte = file.read(1)
+    rom.write_bytes(0x034843E0, byte_list)
+    file.close()
+    rom.write_byte(0x03484171, 0x4C) # Updates AudioBank Index Header if no custom banks are present as this would be 0x26 which would crash the game if a fanfare was played
 
 def chain_groups(group_list: list[tuple[str, list[str] | str]], sequences: dict[str, Sequence]) -> dict[str, list[str]]:
     result = {}
