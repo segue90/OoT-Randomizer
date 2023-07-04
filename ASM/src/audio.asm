@@ -27,11 +27,11 @@ AUDIO_THREAD_INFO_MEM_SIZE:
 
 .align 0x10
 AUDIOBANK_TABLE_EXTENDED:
-.area 0x800, 0
+.area 0xA00, 0
 .endarea
 
 FONTLOADSTATUS_EXTENDED:
-.area 0x80, 0
+.area 0xA0, 0
 .endarea
 
 .align 0x10
