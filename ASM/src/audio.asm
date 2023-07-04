@@ -1,7 +1,7 @@
 @fanfare_audioseq_size equ 0x1000
 @fanfare_audiobank_size equ 0x4800
 @fanfare_unk_size equ 0
-@bgm_audioseq_size equ 0x7000
+@bgm_audioseq_size equ 0xE000
 @bgm_audiobank_size equ 0x4800
 @bgm_unk_size equ 0
 
