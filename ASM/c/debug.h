@@ -12,7 +12,7 @@ typedef struct {
     uint8_t sub_menu_index;
     uint8_t dungeon_index;
     uint8_t overworld_index;
-    uint8_t interior_index;
+    uint8_t item_index;
 } menu_index_t;
 
 typedef struct {
@@ -25,6 +25,12 @@ typedef struct {
     uint16_t entrance_index;
     char name[30];
 } warp_t;
+
+typedef struct {
+    uint8_t index;
+    uint16_t item_index;
+    char name[30];
+} item_t;
 
 void draw_debug_int(int whichNumber, int numberToShow);
 void draw_debug_float(int whichNumber, float numberToShow);

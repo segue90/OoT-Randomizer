@@ -52,9 +52,16 @@
     "AUDIO_THREAD_INFO": "03484148",
     "AUDIO_THREAD_INFO_MEM_SIZE": "03484164",
     "AUDIO_THREAD_INFO_MEM_START": "03484160",
+<<<<<<< Dev
     "AUDIO_THREAD_MEM_START": "034A95C0",
 >>>>>>> Warp debug menu
+<<<<<<< Dev
 >>>>>>> Warp debug menu
+=======
+=======
+    "AUDIO_THREAD_MEM_START": "034AA040",
+>>>>>>> Item debug menu
+>>>>>>> Item debug menu
     "AUTO_TRACKER_CONTEXT": "03481324",
     "AUTO_TRACKER_VERSION": "03481324",
     "BONK_LAST_FRAME": "03483C68",
@@ -165,15 +172,34 @@
     "CHECK_FOR_BONK_CANCEL": "03483D44",
     "CHECK_ROOM_MESH_TYPE": "03483E64",
     "CHEST_LENS_ONLY": "03483594",
+<<<<<<< Dev
     "CHEST_SIZE_MATCH_CONTENTS": "034A020C",
     "CHEST_SIZE_TEXTURE": "034A0208",
     "CHEST_TEXTURE_MATCH_CONTENTS": "034A0210",
     "COMPLETE_MASK_QUEST": "034A0268",
 >>>>>>> Warp debug menu
+<<<<<<< Dev
 >>>>>>> Warp debug menu
+<<<<<<< Dev
 >>>>>>> Warp debug menu
+<<<<<<< Dev
 >>>>>>> Warp debug menu
+<<<<<<< Dev
 >>>>>>> Warp debug menu
+=======
+=======
+=======
+=======
+=======
+    "CHEST_SIZE_MATCH_CONTENTS": "034A0C94",
+    "CHEST_SIZE_TEXTURE": "034A0C90",
+    "CHEST_TEXTURE_MATCH_CONTENTS": "034A0C98",
+    "COMPLETE_MASK_QUEST": "034A0CF0",
+>>>>>>> Item debug menu
+>>>>>>> Item debug menu
+>>>>>>> Item debug menu
+>>>>>>> Item debug menu
+>>>>>>> Item debug menu
     "COOP_CONTEXT": "03480020",
     "COOP_VERSION": "03480020",
     "COSMETIC_CONTEXT": "03480C3C",
@@ -184,17 +210,26 @@
     "DEBUG_OFFSET": "0348375C",
     "DISABLE_TIMERS": "03481315",
 <<<<<<< Dev
+<<<<<<< Dev
     "DPAD_TEXTURE": "034A6500",
 =======
+=======
+>>>>>>> Item debug menu
 <<<<<<< Dev
     "DPAD_TEXTURE": "034A64E0",
 =======
+=======
+>>>>>>> Item debug menu
 <<<<<<< Dev
     "DPAD_TEXTURE": "034A5FE0",
 =======
+=======
+>>>>>>> Item debug menu
 <<<<<<< Dev
     "DPAD_TEXTURE": "034A5F90",
 =======
+=======
+>>>>>>> Item debug menu
 <<<<<<< Dev
     "DPAD_TEXTURE": "034A6018",
 >>>>>>> Warp debug menu
@@ -235,20 +270,23 @@
     "GET_CHEST_OVERRIDE_WRAPPER": "03483520",
 =======
     "DPAD_TEXTURE": "034A7DB8",
+=======
+    "DPAD_TEXTURE": "034A8840",
+>>>>>>> Item debug menu
     "DUNGEONS_SHUFFLED": "03481316",
     "EXTENDED_INITIAL_SAVE_DATA": "03481140",
     "EXTENDED_OBJECT_TABLE": "03481240",
     "EXTERN_DAMAGE_MULTIPLYER": "03483C6D",
-    "EXTRA_BOWLING_SHUFFLE": "034A0204",
+    "EXTRA_BOWLING_SHUFFLE": "034A0C8C",
     "FAST_BUNNY_HOOD_ENABLED": "03481319",
     "FAST_CHESTS": "0348130F",
     "FIX_BROKEN_DROPS": "0348131A",
     "FONTLOADSTATUS_EXTENDED": "03484970",
-    "FONT_TEXTURE": "034A68F0",
+    "FONT_TEXTURE": "034A7378",
     "FREE_BOMBCHU_DROPS": "03481300",
     "FREE_SCARECROW_ENABLED": "03481308",
-    "GANON_BOSS_KEY_CONDITION": "034A0230",
-    "GANON_BOSS_KEY_CONDITION_COUNT": "034A022E",
+    "GANON_BOSS_KEY_CONDITION": "034A0CB8",
+    "GANON_BOSS_KEY_CONDITION_COUNT": "034A0CB6",
     "GET_CHEST_OVERRIDE_WRAPPER": "03483598",
 >>>>>>> Warp debug menu
 >>>>>>> Warp debug menu
@@ -265,26 +303,50 @@
     "INITIAL_SAVE_DATA": "03480D40",
     "JABU_ELEVATOR_ENABLE": "0348130C",
 <<<<<<< Dev
+<<<<<<< Dev
     "KAKARIKO_WEATHER_FORECAST": "0349EA30",
 =======
+=======
+>>>>>>> Item debug menu
 <<<<<<< Dev
     "KAKARIKO_WEATHER_FORECAST": "0349EA10",
 =======
+=======
+>>>>>>> Item debug menu
 <<<<<<< Dev
     "KAKARIKO_WEATHER_FORECAST": "0349E510",
 =======
+=======
+>>>>>>> Item debug menu
 <<<<<<< Dev
     "KAKARIKO_WEATHER_FORECAST": "0349E4C0",
 =======
+=======
+>>>>>>> Item debug menu
 <<<<<<< Dev
     "KAKARIKO_WEATHER_FORECAST": "0349E548",
 =======
     "KAKARIKO_WEATHER_FORECAST": "034A0298",
 >>>>>>> Warp debug menu
+<<<<<<< Dev
 >>>>>>> Warp debug menu
+<<<<<<< Dev
 >>>>>>> Warp debug menu
+<<<<<<< Dev
 >>>>>>> Warp debug menu
+<<<<<<< Dev
 >>>>>>> Warp debug menu
+=======
+=======
+=======
+=======
+=======
+    "KAKARIKO_WEATHER_FORECAST": "034A0D20",
+>>>>>>> Item debug menu
+>>>>>>> Item debug menu
+>>>>>>> Item debug menu
+>>>>>>> Item debug menu
+>>>>>>> Item debug menu
     "KEYRING_BOSSKEY_CONDITION": "0348131E",
     "KING_DODONGO_BONKS": "03483D48",
     "LACS_CONDITION": "03481368",
@@ -292,26 +354,38 @@
     "MALON_GAVE_ICETRAP": "034851E0",
     "MALON_TEXT_ID": "03481314",
 <<<<<<< Dev
+<<<<<<< Dev
     "MAX_RUPEES": "0349EA02",
 =======
+=======
+>>>>>>> Item debug menu
 <<<<<<< Dev
     "MAX_RUPEES": "0349E9E2",
 >>>>>>> Warp debug menu
     "MOVED_ADULT_KING_ZORA": "03484B50",
 =======
+=======
+>>>>>>> Item debug menu
 <<<<<<< Dev
     "MAX_RUPEES": "0349E4E2",
     "MOVED_ADULT_KING_ZORA": "034849D0",
 =======
+=======
+>>>>>>> Item debug menu
 <<<<<<< Dev
     "MAX_RUPEES": "0349E492",
     "MOVED_ADULT_KING_ZORA": "034849B0",
 =======
+=======
+>>>>>>> Item debug menu
 <<<<<<< Dev
     "MAX_RUPEES": "0349E51A",
     "MOVED_ADULT_KING_ZORA": "034849A0",
 =======
     "MAX_RUPEES": "034A026A",
+=======
+    "MAX_RUPEES": "034A0CF2",
+>>>>>>> Item debug menu
     "MOVED_ADULT_KING_ZORA": "03484A20",
 >>>>>>> Warp debug menu
 >>>>>>> Warp debug menu
@@ -322,25 +396,34 @@
     "MW_SEND_OWN_ITEMS": "0348002A",
     "NO_COLLECTIBLE_HEARTS": "0348130E",
 <<<<<<< Dev
+<<<<<<< Dev
     "NO_ESCAPE_SEQUENCE": "0349E9C4",
     "OCARINAS_SHUFFLED": "0348130D",
     "OPEN_KAKARIKO": "0349EA01",
 =======
+=======
+>>>>>>> Item debug menu
 <<<<<<< Dev
     "NO_ESCAPE_SEQUENCE": "0349E9A4",
     "OCARINAS_SHUFFLED": "0348130D",
     "OPEN_KAKARIKO": "0349E9E1",
 =======
+=======
+>>>>>>> Item debug menu
 <<<<<<< Dev
     "NO_ESCAPE_SEQUENCE": "0349E4A4",
     "OCARINAS_SHUFFLED": "0348130D",
     "OPEN_KAKARIKO": "0349E4E1",
 =======
+=======
+>>>>>>> Item debug menu
 <<<<<<< Dev
     "NO_ESCAPE_SEQUENCE": "0349E454",
     "OCARINAS_SHUFFLED": "0348130D",
     "OPEN_KAKARIKO": "0349E491",
 =======
+=======
+>>>>>>> Item debug menu
 <<<<<<< Dev
     "NO_ESCAPE_SEQUENCE": "0349E4DC",
     "OCARINAS_SHUFFLED": "0348130D",
@@ -350,10 +433,27 @@
     "OCARINAS_SHUFFLED": "0348130D",
     "OPEN_KAKARIKO": "034A0269",
 >>>>>>> Warp debug menu
+<<<<<<< Dev
 >>>>>>> Warp debug menu
+<<<<<<< Dev
 >>>>>>> Warp debug menu
+<<<<<<< Dev
 >>>>>>> Warp debug menu
+<<<<<<< Dev
 >>>>>>> Warp debug menu
+=======
+=======
+=======
+=======
+=======
+    "NO_ESCAPE_SEQUENCE": "034A0CB4",
+    "OCARINAS_SHUFFLED": "0348130D",
+    "OPEN_KAKARIKO": "034A0CF1",
+>>>>>>> Item debug menu
+>>>>>>> Item debug menu
+>>>>>>> Item debug menu
+>>>>>>> Item debug menu
+>>>>>>> Item debug menu
     "OUTGOING_ITEM": "03480030",
     "OUTGOING_KEY": "0348002C",
     "OUTGOING_PLAYER": "03480032",
@@ -392,8 +492,11 @@
     "RAINBOW_BRIDGE_CONDITION": "03481360",
     "RAINBOW_BRIDGE_COUNT": "03481368",
 <<<<<<< Dev
+<<<<<<< Dev
     "RANDOMIZER_RNG_SEED": "0349E4A4",
 =======
+=======
+>>>>>>> Item debug menu
 <<<<<<< Dev
     "RANDOMIZER_RNG_SEED": "0349E52C",
 >>>>>>> Warp debug menu
@@ -411,8 +514,11 @@
     "SHUFFLE_CHEST_GAME": "03485F50",
 =======
     "RANDOMIZER_RNG_SEED": "034A027C",
+=======
+    "RANDOMIZER_RNG_SEED": "034A0D04",
+>>>>>>> Item debug menu
     "RANDO_CONTEXT": "03480000",
-    "RNG_SEED_INT": "034A01FC",
+    "RNG_SEED_INT": "034A0C84",
     "SET_BONK_FLAG": "03483D18",
     "SHOW_CHEST_WITH_INVERTED_LENS": "03483658",
     "SHUFFLE_BEANS": "03483EA0",
@@ -467,17 +573,28 @@
     "Sram_InitNewSave": "0349E4C0",
 =======
     "START_TWINROVA_FIGHT": "03484AA0",
+<<<<<<< Dev
     "Sram_InitNewSave": "034A0200",
 >>>>>>> Warp debug menu
+=======
+    "Sram_InitNewSave": "034A0C88",
+>>>>>>> Item debug menu
     "TIME_STRING_TXT": "03480D1C",
     "TIME_TRAVEL_SAVED_EQUIPS": "03482678",
     "TRIFORCE_HUNT_ENABLED": "0348136C",
+<<<<<<< Dev
 <<<<<<< Dev
     "TRIFORCE_ICON_TEXTURE": "034A6818",
 =======
     "TRIFORCE_ICON_TEXTURE": "034A85B8",
 >>>>>>> Warp debug menu
+<<<<<<< Dev
 >>>>>>> Warp debug menu
+=======
+=======
+    "TRIFORCE_ICON_TEXTURE": "034A9040",
+>>>>>>> Item debug menu
+>>>>>>> Item debug menu
     "TRIFORCE_PIECES_REQUIRED": "0348136E",
     "TWINROVA_ACTION_TIMER": "03484A34",
 >>>>>>> Warp debug menu
@@ -486,6 +603,7 @@
     "WINDMILL_SONG_ID": "03481312",
     "WINDMILL_TEXT_ID": "03481313",
     "WORLD_STRING_TXT": "03480D0C",
+<<<<<<< Dev
 <<<<<<< Dev
     "a_button": "0349E978",
     "a_note_b": "0349E964",
@@ -583,6 +701,8 @@
     "trade_quest_items": "0349A76C",
     "triforce_sprite": "0349AED0"
 =======
+=======
+>>>>>>> Item debug menu
 <<<<<<< Dev
     "a_button": "0349E958",
     "a_note_b": "0349E944",
@@ -680,6 +800,8 @@
     "trade_quest_items": "0349A74C",
     "triforce_sprite": "0349AEB0"
 =======
+=======
+>>>>>>> Item debug menu
 <<<<<<< Dev
     "a_button": "0349E458",
     "a_note_b": "0349E444",
@@ -777,6 +899,8 @@
     "trade_quest_items": "0349A350",
     "triforce_sprite": "0349AAB0"
 =======
+=======
+>>>>>>> Item debug menu
 <<<<<<< Dev
     "a_button": "0349E408",
     "a_note_b": "0349E3F4",
@@ -874,6 +998,8 @@
     "trade_quest_items": "0349A2FC",
     "triforce_sprite": "0349AA60"
 =======
+=======
+>>>>>>> Item debug menu
 <<<<<<< Dev
     "a_button": "0349E490",
     "a_note_b": "0349E47C",
@@ -1078,8 +1204,129 @@
     "trade_quest_items": "0349BBEC",
     "triforce_sprite": "0349C820"
 >>>>>>> Warp debug menu
+<<<<<<< Dev
 >>>>>>> Warp debug menu
+<<<<<<< Dev
 >>>>>>> Warp debug menu
+<<<<<<< Dev
 >>>>>>> Warp debug menu
+<<<<<<< Dev
 >>>>>>> Warp debug menu
+=======
+=======
+=======
+=======
+=======
+    "a_button": "034A0C58",
+    "a_note_b": "034A0C44",
+    "a_note_font_glow_base": "034A0C2C",
+    "a_note_font_glow_max": "034A0C28",
+    "a_note_g": "034A0C48",
+    "a_note_glow_base": "034A0C34",
+    "a_note_glow_max": "034A0C30",
+    "a_note_r": "034A0C4C",
+    "active_item_action_id": "034A0CD8",
+    "active_item_fast_chest": "034A0CC8",
+    "active_item_graphic_id": "034A0CCC",
+    "active_item_object_id": "034A0CD0",
+    "active_item_row": "034A0CDC",
+    "active_item_text_id": "034A0CD4",
+    "active_override": "034A1290",
+    "active_override_is_outgoing": "034A0CE0",
+    "adultSkeleton": "034A08F4",
+    "adult_safe": "034A0CFA",
+    "alt_overrides": "034A0E38",
+    "b_button": "034A0C54",
+    "beating_dd": "034A0C60",
+    "beating_no_dd": "034A0C68",
+    "button_sprite": "0349D238",
+    "c_button": "034A0C50",
+    "c_note_b": "034A0C38",
+    "c_note_font_glow_base": "034A0C1C",
+    "c_note_font_glow_max": "034A0C18",
+    "c_note_g": "034A0C3C",
+    "c_note_glow_base": "034A0C24",
+    "c_note_glow_max": "034A0C20",
+    "c_note_r": "034A0C40",
+    "cfg_item_overrides": "034A12A0",
+    "childSkeleton": "034A07F8",
+    "child_safe": "034A0CF9",
+    "collectible_mutex": "034A0CBC",
+    "collectible_override": "034A0DA8",
+    "collectible_override_flags": "034A0CC0",
+    "collectible_scene_flags_table": "034A1038",
+    "curr_scene_setup": "034A0D08",
+    "current_menu_indexes": "034A0C9C",
+    "debugNumbers": "034A0D50",
+    "debugNumbersFloat": "034A0D28",
+    "debug_text_color": "034A0BE0",
+    "debug_text_height": "034A0BE4",
+    "debug_text_width": "034A0BE8",
+    "defaultDDHeart": "034A0C6C",
+    "defaultHeart": "034A0C74",
+    "dpad_sprite": "0349D2B8",
+    "drop_collectible_override_flag": "034A0CE4",
+    "dummy_actor": "034A0CE8",
+    "dungeon_count": "034A0BEC",
+    "dungeon_warps": "0349CD18",
+    "dungeons": "0349CF38",
+    "empty_dlist": "034A0C00",
+    "extended_savectx": "034A7360",
+    "extern_ctxt": "0349D06C",
+    "font_sprite": "0349D2C8",
+    "freecam_modes": "0349BE60",
+    "hash_sprites": "034A0BF8",
+    "hash_symbols": "0349D1A0",
+    "heap_next": "034A0D1C",
+    "heart_sprite": "0349D248",
+    "icon_sprites": "0349BF24",
+    "illegal_model": "034A0CFC",
+    "item_digit_sprite": "0349D268",
+    "item_draw_table": "0349D340",
+    "item_overrides_count": "034A0CEC",
+    "item_table": "0349E93C",
+    "items": "0349D220",
+    "items_debug": "0349C4FC",
+    "items_sprite": "0349D2E8",
+    "key_counts": "0349E918",
+    "key_rupee_clock_sprite": "0349D288",
+    "last_fog_distance": "034A0BF0",
+    "linkhead_skull_sprite": "0349D258",
+    "medals": "0349CF20",
+    "medals_sprite": "0349D2F8",
+    "menu_categories": "0349CED4",
+    "missing_dlist": "034A0CF8",
+    "normal_dd": "034A0C5C",
+    "normal_no_dd": "034A0C64",
+    "num_override_flags": "034A0CC4",
+    "num_to_bits": "0349D1E0",
+    "object_slots": "034A72A0",
+    "outgoing_queue": "034A0DB8",
+    "overworld_warps": "0349CA70",
+    "quest_items_sprite": "0349D2D8",
+    "reward_rows": "0349CF14",
+    "rupee_colors": "0349BF48",
+    "rupee_digit_sprite": "0349D278",
+    "satisified_pending_frames": "034A0CC6",
+    "scene_fog_distance": "034A0BF4",
+    "setup_db": "0349D318",
+    "show_input_viewer": "034A0CA8",
+    "show_warp_menu": "034A0CA4",
+    "silver_rupee_vars": "0349E810",
+    "song_note_sprite": "0349D298",
+    "stones_sprite": "0349D308",
+    "text_cursor_border_base": "034A0C0C",
+    "text_cursor_border_max": "034A0C08",
+    "text_cursor_inner_base": "034A0C14",
+    "text_cursor_inner_max": "034A0C10",
+    "text_height": "034A0C7C",
+    "text_width": "034A0C80",
+    "texture_table": "034A09F0",
+    "trade_quest_items": "0349C0F4",
+    "triforce_sprite": "0349D2A8"
+>>>>>>> Item debug menu
+>>>>>>> Item debug menu
+>>>>>>> Item debug menu
+>>>>>>> Item debug menu
+>>>>>>> Item debug menu
 }

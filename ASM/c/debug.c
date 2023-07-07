@@ -15,7 +15,8 @@ menu_index_t current_menu_indexes = {0, 0, 0, 0, 0};
 menu_category_t menu_categories[] = {
     {  0, "Dungeons"},
     {  1, "Overworld"},
-    {  2, "Switch Age"},
+    {  2, "Items"},
+    {  3, "Switch Age"},
 };
 
 warp_t dungeon_warps[] = {
@@ -33,7 +34,6 @@ warp_t dungeon_warps[] = {
     { 11, 0x08, "GTG"},
     { 12, 0x467, "Ganon Castle"},
 };
-
 
 warp_t overworld_warps[] = {
     {  0, 0x443, "Kokiri Forest"},
@@ -56,6 +56,50 @@ warp_t overworld_warps[] = {
     { 17, 0x130, "Haunted Wasteland"},
     { 18, 0x123, "Desert Colossus"},
     { 19, 0x1FD, "Hyrule Field (from Market)"},
+};
+
+item_t items_debug[] = {
+    {  0, Z64_ITEM_HOOKSHOT, "Hookshot"},
+    {  1, Z64_ITEM_LONGSHOT, "Longshot"},
+    {  2, Z64_ITEM_BOW, "Bow"},
+    {  3, Z64_ITEM_BOMB_BAG_20,  "Bomb bag"},
+    {  4, Z64_ITEM_DEKU_SHIELD, "Deku Shield"},
+    {  5, Z64_ITEM_HYLIAN_SHIELD,  "Hylian Shield"},
+    {  6, Z64_ITEM_MIRROR_SHIELD, "Mirror Shield"},
+    {  7, Z64_ITEM_FAIRY_OCARINA, "Ocarina"},
+    {  8, Z64_ITEM_BOMBCHU, "Bombchu"},
+    {  9, Z64_ITEM_BOOMERANG, "Boomerang"},
+    {  10, Z64_ITEM_HAMMER, "Hammer"},
+    {  11, Z64_ITEM_BOTTLE, "Bottle"},
+    {  12, Z64_ITEM_KOKIRI_SWORD, "Kokiri Sword"},
+    {  13, Z64_ITEM_BIGGORON_SWORD, "Biggoron Sword"},
+    {  14, Z64_ITEM_IRON_BOOTS, "Iron Boots"},
+    {  15, Z64_ITEM_HOVER_BOOTS, "Hover Boots"},
+    {  16, Z64_ITEM_GORONS_BRACELET, "Goron Bracelet"},
+    {  17, Z64_ITEM_SILVER_GAUNTLETS, "Silver Gauntlets"},
+    {  18, Z64_ITEM_GOLDEN_GAUNTLETS, "Golden Gauntlets"},
+    {  19, Z64_ITEM_SILVER_SCALE, "Scale"},
+    {  20, Z64_ITEM_MINUET, "Minuet of Forest"},
+    {  21, Z64_ITEM_BOLERO, "Bolero of Fire"},
+    {  22, Z64_ITEM_SERENADE, "Serenade of Water"},
+    {  23, Z64_ITEM_REQUIEM, "Requiem of Spirit"},
+    {  24, Z64_ITEM_NOCTURNE, "Nocturne of Shadow"},
+    {  25, Z64_ITEM_PRELUDE, "Prelude of Light"},
+    {  26, Z64_ITEM_ZELDAS_LULLABY, "Zeldas Lullaby"},
+    {  27, Z64_ITEM_EPONAS_SONG, "Eponas Song"},
+    {  28, Z64_ITEM_SARIAS_SONG, "Sarias Song"},
+    {  29, Z64_ITEM_SUNS_SONG, "Suns Song"},
+    {  30, Z64_ITEM_SONG_OF_TIME, "Song of Time"},
+    {  31, Z64_ITEM_SONG_OF_STORMS, "Song of Storms"},
+    {  32, Z64_ITEM_FOREST_MEDALLION, "Forest Medallion"},
+    {  33, Z64_ITEM_FIRE_MEDALLION, "Fire Medallion"},
+    {  34, Z64_ITEM_WATER_MEDALLION, "Water Medallion"},
+    {  35, Z64_ITEM_SPIRIT_MEDALLION, "Spirit Medallion"},
+    {  36, Z64_ITEM_SHADOW_MEDALLION, "Shadow Medallion"},
+    {  37, Z64_ITEM_LIGHT_MEDALLION, "Light Medallion"},
+    {  38, Z64_ITEM_KOKIRIS_EMERALD, "Kokiri Emerald"},
+    {  39, Z64_ITEM_GORONS_RUBY, "Goron Ruby"},
+    {  40, Z64_ITEM_ZORAS_SAPPHIRE, "Zora Sapphire"},
 };
 
 void draw_debug_int(int whichNumber, int numberToShow) {
@@ -96,27 +140,29 @@ void draw_debug_menu(z64_disp_buf_t *db) {
     if (z64_game.common.input[0].pad_pressed.l && z64_game.common.input[0].pad_pressed.r) {
         show_warp_menu = show_warp_menu ? 0 : 1;
     }
-    draw_debug_int(0, current_menu_indexes.overworld_index);
-    if (show_warp_menu) {
+
+    if (show_warp_menu &&
+        // debug menu + all the things to draw in the pause menu = crash
+        z64_game.pause_ctxt.state == 0) {
 
         if (current_menu_indexes.sub_menu_index == 0) {
 
             if (z64_game.common.input[0].pad_pressed.dr) {
                 current_menu_indexes.main_index++;
-                if (current_menu_indexes.main_index > 2) {
+                if (current_menu_indexes.main_index > 3) {
                     current_menu_indexes.main_index = 0;
                 }
             }
             if (z64_game.common.input[0].pad_pressed.dl) {
                 if (current_menu_indexes.main_index == 0) {
-                    current_menu_indexes.main_index = 2;
+                    current_menu_indexes.main_index = 3;
                 }
                 else {
                     current_menu_indexes.main_index--;
                 }
             }
 
-            if (current_menu_indexes.main_index == 2) {
+            if (current_menu_indexes.main_index == 3) {
                 if (z64_game.common.input[0].pad_pressed.a) {
                     int age = z64_file.link_age;
                     z64_file.link_age = z64_game.link_age;
@@ -198,6 +244,26 @@ void draw_debug_menu(z64_disp_buf_t *db) {
                         show_warp_menu = 0;
                     }
                     break;
+                case 2: // Items
+                    if (z64_game.common.input[0].pad_pressed.dr) {
+                        current_menu_indexes.item_index++;
+                        if (current_menu_indexes.item_index > 40) {
+                            current_menu_indexes.item_index = 0;
+                        }
+                    }
+                    if (z64_game.common.input[0].pad_pressed.dl) {
+                        if (current_menu_indexes.item_index == 0) {
+                            current_menu_indexes.item_index = 40;
+                        }
+                        else {
+                            current_menu_indexes.item_index--;
+                        }
+                    }
+                    if (z64_game.common.input[0].pad_pressed.a) {
+                        item_t *d = &(items_debug[current_menu_indexes.item_index]);
+                        z64_GiveItem(&z64_game, d->item_index);
+                    }
+                    break;
                 default:
                     break;
             }
@@ -207,7 +273,6 @@ void draw_debug_menu(z64_disp_buf_t *db) {
         gSPDisplayList(db->p++, &setup_db);
 
         // Set up dimensions
-
         int icon_size = 12;
         int font_width = 6;
         int font_height = 11;
@@ -215,7 +280,7 @@ void draw_debug_menu(z64_disp_buf_t *db) {
         int rows = 13;
         int bg_width =
             (6 * icon_size) +
-            (11 * font_width) +
+            (13 * font_width) +
             (8 * padding);
         int bg_height = (rows * icon_size) + ((rows + 1) * padding);
         int bg_left = (Z64_SCREEN_WIDTH - bg_width) / 2;
@@ -225,7 +290,6 @@ void draw_debug_menu(z64_disp_buf_t *db) {
         int start_top = bg_top + padding;
 
         // Draw background
-
         gDPSetCombineMode(db->p++, G_CC_PRIMITIVE, G_CC_PRIMITIVE);
         gDPSetPrimColor(db->p++, 0, 0, 0x00, 0x00, 0x00, 0xD0);
         gSPTextureRectangle(db->p++,
@@ -240,7 +304,7 @@ void draw_debug_menu(z64_disp_buf_t *db) {
 
         if (current_menu_indexes.sub_menu_index == 0) {
             gDPSetPrimColor(db->p++, 0, 0, 0xFF, 0xFF, 0xFF, 0xFF);
-            for (int i = 0; i < 5; i++) {
+            for (int i = 0; i < 4; i++) {
                 menu_category_t *d = &(menu_categories[i]);
                 int top = start_top + ((icon_size + padding) * i) + 1;
                 if (i != current_menu_indexes.main_index) {
@@ -311,6 +375,73 @@ void draw_debug_menu(z64_disp_buf_t *db) {
                         text_flush_size(db, font_width, font_height, 0, 0);
                     }
                     break;
+                case 2: // Items
+                    gDPSetPrimColor(db->p++, 0, 0, 0xFF, 0xFF, 0xFF, 0xFF);
+                    if (current_menu_indexes.item_index < 10) {
+                        for (int i = 0; i < 10; i++) {
+                            item_t *dd = &(items_debug[i]);
+                            int top = start_top + ((icon_size + padding) * i) + 1;
+                            if (i != current_menu_indexes.item_index) {
+                                text_print_size(dd->name, left, top, font_width);
+                            }
+                        }
+                        text_flush_size(db, font_width, font_height, 0, 0);
+
+                        gDPSetPrimColor(db->p++, 0, 0, 0xE0, 0xE0, 0x10, 0xFF);
+                        item_t *dd = &(items_debug[current_menu_indexes.item_index]);
+                        top = start_top + ((icon_size + padding) * current_menu_indexes.item_index) + 1;
+                        text_print_size(dd->name, left, top, font_width);
+                        text_flush_size(db, font_width, font_height, 0, 0);
+                    }
+                    if (current_menu_indexes.item_index > 9 && current_menu_indexes.item_index < 20) {
+                        for (int i = 0; i < 10; i++) {
+                            item_t *dd = &(items_debug[i + 10]);
+                            int top = start_top + ((icon_size + padding) * i) + 1;
+                            if (i + 10 != current_menu_indexes.item_index) {
+                                text_print_size(dd->name, left, top, font_width);
+                            }
+                        }
+                        text_flush_size(db, font_width, font_height, 0, 0);
+
+                        gDPSetPrimColor(db->p++, 0, 0, 0xE0, 0xE0, 0x10 , 0xFF);
+                        item_t *dd = &(items_debug[current_menu_indexes.item_index]);
+                        top = start_top + ((icon_size + padding) * (current_menu_indexes.item_index - 10)) + 1;
+                        text_print_size(dd->name, left, top, font_width);
+                        text_flush_size(db, font_width, font_height, 0, 0);
+                    }
+                    if (current_menu_indexes.item_index > 19 && current_menu_indexes.item_index < 32) {
+                        for (int i = 0; i < 12; i++) {
+                            item_t *dd = &(items_debug[i + 20]);
+                            int top = start_top + ((icon_size + padding) * i) + 1;
+                            if (i + 20 != current_menu_indexes.item_index) {
+                                text_print_size(dd->name, left, top, font_width);
+                            }
+                        }
+                        text_flush_size(db, font_width, font_height, 0, 0);
+
+                        gDPSetPrimColor(db->p++, 0, 0, 0xE0, 0xE0, 0x10 , 0xFF);
+                        item_t *dd = &(items_debug[current_menu_indexes.item_index]);
+                        top = start_top + ((icon_size + padding) * (current_menu_indexes.item_index - 20)) + 1;
+                        text_print_size(dd->name, left, top, font_width);
+                        text_flush_size(db, font_width, font_height, 0, 0);
+                    }
+                    if (current_menu_indexes.item_index > 31 && current_menu_indexes.item_index < 41) {
+                        for (int i = 0; i < 9; i++) {
+                            item_t *dd = &(items_debug[i + 32]);
+                            int top = start_top + ((icon_size + padding) * i) + 1;
+                            if (i + 32 != current_menu_indexes.item_index) {
+                                text_print_size(dd->name, left, top, font_width);
+                            }
+                        }
+                        text_flush_size(db, font_width, font_height, 0, 0);
+
+                        gDPSetPrimColor(db->p++, 0, 0, 0xE0, 0xE0, 0x10 , 0xFF);
+                        item_t *dd = &(items_debug[current_menu_indexes.item_index]);
+                        top = start_top + ((icon_size + padding) * (current_menu_indexes.item_index - 32)) + 1;
+                        text_print_size(dd->name, left, top, font_width);
+                        text_flush_size(db, font_width, font_height, 0, 0);
+                    }
+                    break;
                 default:
                     break;
             }
@@ -321,7 +452,6 @@ void draw_debug_menu(z64_disp_buf_t *db) {
 }
 
 void draw_debug_numbers(z64_disp_buf_t *db) {
-
 
     gSPDisplayList(db->p++, &setup_db);
     gDPPipeSync(db->p++);
