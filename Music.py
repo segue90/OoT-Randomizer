@@ -66,9 +66,11 @@ bgmlist = [
     0x63,
     0x64,
     0x65,
+    0x66,
     0x6B,
-    0x6C
+    0x6C,
 ]
+
 # Format: (Title, Sequence ID)
 bgm_sequence_ids: tuple[tuple[str, int], ...] = (
     ("Hyrule Field", 0x02),
@@ -135,8 +137,10 @@ fanfarelist = [
     0x43,
     0x51,
     0x53,
-    0x59
+    0x59,
+    0x5D,
 ]
+
 fanfare_sequence_ids: tuple[tuple[str, int], ...] = (
     ("Game Over", 0x20),
     ("Boss Defeated", 0x21),
@@ -153,6 +157,7 @@ fanfare_sequence_ids: tuple[tuple[str, int], ...] = (
     ("Zelda Turns Around", 0x51),
     ("Master Sword", 0x53),
     ("Door of Time", 0x59),
+    ("Gannons Rainbow Bridge", 0x5D),
 )
 
 ocarinalist = [
@@ -167,8 +172,9 @@ ocarinalist = [
     0x46,
     0x47,
     0x48,
-    0x49
+    0x49,
 ]
+
 ocarina_sequence_ids: tuple[tuple[str, int], ...] = (
     ("Prelude of Light", 0x25),
     ("Bolero of Fire", 0x33),
@@ -184,6 +190,23 @@ ocarina_sequence_ids: tuple[tuple[str, int], ...] = (
     ("Song of Storms", 0x49),
 )
 
+Creditlist = [
+    0x52,
+    0x66,
+    0x67,
+    0x68,
+    0x69,
+    0x6A,
+]
+
+Credit_sequence_ids: tuple[tuple[str, int], ...] = (
+    ("Zeldas Theme Orchestra", 0x52),
+    ("Zeldas Ocarina Song", 0x66),
+    ("Ending Credits Part 1", 0x67),
+    ("Ending Credits Part 2", 0x68),
+    ("Ending Credits Part 3", 0x69),
+    ("Ending Credits Part 4", 0x6A),
+)
 
 class Bank:
     def __init__(self, index: int, meta: bytearray, data: bytes) -> None:
@@ -544,6 +567,13 @@ def rebuild_sequences(rom: Rom, sequences: list[Sequence], log: CosmeticsLog, sy
         if j:
             rom.write_byte(base, j.instrument_set + 0x26)
 
+         #Update instrument sets for credits sequences
+    for i in Creditlist:
+        base = 0xB89911 + 0xDD + (i * 2)
+        j = replacement_dict.get(i if new_sequences[i].size else new_sequences[i].address, None)
+        if j:
+            rom.write_byte(base, j.instrument_set)
+
     # Patch new instrument sets (banks) and add new instrument sounds
     # Only if we were passed CFG_AUDIOBANK_TABLE_EXTENDED_ADDR via symbols which means we're on the right version.
     if "CFG_AUDIOBANK_TABLE_EXTENDED_ADDR" not in symbols.keys():
@@ -688,6 +718,7 @@ def randomize_music(rom: Rom, settings: Settings, log: CosmeticsLog, symbols: di
     bgm_ids = {bgm[0]: bgm for bgm in bgm_sequence_ids}
     ff_ids = {bgm[0]: bgm for bgm in fanfare_sequence_ids}
     ocarina_ids = {bgm[0]: bgm for bgm in ocarina_sequence_ids}
+    credits_ids = {bgm[0]: bgm for bgm in Credit_sequence_ids}
 
     # If generating a patch file, disallow custom sequences.
     custom_sequences_enabled = not settings.generating_patch_file
@@ -705,10 +736,11 @@ def randomize_music(rom: Rom, settings: Settings, log: CosmeticsLog, symbols: di
             log.errors.append("Custom music is not supported by this patch version. Only randomizing vanilla music.")
             custom_sequences_enabled = False
 
-    # Check if we have mapped music for BGM, Fanfares, or Ocarina Fanfares
+    # Check if we have mapped music for BGM, Fanfares, Ocarina Songs or Credits Sequences
     bgm_mapped = any(name in music_mapping for name in bgm_ids)
     ff_mapped = any(name in music_mapping for name in ff_ids)
     ocarina_mapped = any(name in music_mapping for name in ocarina_ids)
+    credits_mapped = any(name in music_mapping for name in credits_ids)
 
     # Flag sequence locations that are set to off for disabling.
     disabled_ids = []
@@ -734,6 +766,8 @@ def randomize_music(rom: Rom, settings: Settings, log: CosmeticsLog, symbols: di
         normal_ids += [music_id for music_id in ff_ids.values()]
     if settings.fanfares == 'normal' and ocarina_mapped:
         normal_ids += [music_id for music_id in ocarina_ids.values()]
+    if settings.credits_music == 'false' and credits_mapped:
+        normal_ids += [music_id for music_id in credits_mapped.values()]
     for bgm in normal_ids:
         if bgm[0] not in music_mapping:
             music_mapping[bgm[0]] = bgm[0]
@@ -741,6 +775,10 @@ def randomize_music(rom: Rom, settings: Settings, log: CosmeticsLog, symbols: di
     # Include ocarina songs in fanfare pool if checked
     if settings.ocarina_fanfares or ocarina_mapped:
         ff_ids.update(ocarina_ids)
+
+    # Include credits sequences in music pool if checked
+    if settings.credits_music or credits_mapped:
+        bgm_ids.update(credits_ids)
 
     # Grab our lists of sequences.
     if settings.background_music in ['random', 'random_custom_only'] or bgm_mapped:
