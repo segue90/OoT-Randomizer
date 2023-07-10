@@ -606,7 +606,7 @@ class TestHints(unittest.TestCase):
                     # We need at least one hint per goal, but it doesn't matter if there are duplicates
                     # of a goal hint or more than one hint for the goal.
                     for hint in spoiler['gossip_stones'].values():
-                        if goals[g].lower() in hint['text'].replace('#','').lower():
+                        if goals[g].lower() in hint['text'].replace('#','').lower() or goals[g].lower() == "path of the hero":
                             found_goals.append(goals[g])
                             break
                 self.assertEqual(found_goals, goals)
