@@ -3702,7 +3702,7 @@ class SettingInfos:
         },
     )
 
-    display_dpad = Checkbutton(
+    display_dpad = Combobox(
         gui_text       = 'Display D-Pad HUD',
         shared         = False,
         cosmetic       = True,
@@ -3710,26 +3710,11 @@ class SettingInfos:
             Shows an additional HUD element displaying
             current available options on the D-Pad.
         ''',
-        default        = True,
-        disable        = {
-            False: {'settings' : ['dpad_on_left']},
-        },
-        gui_params       = {
-            'no_line_break': True,
-        },
-    )
-
-    dpad_on_left = Checkbutton(
-        gui_text       = 'Display D-Pad on the left of the screen',
-        shared         = False,
-        cosmetic       = True,
-        gui_tooltip    = '''\
-            Displays the D-Pad HUD on the left of the screen instead
-            of the right.
-        ''',
-        default        = False,
-        gui_params       = {
-            "hide_when_disabled" : True,
+        default        = 'right',
+        choices        = {
+            'off':   'Off',
+            'left': 'On the left',
+            'right': 'On the right',
         },
     )
 
