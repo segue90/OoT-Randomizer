@@ -132,7 +132,7 @@ void draw_dpad_and_menu_utilities() {
 
             gDPPipeSync(db->p++);
             gDPSetCombineMode(db->p++, G_CC_MODULATEIA_PRIM, G_CC_MODULATEIA_PRIM);
-            sprite_load(db, &button_sprite, 0, 5);
+            sprite_load(db, &ocarina_button_sprite, 0, 5);
 
             gDPSetPrimColor(db->p++, 0, 0, 0x00, 0x00, 0xFF, alpha); // blue
             if (CFG_CORRECT_MODEL_COLORS) {

@@ -93,10 +93,16 @@ sprite_t heart_sprite = {
     G_IM_FMT_IA, G_IM_SIZ_8b, 1
 };
 
-sprite_t button_sprite = {
+sprite_t ocarina_button_sprite = {
     NULL, 16, 16, 1,
     G_IM_FMT_IA, G_IM_SIZ_8b, 5
 };
+
+sprite_t buttons_sprite = {
+    NULL, 16, 16, 10,
+    G_IM_FMT_I, G_IM_SIZ_4b, 1
+};
+
 
 int sprite_bytes_per_tile(sprite_t *sprite) {
     return sprite->tile_w * sprite->tile_h * sprite->bytes_per_texel;
@@ -183,6 +189,11 @@ void gfx_init() {
     };
     file_init(&icon_item_dungeon_static);
 
+    file_t nes_font_static = {
+        NULL, z64_nes_font_static_vaddr, z64_nes_font_static_vsize
+    };
+    file_init(&nes_font_static);
+
     stones_sprite.buf = title_static.buf + 0x2A300;
     medals_sprite.buf = title_static.buf + 0x2980;
     items_sprite.buf = icon_item_static.buf;
@@ -195,7 +206,8 @@ void gfx_init() {
     item_digit_sprite.buf = parameter_static.buf + 0x000035C0;
     linkhead_skull_sprite.buf = icon_item_dungeon_static.buf + 0x00001980;
     heart_sprite.buf = parameter_static.buf;
-    button_sprite.buf = parameter_static.buf + 0x2940;
+    ocarina_button_sprite.buf = parameter_static.buf + 0x2940;
+    buttons_sprite.buf = nes_font_static.buf + 0x3F80;
 
     int font_bytes = sprite_bytes(&font_sprite);
     font_sprite.buf = heap_alloc(font_bytes);

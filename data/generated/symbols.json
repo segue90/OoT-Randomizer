@@ -1,7 +1,10 @@
 {
 <<<<<<< Dev
+<<<<<<< Dev
     "ADULT_ANJU_ITEM_DIALOG": "034856B0",
 =======
+=======
+>>>>>>> Improve int display and input viewer
 <<<<<<< Dev
     "ADULT_ANJU_ITEM_DIALOG": "03485530",
 >>>>>>> Warp debug menu
@@ -22,6 +25,8 @@
     "BONK_LAST_FRAME": "03483C88",
     "CFG_ADULT_TRADE_SHUFFLE": "0348552C",
 =======
+=======
+>>>>>>> Improve int display and input viewer
 <<<<<<< Dev
     "ADULT_ANJU_ITEM_DIALOG": "03485510",
     "ADULT_INIT_ITEMS": "03482954",
@@ -34,6 +39,8 @@
     "AUDIO_THREAD_MEM_START": "034A7790",
 =======
 <<<<<<< Dev
+=======
+>>>>>>> Improve int display and input viewer
     "ADULT_ANJU_ITEM_DIALOG": "03485500",
     "ADULT_INIT_ITEMS": "03482954",
     "ADULT_VALID_ITEMS": "0348295C",
@@ -42,6 +49,7 @@
     "AUDIO_THREAD_INFO": "034840D0",
     "AUDIO_THREAD_INFO_MEM_SIZE": "034840EC",
     "AUDIO_THREAD_INFO_MEM_START": "034840E8",
+<<<<<<< Dev
     "AUDIO_THREAD_MEM_START": "034A7820",
 =======
     "ADULT_ANJU_ITEM_DIALOG": "03485580",
@@ -62,6 +70,9 @@
     "AUDIO_THREAD_MEM_START": "034AA040",
 >>>>>>> Item debug menu
 >>>>>>> Item debug menu
+=======
+    "AUDIO_THREAD_MEM_START": "034A9DD0",
+>>>>>>> Improve int display and input viewer
     "AUTO_TRACKER_CONTEXT": "03481324",
     "AUTO_TRACKER_VERSION": "03481324",
     "BONK_LAST_FRAME": "03483C68",
@@ -125,7 +136,6 @@
     "CFG_SPEEDUP_MUSIC_FOR_LAST_TRIFORCE_PIECE": "03480C94",
     "CFG_TEXT_CURSOR_COLOR": "03480C5E",
     "CFG_TUNIC_COLORS": "03480C97",
-<<<<<<< Dev
     "CFG_UNINVERT_YAXIS_IN_FIRST_PERSON_CAMERA": "03480CA5",
 <<<<<<< Dev
     "CHAIN_HBA_REWARDS": "034854A4",
@@ -157,6 +167,7 @@
     "CHECK_FOR_BONK_CANCEL": "03483CCC",
     "CHECK_ROOM_MESH_TYPE": "03483DFC",
     "CHEST_LENS_ONLY": "0348351C",
+<<<<<<< Dev
 <<<<<<< Dev
     "CHEST_SIZE_MATCH_CONTENTS": "0349E444",
     "CHEST_SIZE_TEXTURE": "0349E440",
@@ -197,9 +208,24 @@
     "COMPLETE_MASK_QUEST": "034A0CF0",
 >>>>>>> Item debug menu
 >>>>>>> Item debug menu
+<<<<<<< Dev
 >>>>>>> Item debug menu
+<<<<<<< Dev
 >>>>>>> Item debug menu
+<<<<<<< Dev
 >>>>>>> Item debug menu
+=======
+=======
+=======
+=======
+    "CHEST_SIZE_MATCH_CONTENTS": "034A0A44",
+    "CHEST_SIZE_TEXTURE": "034A0A40",
+    "CHEST_TEXTURE_MATCH_CONTENTS": "034A0A48",
+    "COMPLETE_MASK_QUEST": "034A0AA0",
+>>>>>>> Improve int display and input viewer
+>>>>>>> Improve int display and input viewer
+>>>>>>> Improve int display and input viewer
+>>>>>>> Improve int display and input viewer
     "COOP_CONTEXT": "03480020",
     "COOP_VERSION": "03480020",
     "COSMETIC_CONTEXT": "03480C3C",
@@ -211,20 +237,27 @@
     "DISABLE_TIMERS": "03481315",
 <<<<<<< Dev
 <<<<<<< Dev
+<<<<<<< Dev
     "DPAD_TEXTURE": "034A6500",
 =======
 =======
 >>>>>>> Item debug menu
+=======
+>>>>>>> Improve int display and input viewer
 <<<<<<< Dev
     "DPAD_TEXTURE": "034A64E0",
 =======
 =======
 >>>>>>> Item debug menu
+=======
+>>>>>>> Improve int display and input viewer
 <<<<<<< Dev
     "DPAD_TEXTURE": "034A5FE0",
 =======
 =======
 >>>>>>> Item debug menu
+=======
+>>>>>>> Improve int display and input viewer
 <<<<<<< Dev
     "DPAD_TEXTURE": "034A5F90",
 =======
@@ -233,15 +266,42 @@
 <<<<<<< Dev
     "DPAD_TEXTURE": "034A6018",
 >>>>>>> Warp debug menu
+<<<<<<< Dev
 >>>>>>> Warp debug menu
+<<<<<<< Dev
 >>>>>>> Warp debug menu
+<<<<<<< Dev
 >>>>>>> Warp debug menu
+=======
+=======
+=======
+=======
+    "DPAD_TEXTURE": "034A85C8",
+>>>>>>> Improve int display and input viewer
+>>>>>>> Improve int display and input viewer
+>>>>>>> Improve int display and input viewer
+>>>>>>> Improve int display and input viewer
     "DUNGEONS_SHUFFLED": "03481316",
     "EPONAS_SONG_NOTES": "03481323",
     "EXTENDED_INITIAL_SAVE_DATA": "03481140",
     "EXTENDED_OBJECT_TABLE": "03481240",
+<<<<<<< Dev
     "EXTERN_DAMAGE_MULTIPLYER": "03483B71",
+<<<<<<< Dev
     "EXTRA_BOWLING_SHUFFLE": "0349E9AC",
+=======
+    "EXTRA_BOWLING_SHUFFLE": "0349E98C",
+=======
+<<<<<<< Dev
+    "EXTERN_DAMAGE_MULTIPLYER": "03483C15",
+    "EXTRA_BOWLING_SHUFFLE": "0349E48C",
+=======
+    "EXTERN_DAMAGE_MULTIPLYER": "03483BF5",
+<<<<<<< Dev
+    "EXTRA_BOWLING_SHUFFLE": "0349E43C",
+>>>>>>> Improve int display and input viewer
+>>>>>>> Improve int display and input viewer
+>>>>>>> Improve int display and input viewer
     "FAST_BUNNY_HOOD_ENABLED": "03481319",
     "FAST_CHESTS": "0348130F",
     "FILENAME_ENCODING": "0349E420",
@@ -267,30 +327,31 @@
 =======
     "GANON_BOSS_KEY_CONDITION": "0349E458",
     "GANON_BOSS_KEY_CONDITION_COUNT": "0349E456",
-    "GET_CHEST_OVERRIDE_WRAPPER": "03483520",
 =======
-    "DPAD_TEXTURE": "034A7DB8",
-=======
-    "DPAD_TEXTURE": "034A8840",
->>>>>>> Item debug menu
-    "DUNGEONS_SHUFFLED": "03481316",
-    "EXTENDED_INITIAL_SAVE_DATA": "03481140",
-    "EXTENDED_OBJECT_TABLE": "03481240",
-    "EXTERN_DAMAGE_MULTIPLYER": "03483C6D",
-    "EXTRA_BOWLING_SHUFFLE": "034A0C8C",
+    "EXTRA_BOWLING_SHUFFLE": "034A0A3C",
     "FAST_BUNNY_HOOD_ENABLED": "03481319",
     "FAST_CHESTS": "0348130F",
     "FIX_BROKEN_DROPS": "0348131A",
-    "FONTLOADSTATUS_EXTENDED": "03484970",
-    "FONT_TEXTURE": "034A7378",
+    "FONTLOADSTATUS_EXTENDED": "034848F0",
+    "FONT_TEXTURE": "034A7100",
     "FREE_BOMBCHU_DROPS": "03481300",
     "FREE_SCARECROW_ENABLED": "03481308",
+<<<<<<< Dev
     "GANON_BOSS_KEY_CONDITION": "034A0CB8",
     "GANON_BOSS_KEY_CONDITION_COUNT": "034A0CB6",
     "GET_CHEST_OVERRIDE_WRAPPER": "03483598",
 >>>>>>> Warp debug menu
 >>>>>>> Warp debug menu
+<<<<<<< Dev
 >>>>>>> Warp debug menu
+=======
+=======
+    "GANON_BOSS_KEY_CONDITION": "034A0A68",
+    "GANON_BOSS_KEY_CONDITION_COUNT": "034A0A66",
+>>>>>>> Improve int display and input viewer
+    "GET_CHEST_OVERRIDE_WRAPPER": "03483520",
+>>>>>>> Improve int display and input viewer
+>>>>>>> Improve int display and input viewer
     "GET_ITEM_SEQ_ID": "03480C92",
     "GET_ITEM_TRIGGERED": "03481E34",
     "GOSSIP_HINT_CONDITION": "03481304",
@@ -304,20 +365,27 @@
     "JABU_ELEVATOR_ENABLE": "0348130C",
 <<<<<<< Dev
 <<<<<<< Dev
+<<<<<<< Dev
     "KAKARIKO_WEATHER_FORECAST": "0349EA30",
 =======
 =======
 >>>>>>> Item debug menu
+=======
+>>>>>>> Improve int display and input viewer
 <<<<<<< Dev
     "KAKARIKO_WEATHER_FORECAST": "0349EA10",
 =======
 =======
 >>>>>>> Item debug menu
+=======
+>>>>>>> Improve int display and input viewer
 <<<<<<< Dev
     "KAKARIKO_WEATHER_FORECAST": "0349E510",
 =======
 =======
 >>>>>>> Item debug menu
+=======
+>>>>>>> Improve int display and input viewer
 <<<<<<< Dev
     "KAKARIKO_WEATHER_FORECAST": "0349E4C0",
 =======
@@ -344,9 +412,21 @@
     "KAKARIKO_WEATHER_FORECAST": "034A0D20",
 >>>>>>> Item debug menu
 >>>>>>> Item debug menu
+<<<<<<< Dev
 >>>>>>> Item debug menu
+<<<<<<< Dev
 >>>>>>> Item debug menu
+<<<<<<< Dev
 >>>>>>> Item debug menu
+=======
+=======
+=======
+=======
+    "KAKARIKO_WEATHER_FORECAST": "034A0AD0",
+>>>>>>> Improve int display and input viewer
+>>>>>>> Improve int display and input viewer
+>>>>>>> Improve int display and input viewer
+>>>>>>> Improve int display and input viewer
     "KEYRING_BOSSKEY_CONDITION": "0348131E",
     "KING_DODONGO_BONKS": "03483D48",
     "LACS_CONDITION": "03481368",
@@ -355,10 +435,13 @@
     "MALON_TEXT_ID": "03481314",
 <<<<<<< Dev
 <<<<<<< Dev
+<<<<<<< Dev
     "MAX_RUPEES": "0349EA02",
 =======
 =======
 >>>>>>> Item debug menu
+=======
+>>>>>>> Improve int display and input viewer
 <<<<<<< Dev
     "MAX_RUPEES": "0349E9E2",
 >>>>>>> Warp debug menu
@@ -366,12 +449,16 @@
 =======
 =======
 >>>>>>> Item debug menu
+=======
+>>>>>>> Improve int display and input viewer
 <<<<<<< Dev
     "MAX_RUPEES": "0349E4E2",
     "MOVED_ADULT_KING_ZORA": "034849D0",
 =======
 =======
 >>>>>>> Item debug menu
+=======
+>>>>>>> Improve int display and input viewer
 <<<<<<< Dev
     "MAX_RUPEES": "0349E492",
     "MOVED_ADULT_KING_ZORA": "034849B0",
@@ -389,12 +476,23 @@
     "MOVED_ADULT_KING_ZORA": "03484A20",
 >>>>>>> Warp debug menu
 >>>>>>> Warp debug menu
+<<<<<<< Dev
 >>>>>>> Warp debug menu
+<<<<<<< Dev
 >>>>>>> Warp debug menu
+=======
+=======
+=======
+    "MAX_RUPEES": "034A0AA2",
+    "MOVED_ADULT_KING_ZORA": "034849A0",
+>>>>>>> Improve int display and input viewer
+>>>>>>> Improve int display and input viewer
+>>>>>>> Improve int display and input viewer
     "MW_PROGRESSIVE_ITEMS_ENABLE": "0348002B",
     "MW_PROGRESSIVE_ITEMS_STATE": "0348083C",
     "MW_SEND_OWN_ITEMS": "0348002A",
     "NO_COLLECTIBLE_HEARTS": "0348130E",
+<<<<<<< Dev
 <<<<<<< Dev
 <<<<<<< Dev
     "NO_ESCAPE_SEQUENCE": "0349E9C4",
@@ -403,6 +501,8 @@
 =======
 =======
 >>>>>>> Item debug menu
+=======
+>>>>>>> Improve int display and input viewer
 <<<<<<< Dev
     "NO_ESCAPE_SEQUENCE": "0349E9A4",
     "OCARINAS_SHUFFLED": "0348130D",
@@ -410,6 +510,8 @@
 =======
 =======
 >>>>>>> Item debug menu
+=======
+>>>>>>> Improve int display and input viewer
 <<<<<<< Dev
     "NO_ESCAPE_SEQUENCE": "0349E4A4",
     "OCARINAS_SHUFFLED": "0348130D",
@@ -417,6 +519,8 @@
 =======
 =======
 >>>>>>> Item debug menu
+=======
+>>>>>>> Improve int display and input viewer
 <<<<<<< Dev
     "NO_ESCAPE_SEQUENCE": "0349E454",
     "OCARINAS_SHUFFLED": "0348130D",
@@ -451,9 +555,23 @@
     "OPEN_KAKARIKO": "034A0CF1",
 >>>>>>> Item debug menu
 >>>>>>> Item debug menu
+<<<<<<< Dev
 >>>>>>> Item debug menu
+<<<<<<< Dev
 >>>>>>> Item debug menu
+<<<<<<< Dev
 >>>>>>> Item debug menu
+=======
+=======
+=======
+=======
+    "NO_ESCAPE_SEQUENCE": "034A0A64",
+    "OCARINAS_SHUFFLED": "0348130D",
+    "OPEN_KAKARIKO": "034A0AA1",
+>>>>>>> Improve int display and input viewer
+>>>>>>> Improve int display and input viewer
+>>>>>>> Improve int display and input viewer
+>>>>>>> Improve int display and input viewer
     "OUTGOING_ITEM": "03480030",
     "OUTGOING_KEY": "0348002C",
     "OUTGOING_PLAYER": "03480032",
@@ -493,6 +611,7 @@
     "RAINBOW_BRIDGE_COUNT": "03481368",
 <<<<<<< Dev
 <<<<<<< Dev
+<<<<<<< Dev
     "RANDOMIZER_RNG_SEED": "0349E4A4",
 =======
 =======
@@ -502,6 +621,11 @@
 >>>>>>> Warp debug menu
     "RANDO_CONTEXT": "03480000",
     "RNG_SEED_INT": "0349E434",
+=======
+    "RANDOMIZER_RNG_SEED": "034A0AB4",
+    "RANDO_CONTEXT": "03480000",
+    "RNG_SEED_INT": "034A0A34",
+>>>>>>> Improve int display and input viewer
     "SET_BONK_FLAG": "03483CA0",
     "SHOW_CHEST_WITH_INVERTED_LENS": "034835E0",
 <<<<<<< Dev
@@ -512,6 +636,7 @@
     "SHUFFLE_BEANS": "03483E28",
     "SHUFFLE_CARPET_SALESMAN": "034853AC",
     "SHUFFLE_CHEST_GAME": "03485F50",
+<<<<<<< Dev
 =======
     "RANDOMIZER_RNG_SEED": "034A027C",
 =======
@@ -526,8 +651,16 @@
     "SHUFFLE_CHEST_GAME": "03485FD0",
 >>>>>>> Warp debug menu
 >>>>>>> Warp debug menu
+<<<<<<< Dev
 >>>>>>> Warp debug menu
+<<<<<<< Dev
 >>>>>>> Warp debug menu
+=======
+=======
+=======
+>>>>>>> Improve int display and input viewer
+>>>>>>> Improve int display and input viewer
+>>>>>>> Improve int display and input viewer
     "SHUFFLE_COWS": "03481310",
     "SHUFFLE_GRANNYS_POTION_SHOP": "034832F0",
     "SHUFFLE_MEDIGORON": "034855B8",
@@ -539,12 +672,15 @@
     "SPEED_MULTIPLIER": "0348361C",
     "SPOILER_AVAILABLE": "0348131B",
 <<<<<<< Dev
+<<<<<<< Dev
     "START_TWINROVA_FIGHT": "03484BD0",
 <<<<<<< Dev
     "Sram_InitNewSave": "0349E9A8",
 =======
     "Sram_InitNewSave": "0349E988",
 =======
+=======
+>>>>>>> Improve int display and input viewer
 <<<<<<< Dev
     "START_TWINROVA_FIGHT": "03484A50",
     "Sram_InitNewSave": "0349E488",
@@ -560,6 +696,8 @@
 =======
     "TWINROVA_ACTION_TIMER": "03484A54",
 =======
+=======
+>>>>>>> Improve int display and input viewer
 <<<<<<< Dev
     "START_TWINROVA_FIGHT": "03484A30",
     "Sram_InitNewSave": "0349E438",
@@ -569,19 +707,14 @@
     "TRIFORCE_ICON_TEXTURE": "034A6790",
 =======
 <<<<<<< Dev
+=======
+>>>>>>> Improve int display and input viewer
     "START_TWINROVA_FIGHT": "03484A20",
-    "Sram_InitNewSave": "0349E4C0",
-=======
-    "START_TWINROVA_FIGHT": "03484AA0",
-<<<<<<< Dev
-    "Sram_InitNewSave": "034A0200",
->>>>>>> Warp debug menu
-=======
-    "Sram_InitNewSave": "034A0C88",
->>>>>>> Item debug menu
+    "Sram_InitNewSave": "034A0A38",
     "TIME_STRING_TXT": "03480D1C",
     "TIME_TRAVEL_SAVED_EQUIPS": "03482678",
     "TRIFORCE_HUNT_ENABLED": "0348136C",
+<<<<<<< Dev
 <<<<<<< Dev
 <<<<<<< Dev
     "TRIFORCE_ICON_TEXTURE": "034A6818",
@@ -595,6 +728,9 @@
     "TRIFORCE_ICON_TEXTURE": "034A9040",
 >>>>>>> Item debug menu
 >>>>>>> Item debug menu
+=======
+    "TRIFORCE_ICON_TEXTURE": "034A8DC8",
+>>>>>>> Improve int display and input viewer
     "TRIFORCE_PIECES_REQUIRED": "0348136E",
     "TWINROVA_ACTION_TIMER": "03484A34",
 >>>>>>> Warp debug menu
@@ -603,6 +739,7 @@
     "WINDMILL_SONG_ID": "03481312",
     "WINDMILL_TEXT_ID": "03481313",
     "WORLD_STRING_TXT": "03480D0C",
+<<<<<<< Dev
 <<<<<<< Dev
 <<<<<<< Dev
     "a_button": "0349E978",
@@ -703,6 +840,8 @@
 =======
 =======
 >>>>>>> Item debug menu
+=======
+>>>>>>> Improve int display and input viewer
 <<<<<<< Dev
     "a_button": "0349E958",
     "a_note_b": "0349E944",
@@ -802,6 +941,8 @@
 =======
 =======
 >>>>>>> Item debug menu
+=======
+>>>>>>> Improve int display and input viewer
 <<<<<<< Dev
     "a_button": "0349E458",
     "a_note_b": "0349E444",
@@ -901,6 +1042,8 @@
 =======
 =======
 >>>>>>> Item debug menu
+=======
+>>>>>>> Improve int display and input viewer
 <<<<<<< Dev
     "a_button": "0349E408",
     "a_note_b": "0349E3F4",
@@ -1326,7 +1469,125 @@
     "triforce_sprite": "0349D2A8"
 >>>>>>> Item debug menu
 >>>>>>> Item debug menu
+<<<<<<< Dev
 >>>>>>> Item debug menu
+<<<<<<< Dev
 >>>>>>> Item debug menu
+<<<<<<< Dev
 >>>>>>> Item debug menu
+=======
+=======
+=======
+=======
+    "a_button": "034A0A08",
+    "a_note_b": "034A09F4",
+    "a_note_font_glow_base": "034A09DC",
+    "a_note_font_glow_max": "034A09D8",
+    "a_note_g": "034A09F8",
+    "a_note_glow_base": "034A09E4",
+    "a_note_glow_max": "034A09E0",
+    "a_note_r": "034A09FC",
+    "active_item_action_id": "034A0A88",
+    "active_item_fast_chest": "034A0A78",
+    "active_item_graphic_id": "034A0A7C",
+    "active_item_object_id": "034A0A80",
+    "active_item_row": "034A0A8C",
+    "active_item_text_id": "034A0A84",
+    "active_override": "034A1018",
+    "active_override_is_outgoing": "034A0A90",
+    "adultSkeleton": "034A06A4",
+    "adult_safe": "034A0AAA",
+    "alt_overrides": "034A0BC0",
+    "b_button": "034A0A04",
+    "beating_dd": "034A0A10",
+    "beating_no_dd": "034A0A18",
+    "buttons_sprite": "0349CFD8",
+    "c_button": "034A0A00",
+    "c_note_b": "034A09E8",
+    "c_note_font_glow_base": "034A09CC",
+    "c_note_font_glow_max": "034A09C8",
+    "c_note_g": "034A09EC",
+    "c_note_glow_base": "034A09D4",
+    "c_note_glow_max": "034A09D0",
+    "c_note_r": "034A09F0",
+    "cfg_item_overrides": "034A1028",
+    "childSkeleton": "034A05A8",
+    "child_safe": "034A0AA9",
+    "collectible_mutex": "034A0A6C",
+    "collectible_override": "034A0B30",
+    "collectible_override_flags": "034A0A70",
+    "collectible_scene_flags_table": "034A0DC0",
+    "curr_scene_setup": "034A0AB8",
+    "current_menu_indexes": "034A0A4C",
+    "debugNumbers": "034A0AD8",
+    "debug_text_color": "034A0990",
+    "debug_text_height": "034A0994",
+    "debug_text_width": "034A0998",
+    "defaultDDHeart": "034A0A1C",
+    "defaultHeart": "034A0A24",
+    "dpad_sprite": "0349D068",
+    "drop_collectible_override_flag": "034A0A94",
+    "dummy_actor": "034A0A98",
+    "dungeon_count": "034A099C",
+    "dungeon_warps": "0349CAB8",
+    "dungeons": "0349CCD8",
+    "empty_dlist": "034A09B0",
+    "extended_savectx": "034A70E8",
+    "extern_ctxt": "0349CE0C",
+    "font_sprite": "0349D078",
+    "freecam_modes": "0349BC44",
+    "hash_sprites": "034A09A8",
+    "hash_symbols": "0349CF40",
+    "heap_next": "034A0ACC",
+    "heart_sprite": "0349CFF8",
+    "icon_sprites": "0349BD08",
+    "illegal_model": "034A0AAC",
+    "item_digit_sprite": "0349D018",
+    "item_draw_table": "0349D0F0",
+    "item_overrides_count": "034A0A9C",
+    "item_table": "0349E6EC",
+    "items": "0349CFC0",
+    "items_debug": "0349C2BC",
+    "items_sprite": "0349D098",
+    "key_counts": "0349E6C8",
+    "key_rupee_clock_sprite": "0349D038",
+    "last_fog_distance": "034A09A0",
+    "linkhead_skull_sprite": "0349D008",
+    "medals": "0349CCC0",
+    "medals_sprite": "0349D0A8",
+    "menu_categories": "0349CC74",
+    "missing_dlist": "034A0AA8",
+    "normal_dd": "034A0A0C",
+    "normal_no_dd": "034A0A14",
+    "num_override_flags": "034A0A74",
+    "num_to_bits": "0349CF80",
+    "object_slots": "034A7028",
+    "ocarina_button_sprite": "0349CFE8",
+    "outgoing_queue": "034A0B40",
+    "overworld_warps": "0349C830",
+    "quest_items_sprite": "0349D088",
+    "reward_rows": "0349CCB4",
+    "rupee_colors": "0349BD2C",
+    "rupee_digit_sprite": "0349D028",
+    "satisified_pending_frames": "034A0A76",
+    "scene_fog_distance": "034A09A4",
+    "setup_db": "0349D0C8",
+    "show_input_viewer": "034A0A58",
+    "show_warp_menu": "034A0A54",
+    "silver_rupee_vars": "0349E5C0",
+    "song_note_sprite": "0349D048",
+    "stones_sprite": "0349D0B8",
+    "text_cursor_border_base": "034A09BC",
+    "text_cursor_border_max": "034A09B8",
+    "text_cursor_inner_base": "034A09C4",
+    "text_cursor_inner_max": "034A09C0",
+    "text_height": "034A0A2C",
+    "text_width": "034A0A30",
+    "texture_table": "034A07A0",
+    "trade_quest_items": "0349BED8",
+    "triforce_sprite": "0349D058"
+>>>>>>> Improve int display and input viewer
+>>>>>>> Improve int display and input viewer
+>>>>>>> Improve int display and input viewer
+>>>>>>> Improve int display and input viewer
 }

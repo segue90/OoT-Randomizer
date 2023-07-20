@@ -1,14 +1,13 @@
 #include "debug.h"
 
-const int debug_text_width = 10;
-const int debug_text_height = 10;
+const int debug_text_width = 16;
+const int debug_text_height = 16;
 colorRGB8_t debug_text_color = { 0xE0, 0xE0, 0x10 }; // Yellow
 
 int show_input_viewer = 0;
 int show_warp_menu = 0;
 
 uint32_t debugNumbers[10] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
-float debugNumbersFloat[10] = {0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0};
 
 menu_index_t current_menu_indexes = {0, 0, 0, 0, 0};
 
@@ -55,7 +54,7 @@ warp_t overworld_warps[] = {
     { 16, 0x129, "Gerudo Fortress"},
     { 17, 0x130, "Haunted Wasteland"},
     { 18, 0x123, "Desert Colossus"},
-    { 19, 0x1FD, "Hyrule Field (from Market)"},
+    //{ 19, 0x1FD, "Hyrule Field (from Market)"},
 };
 
 item_t items_debug[] = {
@@ -109,13 +108,6 @@ void draw_debug_int(int whichNumber, int numberToShow) {
     debugNumbers[whichNumber] = numberToShow;
 }
 
-void draw_debug_float(int whichNumber, float numberToShow) {
-    if (whichNumber < 0 || whichNumber > 9) {
-        return;
-    }
-    debugNumbersFloat[whichNumber] = numberToShow;
-}
-
 void debug_utilities(z64_disp_buf_t *db)
 {
     if (!DEBUG_MODE){
@@ -141,9 +133,7 @@ void draw_debug_menu(z64_disp_buf_t *db) {
         show_warp_menu = show_warp_menu ? 0 : 1;
     }
 
-    if (show_warp_menu &&
-        // debug menu + all the things to draw in the pause menu = crash
-        z64_game.pause_ctxt.state == 0) {
+    if (show_warp_menu) {
 
         if (current_menu_indexes.sub_menu_index == 0) {
 
@@ -261,7 +251,12 @@ void draw_debug_menu(z64_disp_buf_t *db) {
                     }
                     if (z64_game.common.input[0].pad_pressed.a) {
                         item_t *d = &(items_debug[current_menu_indexes.item_index]);
-                        z64_GiveItem(&z64_game, d->item_index);
+                        // Songs don't work somehow? So use the rando function instead.
+                        if ((d->item_index >= ITEM_SONG_MINUET) && (d->item_index <= ITEM_SONG_STORMS)) {
+                            give_song(&z64_file, d->item_index - 0x54, 0);
+                        }
+                        else
+                            z64_GiveItem(&z64_game, d->item_index);
                     }
                     break;
                 default:
@@ -410,7 +405,7 @@ void draw_debug_menu(z64_disp_buf_t *db) {
                         text_flush_size(db, font_width, font_height, 0, 0);
                     }
                     if (current_menu_indexes.item_index > 19 && current_menu_indexes.item_index < 32) {
-                        for (int i = 0; i < 12; i++) {
+                        for (int i = 0; i < 10; i++) {
                             item_t *dd = &(items_debug[i + 20]);
                             int top = start_top + ((icon_size + padding) * i) + 1;
                             if (i + 20 != current_menu_indexes.item_index) {
@@ -447,16 +442,187 @@ void draw_debug_menu(z64_disp_buf_t *db) {
             }
         }
     }
-    gDPFullSync(db->p++);
-    gSPEndDisplayList(db->p++);
 }
 
-void draw_debug_numbers(z64_disp_buf_t *db) {
+void draw_a(z64_disp_buf_t *db) {
 
-    gSPDisplayList(db->p++, &setup_db);
-    gDPPipeSync(db->p++);
-    gDPSetCombineMode(db->p++, G_CC_MODULATEIA_PRIM, G_CC_MODULATEIA_PRIM);
-    gDPSetPrimColor(db->p++, 0, 0, debug_text_color.r, debug_text_color.g, debug_text_color.b, 0xFF);
+    if (z64_game.common.input[0].raw.pad.a) {
+        //text_print_size("A", Z64_SCREEN_WIDTH / 12 + 8*font_sprite.tile_w, 11 * Z64_SCREEN_HEIGHT / 12 , debug_text_width);
+        gDPSetPrimColor(db->p++, 0, 0, 0x00, 0x00, 0xFF, 0xFF); // blue
+        sprite_draw(db, &buttons_sprite, 0, Z64_SCREEN_WIDTH / 12 + 3*buttons_sprite.tile_w,
+         11 * Z64_SCREEN_HEIGHT / 12, debug_text_width, debug_text_height);
+    }
+}
+
+void draw_b(z64_disp_buf_t *db) {
+
+    if (z64_game.common.input[0].raw.pad.b) {
+       // text_print_size("B", Z64_SCREEN_WIDTH / 12 + 9*font_sprite.tile_w, 11 * Z64_SCREEN_HEIGHT / 12, debug_text_width);
+        gDPSetPrimColor(db->p++, 0, 0, 0xFF, 0x00, 0x00, 0xFF); // blue
+        sprite_draw(db, &buttons_sprite, 1, Z64_SCREEN_WIDTH / 12 + 4*buttons_sprite.tile_w,
+         11 * Z64_SCREEN_HEIGHT / 12, debug_text_width, debug_text_height);
+    }
+}
+
+void draw_start(z64_disp_buf_t *db) {
+
+    if (z64_game.common.input[0].raw.pad.s) {
+        gDPSetPrimColor(db->p++, 0, 0, 0xDC, 0xDC, 0xDC, 0xFF); // grey
+        text_print_size("S", Z64_SCREEN_WIDTH / 12 + 10*buttons_sprite.tile_w, 11 * Z64_SCREEN_HEIGHT / 12, debug_text_width);
+        //text_flush_size(db, debug_text_width, debug_text_height, 0, 0);
+    }
+}
+
+void draw_cdown(z64_disp_buf_t *db) {
+
+    if (z64_game.common.input[0].raw.pad.cd) {
+        gDPSetPrimColor(db->p++, 0, 0, 0xF4, 0xEC, 0x30, 0xFF); // yellow
+        sprite_draw(db, &buttons_sprite, 7, Z64_SCREEN_WIDTH / 12 + 5*buttons_sprite.tile_w,
+         11 * Z64_SCREEN_HEIGHT / 12, debug_text_width, debug_text_height);
+    }
+}
+
+void draw_cup(z64_disp_buf_t *db) {
+
+    if (z64_game.common.input[0].raw.pad.cu) {
+        gDPSetPrimColor(db->p++, 0, 0, 0xF4, 0xEC, 0x30, 0xFF); // yellow
+        sprite_draw(db, &buttons_sprite, 6, Z64_SCREEN_WIDTH / 12 + 8*buttons_sprite.tile_w,
+         11 * Z64_SCREEN_HEIGHT / 12, debug_text_width, debug_text_height);
+    }
+}
+
+
+void draw_cleft(z64_disp_buf_t *db) {
+
+    if (z64_game.common.input[0].raw.pad.cl) {
+        gDPSetPrimColor(db->p++, 0, 0, 0xF4, 0xEC, 0x30, 0xFF); // yellow
+        sprite_draw(db, &buttons_sprite, 8, Z64_SCREEN_WIDTH / 12 + 7*buttons_sprite.tile_w,
+         11 * Z64_SCREEN_HEIGHT / 12, debug_text_width, debug_text_height);
+    }
+}
+
+void draw_cright(z64_disp_buf_t *db) {
+
+    if (z64_game.common.input[0].raw.pad.cr) {
+        gDPSetPrimColor(db->p++, 0, 0, 0xF4, 0xEC, 0x30, 0xFF); // yellow
+        sprite_draw(db, &buttons_sprite, 9, Z64_SCREEN_WIDTH / 12 + 6*buttons_sprite.tile_w,
+         11 * Z64_SCREEN_HEIGHT / 12, debug_text_width, debug_text_height);
+    }
+}
+
+void draw_z(z64_disp_buf_t *db) {
+
+    if (z64_game.common.input[0].raw.pad.z) {
+        gDPSetPrimColor(db->p++, 0, 0, 0xDC, 0xDC, 0xDC, 0xFF); // grey
+        sprite_draw(db, &buttons_sprite, 5, Z64_SCREEN_WIDTH / 12 + 9*buttons_sprite.tile_w,
+         11 * Z64_SCREEN_HEIGHT / 12, debug_text_width, debug_text_height);
+    }
+}
+
+void draw_l(z64_disp_buf_t *db) {
+
+    if (z64_game.common.input[0].raw.pad.l) {
+        gDPSetPrimColor(db->p++, 0, 0, 0xDC, 0xDC, 0xDC, 0xFF); // grey
+        sprite_draw(db, &buttons_sprite, 3, Z64_SCREEN_WIDTH / 12 + 10*buttons_sprite.tile_w,
+         11 * Z64_SCREEN_HEIGHT / 12, debug_text_width, debug_text_height);
+    }
+}
+
+void draw_r(z64_disp_buf_t *db) {
+
+    if (z64_game.common.input[0].raw.pad.r) {
+        gDPSetPrimColor(db->p++, 0, 0, 0xDC, 0xDC, 0xDC, 0xFF); // grey
+        sprite_draw(db, &buttons_sprite, 4, Z64_SCREEN_WIDTH / 12 + 11*buttons_sprite.tile_w,
+         11 * Z64_SCREEN_HEIGHT / 12, debug_text_width, debug_text_height);
+    }
+}
+
+void draw_ddown(z64_disp_buf_t *db) {
+
+    if (z64_game.common.input[0].raw.pad.dd) {
+        gDPSetPrimColor(db->p++, 0, 0, 0xDC, 0xDC, 0xDC, 0xFF); // yellow
+        sprite_draw(db, &buttons_sprite, 7, Z64_SCREEN_WIDTH / 12 + 12*buttons_sprite.tile_w,
+         11 * Z64_SCREEN_HEIGHT / 12, debug_text_width, debug_text_height);
+    }
+}
+
+void draw_dup(z64_disp_buf_t *db) {
+
+    if (z64_game.common.input[0].raw.pad.du) {
+        gDPSetPrimColor(db->p++, 0, 0, 0xDC, 0xDC, 0xDC, 0xFF); // yellow
+        sprite_draw(db, &buttons_sprite, 6, Z64_SCREEN_WIDTH / 12 + 15*buttons_sprite.tile_w,
+         11 * Z64_SCREEN_HEIGHT / 12, debug_text_width, debug_text_height);
+    }
+}
+
+
+void draw_dleft(z64_disp_buf_t *db) {
+
+    if (z64_game.common.input[0].raw.pad.dl) {
+        gDPSetPrimColor(db->p++, 0, 0, 0xDC, 0xDC, 0xDC, 0xFF); // yellow
+        sprite_draw(db, &buttons_sprite, 8, Z64_SCREEN_WIDTH / 12 + 14*buttons_sprite.tile_w,
+         11 * Z64_SCREEN_HEIGHT / 12, debug_text_width, debug_text_height);
+    }
+}
+
+void draw_dright(z64_disp_buf_t *db) {
+
+    if (z64_game.common.input[0].raw.pad.dr) {
+        gDPSetPrimColor(db->p++, 0, 0, 0xDC, 0xDC, 0xDC, 0xFF); // yellow
+        sprite_draw(db, &buttons_sprite, 9, Z64_SCREEN_WIDTH / 12 + 13*buttons_sprite.tile_w,
+         11 * Z64_SCREEN_HEIGHT / 12, debug_text_width, debug_text_height);
+    }
+}
+
+// Helper function for drawing numbers to the HUD.
+void draw_int_helper(z64_disp_buf_t *db, int32_t number, int16_t left, int16_t top, colorRGBA8_t color) {
+
+    int isNegative = 0;
+    if (number < 0) {
+        number *= -1;
+        isNegative = 1;
+    }
+
+    uint8_t digits[10];
+    uint8_t j = 0;
+    // Extract each digit. They are added, in reverse order, to digits[]
+    do {
+        digits[j] = number % 10;
+        number = number / 10;
+        j++;
+    }
+    while ( number > 0 );
+    // This combiner mode makes it look like the rupee count
+    gDPSetCombineLERP(db->p++, 0, 0, 0, PRIMITIVE, TEXEL0, 0, PRIMITIVE, 0, 0, 0, 0, PRIMITIVE,
+                            TEXEL0, 0, PRIMITIVE, 0);
+
+    // Set the color
+    gDPSetPrimColor(db->p++, 0, 0, color.r, color.g, color.b, color.a);
+    if (isNegative) {
+        text_print_size("-", left - rupee_digit_sprite.tile_w, top, 8);
+        text_flush_size(db, 8, 16, 0, 0);
+    }
+    // Draw each digit
+    for(uint8_t c = j; c > 0; c--) {
+        sprite_texture(db, &rupee_digit_sprite, digits[c-1], left, top, 8, 16);
+        left += 8;
+    }
+}
+
+void draw_x_stick(z64_disp_buf_t *db) {
+    colorRGBA8_t color = { 0xF4, 0xEC, 0x30, 0xFF};
+    draw_int_helper(db, z64_game.common.input[0].raw.x, Z64_SCREEN_WIDTH / 12,
+        11 * Z64_SCREEN_HEIGHT / 12, color);
+}
+
+void draw_y_stick(z64_disp_buf_t *db) {
+    colorRGBA8_t color = { 0xF4, 0xEC, 0x30, 0xFF};
+    draw_int_helper(db, z64_game.common.input[0].raw.y, Z64_SCREEN_WIDTH / 12 + 4*rupee_digit_sprite.tile_w,
+        11 * Z64_SCREEN_HEIGHT / 12, color);
+}
+
+
+void draw_debug_numbers(z64_disp_buf_t *db) {
 
     for (int i = 0; i < 10; i++) {
 
@@ -465,30 +631,6 @@ void draw_debug_numbers(z64_disp_buf_t *db) {
             continue;
         }
 
-        int isNegative = 0;
-        if (numberToShow < 0) {
-            numberToShow *= -1;
-            isNegative = 1;
-        }
-
-        int numberToShow_digits = 0;
-        int numberToShow_copy = numberToShow;
-        while (numberToShow_copy >= 1) {
-            numberToShow_digits++;
-            numberToShow_copy /= 10;
-        }
-        int str_len = numberToShow_digits;
-        char text[str_len + 1 + isNegative];
-        text[str_len + isNegative] = 0;
-        numberToShow_copy = numberToShow;
-        for (int j = numberToShow_digits - 1 + isNegative; j >= isNegative; j--) {
-            text[j] = (numberToShow_copy % 10) + '0';
-            numberToShow_copy /= 10;
-        }
-        if (isNegative) {
-            text[0] = '-';
-        }
-
         int debug_text_x_placement = Z64_SCREEN_WIDTH / 12;
         int debug_text_y_placement = font_sprite.tile_h * 2.5;
 
@@ -500,229 +642,32 @@ void draw_debug_numbers(z64_disp_buf_t *db) {
         if (z64_file.energy_capacity > 10 * 0x10)
             height += font_sprite.tile_h * 0.8;
 
-        text_print_size(text, debug_text_x_placement, height + offsetY, debug_text_width);
-        //text_flush_size(db, debug_text_width, debug_text_height, 0, 0);
-    }
-
-    for (int i = 0; i < 10; i++) {
-
-        float numberToShow = debugNumbersFloat[i];
-        if (!numberToShow) {
-            continue;
-        }
-
-        int isNegative = 0;
-        if (numberToShow < 0) {
-            numberToShow *= -1;
-            isNegative = 1;
-        }
-
-        // 4 decimals
-        int floorValue = (int)numberToShow;
-        int decimalValue = (numberToShow - floorValue) * 10000;
-
-        int numberToShow_digits = 0;
-        int numberToShow_copy = floorValue;
-        while (numberToShow_copy >= 1) {
-            numberToShow_digits++;
-            numberToShow_copy /= 10;
-        }
-        int str_len = numberToShow_digits + isNegative + 5;
-        char text[str_len + 1];
-        text[str_len] = 0;
-        numberToShow_copy = floorValue;
-        for (int j = numberToShow_digits - 1 + isNegative; j >= isNegative; j--) {
-            text[j] = (numberToShow_copy % 10) + '0';
-            numberToShow_copy /= 10;
-        }
-        if (isNegative) {
-            text[0] = '-';
-        }
-
-        int decimal_copy = decimalValue;
-        decimal_copy = decimalValue;
-        text[str_len - 5] = '.';
-        for (int j = str_len - 1; j > str_len - 5; j--) {
-            text[j] = (decimal_copy % 10) + '0';
-            decimal_copy /= 10;
-        }
-
-        int debug_text_x_placement = Z64_SCREEN_WIDTH / 12;
-        int debug_text_y_placement = font_sprite.tile_h * 2.5;
-
-        int offsetY = i * font_sprite.tile_h;
-        int height = debug_text_y_placement;
-        // Move down if magic or 2nd row of hearts
-        if (z64_file.magic_capacity_set > 0)
-            height += font_sprite.tile_h * 0.8;
-        if (z64_file.energy_capacity > 10 * 0x10)
-            height += font_sprite.tile_h * 0.8;
-
-        text_print_size(text, debug_text_x_placement, height + offsetY, debug_text_width);
-        //text_flush_size(db, debug_text_width, debug_text_height, 0, 0);
+        colorRGBA8_t color = { 0xF4, 0xEC, 0x30, 0xFF};
+        draw_int_helper(db, numberToShow, debug_text_x_placement, height + offsetY, color);
     }
 
     // Input viewer
     if (show_input_viewer) {
+        sprite_load(db, &buttons_sprite, 0, 10);
         draw_a(db);
         draw_b(db);
-        draw_x_stick(db);
-        draw_y_stick(db);
-        draw_start(db);
         draw_cup(db);
         draw_cdown(db);
         draw_cleft(db);
         draw_cright(db);
+        //draw_start(db);
+
         draw_z(db);
         draw_l(db);
         draw_r(db);
-    }
-    gDPSetPrimColor(db->p++, 0, 0, debug_text_color.r, debug_text_color.g, debug_text_color.b, 0xFF);
-    text_flush_size(db, debug_text_width, debug_text_height, 0, 0);
-    gDPFullSync(db->p++);
-    gSPEndDisplayList(db->p++);
-}
 
-void draw_a(z64_disp_buf_t *db) {
+        draw_dup(db);
+        draw_ddown(db);
+        draw_dleft(db);
+        draw_dright(db);
 
-    if (z64_game.common.input[0].raw.pad.a) {
-        //text_print_size("A", Z64_SCREEN_WIDTH / 12 + 8*font_sprite.tile_w, 11 * Z64_SCREEN_HEIGHT / 12 , debug_text_width);
-        //text_flush_size(db, debug_text_width, debug_text_height, 0, 0);
-        gDPSetPrimColor(db->p++, 0, 0, 0x00, 0x00, 0xFF, 0xFF); // blue
-        sprite_load(db, &button_sprite, 0, 5);
-        sprite_draw(db, &button_sprite, 0, Z64_SCREEN_WIDTH / 12 + 8*font_sprite.tile_w,
-         11 * Z64_SCREEN_HEIGHT / 12, debug_text_width, debug_text_height);
-    }
-}
-
-void draw_b(z64_disp_buf_t *db) {
-
-    if (z64_game.common.input[0].raw.pad.b) {
-        text_print_size("B", Z64_SCREEN_WIDTH / 12 + 9*font_sprite.tile_w, 11 * Z64_SCREEN_HEIGHT / 12, debug_text_width);
-        //text_flush_size(db, debug_text_width, debug_text_height, 0, 0);
-    }
-}
-
-void draw_start(z64_disp_buf_t *db) {
-
-    if (z64_game.common.input[0].raw.pad.s) {
-        text_print_size("S", Z64_SCREEN_WIDTH / 12 + 10*font_sprite.tile_w, 11 * Z64_SCREEN_HEIGHT / 12, debug_text_width);
-        //text_flush_size(db, debug_text_width, debug_text_height, 0, 0);
-    }
-}
-
-void draw_cup(z64_disp_buf_t *db) {
-
-    if (z64_game.common.input[0].raw.pad.cu) {
-        text_print_size("^", Z64_SCREEN_WIDTH / 12 + 11*font_sprite.tile_w, 11 * Z64_SCREEN_HEIGHT / 12, debug_text_width);
-        //text_flush_size(db, debug_text_width, debug_text_height, 0, 0);
-    }
-}
-
-void draw_cdown(z64_disp_buf_t *db) {
-
-    if (z64_game.common.input[0].raw.pad.cd) {
-        text_print_size("v", Z64_SCREEN_WIDTH / 12 + 12*font_sprite.tile_w, 11 * Z64_SCREEN_HEIGHT / 12, debug_text_width);
-        //text_flush_size(db, debug_text_width, debug_text_height, 0, 0);
-    }
-}
-
-void draw_cleft(z64_disp_buf_t *db) {
-
-    if (z64_game.common.input[0].raw.pad.cl) {
-        text_print_size("<", Z64_SCREEN_WIDTH / 12 + 13*font_sprite.tile_w, 11 * Z64_SCREEN_HEIGHT / 12, debug_text_width);
-        //text_flush_size(db, debug_text_width, debug_text_height, 0, 0);
-    }
-}
-
-void draw_cright(z64_disp_buf_t *db) {
-
-    if (z64_game.common.input[0].raw.pad.cr) {
-        text_print_size(">", Z64_SCREEN_WIDTH / 12 + 14*font_sprite.tile_w, 11 * Z64_SCREEN_HEIGHT / 12, debug_text_width);
-        //text_flush_size(db, debug_text_width, debug_text_height, 0, 0);
-    }
-}
-
-void draw_z(z64_disp_buf_t *db) {
-
-    if (z64_game.common.input[0].raw.pad.z) {
-        text_print_size("Z", Z64_SCREEN_WIDTH / 12 + 15*font_sprite.tile_w, 11 * Z64_SCREEN_HEIGHT / 12, debug_text_width);
-        //text_flush_size(db, debug_text_width, debug_text_height, 0, 0);
-    }
-}
-
-void draw_l(z64_disp_buf_t *db) {
-
-    if (z64_game.common.input[0].raw.pad.l) {
-        text_print_size("L", Z64_SCREEN_WIDTH / 12 + 16*font_sprite.tile_w, 11 * Z64_SCREEN_HEIGHT / 12, debug_text_width);
-        //text_flush_size(db, debug_text_width, debug_text_height, 0, 0);
-    }
-}
-
-void draw_r(z64_disp_buf_t *db) {
-
-    if (z64_game.common.input[0].raw.pad.r) {
-        text_print_size("R", Z64_SCREEN_WIDTH / 12 + 17*font_sprite.tile_w, 11 * Z64_SCREEN_HEIGHT / 12, debug_text_width);
-        //text_flush_size(db, debug_text_width, debug_text_height, 0, 0);
-    }
-}
-
-void draw_x_stick(z64_disp_buf_t *db) {
-
-    int numberToShow = z64_game.common.input[0].raw.x;
-    int isNegative = 0;
-    if (numberToShow < 0) {
-        numberToShow *= -1;
-        isNegative = 1;
-    }
-    int numberToShow_digits = 0;
-    int numberToShow_copy = numberToShow;
-    while (numberToShow_copy >= 1) {
-        numberToShow_digits++;
-        numberToShow_copy /= 10;
-    }
-    int str_len = numberToShow_digits;
-    char text[str_len + 1 + isNegative];
-    text[str_len + isNegative] = 0;
-    numberToShow_copy = numberToShow;
-    for (int j = numberToShow_digits - 1 + isNegative; j >= isNegative; j--) {
-        text[j] = (numberToShow_copy % 10) + '0';
-        numberToShow_copy /= 10;
-    }
-    if (isNegative) {
-        text[0] = '-';
+        draw_x_stick(db);
+        draw_y_stick(db);
     }
 
-    text_print_size(text, Z64_SCREEN_WIDTH / 12 + (1 - isNegative)*font_sprite.tile_w, 11 * Z64_SCREEN_HEIGHT / 12, debug_text_width);
-    //text_flush_size(db, debug_text_width, debug_text_height, 0, 0);
-}
-
-void draw_y_stick(z64_disp_buf_t *db) {
-
-    int numberToShow = z64_game.common.input[0].raw.y;
-    int isNegative = 0;
-    if (numberToShow < 0) {
-        numberToShow *= -1;
-        isNegative = 1;
-    }
-    int numberToShow_digits = 0;
-    int numberToShow_copy = numberToShow;
-    while (numberToShow_copy >= 1) {
-        numberToShow_digits++;
-        numberToShow_copy /= 10;
-    }
-    int str_len = numberToShow_digits;
-    char text[str_len + 1 + isNegative];
-    text[str_len + isNegative] = 0;
-    numberToShow_copy = numberToShow;
-    for (int j = numberToShow_digits - 1 + isNegative; j >= isNegative; j--) {
-        text[j] = (numberToShow_copy % 10) + '0';
-        numberToShow_copy /= 10;
-    }
-    if (isNegative) {
-        text[0] = '-';
-    }
-
-    text_print_size(text, Z64_SCREEN_WIDTH / 12 + (5 - isNegative)*font_sprite.tile_w, 11 * Z64_SCREEN_HEIGHT / 12, debug_text_width);
-    //text_flush_size(db, debug_text_width, debug_text_height, 0, 0);
 }
