@@ -396,6 +396,7 @@
           "settings": [
             "default_targeting",
             "display_dpad",
+            "dpad_on_left",
             "dpad_dungeon_menu",
             "correct_model_colors",
             "randomize_all_cosmetics",

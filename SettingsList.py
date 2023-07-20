@@ -3711,6 +3711,26 @@ class SettingInfos:
             current available options on the D-Pad.
         ''',
         default        = True,
+        disable        = {
+            False: {'settings' : ['dpad_on_left']},
+        },
+        gui_params       = {
+            'no_line_break': True,
+        },
+    )
+
+    dpad_on_left = Checkbutton(
+        gui_text       = 'Display D-Pad on the left of the screen',
+        shared         = False,
+        cosmetic       = True,
+        gui_tooltip    = '''\
+            Displays the D-Pad HUD on the left of the screen instead
+            of the right.
+        ''',
+        default        = False,
+        gui_params       = {
+            "hide_when_disabled" : True,
+        },
     )
 
     dpad_dungeon_menu = Checkbutton(
