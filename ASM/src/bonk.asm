@@ -122,7 +122,7 @@ APPLY_BONK_DAMAGE:
     bne     t3, t4, @@return_bonk
     nop
     lb      t3, SHUFFLE_CHEST_GAME      ; don't reset anything if TCG shuffle is enabled
-    beqz    t3, @@return_bonk
+    bnez    t3, @@return_bonk
     nop
     ; Set scene temp flags to zero to re-lock doors
     sw      $zero, 0x1D2C(t7)
