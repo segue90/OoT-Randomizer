@@ -91,7 +91,7 @@ Gameplay_InitSkybox:
     ; addiu v0, v0 0x5660
     ; addiu v1, v1, 0x5630
     li      v1, FONTLOADSTATUS_EXTENDED
-    li      v0, FONTLOADSTATUS_EXTENDED + 0x80
+    li      v0, FONTLOADSTATUS_EXTENDED + 0xA0
 
 .org 0x800B3554
     ; Replaces:

@@ -208,21 +208,6 @@ Credit_sequence_ids: tuple[tuple[str, int], ...] = (
     ("Ending Credits Part 4", 0x6A),
 )
 
-# WIP for custom ocarina songs match fanfares setting in the future currently does nothing
-ocarina_song_ids: tuple[tuple[str, int], ...] = (
-    ("minuet of Forest", 0x00),
-    ("Bolero of Fire", 0x01),
-    ("Serenade of Water", 0x02),
-    ("Requiem of Spirit", 0x03),
-    ("Nocturne of Shadow", 0x04),
-    ("Prelude of Light", 0x05),
-    ("Saria's Song", 0x06),
-    ("Epona's Song", 0x07),
-    ("Zelda's Lullaby", 0x08),
-    ("Sun's Song", 0x09),
-    ("Song of Time", 0x0A),
-    ("Song of Storms", 0x0B)
-)
 
 class Bank:
     def __init__(self, index: int, meta: bytearray, data: bytes) -> None:
