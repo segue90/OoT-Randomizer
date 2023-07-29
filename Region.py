@@ -156,3 +156,6 @@ class Region:
 
     def __unicode__(self) -> str:
         return '%s' % self.name
+
+    def __repr__(self) -> str:
+        return "W%d %s" % (self.world.id, self.name)
