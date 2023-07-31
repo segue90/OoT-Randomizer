@@ -189,6 +189,7 @@ issue. You should always Hard Reset to avoid this issue entirely.
 * Python 3.6 and 3.7 are no longer supported.
 * Some inescapable entrances are no longer valid targets for Overworld Spawn entrances.
 * Using Farore's Wind to warp between dungeons is now considered in logic.
+* Various text changes such as singular Temple of Time Altar bridge conditions, grammar changes to region hints, and adding apostrophes to shop items.
 
 #### New Speedups
 * Various cutscenes removed or shortened, such as Water Temple and Gerudo Fortress gates and scarecrow spawn cutscenes.
