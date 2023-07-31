@@ -30,6 +30,7 @@ from Sounds import move_audiobank_table
 from Spoiler import Spoiler
 from Utils import data_path
 from World import World
+from TextBox import line_wrap
 from texture_util import ci4_rgba16patch_to_ci8, rgba16_patch
 from version import __version__
 
