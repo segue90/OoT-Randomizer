@@ -159,6 +159,7 @@ issue. You should always Hard Reset to avoid this issue entirely.
   * A rare softlock when fighting Gohma present in the original game has been fixed.
   * A crash when diving and resurfacing in very shallow water present in the original game has been fixed.
   * Various miscellaneous logic issues have been addressed.
+  * A minor bug related to checking time of day access has been corrected.
 * **Hints**
   * Fix the cryptic hint for Ganon's Castle Boss Key.
   * Fix missing punctuation in dual hints.
