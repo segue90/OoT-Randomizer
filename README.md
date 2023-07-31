@@ -161,6 +161,7 @@ issue. You should always Hard Reset to avoid this issue entirely.
   * Various miscellaneous logic issues have been addressed.
   * A minor bug related to checking time of day access has been corrected.
   * Fix a softlock caused by 8-note Sun's Songs when using `Randomize Ocarina Song Notes`, again.
+  * Fix pause screen rendering causing graphical issues on some platforms.
 * **Hints**
   * Fix the cryptic hint for Ganon's Castle Boss Key.
   * Fix missing punctuation in dual hints.
