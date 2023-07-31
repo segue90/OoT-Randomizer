@@ -127,6 +127,7 @@ issue. You should always Hard Reset to avoid this issue entirely.
   * New setting `Key Appearance Matches Dungeon` which changes the models for small keys and boss keys to indicate which dungeon the key belongs to.
   * New setting `Shuffle Individual Ocarina Notes`, which shuffles items representing each of the 5 ocarina notes into the item pool. You cannot play any note on the ocarina until you find its corresponding item.
   * New cosmetic setting `Uninvert Y-Axis in First Person Camera` which makes tilting the joystick up or down in first person look those respective directions, instead of the opposite direction.
+  * The setting `Display D-Pad HUD` has been expanded so that the D-Pad can be set to the left of the screen.
 * **Hints**
   * New `Important Checks` hint type which hints at how many major items are in a given region.
     * Double Defense and Biggoron's Sword are counted as major for this hint type.
