@@ -250,12 +250,12 @@ conditional_sometimes: dict[str, Callable[[World], bool]] = {
     'HC Great Fairy Reward':                    lambda world: world.settings.shuffle_interior_entrances == 'off',
     'OGC Great Fairy Reward':                   lambda world: world.settings.shuffle_interior_entrances == 'off',
     'ZR Frogs in the Rain':                     lambda world: not world.settings.shuffle_frog_song_rupees,
-    'ZD King Zora Thawed':                      lambda world: not world.settings.adult_trade_shuffle,
+    'ZD King Zora Thawed':                      lambda world: not world.settings.adult_trade_shuffle or 'Eyeball Frog' not in world.settings.adult_trade_start,
 
     # Conditional dual hints
     'GV Pieces of Heart Ledges':                lambda world: not world.settings.shuffle_cows and world.settings.tokensanity not in ['overworld', 'all'],
     'LH Adult Bean Destination Checks':         lambda world: world.settings.shuffle_interior_entrances == 'off',
-    'King Zora Items':                          lambda world: world.settings.adult_trade_shuffle,
+    'King Zora Items':                          lambda world: world.settings.adult_trade_shuffle and 'Eyeball Frog' in world.settings.adult_trade_start,
 
     'Fire Temple Lower Loop':                   lambda world: world.settings.tokensanity not in ['dungeons', 'all'],
     'Water Temple River Loop Chests':           lambda world: world.settings.tokensanity not in ['dungeons', 'all'],
@@ -622,7 +622,7 @@ hintTable: dict[str, tuple[list[str] | str, Optional[str], str | list[str]]] = {
     'Graveyard Royal Family Tomb Contents':                        ("inside the #Royal Family Tomb#, you will find...^", None, 'dual'),
     'DMC Child Upper Checks':                                      ("in the #crater, a spider in a crate and a single scrub# guard...^", None, 'dual'),
     'Haunted Wasteland Checks':                                    ("deep in the #wasteland a spider and a chest# hold...^", None, 'dual'),
-    'King Zora Items':                                             ("#unfreezing King Zora and giving him Prescription# rewards both...^", None, 'dual'),
+    'King Zora Items':                                             ("#unfreezing King Zora and giving him the Prescription# rewards...^", None, 'dual'),
 
     'Deku Tree MQ Basement GS':                                    ("in the back of the #basement of the Great Deku Tree# two spiders hold...^", None, 'dual'),
     'Dodongos Cavern Upper Business Scrubs':                       ("deep in #Dodongo's Cavern a pair of scrubs# sell...^", None, 'dual'),
