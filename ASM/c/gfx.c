@@ -94,8 +94,8 @@ sprite_t heart_sprite = {
 };
 
 sprite_t ocarina_button_sprite = {
-    NULL, 16, 16, 1,
-    G_IM_FMT_IA, G_IM_SIZ_8b, 5
+    NULL, 16, 16, 5,
+    G_IM_FMT_IA, G_IM_SIZ_8b, 1
 };
 
 sprite_t buttons_sprite = {

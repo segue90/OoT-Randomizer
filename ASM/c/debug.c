@@ -6,16 +6,22 @@ colorRGB8_t debug_text_color = { 0xE0, 0xE0, 0x10 }; // Yellow
 
 int show_input_viewer = 0;
 int show_warp_menu = 0;
+int float_precision = 2;
 
 uint32_t debugNumbers[10] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+float debugNumbersFloat[10] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
 
-menu_index_t current_menu_indexes = {0, 0, 0, 0, 0};
+menu_index_t current_menu_indexes = {0, 0, 0, 0};
+
+typedef void(*usebutton_t)(z64_game_t *game, z64_link_t *link, uint8_t item, uint8_t button);
+#define z64_usebutton ((usebutton_t)    0x8038C9A0)
 
 menu_category_t menu_categories[] = {
     {  0, "Dungeons"},
     {  1, "Overworld"},
     {  2, "Items"},
     {  3, "Switch Age"},
+    {  4, "Bunny Hood"},
 };
 
 warp_t dungeon_warps[] = {
@@ -54,7 +60,6 @@ warp_t overworld_warps[] = {
     { 16, 0x129, "Gerudo Fortress"},
     { 17, 0x130, "Haunted Wasteland"},
     { 18, 0x123, "Desert Colossus"},
-    //{ 19, 0x1FD, "Hyrule Field (from Market)"},
 };
 
 item_t items_debug[] = {
@@ -108,6 +113,13 @@ void draw_debug_int(int whichNumber, int numberToShow) {
     debugNumbers[whichNumber] = numberToShow;
 }
 
+void draw_debug_float(int whichNumber, float numberToShow) {
+    if (whichNumber < 0 || whichNumber > 9) {
+        return;
+    }
+    debugNumbersFloat[whichNumber] = numberToShow;
+}
+
 void debug_utilities(z64_disp_buf_t *db)
 {
     if (!DEBUG_MODE){
@@ -139,13 +151,13 @@ void draw_debug_menu(z64_disp_buf_t *db) {
 
             if (z64_game.common.input[0].pad_pressed.dr) {
                 current_menu_indexes.main_index++;
-                if (current_menu_indexes.main_index > 3) {
+                if (current_menu_indexes.main_index > 4) {
                     current_menu_indexes.main_index = 0;
                 }
             }
             if (z64_game.common.input[0].pad_pressed.dl) {
                 if (current_menu_indexes.main_index == 0) {
-                    current_menu_indexes.main_index = 3;
+                    current_menu_indexes.main_index = 4;
                 }
                 else {
                     current_menu_indexes.main_index--;
@@ -172,7 +184,13 @@ void draw_debug_menu(z64_disp_buf_t *db) {
                     show_warp_menu = 0;
                 }
             }
-            else {
+            if (current_menu_indexes.main_index == 4) {
+                if (z64_game.common.input[0].pad_pressed.a) {
+                    z64_GiveItem(&z64_game, Z64_ITEM_BUNNY_HOOD);
+                    z64_usebutton(&z64_game, &z64_link, Z64_ITEM_BUNNY_HOOD, 2);
+                }
+            }
+            if (current_menu_indexes.main_index < 3){
                 if (z64_game.common.input[0].pad_pressed.a) {
                     current_menu_indexes.sub_menu_index++;
                 }
@@ -299,7 +317,7 @@ void draw_debug_menu(z64_disp_buf_t *db) {
 
         if (current_menu_indexes.sub_menu_index == 0) {
             gDPSetPrimColor(db->p++, 0, 0, 0xFF, 0xFF, 0xFF, 0xFF);
-            for (int i = 0; i < 4; i++) {
+            for (int i = 0; i < 5; i++) {
                 menu_category_t *d = &(menu_categories[i]);
                 int top = start_top + ((icon_size + padding) * i) + 1;
                 if (i != current_menu_indexes.main_index) {
@@ -575,7 +593,7 @@ void draw_dright(z64_disp_buf_t *db) {
 }
 
 // Helper function for drawing numbers to the HUD.
-void draw_int_helper(z64_disp_buf_t *db, int32_t number, int16_t left, int16_t top, colorRGBA8_t color) {
+int draw_int_helper(z64_disp_buf_t *db, int32_t number, int16_t left, int16_t top, colorRGBA8_t color) {
 
     int isNegative = 0;
     if (number < 0) {
@@ -603,10 +621,11 @@ void draw_int_helper(z64_disp_buf_t *db, int32_t number, int16_t left, int16_t t
         text_flush_size(db, 8, 16, 0, 0);
     }
     // Draw each digit
-    for(uint8_t c = j; c > 0; c--) {
+    for (uint8_t c = j; c > 0; c--) {
         sprite_texture(db, &rupee_digit_sprite, digits[c-1], left, top, 8, 16);
         left += 8;
     }
+    return j;
 }
 
 void draw_x_stick(z64_disp_buf_t *db) {
@@ -644,6 +663,40 @@ void draw_debug_numbers(z64_disp_buf_t *db) {
 
         colorRGBA8_t color = { 0xF4, 0xEC, 0x30, 0xFF};
         draw_int_helper(db, numberToShow, debug_text_x_placement, height + offsetY, color);
+    }
+
+    for (int i = 0; i < 10; i++) {
+
+        float numberToShow = debugNumbersFloat[i];
+        if (!numberToShow) {
+            continue;
+        }
+        int decimalValue = 0;
+        int entireValue = (int)(numberToShow);
+        if (numberToShow > 0) {
+            decimalValue = (numberToShow - entireValue) * 10 * float_precision;
+        }
+        else {
+            decimalValue = (entireValue - numberToShow) * 10 * float_precision;
+        }
+
+        int debug_text_x_placement = Z64_SCREEN_WIDTH / 12;
+        int debug_text_y_placement = rupee_digit_sprite.tile_h * 2.5;
+
+        int offsetY = i * rupee_digit_sprite.tile_h;
+        int height = debug_text_y_placement;
+        // Move down if magic or 2nd row of hearts
+        if (z64_file.magic_capacity_set > 0)
+            height += rupee_digit_sprite.tile_h * 0.8;
+        if (z64_file.energy_capacity > 10 * 0x10)
+            height += rupee_digit_sprite.tile_h * 0.8;
+
+        colorRGBA8_t color = { 0xF4, 0xEC, 0x30, 0xFF};
+        int numberDigit = draw_int_helper(db, entireValue, debug_text_x_placement, height + offsetY, color);
+        text_print_size(".", debug_text_x_placement + numberDigit * rupee_digit_sprite.tile_w, height + offsetY, rupee_digit_sprite.tile_w);
+        text_flush_size(db, rupee_digit_sprite.tile_w, rupee_digit_sprite.tile_h, 0, 0);
+        draw_int_helper(db, decimalValue, debug_text_x_placement + numberDigit * rupee_digit_sprite.tile_w + font_sprite.tile_w,
+                        height + offsetY, color);
     }
 
     // Input viewer
