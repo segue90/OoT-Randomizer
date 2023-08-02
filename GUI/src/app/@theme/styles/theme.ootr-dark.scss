@@ -136,7 +136,10 @@ $nb-themes: nb-register-theme(
       header-padding: 17.5px,
       header-shadow: 0 7px 14px 0 rgba(44, 51, 73, 0.1),
 
+      button-filled-border-width: 0.875px,
       button-small-text-line-height: 14px,
+      button-medium-text-line-height: 14px,
+      button-large-text-line-height: 14px,
     ),
     ootr-dark,
     default
