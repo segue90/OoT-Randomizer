@@ -527,6 +527,9 @@
       }
 
       [nbButton].appearance-filled.status-info {
+        font-family: Exo;
+        font-weight: 500;
+        font-size: 14px;
         color: nb-theme(color-info-300);
         background-color: nb-theme(color-info-500);
         border-color: nb-theme(color-info-500);
