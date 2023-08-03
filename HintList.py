@@ -599,7 +599,7 @@ hintTable: dict[str, tuple[list[str] | str, Optional[str], str | list[str]]] = {
     'Spirit Temple MQ Symphony Room Chest':                        ("a #symphony in the Colossus# yields", "a #symphony in the Spirit Temple# yields", ['dungeon', 'sometimes']),
     'Spirit Temple MQ GS Symphony Room':                           ("a #spider's symphony in the Colossus# yields", "a #spider's symphony in the Spirit Temple# yields", ['dungeon', 'sometimes']),
     'Shadow Temple Freestanding Key':                              ("a #burning skull in the house of the dead# holds", "a #giant pot in the Shadow Temple# holds", ['dungeon', 'sometimes']),
-    'Shadow Temple MQ Bomb Flower Chest':                          ("a grasping ghoul in an #invisible maze# guards", "the buried #Dead Hand with Bomb Flowers# guards", ['dungeon', 'sometimes']),
+    'Shadow Temple MQ Bomb Flower Chest':                          ("a #grasping ghoul surrounded by Bomb Flowers# guards", "the #Dead Hand surrounded by Bomb Flowers# guards", ['dungeon', 'sometimes']),
     'Shadow Temple MQ Stalfos Room Chest':                         ("near an #empty pedestal within the house of the dead# lies", "#stalfos in the Shadow Temple# guard", ['dungeon', 'sometimes']),
     'Ice Cavern Iron Boots Chest':                                 ("a #monster in a frozen cavern# guards", "the #final treasure of Ice Cavern# is", ['dungeon', 'sometimes']),
     'Ice Cavern MQ Iron Boots Chest':                              ("a #monster in a frozen cavern# guards", "the #final treasure of Ice Cavern# is", ['dungeon', 'sometimes']),
@@ -901,7 +901,7 @@ hintTable: dict[str, tuple[list[str] | str, Optional[str], str | list[str]]] = {
     'Shadow Temple After Wind Enemy Chest':                        ("#mummies guarding a ferry# hide", None, 'exclude'),
     'Shadow Temple After Wind Hidden Chest':                       ("#mummies guarding a ferry# hide", None, 'exclude'),
     'Shadow Temple Spike Walls Left Chest':                        ("#walls consumed by a ball of fire# reveal", None, 'exclude'),
-    'Shadow Temple Invisible Floormaster Chest':                   ("a singular hand in an #invisible maze# guards", "a #floormaster at the end of Shadow Temple# guards", 'exclude'),
+    'Shadow Temple Invisible Floormaster Chest':                   ("a #Floormaster in the house of the dead# guards", "a #Floormaster in the Shadow Temple# guards", 'exclude'),
     'Shadow Temple Boss Key Chest':                                ("#walls consumed by a ball of fire# reveal", None, 'exclude'),
 
     'Shadow Temple MQ Compass Chest':                              ("the #Eye of Truth# pierces a hall of faces to reveal", None, 'exclude'),
