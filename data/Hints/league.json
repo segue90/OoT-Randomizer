@@ -1,7 +1,7 @@
 {
     "name":                  "league",
     "gui_name":              "League",
-    "description":           "Hint Distribution for the S4 of League. 5 Always, 5 Path, 3 Barren, 7 Sometimes & Dual Hints weighted towards sometimes, 30/40/50 skull hints in house of skulltula",
+    "description":           "Hint Distribution for the S5 of League. 5 Always, 5 Path, 3 Barren, 7 Sometimes & Dual Hints weighted towards sometimes, 30/40/50 skull hints in house of skulltula",
     "add_locations":         [
         { "location": "Deku Theater Skull Mask", "types": ["always"] },
         { "location": "Sheik in Kakariko", "types": ["always"] }
