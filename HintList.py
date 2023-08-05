@@ -254,6 +254,7 @@ conditional_sometimes: dict[str, Callable[[World], bool]] = {
     # Conditional dual hints
     'GV Pieces of Heart Ledges':                lambda world: not world.settings.shuffle_cows and world.settings.tokensanity not in ['overworld', 'all'],
     'LH Adult Bean Destination Checks':         lambda world: world.settings.shuffle_interior_entrances == 'off',
+    'Castle Fairy Checks':                      lambda world: world.settings.shuffle_interior_entrances == 'off',
 
     'Fire Temple Lower Loop':                   lambda world: world.settings.tokensanity not in ['dungeons', 'all'],
     'Water Temple River Loop Chests':           lambda world: world.settings.tokensanity not in ['dungeons', 'all'],
