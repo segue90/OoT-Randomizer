@@ -627,7 +627,7 @@ hintTable: dict[str, tuple[list[str] | str, Optional[str], str | list[str]]] = {
     'Dodongos Cavern Upper Business Scrubs':                       ("deep in #Dodongo's Cavern a pair of scrubs# sell...^", None, 'dual'),
     'Dodongos Cavern MQ Larvae Room':                              ("amid #larvae in Dodongo's Cavern# a chest and a spider hold...^", None, 'dual'),
     'Fire Temple Lower Loop':                                      ("under the #entrance of the Fire Temple# a blocked path leads to...^", None, 'dual'),
-    'Fire Temple Upper Checks':                                    ("#a scarecrow and a flare dancer# atop the Fire Temple guard...^", None, 'dual'),
+    'Fire Temple Upper Checks':                                    ("#a scarecrow and a Flare Dancer# atop the Fire Temple guard...^", None, 'dual'),
     'Fire Temple MQ Lower Loop':                                   ("under the #entrance of the Fire Temple# a blocked path leads to...^", None, 'dual'),
     'Water Temple River Loop Chests':                              ("#chests past a shadowy fight# in the Water Temple hold...^", "#chests past Dark Link# in the Water Temple hold...^", 'dual'),
     'Water Temple River Checks':                                   ("in the #river in the Water Temple# lies...^", None, 'dual'),
