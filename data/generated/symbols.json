@@ -2,6 +2,7 @@
 <<<<<<< Dev
 <<<<<<< Dev
 <<<<<<< Dev
+<<<<<<< Dev
     "ADULT_ANJU_ITEM_DIALOG": "034856B0",
 =======
 =======
@@ -9,16 +10,31 @@
 =======
 >>>>>>> Float version rewrite + bunny hood option
 <<<<<<< Dev
+=======
+>>>>>>> Cleaning + Readme info
     "ADULT_ANJU_ITEM_DIALOG": "03485530",
 >>>>>>> Warp debug menu
     "ADULT_INIT_ITEMS": "03482958",
     "ADULT_VALID_ITEMS": "03482960",
+<<<<<<< Dev
     "APPLY_BONK_DAMAGE": "03483C9C",
     "AUDIOBANK_TABLE_EXTENDED": "03484080",
     "AUDIO_THREAD_INFO": "03484060",
     "AUDIO_THREAD_INFO_MEM_SIZE": "0348407C",
     "AUDIO_THREAD_INFO_MEM_START": "03484078",
+<<<<<<< Dev
     "AUDIO_THREAD_MEM_START": "034A7D00",
+=======
+    "AUDIO_THREAD_MEM_START": "034A7CE0",
+=======
+    "APPLY_BONK_DAMAGE": "03483D3C",
+    "AUDIOBANK_TABLE_EXTENDED": "03484120",
+    "AUDIO_THREAD_INFO": "03484100",
+    "AUDIO_THREAD_INFO_MEM_SIZE": "0348411C",
+    "AUDIO_THREAD_INFO_MEM_START": "03484118",
+    "AUDIO_THREAD_MEM_START": "034A9F30",
+>>>>>>> Cleaning + Readme info
+>>>>>>> Cleaning + Readme info
     "AUTO_TRACKER_CONTEXT": "03481328",
     "AUTO_TRACKER_VERSION": "03481328",
 <<<<<<< Dev
@@ -27,6 +43,7 @@
 =======
     "BONK_LAST_FRAME": "03483C88",
     "CFG_ADULT_TRADE_SHUFFLE": "0348552C",
+<<<<<<< Dev
 =======
 =======
 >>>>>>> Improve int display and input viewer
@@ -48,6 +65,8 @@
     "CFG_ADULT_TRADE_SHUFFLE": "0348550C",
 >>>>>>> Warp debug menu
 >>>>>>> Warp debug menu
+=======
+>>>>>>> Cleaning + Readme info
     "CFG_AUDIOBANK_TABLE_EXTENDED_ADDR": "03480CA0",
     "CFG_A_BUTTON_COLOR": "03480C4C",
     "CFG_A_NOTE_COLOR": "03480C6A",
@@ -107,6 +126,7 @@
     "CFG_TUNIC_COLORS": "03480C97",
     "CFG_UNINVERT_YAXIS_IN_FIRST_PERSON_CAMERA": "03480CA5",
 <<<<<<< Dev
+<<<<<<< Dev
     "CHAIN_HBA_REWARDS": "034854A4",
     "CHECK_FOR_BONK_CANCEL": "03483C4C",
     "CHECK_ROOM_MESH_TYPE": "03483D7C",
@@ -123,10 +143,13 @@
     "COMPLETE_MASK_QUEST": "0349E9E0",
 =======
 <<<<<<< Dev
+=======
+>>>>>>> Cleaning + Readme info
     "CHAIN_HBA_REWARDS": "03485324",
     "CHECK_FOR_BONK_CANCEL": "03483CEC",
     "CHECK_ROOM_MESH_TYPE": "03483E1C",
     "CHEST_LENS_ONLY": "0348353C",
+<<<<<<< Dev
     "CHEST_SIZE_MATCH_CONTENTS": "0349E494",
     "CHEST_SIZE_TEXTURE": "0349E490",
     "CHEST_TEXTURE_MATCH_CONTENTS": "0349E498",
@@ -207,7 +230,16 @@
     "COMPLETE_MASK_QUEST": "034A0D10",
 >>>>>>> Float version rewrite + bunny hood option
 >>>>>>> Float version rewrite + bunny hood option
+<<<<<<< Dev
 >>>>>>> Float version rewrite + bunny hood option
+=======
+=======
+    "CHEST_SIZE_MATCH_CONTENTS": "034A0B74",
+    "CHEST_SIZE_TEXTURE": "034A0B70",
+    "CHEST_TEXTURE_MATCH_CONTENTS": "034A0B78",
+    "COMPLETE_MASK_QUEST": "034A0BD0",
+>>>>>>> Cleaning + Readme info
+>>>>>>> Cleaning + Readme info
     "COOP_CONTEXT": "03480020",
     "COOP_VERSION": "03480020",
     "COSMETIC_CONTEXT": "03480C3C",
@@ -221,6 +253,7 @@
 <<<<<<< Dev
 <<<<<<< Dev
 <<<<<<< Dev
+<<<<<<< Dev
     "DPAD_TEXTURE": "034A6500",
 =======
 =======
@@ -229,6 +262,8 @@
 >>>>>>> Improve int display and input viewer
 =======
 >>>>>>> Float version rewrite + bunny hood option
+=======
+>>>>>>> Cleaning + Readme info
 <<<<<<< Dev
     "DPAD_TEXTURE": "034A64E0",
 =======
@@ -276,11 +311,18 @@
     "DPAD_TEXTURE": "034A8860",
 >>>>>>> Float version rewrite + bunny hood option
 >>>>>>> Float version rewrite + bunny hood option
+<<<<<<< Dev
 >>>>>>> Float version rewrite + bunny hood option
+=======
+=======
+    "DPAD_TEXTURE": "034A8730",
+>>>>>>> Cleaning + Readme info
+>>>>>>> Cleaning + Readme info
     "DUNGEONS_SHUFFLED": "03481316",
     "EPONAS_SONG_NOTES": "03481323",
     "EXTENDED_INITIAL_SAVE_DATA": "03481140",
     "EXTENDED_OBJECT_TABLE": "03481240",
+<<<<<<< Dev
 <<<<<<< Dev
     "EXTERN_DAMAGE_MULTIPLYER": "03483B71",
 <<<<<<< Dev
@@ -298,11 +340,19 @@
     "EXTRA_BOWLING_SHUFFLE": "0349E43C",
 >>>>>>> Improve int display and input viewer
 >>>>>>> Improve int display and input viewer
+<<<<<<< Dev
 >>>>>>> Improve int display and input viewer
+=======
+=======
+    "EXTERN_DAMAGE_MULTIPLYER": "03483C15",
+    "EXTRA_BOWLING_SHUFFLE": "034A0B6C",
+>>>>>>> Cleaning + Readme info
+>>>>>>> Cleaning + Readme info
     "FAST_BUNNY_HOOD_ENABLED": "03481319",
     "FAST_CHESTS": "0348130F",
     "FILENAME_ENCODING": "0349E420",
     "FIX_BROKEN_DROPS": "0348131A",
+<<<<<<< Dev
     "FONTLOADSTATUS_EXTENDED": "03484A80",
     "FONT_TEXTURE": "034A5038",
     "FREE_BOMBCHU_DROPS": "03481300",
@@ -361,6 +411,15 @@
     "GET_CHEST_OVERRIDE_WRAPPER": "03483520",
 >>>>>>> Improve int display and input viewer
 >>>>>>> Improve int display and input viewer
+=======
+    "FONTLOADSTATUS_EXTENDED": "03484920",
+    "FONT_TEXTURE": "034A7268",
+    "FREE_BOMBCHU_DROPS": "03481300",
+    "FREE_SCARECROW_ENABLED": "03481308",
+    "GANON_BOSS_KEY_CONDITION": "034A0B98",
+    "GANON_BOSS_KEY_CONDITION_COUNT": "034A0B96",
+    "GET_CHEST_OVERRIDE_WRAPPER": "03483540",
+>>>>>>> Cleaning + Readme info
     "GET_ITEM_SEQ_ID": "03480C92",
     "GET_ITEM_TRIGGERED": "03481E34",
     "GOSSIP_HINT_CONDITION": "03481304",
@@ -376,6 +435,7 @@
 <<<<<<< Dev
 <<<<<<< Dev
 <<<<<<< Dev
+<<<<<<< Dev
     "KAKARIKO_WEATHER_FORECAST": "0349EA30",
 =======
 =======
@@ -384,6 +444,8 @@
 >>>>>>> Improve int display and input viewer
 =======
 >>>>>>> Float version rewrite + bunny hood option
+=======
+>>>>>>> Cleaning + Readme info
 <<<<<<< Dev
     "KAKARIKO_WEATHER_FORECAST": "0349EA10",
 =======
@@ -449,13 +511,20 @@
     "KAKARIKO_WEATHER_FORECAST": "034A0D40",
 >>>>>>> Float version rewrite + bunny hood option
 >>>>>>> Float version rewrite + bunny hood option
+<<<<<<< Dev
 >>>>>>> Float version rewrite + bunny hood option
+=======
+=======
+    "KAKARIKO_WEATHER_FORECAST": "034A0C00",
+>>>>>>> Cleaning + Readme info
+>>>>>>> Cleaning + Readme info
     "KEYRING_BOSSKEY_CONDITION": "0348131E",
     "KING_DODONGO_BONKS": "03483D48",
     "LACS_CONDITION": "03481368",
     "LACS_CONDITION_COUNT": "0348136E",
     "MALON_GAVE_ICETRAP": "034851E0",
     "MALON_TEXT_ID": "03481314",
+<<<<<<< Dev
 <<<<<<< Dev
 <<<<<<< Dev
 <<<<<<< Dev
@@ -468,6 +537,8 @@
 >>>>>>> Improve int display and input viewer
 =======
 >>>>>>> Float version rewrite + bunny hood option
+=======
+>>>>>>> Cleaning + Readme info
 <<<<<<< Dev
     "MAX_RUPEES": "0349E9E2",
 >>>>>>> Warp debug menu
@@ -523,10 +594,15 @@
     "MOVED_ADULT_KING_ZORA": "034849B0",
 >>>>>>> Float version rewrite + bunny hood option
 >>>>>>> Float version rewrite + bunny hood option
+=======
+    "MAX_RUPEES": "034A0BD2",
+    "MOVED_ADULT_KING_ZORA": "034849D0",
+>>>>>>> Cleaning + Readme info
     "MW_PROGRESSIVE_ITEMS_ENABLE": "0348002B",
     "MW_PROGRESSIVE_ITEMS_STATE": "0348083C",
     "MW_SEND_OWN_ITEMS": "0348002A",
     "NO_COLLECTIBLE_HEARTS": "0348130E",
+<<<<<<< Dev
 <<<<<<< Dev
 <<<<<<< Dev
 <<<<<<< Dev
@@ -541,6 +617,8 @@
 >>>>>>> Improve int display and input viewer
 =======
 >>>>>>> Float version rewrite + bunny hood option
+=======
+>>>>>>> Cleaning + Readme info
 <<<<<<< Dev
     "NO_ESCAPE_SEQUENCE": "0349E9A4",
     "OCARINAS_SHUFFLED": "0348130D",
@@ -622,7 +700,15 @@
     "OPEN_KAKARIKO": "034A0D11",
 >>>>>>> Float version rewrite + bunny hood option
 >>>>>>> Float version rewrite + bunny hood option
+<<<<<<< Dev
 >>>>>>> Float version rewrite + bunny hood option
+=======
+=======
+    "NO_ESCAPE_SEQUENCE": "034A0B94",
+    "OCARINAS_SHUFFLED": "0348130D",
+    "OPEN_KAKARIKO": "034A0BD1",
+>>>>>>> Cleaning + Readme info
+>>>>>>> Cleaning + Readme info
     "OUTGOING_ITEM": "03480030",
     "OUTGOING_KEY": "0348002C",
     "OUTGOING_PLAYER": "03480032",
@@ -634,10 +720,14 @@
     "PLAYER_NAMES": "03480034",
     "PLAYER_NAME_ID": "03480025",
     "POTCRATE_TEXTURES_MATCH_CONTENTS": "0348131D",
-<<<<<<< Dev
     "RAINBOW_BRIDGE_CONDITION": "03481364",
     "RAINBOW_BRIDGE_COUNT": "0348136C",
+<<<<<<< Dev
     "RANDOMIZER_RNG_SEED": "0349EA14",
+=======
+<<<<<<< Dev
+    "RANDOMIZER_RNG_SEED": "0349E9F4",
+>>>>>>> Cleaning + Readme info
     "RANDO_CONTEXT": "03480000",
 <<<<<<< Dev
     "RNG_SEED_INT": "0349E9A4",
@@ -652,11 +742,17 @@
     "SHUFFLE_CHEST_GAME": "03486100",
 =======
     "RNG_SEED_INT": "0349E484",
+=======
+    "RANDOMIZER_RNG_SEED": "034A0BE4",
+    "RANDO_CONTEXT": "03480000",
+    "RNG_SEED_INT": "034A0B64",
+>>>>>>> Cleaning + Readme info
     "SET_BONK_FLAG": "03483CC0",
     "SHOW_CHEST_WITH_INVERTED_LENS": "03483600",
     "SHUFFLE_BEANS": "03483E58",
     "SHUFFLE_CARPET_SALESMAN": "034853DC",
     "SHUFFLE_CHEST_GAME": "03485F80",
+<<<<<<< Dev
 =======
     "RAINBOW_BRIDGE_CONDITION": "03481360",
     "RAINBOW_BRIDGE_COUNT": "03481368",
@@ -700,6 +796,8 @@
 >>>>>>> Improve int display and input viewer
 =======
 >>>>>>> Float version rewrite + bunny hood option
+=======
+>>>>>>> Cleaning + Readme info
     "SHUFFLE_COWS": "03481310",
     "SHUFFLE_GRANNYS_POTION_SHOP": "034832F0",
     "SHUFFLE_MEDIGORON": "034855B8",
@@ -710,6 +808,7 @@
     "SPECIAL_DEAL_COUNTS": "03481374",
     "SPEED_MULTIPLIER": "0348361C",
     "SPOILER_AVAILABLE": "0348131B",
+<<<<<<< Dev
 <<<<<<< Dev
 <<<<<<< Dev
 <<<<<<< Dev
@@ -731,12 +830,25 @@
     "TIME_STRING_TXT": "03480D1C",
     "TIME_TRAVEL_SAVED_EQUIPS": "0348267C",
     "TRIFORCE_HUNT_ENABLED": "03481370",
+<<<<<<< Dev
     "TRIFORCE_ICON_TEXTURE": "034A6D00",
+=======
+    "TRIFORCE_ICON_TEXTURE": "034A6CE0",
+=======
+    "START_TWINROVA_FIGHT": "03484A50",
+    "Sram_InitNewSave": "034A0B68",
+    "TIME_STRING_TXT": "03480D1C",
+    "TIME_TRAVEL_SAVED_EQUIPS": "0348267C",
+    "TRIFORCE_HUNT_ENABLED": "03481370",
+    "TRIFORCE_ICON_TEXTURE": "034A8F30",
+>>>>>>> Cleaning + Readme info
+>>>>>>> Cleaning + Readme info
     "TRIFORCE_PIECES_REQUIRED": "03481372",
 <<<<<<< Dev
     "TWINROVA_ACTION_TIMER": "03484BD4",
 =======
     "TWINROVA_ACTION_TIMER": "03484A54",
+<<<<<<< Dev
 =======
 =======
 >>>>>>> Improve int display and input viewer
@@ -753,10 +865,13 @@
     "TWINROVA_ACTION_TIMER": "03484A34",
 >>>>>>> Warp debug menu
 >>>>>>> Warp debug menu
+=======
+>>>>>>> Cleaning + Readme info
     "VERSION_STRING_TXT": "03480CE8",
     "WINDMILL_SONG_ID": "03481312",
     "WINDMILL_TEXT_ID": "03481313",
     "WORLD_STRING_TXT": "03480D0C",
+<<<<<<< Dev
 <<<<<<< Dev
 <<<<<<< Dev
 <<<<<<< Dev
@@ -863,6 +978,8 @@
 >>>>>>> Improve int display and input viewer
 =======
 >>>>>>> Float version rewrite + bunny hood option
+=======
+>>>>>>> Cleaning + Readme info
 <<<<<<< Dev
     "a_button": "0349E958",
     "a_note_b": "0349E944",
@@ -1729,5 +1846,116 @@
     "triforce_sprite": "0349D2C0"
 >>>>>>> Float version rewrite + bunny hood option
 >>>>>>> Float version rewrite + bunny hood option
+<<<<<<< Dev
 >>>>>>> Float version rewrite + bunny hood option
+=======
+=======
+    "a_button": "034A0B38",
+    "a_note_b": "034A0B24",
+    "a_note_font_glow_base": "034A0B0C",
+    "a_note_font_glow_max": "034A0B08",
+    "a_note_g": "034A0B28",
+    "a_note_glow_base": "034A0B14",
+    "a_note_glow_max": "034A0B10",
+    "a_note_r": "034A0B2C",
+    "active_item_action_id": "034A0BB8",
+    "active_item_fast_chest": "034A0BA8",
+    "active_item_graphic_id": "034A0BAC",
+    "active_item_object_id": "034A0BB0",
+    "active_item_row": "034A0BBC",
+    "active_item_text_id": "034A0BB4",
+    "active_override": "034A117C",
+    "active_override_is_outgoing": "034A0BC0",
+    "adultSkeleton": "034A07D4",
+    "adult_safe": "034A0BDA",
+    "alt_overrides": "034A0D24",
+    "b_button": "034A0B34",
+    "beating_dd": "034A0B40",
+    "beating_no_dd": "034A0B48",
+    "buttons_sprite": "0349D108",
+    "c_button": "034A0B30",
+    "c_note_b": "034A0B18",
+    "c_note_font_glow_base": "034A0AFC",
+    "c_note_font_glow_max": "034A0AF8",
+    "c_note_g": "034A0B1C",
+    "c_note_glow_base": "034A0B04",
+    "c_note_glow_max": "034A0B00",
+    "c_note_r": "034A0B20",
+    "cfg_item_overrides": "034A118C",
+    "childSkeleton": "034A06D8",
+    "child_safe": "034A0BD9",
+    "collectible_mutex": "034A0B9C",
+    "collectible_override": "034A0C94",
+    "collectible_override_flags": "034A0BA0",
+    "collectible_scene_flags_table": "034A0F24",
+    "curr_scene_setup": "034A0BE8",
+    "debug_text_color": "034A0AC4",
+    "debug_text_height": "034A0AC7",
+    "debug_text_width": "034A0AC8",
+    "defaultDDHeart": "034A0B4C",
+    "defaultHeart": "034A0B54",
+    "dpad_sprite": "0349D198",
+    "drop_collectible_override_flag": "034A0BC4",
+    "dummy_actor": "034A0BC8",
+    "dungeon_count": "034A0ACC",
+    "dungeon_warps": "0349CBD8",
+    "dungeons": "0349CE08",
+    "empty_dlist": "034A0AE0",
+    "extended_savectx": "034A7250",
+    "extern_ctxt": "0349CF3C",
+    "float_precision": "034A0AC0",
+    "font_sprite": "0349D1A8",
+    "freecam_modes": "0349BEF4",
+    "hash_sprites": "034A0AD8",
+    "hash_symbols": "0349D070",
+    "heap_next": "034A0BFC",
+    "heart_sprite": "0349D128",
+    "icon_sprites": "0349BFB8",
+    "illegal_model": "034A0BDC",
+    "item_digit_sprite": "0349D148",
+    "item_draw_table": "0349D220",
+    "item_overrides_count": "034A0BCC",
+    "item_table": "0349E81C",
+    "items": "0349D0F0",
+    "items_debug": "0349C574",
+    "items_sprite": "0349D1C8",
+    "key_counts": "0349E7F8",
+    "key_rupee_clock_sprite": "0349D168",
+    "last_fog_distance": "034A0AD0",
+    "linkhead_skull_sprite": "0349D138",
+    "medals": "0349CDF0",
+    "medals_sprite": "0349D1D8",
+    "menu_categories": "0349CD94",
+    "menu_not_on_dup": "034A0B7C",
+    "missing_dlist": "034A0BD8",
+    "normal_dd": "034A0B3C",
+    "normal_no_dd": "034A0B44",
+    "num_override_flags": "034A0BA4",
+    "num_to_bits": "0349D0B0",
+    "object_slots": "034A718C",
+    "ocarina_button_sprite": "0349D118",
+    "outgoing_queue": "034A0CA4",
+    "overworld_warps": "0349C950",
+    "quest_items_sprite": "0349D1B8",
+    "reward_rows": "0349CDE4",
+    "rupee_colors": "0349BFDC",
+    "rupee_digit_sprite": "0349D158",
+    "satisified_pending_frames": "034A0BA6",
+    "scene_fog_distance": "034A0AD4",
+    "setup_db": "0349D1F8",
+    "show_input_viewer": "034A0AC1",
+    "silver_rupee_vars": "0349E6F0",
+    "song_note_sprite": "0349D178",
+    "stones_sprite": "0349D1E8",
+    "text_cursor_border_base": "034A0AEC",
+    "text_cursor_border_max": "034A0AE8",
+    "text_cursor_inner_base": "034A0AF4",
+    "text_cursor_inner_max": "034A0AF0",
+    "text_height": "034A0B5C",
+    "text_width": "034A0B60",
+    "texture_table": "034A08D0",
+    "trade_quest_items": "0349C188",
+    "triforce_sprite": "0349D188"
+>>>>>>> Cleaning + Readme info
+>>>>>>> Cleaning + Readme info
 }
