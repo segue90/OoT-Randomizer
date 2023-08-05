@@ -349,6 +349,9 @@ def color_text(gossip_text: GossipText) -> str:
     colors = list(gossip_text.colors) if gossip_text.colors is not None else []
     color = 'White'
 
+    while text.count('#') > 2 * len(colors):
+        colors[:0] = [colors[0]]
+
     while '#' in text:
         split_text = text.split('#', 2)
         if len(colors) > 0:
