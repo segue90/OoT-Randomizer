@@ -2499,6 +2499,19 @@ def patch_rom(spoiler: Spoiler, world: World, rom: Rom) -> Rom:
 
     if world.settings.shuffle_individual_ocarina_notes:
         rom.write_byte(rom.sym('SHUFFLE_OCARINA_BUTTONS'), 1)
+        epona_notes = str(world.song_notes['Eponas Song'])
+        song_layout_in_byte_form = 0
+        if 'A' in epona_notes:
+            song_layout_in_byte_form |= 1 << 0
+        if '^' in epona_notes:
+            song_layout_in_byte_form |= 1 << 1
+        if 'v' in epona_notes:
+            song_layout_in_byte_form |= 1 << 2
+        if '<' in epona_notes:
+            song_layout_in_byte_form |= 1 << 3
+        if '>' in epona_notes:
+            song_layout_in_byte_form |= 1 << 4
+        rom.write_int16(rom.sym('EPONAS_SONG_NOTES'), song_layout_in_byte_form)
 
     # Sets the torch count to open the entrance to Shadow Temple
     if world.settings.easier_fire_arrow_entry:
