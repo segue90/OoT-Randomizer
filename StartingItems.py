@@ -66,6 +66,11 @@ inventory: dict[str, Entry] = dict(chain(
     _entry("zora_mask",    "Zora Mask", gui_text="Zora Mask"),
     _entry("gerudo_mask",  "Gerudo Mask", gui_text="Gerudo Mask"),
     _entry("mask_of_truth","Mask of Truth", gui_text="Mask of Truth"),
+    _entry("ocarina_a_button","Ocarina A Button", gui_text="Ocarina A Button"),
+    _entry("ocarina_c_up_button","Ocarina C up Button", gui_text="Ocarina C up Button"),
+    _entry("ocarina_c_down_button","Ocarina C down Button", gui_text="Ocarina C down Button"),
+    _entry("ocarina_c_left_button","Ocarina C left Button", gui_text="Ocarina C left Button"),
+    _entry("ocarina_c_right_button","Ocarina C right Button", gui_text="Ocarina C right Button"),
 ))
 
 songs: dict[str, Entry] = dict(chain(
