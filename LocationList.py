@@ -247,7 +247,6 @@ location_table: dict[str, tuple[str, Optional[int], LocationDefault, LocationAdd
     ("Market Bazaar Item 6",                                         ("Shop",         0x2C,  0x35, (shop_address(4, 5), None),      'Buy Arrows (50)',                       ("Market", "Shops",))),
     ("Market Bazaar Item 7",                                         ("Shop",         0x2C,  0x36, (shop_address(4, 6), None),      'Buy Deku Stick (1)',                    ("Market", "Shops",))),
     ("Market Bazaar Item 8",                                         ("Shop",         0x2C,  0x37, (shop_address(4, 7), None),      'Buy Arrows (30)',                       ("Market", "Shops",))),
-
     ("Market Potion Shop Item 1",                                    ("Shop",         0x31,  0x30, (shop_address(3, 0), None),      'Buy Green Potion',                      ("Market", "Shops",))),
     ("Market Potion Shop Item 2",                                    ("Shop",         0x31,  0x31, (shop_address(3, 1), None),      'Buy Blue Fire',                         ("Market", "Shops",))),
     ("Market Potion Shop Item 3",                                    ("Shop",         0x31,  0x32, (shop_address(3, 2), None),      'Buy Red Potion for 30 Rupees',          ("Market", "Shops",))),
@@ -256,7 +255,6 @@ location_table: dict[str, tuple[str, Optional[int], LocationDefault, LocationAdd
     ("Market Potion Shop Item 6",                                    ("Shop",         0x31,  0x35, (shop_address(3, 5), None),      'Buy Bottle Bug',                        ("Market", "Shops",))),
     ("Market Potion Shop Item 7",                                    ("Shop",         0x31,  0x36, (shop_address(3, 6), None),      'Buy Poe',                               ("Market", "Shops",))),
     ("Market Potion Shop Item 8",                                    ("Shop",         0x31,  0x37, (shop_address(3, 7), None),      'Buy Fish',                              ("Market", "Shops",))),
-
     ("Market Bombchu Shop Item 1",                                   ("Shop",         0x32,  0x30, (shop_address(2, 0), None),      'Buy Bombchu (5)',                       ("Market", "Shops",))),
     ("Market Bombchu Shop Item 2",                                   ("Shop",         0x32,  0x31, (shop_address(2, 1), None),      'Buy Bombchu (10)',                      ("Market", "Shops",))),
     ("Market Bombchu Shop Item 3",                                   ("Shop",         0x32,  0x32, (shop_address(2, 2), None),      'Buy Bombchu (10)',                      ("Market", "Shops",))),
