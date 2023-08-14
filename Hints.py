@@ -349,9 +349,6 @@ def color_text(gossip_text: GossipText) -> str:
     colors = list(gossip_text.colors) if gossip_text.colors is not None else []
     color = 'White'
 
-    while text.count('#') > 2 * len(colors):
-        colors[:0] = [colors[0]]
-
     while '#' in text:
         split_text = text.split('#', 2)
         if len(colors) > 0:
@@ -988,7 +985,12 @@ def get_specific_hint(spoiler: Spoiler, world: World, checked: set[str], hint_ty
         location_text = '#%s#' % location_text
     item_text = get_hint(get_item_generic_name(location.item), world.settings.clearer_hints).text
 
-    return GossipText('%s #%s#.' % (location_text, item_text), ['Red', 'Green'], [location.name], [location.item.name]), [location]
+    colors = ['Red']
+    while location_text.count('#') > 2 * len(colors):
+        colors.append('Red')
+    colors.append('Green')
+
+    return GossipText('%s #%s#.' % (location_text, item_text), colors, [location.name], [location.item.name]), [location]
 
 
 def get_sometimes_hint(spoiler: Spoiler, world: World, checked: set[str]) -> HintReturn:
