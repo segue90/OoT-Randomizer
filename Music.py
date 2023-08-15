@@ -19,58 +19,6 @@ AUDIOSEQ_DMADATA_INDEX: int = 4
 AUDIOBANK_DMADATA_INDEX: int = 3
 AUDIOTABLE_DMADATA_INDEX: int = 5
 
-bgmlist = [
-    0x02,
-    0x18,
-    0x19,
-    0x1A,
-    0x1B,
-    0x1C,
-    0x1D,
-    0x1E,
-    0x1F,
-    0x26,
-    0x27,
-    0x28,
-    0x29,
-    0x2A,
-    0x2C,
-    0x2D,
-    0x2E,
-    0x2F,
-    0x30,
-    0x38,
-    0x3A,
-    0x3C,
-    0x3E,
-    0x3F,
-    0x40,
-    0x42,
-    0x4A,
-    0x4B,
-    0x4C,
-    0x4E,
-    0x4F,
-    0x50,
-    0x55,
-    0x56,
-    0x57,
-    0x58,
-    0x5A,
-    0x5B,
-    0x5C,
-    0x5F,
-    0x60,
-    0x61,
-    0x62,
-    0x63,
-    0x64,
-    0x65,
-    0x66,
-    0x6B,
-    0x6C,
-]
-
 # Format: (Title, Sequence ID)
 bgm_sequence_ids: tuple[tuple[str, int], ...] = (
     ("Hyrule Field", 0x02),
@@ -122,25 +70,6 @@ bgm_sequence_ids: tuple[tuple[str, int], ...] = (
     ("Mini-game", 0x6C),
 )
 
-fanfarelist = [
-    0x20,
-    0x21,
-    0x22,
-    0x23,
-    0x24,
-    0x2B,
-    0x32,
-    0x39,
-    0x3B,
-    0x3D,
-    0x41,
-    0x43,
-    0x51,
-    0x53,
-    0x59,
-    0x5D,
-]
-
 fanfare_sequence_ids: tuple[tuple[str, int], ...] = (
     ("Game Over", 0x20),
     ("Boss Defeated", 0x21),
@@ -160,21 +89,6 @@ fanfare_sequence_ids: tuple[tuple[str, int], ...] = (
     ("Gannons Rainbow Bridge", 0x5D),
 )
 
-ocarinalist = [
-    0x25,
-    0x33,
-    0x34,
-    0x35,
-    0x36,
-    0x37,
-    0x44,
-    0x45,
-    0x46,
-    0x47,
-    0x48,
-    0x49,
-]
-
 ocarina_sequence_ids: tuple[tuple[str, int], ...] = (
     ("Prelude of Light", 0x25),
     ("Bolero of Fire", 0x33),
@@ -190,16 +104,7 @@ ocarina_sequence_ids: tuple[tuple[str, int], ...] = (
     ("Song of Storms", 0x49),
 )
 
-Creditlist = [
-    0x52,
-    0x66,
-    0x67,
-    0x68,
-    0x69,
-    0x6A,
-]
-
-Credit_sequence_ids: tuple[tuple[str, int], ...] = (
+credit_sequence_ids: tuple[tuple[str, int], ...] = (
     ("Zeldas Theme Orchestra", 0x52),
     ("Zeldas Ocarina Song", 0x66),
     ("Ending Credits Part 1", 0x67),
@@ -208,6 +113,9 @@ Credit_sequence_ids: tuple[tuple[str, int], ...] = (
     ("Ending Credits Part 4", 0x6A),
 )
 
+fileselect_sequence_id: tuple[tuple[str, int], ...] = (
+    ("File Select", 0x57),
+)
 
 class Bank:
     def __init__(self, index: int, meta: bytearray, data: bytes) -> None:
@@ -453,6 +361,11 @@ def rebuild_sequences(rom: Rom, sequences: list[Sequence], log: CosmeticsLog, sy
     replacement_dict = {seq.replaces: seq for seq in sequences}
     # List of sequences (actual sequence data objects) containing the vanilla sequence data
     old_sequences = []
+    bgmlist = [sequence_id for title, sequence_id in bgm_sequence_ids]
+    fanfarelist = [sequence_id for title, sequence_id in fanfare_sequence_ids]
+    ocarinalist = [sequence_id for title, sequence_id in ocarina_sequence_ids]
+    creditlist = [sequence_id for title, sequence_id in credit_sequence_ids]
+    fileselectlist = [sequence_id for title, sequence_id in fileselect_sequence_id]
 
     for i in range(0x6E):
         # Create new sequence object, an entry for the audio sequence
@@ -568,7 +481,13 @@ def rebuild_sequences(rom: Rom, sequences: list[Sequence], log: CosmeticsLog, sy
             rom.write_byte(base, j.instrument_set + 0x26)
 
          #Update instrument sets for credits sequences
-    for i in Creditlist:
+    for i in creditlist:
+        base = 0xB89911 + 0xDD + (i * 2)
+        j = replacement_dict.get(i if new_sequences[i].size else new_sequences[i].address, None)
+        if j:
+            rom.write_byte(base, j.instrument_set)
+         #Update instrument set for file select sequence
+    for i in fileselectlist:
         base = 0xB89911 + 0xDD + (i * 2)
         j = replacement_dict.get(i if new_sequences[i].size else new_sequences[i].address, None)
         if j:
@@ -732,7 +651,7 @@ def randomize_music(rom: Rom, settings: Settings, log: CosmeticsLog, symbols: di
     bgm_ids = {bgm[0]: bgm for bgm in bgm_sequence_ids}
     ff_ids = {bgm[0]: bgm for bgm in fanfare_sequence_ids}
     ocarina_ids = {bgm[0]: bgm for bgm in ocarina_sequence_ids}
-    credits_ids = {bgm[0]: bgm for bgm in Credit_sequence_ids}
+    credits_ids = {bgm[0]: bgm for bgm in credit_sequence_ids}
 
     # If generating a patch file, disallow custom sequences.
     custom_sequences_enabled = not settings.generating_patch_file
