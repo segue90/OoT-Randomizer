@@ -79,6 +79,9 @@ class Goal:
             names.append(item_table[item][3]['alias'][0])
         return any(i['name'] in names and not i['hintable'] for i in self.items)
 
+    def __repr__(self) -> str:
+        return "W%d %s: %s" % (self.world.id, self.name, self.hint_text)
+
 
 class GoalCategory:
     def __init__(self, name: str, priority: int, goal_count: int = 0, minimum_goals: int = 0,
