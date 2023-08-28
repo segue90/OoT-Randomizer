@@ -153,7 +153,7 @@ class Location:
         return '%s' % self.name
 
     def __repr__(self) -> str:
-        return "W%d %s with %s" % (self.world.id, self.name, self.item.__repr__() if self.item else "<empty>")
+        return "%s %s with %s" % (self.world.__repr__(), self.name, self.item.__repr__() if self.item else "<empty>")
 
 
 @overload

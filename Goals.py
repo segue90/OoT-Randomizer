@@ -80,7 +80,7 @@ class Goal:
         return any(i['name'] in names and not i['hintable'] for i in self.items)
 
     def __repr__(self) -> str:
-        return "W%d %s: %s" % (self.world.id, self.name, self.hint_text)
+        return "%s %s: %s" % (self.world.__repr__(), self.name, self.hint_text)
 
 
 class GoalCategory:
