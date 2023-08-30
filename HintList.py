@@ -255,11 +255,8 @@ conditional_sometimes: dict[str, Callable[[World], bool]] = {
     # Conditional dual hints
     'GV Pieces of Heart Ledges':                lambda world: not world.settings.shuffle_cows and world.settings.tokensanity not in ['overworld', 'all'],
     'LH Adult Bean Destination Checks':         lambda world: world.settings.shuffle_interior_entrances == 'off',
-<<<<<<< HEAD
     'Castle Fairy Checks':                      lambda world: world.settings.shuffle_interior_entrances == 'off',
-=======
     'King Zora Items':                          lambda world: world.settings.adult_trade_shuffle and 'Eyeball Frog' in world.settings.adult_trade_start,
->>>>>>> 69c4e08c77ed4207af892e6918e6441e1c847e48
 
     'Fire Temple Lower Loop':                   lambda world: world.settings.tokensanity not in ['dungeons', 'all'],
     'Water Temple River Loop Chests':           lambda world: world.settings.tokensanity not in ['dungeons', 'all'],
@@ -627,17 +624,13 @@ hintTable: dict[str, tuple[list[str] | str, Optional[str], str | list[str]]] = {
     'Graveyard Royal Family Tomb Contents':                        ("inside the #Royal Family Tomb#, you will find...^", None, 'dual'),
     'DMC Child Upper Checks':                                      ("in the #crater, a spider in a crate and a single scrub# guard...^", None, 'dual'),
     'Haunted Wasteland Checks':                                    ("deep in the #wasteland a spider and a chest# hold...^", None, 'dual'),
-<<<<<<< HEAD
     'Castle Fairy Checks':                                         ("Great Fairies outside #Hyrule and Ganon's castles# reward...^", None, 'dual'),
-=======
     'King Zora Items':                                             ("#unfreezing King Zora and giving him the Prescription# rewards...^", None, 'dual'),
->>>>>>> 69c4e08c77ed4207af892e6918e6441e1c847e48
 
     'Deku Tree MQ Basement GS':                                    ("in the back of the #basement of the Great Deku Tree# two spiders hold...^", None, 'dual'),
     'Dodongos Cavern Upper Business Scrubs':                       ("deep in #Dodongo's Cavern a pair of scrubs# sell...^", None, 'dual'),
     'Dodongos Cavern MQ Larvae Room':                              ("amid #larvae in Dodongo's Cavern# a chest and a spider hold...^", None, 'dual'),
     'Fire Temple Lower Loop':                                      ("under the #entrance of the Fire Temple# a blocked path leads to...^", None, 'dual'),
-    'Fire Temple Upper Checks':                                    ("#a scarecrow and a Flare Dancer# atop the Fire Temple guard...^", None, 'dual'),
     'Fire Temple MQ Lower Loop':                                   ("under the #entrance of the Fire Temple# a blocked path leads to...^", None, 'dual'),
     'Water Temple River Loop Chests':                              ("#chests past a shadowy fight# in the Water Temple hold...^", "#chests past Dark Link# in the Water Temple hold...^", 'dual'),
     'Water Temple River Checks':                                   ("in the #river in the Water Temple# lies...^", None, 'dual'),
@@ -1740,17 +1733,13 @@ multiTable: dict[str, list[str]] = {
     'Graveyard Royal Family Tomb Contents':                     ['Graveyard Royal Familys Tomb Chest', 'Song from Royal Familys Tomb'],
     'DMC Child Upper Checks':                                   ['DMC GS Crate', 'DMC Deku Scrub'],
     'Haunted Wasteland Checks':                                 ['Wasteland Chest', 'Wasteland GS'],
-<<<<<<< HEAD
     'Castle Fairy Checks':                                      ['HC Great Fairy Reward', 'OGC Great Fairy Reward'],
-=======
     'King Zora Items':                                          ['ZD King Zora Thawed', 'ZD Trade Prescription'],
->>>>>>> 69c4e08c77ed4207af892e6918e6441e1c847e48
 
     'Deku Tree MQ Basement GS':                                 ['Deku Tree MQ GS Basement Graves Room','Deku Tree MQ GS Basement Back Room'],
     'Dodongos Cavern Upper Business Scrubs':                    ['Dodongos Cavern Deku Scrub Near Bomb Bag Left', 'Dodongos Cavern Deku Scrub Near Bomb Bag Right'],
     'Dodongos Cavern MQ Larvae Room':                           ['Dodongos Cavern MQ Larvae Room Chest', 'Dodongos Cavern MQ GS Larvae Room'],
     'Fire Temple Lower Loop':                                   ['Fire Temple Flare Dancer Chest', 'Fire Temple Boss Key Chest'],
-    'Fire Temple Upper Checks':                                 ['Fire Temple Scarecrow Chest', 'Fire Temple Megaton Hammer Chest'],
     'Fire Temple MQ Lower Loop':                                ['Fire Temple MQ Megaton Hammer Chest', 'Fire Temple MQ Map Chest'],
     'Water Temple River Loop Chests':                           ['Water Temple Longshot Chest', 'Water Temple River Chest'],
     'Water Temple River Checks':                                ['Water Temple GS River', 'Water Temple River Chest'],
