@@ -906,7 +906,7 @@ void fairy_ocarina_getitem() {
             z64_file.items[Z64_SLOT_OCARINA] = 0x07;
             break;
         }
-        case 0x000C: {
+        case 0x000C: { // Ocarina of Time
             z64_file.items[Z64_SLOT_OCARINA] = 0x08;
             break;
         }
