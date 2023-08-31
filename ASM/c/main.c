@@ -70,8 +70,3 @@ void after_scene_init() {
     reset_collectible_mutex();
     get_current_scene_setup_number();
 }
-
-void fairy_ocarina_getitem() {
-    //give_triforce_piece(&z64_file, 0, 0);
-    //z64_DisplayTextbox(&z64_game, 0x401C, 0);
-}
