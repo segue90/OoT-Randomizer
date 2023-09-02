@@ -797,8 +797,8 @@ logic_tricks: dict[str, dict[str, str | tuple[str, ...]]] = {
                     to this ledge from upper balconies. If done precisely
                     enough, it is not necessary to take fall damage.
                     In MQ, this skips a Longshot requirement.
-                    In Vanilla, this can skip a Hookshot requirement in
-                    entrance randomizer.
+                    In Vanilla, this can skip a Hookshot requirement if
+                    dungeon entrances are randomized.
                     '''},
     'Forest Temple East Courtyard Door Frame with Hover Boots': {
         'name'    : 'logic_forest_door_frame',
@@ -1121,7 +1121,7 @@ logic_tricks: dict[str, dict[str, str | tuple[str, ...]]] = {
         'tooltip' : '''\
                     If you stand on the very edge of the platform, this
                     Gold Skulltula can be obtained with only the Boomerang.
-                    This trick is only relevant in entrance randomizer.
+                    This trick is only relevant if dungeon entrances are randomized.
                     '''},
     'Water Temple River GS without Iron Boots': {
         'name'    : 'logic_water_river_gs',
