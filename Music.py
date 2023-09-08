@@ -459,6 +459,15 @@ def rebuild_sequences(rom: Rom, sequences: list[Sequence], log: CosmeticsLog, sy
         rom.write_int32(0xB89AE0 + (i * 0x10) + 0x04, new_sequences[i].size)
         seq = replacement_dict.get(i, None)
 
+# Builds new audio bank entrys for fanfares #rob review
+    bank_index_base = (rom.read_int32(symbols['CFG_AUDIOBANK_TABLE_EXTENDED_ADDR']) - 0x80400000) + 0x3480000
+        # Build new fanfare banks by copying each entry in audiobank_index
+    for i in range(0, 0x26):
+        bank_entry = rom.read_bytes(bank_index_base + 0x10 + (0x10*i), 0x10)
+        bank_entry[9] = 1
+        rom.write_bytes(bank_index_base + 0x270 + 0x10*i, bank_entry)
+        rom.write_byte(bank_index_base + 0x01, 0x4C) # Updates AudioBank Index Header if no custom banks are present as this would be 0x26 which would crash the game if a fanfare was played   
+
     # Update instrument sets for bgm sequences
     for i in bgmlist:
         base = 0xB89911 + 0xDD + (i * 2)
@@ -559,19 +568,6 @@ def rebuild_sequences(rom: Rom, sequences: list[Sequence], log: CosmeticsLog, sy
 
                 # Update the sequence's bank (instrument set)
                 rom.write_byte(seq_bank_base, bank.index)
-
-                # Writes new audiobank index from /data/custom_audiobank_index.bin to audiobank index
-                file_path = "data/custom_audiobank_index.bin"
-                byte_list = []
-                bank_table_base = (rom.read_int32(symbols['CFG_AUDIOBANK_TABLE_EXTENDED_ADDR']) - 0x80400000) + 0x3480000
-                with open(file_path, "rb") as file:
-                    byte = file.read(1)
-                    while byte:
-                        byte_list.append(ord(byte))
-                        byte = file.read(1)
-                rom.write_bytes(bank_table_base + 0x270, byte_list)
-                file.close()
-                rom.write_byte(bank_table_base + 0x01, 0x4C) # Updates AudioBank Index Header if no custom banks are present as this would be 0x26 which would crash the game if a fanfare was played
 
 
     # Patch the new instrument data into the ROM in a new file.
