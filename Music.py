@@ -601,8 +601,8 @@ def rebuild_sequences(rom: Rom, sequences: list[Sequence], log: CosmeticsLog, sy
         new_bank_data += bank.data
         new_bank_offset += len(bank.data)
 
-    # move the entire audiobank file to a new place in ROM. Update the existing dmadata record
-    if len(new_bank_data):
+    # If there is any audiobank data to add, move the entire audiobank file to a new place in ROM. Update the existing dmadata record
+    if len(new_bank_data) > 0:
         # Zeroize existing file
         rom.write_bytes(audiobank_start, [0] * audiobank_size)
         # Add the new data
