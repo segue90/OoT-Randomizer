@@ -355,6 +355,7 @@ def shuffle_music(log: CosmeticsLog, source_sequences: dict[str, Sequence], targ
 
 
 def rebuild_sequences(rom: Rom, sequences: list[Sequence], log: CosmeticsLog, symbols: dict[str, int]) -> None:
+    CUSTOM_BANKS_SUPPORTED = "CFG_AUDIOBANK_TABLE_EXTENDED_ADDR" in symbols.keys()
     audioseq_dma_entry = rom.dma[AUDIOSEQ_DMADATA_INDEX]
     audioseq_start, audioseq_end, audioseq_size = audioseq_dma_entry.as_tuple()
 
@@ -453,20 +454,15 @@ def rebuild_sequences(rom: Rom, sequences: list[Sequence], log: CosmeticsLog, sy
     # Write new audio sequence file
     rom.write_bytes(new_address, new_audio_sequence)
 
+    # If custom banks are supported, we're going to make copies of the banks to be used for fanfares
+    # In that case, need to update the fanfare sequence's bank to point to the new one
+    fanfare_bank_shift = 0x26 if CUSTOM_BANKS_SUPPORTED else 0
+
     # Update pointer table
     for i in range(0x6E):
         rom.write_int32(0xB89AE0 + (i * 0x10), new_sequences[i].address)
         rom.write_int32(0xB89AE0 + (i * 0x10) + 0x04, new_sequences[i].size)
         seq = replacement_dict.get(i, None)
-
-# Builds new audio bank entrys for fanfares #rob review
-    bank_index_base = (rom.read_int32(symbols['CFG_AUDIOBANK_TABLE_EXTENDED_ADDR']) - 0x80400000) + 0x3480000
-        # Build new fanfare banks by copying each entry in audiobank_index
-    for i in range(0, 0x26):
-        bank_entry = rom.read_bytes(bank_index_base + 0x10 + (0x10*i), 0x10)
-        bank_entry[9] = 1
-        rom.write_bytes(bank_index_base + 0x270 + 0x10*i, bank_entry)
-        rom.write_byte(bank_index_base + 0x01, 0x4C) # Updates AudioBank Index Header if no custom banks are present as this would be 0x26 which would crash the game if a fanfare was played   
 
     # Update instrument sets for bgm sequences
     for i in bgmlist:
@@ -479,13 +475,13 @@ def rebuild_sequences(rom: Rom, sequences: list[Sequence], log: CosmeticsLog, sy
         base = 0xB89911 + 0xDD + (i * 2)
         j = replacement_dict.get(i if new_sequences[i].size else new_sequences[i].address, None)
         if j:
-            rom.write_byte(base, j.instrument_set + 0x26)
+            rom.write_byte(base, j.instrument_set + fanfare_bank_shift)
     #Update instrument sets for ocarina fanfare sequences
     for i in ocarinalist:
         base = 0xB89911 + 0xDD + (i * 2)
         j = replacement_dict.get(i if new_sequences[i].size else new_sequences[i].address, None)
         if j:
-            rom.write_byte(base, j.instrument_set + 0x26)
+            rom.write_byte(base, j.instrument_set + fanfare_bank_shift)
     #Update instrument sets for credits sequences
     for i in creditlist:
         base = 0xB89911 + 0xDD + (i * 2)
@@ -501,8 +497,17 @@ def rebuild_sequences(rom: Rom, sequences: list[Sequence], log: CosmeticsLog, sy
 
     # Patch new instrument sets (banks) and add new instrument sounds
     # Only if we were passed CFG_AUDIOBANK_TABLE_EXTENDED_ADDR via symbols which means we're on the right version.
-    if "CFG_AUDIOBANK_TABLE_EXTENDED_ADDR" not in symbols.keys():
+    if not CUSTOM_BANKS_SUPPORTED:
         return
+
+    # Builds new audio bank entrys for fanfares to prevent fanfares killing bgm in areas like Goron City
+    bank_index_base = (rom.read_int32(symbols['CFG_AUDIOBANK_TABLE_EXTENDED_ADDR']) - 0x80400000) + 0x3480000
+    # Build new fanfare banks by copying each entry in audiobank_index
+    for i in range(0, 0x26):
+        bank_entry = rom.read_bytes(bank_index_base + 0x10 + (0x10*i), 0x10) # Get the vanilla entry
+        bank_entry[9] = 1 # Update the cache type to 1
+        rom.write_bytes(bank_index_base + 0x270 + 0x10*i, bank_entry) # Write the new entry at the end of the bank table.
+    rom.write_byte(bank_index_base + 0x01, 0x4C) # Updates AudioBank Index Header if no custom banks are present as this would be 0x26 which would crash the game if a fanfare was played   
 
     added_banks = []  # Store copies of all the banks we've added
     added_instruments = []  # Store copies of all the instruments we've added
