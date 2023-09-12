@@ -1812,7 +1812,7 @@
         "shuffle_interior_entrances": "off",
         "shuffle_hideout_entrances": false,
         "shuffle_grotto_entrances": false,
-        "shuffle_dungeon_entrances": "on",
+        "shuffle_dungeon_entrances": "simple",
         "shuffle_bosses": "off",
         "shuffle_overworld_entrances": false,
         "shuffle_gerudo_valley_river_exit": false,
