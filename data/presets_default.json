@@ -270,7 +270,8 @@
             "logic_lens_shadow",
             "logic_lens_shadow_platform",
             "logic_lens_bongo",
-            "logic_lens_spirit"
+            "logic_lens_spirit",
+            "logic_visible_collisions"
         ],
         "starting_equipment": [
             "deku_shield"
