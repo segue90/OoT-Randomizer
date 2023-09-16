@@ -318,7 +318,8 @@
             "ganondorf",
             "warp_songs_and_owls",
             "40_skulltulas",
-            "50_skulltulas"
+            "50_skulltulas",
+            "unique_merchants"
         ],
         "text_shuffle": "none",
         "damage_multiplier": "normal",
