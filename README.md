@@ -149,6 +149,7 @@ issue. You should always Hard Reset to avoid this issue entirely.
   * Custom music has moved to a new format. See `data/Music/README.md` for more details.
   * New and improved model for key rings.
   * Several new tricks have been added.
+  * Multiworld plugins now have the ability to show the proper progressive item based on the inventory state of the receiving player.
 
 #### Bug Fixes
 * **Misc.**
