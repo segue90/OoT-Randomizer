@@ -171,6 +171,7 @@ issue. You should always Hard Reset to avoid this issue entirely.
   * Fix the cryptic hint for Ganon's Castle Boss Key.
   * Fix missing punctuation in dual hints.
   * Fix a bug in Multiworld Goal hints causing the incorrect path to be generated for the hint.
+  * Fix a bug which would cause hints to the "Link's Pocket" goal to be generated.
 
 #### Other Changes
 * `Closed Forest` is no longer changed to `Closed Deku` when `Shuffle Boss Entrances` is enabled.
