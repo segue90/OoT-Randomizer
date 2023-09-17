@@ -305,7 +305,9 @@
             "LW Skull Kid": "is_child and can_play(Sarias_Song)",
             "LW Trade Cojiro": "'Odd Mushroom Access'",
             "LW Trade Odd Potion": "'Poachers Saw Access'",
-            "LW Ocarina Memory Game": "is_child and Ocarina and Ocarina_A_Button and Ocarina_C_down_Button and Ocarina_C_right_Button and Ocarina_C_left_Button and Ocarina_C_up_Button",
+            "LW Ocarina Memory Game": "
+                is_child and Ocarina and Ocarina_A_Button and Ocarina_C_down_Button and
+                Ocarina_C_right_Button and Ocarina_C_left_Button and Ocarina_C_up_Button",
             "LW Target in Woods": "can_use(Slingshot)",
             "LW Deku Scrub Near Bridge": "is_child and can_stun_deku",
             "LW Underwater Green Rupee 1": "is_child and (can_dive or Boomerang)",
@@ -326,7 +328,7 @@
             "GC Woods Warp": "True",
             "LW Bridge": "
                 is_adult and
-                (Hover_Boots or Longshot or here(can_plant_bean) or logic_lost_woods_bridge)",
+                (Hover_Boots or Longshot or here(can_plant_bean) or plant_beans or logic_lost_woods_bridge)",
             "LW Underwater Entrance": "is_child and (can_dive or Boomerang)",
             "Zora River": "can_leave_forest and (can_dive or can_use(Iron_Boots))",
             "LW Beyond Mido": "is_child or logic_mido_backflip or can_play(Sarias_Song)",
@@ -517,7 +519,7 @@
             "LH Lab": "True",
             "LH Fishing Island": "
                 is_child or can_use(Scarecrow) or
-                here(can_plant_bean) or 'Water Temple Clear'",
+                here(can_plant_bean) or plant_beans or 'Water Temple Clear'",
             "Water Temple Lobby": "
                 is_adult and Hookshot and
                 (Iron_Boots or ((Longshot or logic_water_hookshot_entry) and (Progressive_Scale, 2)))",
@@ -709,7 +711,7 @@
             # Can ask the Gerudo on the path to HBA to throw you in jail.
             "GF Break Room Entrance": "can_use(Hookshot)",
             "GF Outside Gate": "'GF Gate Open'",
-            "Gerudo Training Ground Lobby": "Gerudo_Membership_Card and is_adult"
+            "Gerudo Training Ground Lobby": "is_adult and Gerudo_Membership_Card"
         }
     },
     {
@@ -1195,7 +1197,7 @@
         "scene": "Temple of Time",
         "hint": "TEMPLE_OF_TIME",
         "events": {
-            # used for the "path of time" goal
+            # Used for the "path of time" goal
             "Temple of Time Access": "True"
         },
         "locations": {
@@ -1602,7 +1604,7 @@
                         (logic_kakariko_tower_gs and (Sticks or Kokiri_Sword))))",
             "Kak Backyard": "is_adult or at_day",
             "Graveyard": "True",
-            "Kak Behind Gate": "is_adult or 'Kakariko Village Gate Open'"
+            "Kak Behind Gate": "is_adult or 'Kakariko Village Gate Open' or open_kakariko == 'open'"
         }
     },
     {
@@ -1917,7 +1919,7 @@
         "hint": "KAKARIKO_VILLAGE",
         "exits": {
             "Kakariko Village": "
-                is_adult or logic_visible_collisions or 'Kakariko Village Gate Open'",
+                is_adult or logic_visible_collisions or 'Kakariko Village Gate Open' or open_kakariko == 'open'",
             "Death Mountain": "True"
         }
     },
@@ -1951,7 +1953,7 @@
             "Goron City": "True",
             "Death Mountain Summit": "
                 here(can_blast_or_smash) or
-                (is_adult and here(can_plant_bean and (plant_beans or Progressive_Strength_Upgrade))) or
+                (is_adult and (here(can_plant_bean and Progressive_Strength_Upgrade) or plant_beans)) or
                 (logic_dmt_climb_hovers and can_use(Hover_Boots))",
             "Dodongos Cavern Beginning": "
                 has_explosives or Progressive_Strength_Upgrade or is_adult",
@@ -2263,8 +2265,8 @@
         "exits": {
             "DMC Central Nearby": "True",
             "DMC Lower Nearby": "
-                is_adult and (Hover_Boots or Hookshot or here(can_plant_bean))",
-            "DMC Upper Nearby": "is_adult and here(can_plant_bean)",
+                is_adult and (Hover_Boots or Hookshot or here(can_plant_bean) or plant_beans)",
+            "DMC Upper Nearby": "is_adult and (here(can_plant_bean) or plant_beans)",
             "DMC Fire Temple Entrance": "
                 (is_child and shuffle_dungeon_entrances) or
                 (is_adult and (logic_fewer_tunic_requirements or Goron_Tunic))",
