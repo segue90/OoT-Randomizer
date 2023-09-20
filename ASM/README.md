@@ -15,7 +15,7 @@ To generate symbols for the Project 64 debugger, use the `--pj64sym` option:
 How to use the Debug mode: 
 - First put the DEBUG_MODE variable at 1 in debug.h.
 - You will then have access to a hidden menu with the following options:
-  - Instant warps to Dungeons or Overworld locations
+  - Instant warps to Dungeons, Bosses or Overworld locations
   - Item inventory edits
   - Instant age switch
   - Bunny Hood applied on

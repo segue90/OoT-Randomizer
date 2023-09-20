@@ -10,9 +10,10 @@ int8_t menu_not_on_dup = 0;
 menu_category_t menu_categories[] = {
     {  0, "Dungeons"},
     {  1, "Overworld"},
-    {  2, "Items"},
-    {  3, "Switch Age"},
-    {  4, "Bunny Hood"},
+    {  2, "Bosses"},
+    {  3, "Items"},
+    {  4, "Switch Age"},
+    {  5, "Bunny Hood"},
 };
 
 warp_t dungeon_warps[] = {
@@ -51,6 +52,19 @@ warp_t overworld_warps[] = {
     { 16, 0x129, "GF"},
     { 17, 0x130, "HW"},
     { 18, 0x123, "Colossus"},
+};
+
+warp_t bosses_warps[] = {
+    {  0, 0x40F, "Gohma"},
+    {  1, 0x40B, "KD"},
+    {  2, 0x301, "Bari"},
+    {  3, 0x0C, "PG"},
+    {  4, 0x305, "Volv"},
+    {  5, 0x417, "Morph"},
+    {  6, 0x413, "Bongo"},
+    {  7, 0x8D, "Twin"},
+    {  8, 0x41F, "Ganondorf"},
+    {  9, 0x517, "Ganon"},
 };
 
 item_t items_debug[] = {
@@ -139,20 +153,20 @@ void draw_debug_menu(z64_disp_buf_t *db) {
 
             if (z64_game.common.input[0].pad_pressed.dr) {
                 current_menu_indexes.main_index++;
-                if (current_menu_indexes.main_index > 4) {
+                if (current_menu_indexes.main_index > 5) {
                     current_menu_indexes.main_index = 0;
                 }
             }
             if (z64_game.common.input[0].pad_pressed.dl) {
                 if (current_menu_indexes.main_index == 0) {
-                    current_menu_indexes.main_index = 4;
+                    current_menu_indexes.main_index = 5;
                 }
                 else {
                     current_menu_indexes.main_index--;
                 }
             }
 
-            if (current_menu_indexes.main_index == 3) {
+            if (current_menu_indexes.main_index == 4) {
                 if (z64_game.common.input[0].pad_pressed.a) {
                     int age = z64_file.link_age;
                     z64_file.link_age = z64_game.link_age;
@@ -164,13 +178,13 @@ void draw_debug_menu(z64_disp_buf_t *db) {
                     show_warp_menu = 0;
                 }
             }
-            if (current_menu_indexes.main_index == 4) {
+            if (current_menu_indexes.main_index == 5) {
                 if (z64_game.common.input[0].pad_pressed.a) {
                     z64_GiveItem(&z64_game, Z64_ITEM_BUNNY_HOOD);
                     z64_usebutton(&z64_game, &z64_link, Z64_ITEM_BUNNY_HOOD, 2);
                 }
             }
-            if (current_menu_indexes.main_index < 3){
+            if (current_menu_indexes.main_index < 4){
                 if (z64_game.common.input[0].pad_pressed.a) {
                     current_menu_indexes.sub_menu_index++;
                 }
@@ -228,7 +242,29 @@ void draw_debug_menu(z64_disp_buf_t *db) {
                         show_warp_menu = 0;
                     }
                     break;
-                case 2: // Items
+                case 2: // Bosses
+                    if (z64_game.common.input[0].pad_pressed.dr) {
+                        current_menu_indexes.boss_index++;
+                        if (current_menu_indexes.boss_index > 9) {
+                            current_menu_indexes.boss_index = 0;
+                        }
+                    }
+                    if (z64_game.common.input[0].pad_pressed.dl) {
+                        current_menu_indexes.boss_index--;
+                        if (current_menu_indexes.boss_index < 0) {
+                            current_menu_indexes.boss_index = 9;
+                        }
+                    }
+                    if (z64_game.common.input[0].pad_pressed.a) {
+                        warp_t *d = &(bosses_warps[current_menu_indexes.boss_index]);
+                        z64_file.entrance_index = d->entrance_index;
+                        z64_game.entrance_index = d->entrance_index;
+                        z64_game.scene_load_flag = 0x14;
+                        z64_game.fadeout_transition = 0x02;
+                        show_warp_menu = 0;
+                    }
+                    break;
+                case 3: // Items
                     if (z64_game.common.input[0].pad_pressed.dr) {
                         current_menu_indexes.item_index++;
                         if (current_menu_indexes.item_index > 28) {
@@ -295,7 +331,7 @@ void draw_debug_menu(z64_disp_buf_t *db) {
 
         if (current_menu_indexes.sub_menu_index == 0) {
             gDPSetPrimColor(db->p++, 0, 0, 0xFF, 0xFF, 0xFF, 0xFF);
-            for (int i = 0; i < 5; i++) {
+            for (int i = 0; i < 6; i++) {
                 menu_category_t *d = &(menu_categories[i]);
                 int top = start_top + ((icon_size + padding) * i) + 1;
                 if (i != current_menu_indexes.main_index) {
@@ -365,7 +401,24 @@ void draw_debug_menu(z64_disp_buf_t *db) {
                         text_flush_size(db, font_width, font_height, 0, 0);
                     }
                     break;
-                case 2: // Items
+                case 2: // Bosses
+                    gDPSetPrimColor(db->p++, 0, 0, 0xFF, 0xFF, 0xFF, 0xFF);
+                    for (int i = 0; i < 10; i++) {
+                        warp_t *d = &(bosses_warps[i]);
+                        int top = start_top + ((icon_size + padding) * i) + 1;
+                        if (i != current_menu_indexes.boss_index) {
+                            text_print_size(d->name, left, top, font_width);
+                        }
+                    }
+                    text_flush_size(db, font_width, font_height, 0, 0);
+
+                    gDPSetPrimColor(db->p++, 0, 0, 0xE0, 0xE0, 0x10, 0xFF);
+                    d = &(bosses_warps[current_menu_indexes.boss_index]);
+                    top = start_top + ((icon_size + padding) * current_menu_indexes.boss_index) + 1;
+                    text_print_size(d->name, left, top, font_width);
+                    text_flush_size(db, font_width, font_height, 0, 0);
+                    break;
+                case 3: // Items
                     gDPSetPrimColor(db->p++, 0, 0, 0xFF, 0xFF, 0xFF, 0xFF);
                     if (current_menu_indexes.item_index < 10) {
                         for (int i = 0; i < 10; i++) {

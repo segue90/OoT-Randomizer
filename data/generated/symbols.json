@@ -1,27 +1,13 @@
 {
-<<<<<<< Dev
-<<<<<<< Dev
-<<<<<<< Dev
-<<<<<<< Dev
     "ADULT_ANJU_ITEM_DIALOG": "034856B0",
-=======
-=======
->>>>>>> Improve int display and input viewer
-=======
->>>>>>> Float version rewrite + bunny hood option
-<<<<<<< Dev
-=======
->>>>>>> Cleaning + Readme info
-    "ADULT_ANJU_ITEM_DIALOG": "03485530",
->>>>>>> Warp debug menu
     "ADULT_INIT_ITEMS": "03482958",
     "ADULT_VALID_ITEMS": "03482960",
-<<<<<<< Dev
     "APPLY_BONK_DAMAGE": "03483C9C",
     "AUDIOBANK_TABLE_EXTENDED": "03484080",
     "AUDIO_THREAD_INFO": "03484060",
     "AUDIO_THREAD_INFO_MEM_SIZE": "0348407C",
     "AUDIO_THREAD_INFO_MEM_START": "03484078",
+<<<<<<< Dev
 <<<<<<< Dev
     "AUDIO_THREAD_MEM_START": "034A7D00",
 =======
@@ -35,38 +21,13 @@
     "AUDIO_THREAD_MEM_START": "034A9F30",
 >>>>>>> Cleaning + Readme info
 >>>>>>> Cleaning + Readme info
+=======
+    "AUDIO_THREAD_MEM_START": "034AA7E0",
+>>>>>>> Bosses warp
     "AUTO_TRACKER_CONTEXT": "03481328",
     "AUTO_TRACKER_VERSION": "03481328",
-<<<<<<< Dev
     "BONK_LAST_FRAME": "03483BE8",
     "CFG_ADULT_TRADE_SHUFFLE": "034856AC",
-=======
-    "BONK_LAST_FRAME": "03483C88",
-    "CFG_ADULT_TRADE_SHUFFLE": "0348552C",
-<<<<<<< Dev
-=======
-=======
->>>>>>> Improve int display and input viewer
-<<<<<<< Dev
-=======
->>>>>>> Float version rewrite + bunny hood option
-    "ADULT_ANJU_ITEM_DIALOG": "03485510",
-    "ADULT_INIT_ITEMS": "03482954",
-    "ADULT_VALID_ITEMS": "0348295C",
-    "APPLY_BONK_DAMAGE": "03483D1C",
-    "AUDIOBANK_TABLE_EXTENDED": "03484100",
-    "AUDIO_THREAD_INFO": "034840E0",
-    "AUDIO_THREAD_INFO_MEM_SIZE": "034840FC",
-    "AUDIO_THREAD_INFO_MEM_START": "034840F8",
-    "AUDIO_THREAD_MEM_START": "034AA060",
-    "AUTO_TRACKER_CONTEXT": "03481324",
-    "AUTO_TRACKER_VERSION": "03481324",
-    "BONK_LAST_FRAME": "03483C68",
-    "CFG_ADULT_TRADE_SHUFFLE": "0348550C",
->>>>>>> Warp debug menu
->>>>>>> Warp debug menu
-=======
->>>>>>> Cleaning + Readme info
     "CFG_AUDIOBANK_TABLE_EXTENDED_ADDR": "03480CA0",
     "CFG_A_BUTTON_COLOR": "03480C4C",
     "CFG_A_NOTE_COLOR": "03480C6A",
@@ -125,12 +86,11 @@
     "CFG_TEXT_CURSOR_COLOR": "03480C5E",
     "CFG_TUNIC_COLORS": "03480C97",
     "CFG_UNINVERT_YAXIS_IN_FIRST_PERSON_CAMERA": "03480CA5",
-<<<<<<< Dev
-<<<<<<< Dev
     "CHAIN_HBA_REWARDS": "034854A4",
     "CHECK_FOR_BONK_CANCEL": "03483C4C",
     "CHECK_ROOM_MESH_TYPE": "03483D7C",
     "CHEST_LENS_ONLY": "03483498",
+<<<<<<< Dev
 <<<<<<< Dev
     "CHEST_SIZE_MATCH_CONTENTS": "0349E9B4",
     "CHEST_SIZE_TEXTURE": "0349E9B0",
@@ -240,6 +200,12 @@
     "COMPLETE_MASK_QUEST": "034A0BD0",
 >>>>>>> Cleaning + Readme info
 >>>>>>> Cleaning + Readme info
+=======
+    "CHEST_SIZE_MATCH_CONTENTS": "034A1424",
+    "CHEST_SIZE_TEXTURE": "034A1420",
+    "CHEST_TEXTURE_MATCH_CONTENTS": "034A1428",
+    "COMPLETE_MASK_QUEST": "034A1480",
+>>>>>>> Bosses warp
     "COOP_CONTEXT": "03480020",
     "COOP_VERSION": "03480020",
     "COSMETIC_CONTEXT": "03480C3C",
@@ -249,6 +215,7 @@
     "CUSTOM_KEY_MODELS": "03481321",
     "DEBUG_OFFSET": "0348375C",
     "DISABLE_TIMERS": "03481315",
+<<<<<<< Dev
 <<<<<<< Dev
 <<<<<<< Dev
 <<<<<<< Dev
@@ -318,13 +285,15 @@
     "DPAD_TEXTURE": "034A8730",
 >>>>>>> Cleaning + Readme info
 >>>>>>> Cleaning + Readme info
+=======
+    "DPAD_TEXTURE": "034A8FE0",
+>>>>>>> Bosses warp
     "DUNGEONS_SHUFFLED": "03481316",
     "EPONAS_SONG_NOTES": "03481323",
     "EXTENDED_INITIAL_SAVE_DATA": "03481140",
     "EXTENDED_OBJECT_TABLE": "03481240",
-<<<<<<< Dev
-<<<<<<< Dev
     "EXTERN_DAMAGE_MULTIPLYER": "03483B71",
+<<<<<<< Dev
 <<<<<<< Dev
     "EXTRA_BOWLING_SHUFFLE": "0349E9AC",
 =======
@@ -351,9 +320,15 @@
     "FAST_BUNNY_HOOD_ENABLED": "03481319",
     "FAST_CHESTS": "0348130F",
     "FILENAME_ENCODING": "0349E420",
+=======
+    "EXTRA_BOWLING_SHUFFLE": "034A141C",
+    "FAST_BUNNY_HOOD_ENABLED": "03481319",
+    "FAST_CHESTS": "0348130F",
+    "FILENAME_ENCODING": "034A0E88",
+>>>>>>> Bosses warp
     "FIX_BROKEN_DROPS": "0348131A",
-<<<<<<< Dev
     "FONTLOADSTATUS_EXTENDED": "03484A80",
+<<<<<<< Dev
     "FONT_TEXTURE": "034A5038",
     "FREE_BOMBCHU_DROPS": "03481300",
     "FREE_SCARECROW_ENABLED": "03481308",
@@ -365,61 +340,14 @@
     "GANON_BOSS_KEY_CONDITION": "0349E9A8",
     "GANON_BOSS_KEY_CONDITION_COUNT": "0349E9A6",
 >>>>>>> Warp debug menu
+=======
+    "FONT_TEXTURE": "034A7B18",
+    "FREE_BOMBCHU_DROPS": "03481300",
+    "FREE_SCARECROW_ENABLED": "03481308",
+    "GANON_BOSS_KEY_CONDITION": "034A1448",
+    "GANON_BOSS_KEY_CONDITION_COUNT": "034A1446",
+>>>>>>> Bosses warp
     "GET_CHEST_OVERRIDE_WRAPPER": "0348349C",
-=======
-<<<<<<< Dev
-    "GANON_BOSS_KEY_CONDITION": "0349E4A8",
-    "GANON_BOSS_KEY_CONDITION_COUNT": "0349E4A6",
-    "GET_CHEST_OVERRIDE_WRAPPER": "03483540",
-=======
-    "GANON_BOSS_KEY_CONDITION": "0349E458",
-    "GANON_BOSS_KEY_CONDITION_COUNT": "0349E456",
-=======
-    "EXTRA_BOWLING_SHUFFLE": "034A0A3C",
-    "FAST_BUNNY_HOOD_ENABLED": "03481319",
-    "FAST_CHESTS": "0348130F",
-    "FIX_BROKEN_DROPS": "0348131A",
-    "FONTLOADSTATUS_EXTENDED": "034848F0",
-    "FONT_TEXTURE": "034A7100",
-    "FREE_BOMBCHU_DROPS": "03481300",
-    "FREE_SCARECROW_ENABLED": "03481308",
-<<<<<<< Dev
-    "GANON_BOSS_KEY_CONDITION": "034A0CB8",
-    "GANON_BOSS_KEY_CONDITION_COUNT": "034A0CB6",
-    "GET_CHEST_OVERRIDE_WRAPPER": "03483598",
->>>>>>> Warp debug menu
->>>>>>> Warp debug menu
-<<<<<<< Dev
->>>>>>> Warp debug menu
-=======
-=======
-    "GANON_BOSS_KEY_CONDITION": "034A0A68",
-    "GANON_BOSS_KEY_CONDITION_COUNT": "034A0A66",
->>>>>>> Improve int display and input viewer
-=======
-    "EXTRA_BOWLING_SHUFFLE": "034A0CAC",
-    "FAST_BUNNY_HOOD_ENABLED": "03481319",
-    "FAST_CHESTS": "0348130F",
-    "FIX_BROKEN_DROPS": "0348131A",
-    "FONTLOADSTATUS_EXTENDED": "03484900",
-    "FONT_TEXTURE": "034A7398",
-    "FREE_BOMBCHU_DROPS": "03481300",
-    "FREE_SCARECROW_ENABLED": "03481308",
-    "GANON_BOSS_KEY_CONDITION": "034A0CD8",
-    "GANON_BOSS_KEY_CONDITION_COUNT": "034A0CD6",
->>>>>>> Float version rewrite + bunny hood option
-    "GET_CHEST_OVERRIDE_WRAPPER": "03483520",
->>>>>>> Improve int display and input viewer
->>>>>>> Improve int display and input viewer
-=======
-    "FONTLOADSTATUS_EXTENDED": "03484920",
-    "FONT_TEXTURE": "034A7268",
-    "FREE_BOMBCHU_DROPS": "03481300",
-    "FREE_SCARECROW_ENABLED": "03481308",
-    "GANON_BOSS_KEY_CONDITION": "034A0B98",
-    "GANON_BOSS_KEY_CONDITION_COUNT": "034A0B96",
-    "GET_CHEST_OVERRIDE_WRAPPER": "03483540",
->>>>>>> Cleaning + Readme info
     "GET_ITEM_SEQ_ID": "03480C92",
     "GET_ITEM_TRIGGERED": "03481E34",
     "GOSSIP_HINT_CONDITION": "03481304",
@@ -431,6 +359,7 @@
     "INCOMING_PLAYER": "03480026",
     "INITIAL_SAVE_DATA": "03480D40",
     "JABU_ELEVATOR_ENABLE": "0348130C",
+<<<<<<< Dev
 <<<<<<< Dev
 <<<<<<< Dev
 <<<<<<< Dev
@@ -518,12 +447,16 @@
     "KAKARIKO_WEATHER_FORECAST": "034A0C00",
 >>>>>>> Cleaning + Readme info
 >>>>>>> Cleaning + Readme info
+=======
+    "KAKARIKO_WEATHER_FORECAST": "034A14B0",
+>>>>>>> Bosses warp
     "KEYRING_BOSSKEY_CONDITION": "0348131E",
     "KING_DODONGO_BONKS": "03483D48",
     "LACS_CONDITION": "03481368",
     "LACS_CONDITION_COUNT": "0348136E",
     "MALON_GAVE_ICETRAP": "034851E0",
     "MALON_TEXT_ID": "03481314",
+<<<<<<< Dev
 <<<<<<< Dev
 <<<<<<< Dev
 <<<<<<< Dev
@@ -542,66 +475,15 @@
 <<<<<<< Dev
     "MAX_RUPEES": "0349E9E2",
 >>>>>>> Warp debug menu
+=======
+    "MAX_RUPEES": "034A1482",
+>>>>>>> Bosses warp
     "MOVED_ADULT_KING_ZORA": "03484B50",
-=======
-=======
->>>>>>> Item debug menu
-=======
->>>>>>> Improve int display and input viewer
-=======
->>>>>>> Float version rewrite + bunny hood option
-<<<<<<< Dev
-    "MAX_RUPEES": "0349E4E2",
-    "MOVED_ADULT_KING_ZORA": "034849D0",
-=======
-=======
->>>>>>> Item debug menu
-=======
->>>>>>> Improve int display and input viewer
-<<<<<<< Dev
-    "MAX_RUPEES": "0349E492",
-    "MOVED_ADULT_KING_ZORA": "034849B0",
-=======
-=======
->>>>>>> Item debug menu
-<<<<<<< Dev
-    "MAX_RUPEES": "0349E51A",
-    "MOVED_ADULT_KING_ZORA": "034849A0",
-=======
-    "MAX_RUPEES": "034A026A",
-=======
-    "MAX_RUPEES": "034A0CF2",
->>>>>>> Item debug menu
-    "MOVED_ADULT_KING_ZORA": "03484A20",
->>>>>>> Warp debug menu
->>>>>>> Warp debug menu
-<<<<<<< Dev
->>>>>>> Warp debug menu
-<<<<<<< Dev
->>>>>>> Warp debug menu
-=======
-=======
-=======
-    "MAX_RUPEES": "034A0AA2",
-    "MOVED_ADULT_KING_ZORA": "034849A0",
->>>>>>> Improve int display and input viewer
->>>>>>> Improve int display and input viewer
-<<<<<<< Dev
->>>>>>> Improve int display and input viewer
-=======
-=======
-    "MAX_RUPEES": "034A0D12",
-    "MOVED_ADULT_KING_ZORA": "034849B0",
->>>>>>> Float version rewrite + bunny hood option
->>>>>>> Float version rewrite + bunny hood option
-=======
-    "MAX_RUPEES": "034A0BD2",
-    "MOVED_ADULT_KING_ZORA": "034849D0",
->>>>>>> Cleaning + Readme info
     "MW_PROGRESSIVE_ITEMS_ENABLE": "0348002B",
     "MW_PROGRESSIVE_ITEMS_STATE": "0348083C",
     "MW_SEND_OWN_ITEMS": "0348002A",
     "NO_COLLECTIBLE_HEARTS": "0348130E",
+<<<<<<< Dev
 <<<<<<< Dev
 <<<<<<< Dev
 <<<<<<< Dev
@@ -709,6 +591,11 @@
     "OPEN_KAKARIKO": "034A0BD1",
 >>>>>>> Cleaning + Readme info
 >>>>>>> Cleaning + Readme info
+=======
+    "NO_ESCAPE_SEQUENCE": "034A1444",
+    "OCARINAS_SHUFFLED": "0348130D",
+    "OPEN_KAKARIKO": "034A1481",
+>>>>>>> Bosses warp
     "OUTGOING_ITEM": "03480030",
     "OUTGOING_KEY": "0348002C",
     "OUTGOING_PLAYER": "03480032",
@@ -723,6 +610,7 @@
     "RAINBOW_BRIDGE_CONDITION": "03481364",
     "RAINBOW_BRIDGE_COUNT": "0348136C",
 <<<<<<< Dev
+<<<<<<< Dev
     "RANDOMIZER_RNG_SEED": "0349EA14",
 =======
 <<<<<<< Dev
@@ -735,69 +623,16 @@
 <<<<<<< Dev
     "RNG_SEED_INT": "0349E984",
 >>>>>>> Warp debug menu
+=======
+    "RANDOMIZER_RNG_SEED": "034A1494",
+    "RANDO_CONTEXT": "03480000",
+    "RNG_SEED_INT": "034A1414",
+>>>>>>> Bosses warp
     "SET_BONK_FLAG": "03483C20",
     "SHOW_CHEST_WITH_INVERTED_LENS": "0348355C",
     "SHUFFLE_BEANS": "03483DB8",
     "SHUFFLE_CARPET_SALESMAN": "0348555C",
     "SHUFFLE_CHEST_GAME": "03486100",
-=======
-    "RNG_SEED_INT": "0349E484",
-=======
-    "RANDOMIZER_RNG_SEED": "034A0BE4",
-    "RANDO_CONTEXT": "03480000",
-    "RNG_SEED_INT": "034A0B64",
->>>>>>> Cleaning + Readme info
-    "SET_BONK_FLAG": "03483CC0",
-    "SHOW_CHEST_WITH_INVERTED_LENS": "03483600",
-    "SHUFFLE_BEANS": "03483E58",
-    "SHUFFLE_CARPET_SALESMAN": "034853DC",
-    "SHUFFLE_CHEST_GAME": "03485F80",
-<<<<<<< Dev
-=======
-    "RAINBOW_BRIDGE_CONDITION": "03481360",
-    "RAINBOW_BRIDGE_COUNT": "03481368",
-    "RANDOMIZER_RNG_SEED": "034A0D24",
-    "RANDO_CONTEXT": "03480000",
-    "RNG_SEED_INT": "034A0CA4",
-    "SET_BONK_FLAG": "03483CA0",
-    "SHOW_CHEST_WITH_INVERTED_LENS": "034835E0",
-    "SHUFFLE_BEANS": "03483E38",
-    "SHUFFLE_CARPET_SALESMAN": "034853BC",
-    "SHUFFLE_CHEST_GAME": "03485F60",
-<<<<<<< Dev
-=======
-    "SHUFFLE_BEANS": "03483E28",
-    "SHUFFLE_CARPET_SALESMAN": "034853AC",
-    "SHUFFLE_CHEST_GAME": "03485F50",
-<<<<<<< Dev
-=======
-    "RANDOMIZER_RNG_SEED": "034A027C",
-=======
-    "RANDOMIZER_RNG_SEED": "034A0D04",
->>>>>>> Item debug menu
-    "RANDO_CONTEXT": "03480000",
-    "RNG_SEED_INT": "034A0C84",
-    "SET_BONK_FLAG": "03483D18",
-    "SHOW_CHEST_WITH_INVERTED_LENS": "03483658",
-    "SHUFFLE_BEANS": "03483EA0",
-    "SHUFFLE_CARPET_SALESMAN": "0348542C",
-    "SHUFFLE_CHEST_GAME": "03485FD0",
->>>>>>> Warp debug menu
->>>>>>> Warp debug menu
-<<<<<<< Dev
->>>>>>> Warp debug menu
-<<<<<<< Dev
->>>>>>> Warp debug menu
-=======
-=======
-=======
->>>>>>> Improve int display and input viewer
->>>>>>> Improve int display and input viewer
->>>>>>> Improve int display and input viewer
-=======
->>>>>>> Float version rewrite + bunny hood option
-=======
->>>>>>> Cleaning + Readme info
     "SHUFFLE_COWS": "03481310",
     "SHUFFLE_GRANNYS_POTION_SHOP": "034832F0",
     "SHUFFLE_MEDIGORON": "034855B8",
@@ -808,11 +643,8 @@
     "SPECIAL_DEAL_COUNTS": "03481374",
     "SPEED_MULTIPLIER": "0348361C",
     "SPOILER_AVAILABLE": "0348131B",
-<<<<<<< Dev
-<<<<<<< Dev
-<<<<<<< Dev
-<<<<<<< Dev
     "START_TWINROVA_FIGHT": "03484BD0",
+<<<<<<< Dev
 <<<<<<< Dev
     "Sram_InitNewSave": "0349E9A8",
 =======
@@ -843,34 +675,20 @@
     "TRIFORCE_ICON_TEXTURE": "034A8F30",
 >>>>>>> Cleaning + Readme info
 >>>>>>> Cleaning + Readme info
-    "TRIFORCE_PIECES_REQUIRED": "03481372",
-<<<<<<< Dev
-    "TWINROVA_ACTION_TIMER": "03484BD4",
 =======
-    "TWINROVA_ACTION_TIMER": "03484A54",
-<<<<<<< Dev
-=======
-=======
->>>>>>> Improve int display and input viewer
-<<<<<<< Dev
-=======
->>>>>>> Float version rewrite + bunny hood option
-    "START_TWINROVA_FIGHT": "03484A30",
-    "Sram_InitNewSave": "034A0CA8",
+    "Sram_InitNewSave": "034A1418",
     "TIME_STRING_TXT": "03480D1C",
-    "TIME_TRAVEL_SAVED_EQUIPS": "03482678",
-    "TRIFORCE_HUNT_ENABLED": "0348136C",
-    "TRIFORCE_ICON_TEXTURE": "034A9060",
-    "TRIFORCE_PIECES_REQUIRED": "0348136E",
-    "TWINROVA_ACTION_TIMER": "03484A34",
->>>>>>> Warp debug menu
->>>>>>> Warp debug menu
-=======
->>>>>>> Cleaning + Readme info
+    "TIME_TRAVEL_SAVED_EQUIPS": "0348267C",
+    "TRIFORCE_HUNT_ENABLED": "03481370",
+    "TRIFORCE_ICON_TEXTURE": "034A97E0",
+>>>>>>> Bosses warp
+    "TRIFORCE_PIECES_REQUIRED": "03481372",
+    "TWINROVA_ACTION_TIMER": "03484BD4",
     "VERSION_STRING_TXT": "03480CE8",
     "WINDMILL_SONG_ID": "03481312",
     "WINDMILL_TEXT_ID": "03481313",
     "WORLD_STRING_TXT": "03480D0C",
+<<<<<<< Dev
 <<<<<<< Dev
 <<<<<<< Dev
 <<<<<<< Dev
@@ -1958,4 +1776,113 @@
     "triforce_sprite": "0349D188"
 >>>>>>> Cleaning + Readme info
 >>>>>>> Cleaning + Readme info
+=======
+    "a_button": "034A13E8",
+    "a_note_b": "034A13D4",
+    "a_note_font_glow_base": "034A13BC",
+    "a_note_font_glow_max": "034A13B8",
+    "a_note_g": "034A13D8",
+    "a_note_glow_base": "034A13C4",
+    "a_note_glow_max": "034A13C0",
+    "a_note_r": "034A13DC",
+    "active_item_action_id": "034A1468",
+    "active_item_fast_chest": "034A1458",
+    "active_item_graphic_id": "034A145C",
+    "active_item_object_id": "034A1460",
+    "active_item_row": "034A146C",
+    "active_item_text_id": "034A1464",
+    "active_override": "034A1A2C",
+    "active_override_is_outgoing": "034A1470",
+    "adultSkeleton": "034A1084",
+    "adult_safe": "034A148A",
+    "alt_overrides": "034A15D4",
+    "b_button": "034A13E4",
+    "beating_dd": "034A13F0",
+    "beating_no_dd": "034A13F8",
+    "bosses_warps": "0349CF98",
+    "buttons_sprite": "0349D8B8",
+    "c_button": "034A13E0",
+    "c_note_b": "034A13C8",
+    "c_note_font_glow_base": "034A13AC",
+    "c_note_font_glow_max": "034A13A8",
+    "c_note_g": "034A13CC",
+    "c_note_glow_base": "034A13B4",
+    "c_note_glow_max": "034A13B0",
+    "c_note_r": "034A13D0",
+    "cfg_item_overrides": "034A1A3C",
+    "childSkeleton": "034A0F88",
+    "child_safe": "034A1489",
+    "collectible_mutex": "034A144C",
+    "collectible_override": "034A1544",
+    "collectible_override_flags": "034A1450",
+    "collectible_scene_flags_table": "034A17D4",
+    "curr_scene_setup": "034A1498",
+    "debug_text_color": "034A1374",
+    "debug_text_height": "034A1377",
+    "debug_text_width": "034A1378",
+    "defaultDDHeart": "034A13FC",
+    "defaultHeart": "034A1404",
+    "dpad_sprite": "0349D948",
+    "drop_collectible_override_flag": "034A1474",
+    "dummy_actor": "034A1478",
+    "dungeon_count": "034A137C",
+    "dungeon_warps": "0349D374",
+    "dungeons": "0349D5B4",
+    "empty_dlist": "034A1390",
+    "extended_savectx": "034A7B00",
+    "extern_ctxt": "0349D6E8",
+    "float_precision": "034A1370",
+    "font_sprite": "0349D958",
+    "freecam_modes": "0349C538",
+    "hash_sprites": "034A1388",
+    "hash_symbols": "0349D81C",
+    "heap_next": "034A14AC",
+    "heart_sprite": "0349D8D8",
+    "icon_sprites": "0349C5FC",
+    "illegal_model": "034A148C",
+    "item_digit_sprite": "0349D8F8",
+    "item_draw_table": "0349D9D0",
+    "item_overrides_count": "034A147C",
+    "item_table": "0349EFCC",
+    "items": "0349D89C",
+    "items_debug": "0349CBBC",
+    "items_sprite": "0349D978",
+    "key_counts": "0349EFA8",
+    "key_rupee_clock_sprite": "0349D918",
+    "last_fog_distance": "034A1380",
+    "linkhead_skull_sprite": "0349D8E8",
+    "medals": "0349D59C",
+    "medals_sprite": "0349D988",
+    "menu_categories": "0349D530",
+    "menu_not_on_dup": "034A142C",
+    "missing_dlist": "034A1488",
+    "normal_dd": "034A13EC",
+    "normal_no_dd": "034A13F4",
+    "num_override_flags": "034A1454",
+    "num_to_bits": "0349D85C",
+    "object_slots": "034A7A3C",
+    "ocarina_button_sprite": "0349D8C8",
+    "outgoing_queue": "034A1554",
+    "overworld_warps": "0349D0EC",
+    "quest_items_sprite": "0349D968",
+    "reward_rows": "0349D590",
+    "rupee_colors": "0349C620",
+    "rupee_digit_sprite": "0349D908",
+    "satisified_pending_frames": "034A1456",
+    "scene_fog_distance": "034A1384",
+    "setup_db": "0349D9A8",
+    "show_input_viewer": "034A1371",
+    "silver_rupee_vars": "0349EEA0",
+    "song_note_sprite": "0349D928",
+    "stones_sprite": "0349D998",
+    "text_cursor_border_base": "034A139C",
+    "text_cursor_border_max": "034A1398",
+    "text_cursor_inner_base": "034A13A4",
+    "text_cursor_inner_max": "034A13A0",
+    "text_height": "034A140C",
+    "text_width": "034A1410",
+    "texture_table": "034A1180",
+    "trade_quest_items": "0349C7CC",
+    "triforce_sprite": "0349D938"
+>>>>>>> Bosses warp
 }

@@ -13,6 +13,7 @@ typedef struct {
     int8_t sub_menu_index;
     int8_t dungeon_index;
     int8_t overworld_index;
+    int8_t boss_index;
     int8_t item_index;
 } menu_index_t;
 
