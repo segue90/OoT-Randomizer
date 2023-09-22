@@ -2290,7 +2290,35 @@ def patch_rom(spoiler: Spoiler, world: World, rom: Rom) -> Rom:
     if world.settings.correct_chest_appearances == 'both':
         symbol = rom.sym('CHEST_SIZE_TEXTURE')
         rom.write_int32(symbol, 0x00000001)
-        # Move Ganon's Castle's Zelda's Lullaby Chest back so is reachable if large
+
+    # Specify which textures we want
+    symbol = rom.sym('CHEST_GILDED_TEXTURE')
+    rom.write_byte(symbol, 0x01)
+    if 'major' not in world.settings.chest_textures_specific:
+        rom.write_byte(symbol, 0x00)
+    symbol = rom.sym('CHEST_GOLD_TEXTURE')
+    rom.write_byte(symbol, 0x01)
+    if 'bosskeys' not in world.settings.chest_textures_specific:
+        rom.write_byte(symbol, 0x00)
+    symbol = rom.sym('CHEST_SILVER_TEXTURE')
+    rom.write_byte(symbol, 0x01)
+    if 'keys' not in world.settings.chest_textures_specific:
+        rom.write_byte(symbol, 0x00)
+    symbol = rom.sym('CHEST_SKULL_TEXTURE')
+    rom.write_byte(symbol, 0x01)
+    if 'tokens' not in world.settings.chest_textures_specific:
+        rom.write_byte(symbol, 0x00)
+    symbol = rom.sym('CHEST_HEART_TEXTURE')
+    rom.write_byte(symbol, 0x01)
+    if 'hearts' not in world.settings.chest_textures_specific:
+        rom.write_byte(symbol, 0x00)
+
+    symbol = rom.sym('SOA_UNLOCKS_CHEST_TEXTURE')
+    rom.write_byte(symbol, 0x00)
+    if world.settings.correct_chest_appearances == 'textures' and world.settings.soa_unlocks_chest_texture:
+        rom.write_byte(symbol, 0x01)
+
+    # Move Ganon's Castle's Zelda's Lullaby Chest back so is reachable if large
     if world.settings.correct_chest_appearances == 'classic' or world.settings.correct_chest_appearances == 'both':
         if not world.dungeon_mq['Ganons Castle']:
             chest_name = 'Ganons Castle Light Trial Lullaby Chest'
@@ -2333,6 +2361,33 @@ def patch_rom(spoiler: Spoiler, world: World, rom: Rom) -> Rom:
     }
     symbol = rom.sym('POTCRATE_TEXTURES_MATCH_CONTENTS')
     rom.write_byte(symbol, ptmc_options[world.settings.correct_potcrate_appearances])
+
+    # Specify which textures we want
+    symbol = rom.sym('POTCRATE_GILDED_TEXTURE')
+    rom.write_byte(symbol, 0x01)
+    if 'major' not in world.settings.potcrate_textures_specific:
+        rom.write_byte(symbol, 0x00)
+    symbol = rom.sym('POTCRATE_GOLD_TEXTURE')
+    rom.write_byte(symbol, 0x01)
+    if 'bosskeys' not in world.settings.potcrate_textures_specific:
+        rom.write_byte(symbol, 0x00)
+    symbol = rom.sym('POTCRATE_SILVER_TEXTURE')
+    rom.write_byte(symbol, 0x01)
+    if 'keys' not in world.settings.potcrate_textures_specific:
+        rom.write_byte(symbol, 0x00)
+    symbol = rom.sym('POTCRATE_SKULL_TEXTURE')
+    rom.write_byte(symbol, 0x01)
+    if 'tokens' not in world.settings.potcrate_textures_specific:
+        rom.write_byte(symbol, 0x00)
+    symbol = rom.sym('POTCRATE_HEART_TEXTURE')
+    rom.write_byte(symbol, 0x01)
+    if 'hearts' not in world.settings.potcrate_textures_specific:
+        rom.write_byte(symbol, 0x00)
+
+    symbol = rom.sym('SOA_UNLOCKS_POTCRATE_TEXTURE')
+    rom.write_byte(symbol, 0x00)
+    if world.settings.correct_potcrate_appearances == 'textures_content' and world.settings.soa_unlocks_potcrate_texture:
+        rom.write_byte(symbol, 0x01)
 
     # give dungeon items the correct messages
     add_item_messages(messages, shop_items, world)
