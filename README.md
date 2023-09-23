@@ -169,6 +169,7 @@ issue. You should always Hard Reset to avoid this issue entirely.
   * Fix pause screen rendering causing graphical issues on some platforms.
   * Fix a long-standing bug where certain fanfares kill the currently-playing backgroud music.
   * Fix a bug which would cause the Lost Woods bridge ocarina check, if ocarinas are unshuffled and overworld Entrance Randomizer is disabled, to give a Fairy Ocarina when it should give the Ocarina of Time.
+  * Disallow excluding the bombchu bowling bombchu refill locations, since this didn't do anything.
 * **Hints**
   * Fix the cryptic hint for Ganon's Castle Boss Key.
   * Fix missing punctuation in dual hints.
