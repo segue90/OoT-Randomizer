@@ -2222,34 +2222,43 @@ def patch_rom(spoiler: Spoiler, world: World, rom: Rom) -> Rom:
     HEART_CHEST_BIG = 17
     if world.settings.shuffle_tcgkeys == 'vanilla':
         # Force key chests in Treasure Chest Game to use the default chest texture when not shuffled
-        item = read_rom_item(rom, 0x71)
+        item = read_rom_item(rom, 0x0071)
         item['chest_type'] = BROWN_CHEST
-        write_rom_item(rom, 0x71, item)
-    if world.settings.free_bombchu_drops or world.settings.minor_items_as_major_chest:
-        bombchu_ids = [0x6A, 0x03, 0x6B]
+        write_rom_item(rom, 0x0071, item)
+    if world.settings.free_bombchu_drops or 'bombchus' in world.settings.minor_items_as_major_chest:
+        bombchu_ids = [0x006A, 0x0003, 0x006B]
         for i in bombchu_ids:
             item = read_rom_item(rom, i)
             item['chest_type'] = GILDED_CHEST
             write_rom_item(rom, i, item)
     if world.settings.bridge == 'tokens' or world.settings.lacs_condition == 'tokens' or world.settings.shuffle_ganon_bosskey == 'tokens':
-        item = read_rom_item(rom, 0x5B)
+        item = read_rom_item(rom, 0x005B)
         item['chest_type'] = SKULL_CHEST_BIG
-        write_rom_item(rom, 0x5B, item)
+        write_rom_item(rom, 0x005B, item)
     if world.settings.bridge == 'hearts' or world.settings.lacs_condition == 'hearts' or world.settings.shuffle_ganon_bosskey == 'hearts':
-        heart_ids = [0x3D, 0x3E, 0x76]
+        heart_ids = [0x003D, 0x003E, 0x0076]
         for i in heart_ids:
             item = read_rom_item(rom, i)
             item['chest_type'] = HEART_CHEST_BIG
             write_rom_item(rom, i, item)
-    if world.settings.minor_items_as_major_chest:
+    if 'shields' in world.settings.minor_items_as_major_chest:
         # Deku
-        item = read_rom_item(rom, 0x29)
+        item = read_rom_item(rom, 0x0029)
         item['chest_type'] = GILDED_CHEST
-        write_rom_item(rom, 0x29, item)
+        write_rom_item(rom, 0x0029, item)
         # Hylian
-        item = read_rom_item(rom, 0x2A)
+        item = read_rom_item(rom, 0x002A)
         item['chest_type'] = GILDED_CHEST
-        write_rom_item(rom, 0x2A, item)
+        write_rom_item(rom, 0x002A, item)
+    if 'capacity' in world.settings.minor_items_as_major_chest:
+        # Nuts
+        item = read_rom_item(rom, 0x0087)
+        item['chest_type'] = GILDED_CHEST
+        write_rom_item(rom, 0x0087, item)
+        # Sticks
+        item = read_rom_item(rom, 0x0088)
+        item['chest_type'] = GILDED_CHEST
+        write_rom_item(rom, 0x0088, item)
 
     # Update chest type appearance
     if world.settings.correct_chest_appearances == 'textures':
