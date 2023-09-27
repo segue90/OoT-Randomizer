@@ -69,8 +69,6 @@ The unused field (offset 0x10) of the permanent scene flags (save context + 0xd4
     * Owned and Traded flags use the same bit position for the same item (e.g. Weird Egg uses bit 0 for both Owned and Traded flags)
     * 0x60 Death Mountain Trail
     * 0x62 Goron City
-* Trade Quest Items Traded: Scene 0x62
-    * 0x62 Goron City
 
 ## Collectibles field
 
