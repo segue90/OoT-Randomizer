@@ -48,6 +48,7 @@ defaultHintDists: list[str] = [
     'balanced.json',
     'bingo.json',
     'chaos.json',
+    'chaos_no_goal.json',
     'coop2.json',
     'ddr.json',
     'important_checks.json',
