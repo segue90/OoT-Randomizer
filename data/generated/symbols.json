@@ -9,6 +9,7 @@
     "AUDIO_THREAD_INFO_MEM_START": "03484078",
 <<<<<<< Dev
 <<<<<<< Dev
+<<<<<<< Dev
     "AUDIO_THREAD_MEM_START": "034A7D00",
 =======
     "AUDIO_THREAD_MEM_START": "034A7CE0",
@@ -24,6 +25,9 @@
 =======
     "AUDIO_THREAD_MEM_START": "034AA7E0",
 >>>>>>> Bosses warp
+=======
+    "AUDIO_THREAD_MEM_START": "034AA7F0",
+>>>>>>> Age change keeps respawn point
     "AUTO_TRACKER_CONTEXT": "03481328",
     "AUTO_TRACKER_VERSION": "03481328",
     "BONK_LAST_FRAME": "03483BE8",
@@ -90,6 +94,7 @@
     "CHECK_FOR_BONK_CANCEL": "03483C4C",
     "CHECK_ROOM_MESH_TYPE": "03483D7C",
     "CHEST_LENS_ONLY": "03483498",
+<<<<<<< Dev
 <<<<<<< Dev
 <<<<<<< Dev
     "CHEST_SIZE_MATCH_CONTENTS": "0349E9B4",
@@ -206,6 +211,12 @@
     "CHEST_TEXTURE_MATCH_CONTENTS": "034A1428",
     "COMPLETE_MASK_QUEST": "034A1480",
 >>>>>>> Bosses warp
+=======
+    "CHEST_SIZE_MATCH_CONTENTS": "034A1434",
+    "CHEST_SIZE_TEXTURE": "034A1430",
+    "CHEST_TEXTURE_MATCH_CONTENTS": "034A1438",
+    "COMPLETE_MASK_QUEST": "034A1490",
+>>>>>>> Age change keeps respawn point
     "COOP_CONTEXT": "03480020",
     "COOP_VERSION": "03480020",
     "COSMETIC_CONTEXT": "03480C3C",
@@ -215,6 +226,7 @@
     "CUSTOM_KEY_MODELS": "03481321",
     "DEBUG_OFFSET": "0348375C",
     "DISABLE_TIMERS": "03481315",
+<<<<<<< Dev
 <<<<<<< Dev
 <<<<<<< Dev
 <<<<<<< Dev
@@ -288,11 +300,15 @@
 =======
     "DPAD_TEXTURE": "034A8FE0",
 >>>>>>> Bosses warp
+=======
+    "DPAD_TEXTURE": "034A8FF0",
+>>>>>>> Age change keeps respawn point
     "DUNGEONS_SHUFFLED": "03481316",
     "EPONAS_SONG_NOTES": "03481323",
     "EXTENDED_INITIAL_SAVE_DATA": "03481140",
     "EXTENDED_OBJECT_TABLE": "03481240",
     "EXTERN_DAMAGE_MULTIPLYER": "03483B71",
+<<<<<<< Dev
 <<<<<<< Dev
 <<<<<<< Dev
     "EXTRA_BOWLING_SHUFFLE": "0349E9AC",
@@ -347,6 +363,19 @@
     "GANON_BOSS_KEY_CONDITION": "034A1448",
     "GANON_BOSS_KEY_CONDITION_COUNT": "034A1446",
 >>>>>>> Bosses warp
+=======
+    "EXTRA_BOWLING_SHUFFLE": "034A142C",
+    "FAST_BUNNY_HOOD_ENABLED": "03481319",
+    "FAST_CHESTS": "0348130F",
+    "FILENAME_ENCODING": "034A0E98",
+    "FIX_BROKEN_DROPS": "0348131A",
+    "FONTLOADSTATUS_EXTENDED": "03484A80",
+    "FONT_TEXTURE": "034A7B28",
+    "FREE_BOMBCHU_DROPS": "03481300",
+    "FREE_SCARECROW_ENABLED": "03481308",
+    "GANON_BOSS_KEY_CONDITION": "034A1458",
+    "GANON_BOSS_KEY_CONDITION_COUNT": "034A1456",
+>>>>>>> Age change keeps respawn point
     "GET_CHEST_OVERRIDE_WRAPPER": "0348349C",
     "GET_ITEM_SEQ_ID": "03480C92",
     "GET_ITEM_TRIGGERED": "03481E34",
@@ -359,6 +388,7 @@
     "INCOMING_PLAYER": "03480026",
     "INITIAL_SAVE_DATA": "03480D40",
     "JABU_ELEVATOR_ENABLE": "0348130C",
+<<<<<<< Dev
 <<<<<<< Dev
 <<<<<<< Dev
 <<<<<<< Dev
@@ -450,12 +480,16 @@
 =======
     "KAKARIKO_WEATHER_FORECAST": "034A14B0",
 >>>>>>> Bosses warp
+=======
+    "KAKARIKO_WEATHER_FORECAST": "034A14C0",
+>>>>>>> Age change keeps respawn point
     "KEYRING_BOSSKEY_CONDITION": "0348131E",
     "KING_DODONGO_BONKS": "03483D48",
     "LACS_CONDITION": "03481368",
     "LACS_CONDITION_COUNT": "0348136E",
     "MALON_GAVE_ICETRAP": "034851E0",
     "MALON_TEXT_ID": "03481314",
+<<<<<<< Dev
 <<<<<<< Dev
 <<<<<<< Dev
 <<<<<<< Dev
@@ -478,11 +512,15 @@
 =======
     "MAX_RUPEES": "034A1482",
 >>>>>>> Bosses warp
+=======
+    "MAX_RUPEES": "034A1492",
+>>>>>>> Age change keeps respawn point
     "MOVED_ADULT_KING_ZORA": "03484B50",
     "MW_PROGRESSIVE_ITEMS_ENABLE": "0348002B",
     "MW_PROGRESSIVE_ITEMS_STATE": "0348083C",
     "MW_SEND_OWN_ITEMS": "0348002A",
     "NO_COLLECTIBLE_HEARTS": "0348130E",
+<<<<<<< Dev
 <<<<<<< Dev
 <<<<<<< Dev
 <<<<<<< Dev
@@ -596,6 +634,11 @@
     "OCARINAS_SHUFFLED": "0348130D",
     "OPEN_KAKARIKO": "034A1481",
 >>>>>>> Bosses warp
+=======
+    "NO_ESCAPE_SEQUENCE": "034A1454",
+    "OCARINAS_SHUFFLED": "0348130D",
+    "OPEN_KAKARIKO": "034A1491",
+>>>>>>> Age change keeps respawn point
     "OUTGOING_ITEM": "03480030",
     "OUTGOING_KEY": "0348002C",
     "OUTGOING_PLAYER": "03480032",
@@ -609,6 +652,7 @@
     "POTCRATE_TEXTURES_MATCH_CONTENTS": "0348131D",
     "RAINBOW_BRIDGE_CONDITION": "03481364",
     "RAINBOW_BRIDGE_COUNT": "0348136C",
+<<<<<<< Dev
 <<<<<<< Dev
 <<<<<<< Dev
     "RANDOMIZER_RNG_SEED": "0349EA14",
@@ -628,6 +672,11 @@
     "RANDO_CONTEXT": "03480000",
     "RNG_SEED_INT": "034A1414",
 >>>>>>> Bosses warp
+=======
+    "RANDOMIZER_RNG_SEED": "034A14A4",
+    "RANDO_CONTEXT": "03480000",
+    "RNG_SEED_INT": "034A1424",
+>>>>>>> Age change keeps respawn point
     "SET_BONK_FLAG": "03483C20",
     "SHOW_CHEST_WITH_INVERTED_LENS": "0348355C",
     "SHUFFLE_BEANS": "03483DB8",
@@ -644,6 +693,7 @@
     "SPEED_MULTIPLIER": "0348361C",
     "SPOILER_AVAILABLE": "0348131B",
     "START_TWINROVA_FIGHT": "03484BD0",
+<<<<<<< Dev
 <<<<<<< Dev
 <<<<<<< Dev
     "Sram_InitNewSave": "0349E9A8",
@@ -682,12 +732,20 @@
     "TRIFORCE_HUNT_ENABLED": "03481370",
     "TRIFORCE_ICON_TEXTURE": "034A97E0",
 >>>>>>> Bosses warp
+=======
+    "Sram_InitNewSave": "034A1428",
+    "TIME_STRING_TXT": "03480D1C",
+    "TIME_TRAVEL_SAVED_EQUIPS": "0348267C",
+    "TRIFORCE_HUNT_ENABLED": "03481370",
+    "TRIFORCE_ICON_TEXTURE": "034A97F0",
+>>>>>>> Age change keeps respawn point
     "TRIFORCE_PIECES_REQUIRED": "03481372",
     "TWINROVA_ACTION_TIMER": "03484BD4",
     "VERSION_STRING_TXT": "03480CE8",
     "WINDMILL_SONG_ID": "03481312",
     "WINDMILL_TEXT_ID": "03481313",
     "WORLD_STRING_TXT": "03480D0C",
+<<<<<<< Dev
 <<<<<<< Dev
 <<<<<<< Dev
 <<<<<<< Dev
@@ -1885,4 +1943,113 @@
     "trade_quest_items": "0349C7CC",
     "triforce_sprite": "0349D938"
 >>>>>>> Bosses warp
+=======
+    "a_button": "034A13F8",
+    "a_note_b": "034A13E4",
+    "a_note_font_glow_base": "034A13CC",
+    "a_note_font_glow_max": "034A13C8",
+    "a_note_g": "034A13E8",
+    "a_note_glow_base": "034A13D4",
+    "a_note_glow_max": "034A13D0",
+    "a_note_r": "034A13EC",
+    "active_item_action_id": "034A1478",
+    "active_item_fast_chest": "034A1468",
+    "active_item_graphic_id": "034A146C",
+    "active_item_object_id": "034A1470",
+    "active_item_row": "034A147C",
+    "active_item_text_id": "034A1474",
+    "active_override": "034A1A3C",
+    "active_override_is_outgoing": "034A1480",
+    "adultSkeleton": "034A1094",
+    "adult_safe": "034A149A",
+    "alt_overrides": "034A15E4",
+    "b_button": "034A13F4",
+    "beating_dd": "034A1400",
+    "beating_no_dd": "034A1408",
+    "bosses_warps": "0349CFA8",
+    "buttons_sprite": "0349D8C8",
+    "c_button": "034A13F0",
+    "c_note_b": "034A13D8",
+    "c_note_font_glow_base": "034A13BC",
+    "c_note_font_glow_max": "034A13B8",
+    "c_note_g": "034A13DC",
+    "c_note_glow_base": "034A13C4",
+    "c_note_glow_max": "034A13C0",
+    "c_note_r": "034A13E0",
+    "cfg_item_overrides": "034A1A4C",
+    "childSkeleton": "034A0F98",
+    "child_safe": "034A1499",
+    "collectible_mutex": "034A145C",
+    "collectible_override": "034A1554",
+    "collectible_override_flags": "034A1460",
+    "collectible_scene_flags_table": "034A17E4",
+    "curr_scene_setup": "034A14A8",
+    "debug_text_color": "034A1384",
+    "debug_text_height": "034A1387",
+    "debug_text_width": "034A1388",
+    "defaultDDHeart": "034A140C",
+    "defaultHeart": "034A1414",
+    "dpad_sprite": "0349D958",
+    "drop_collectible_override_flag": "034A1484",
+    "dummy_actor": "034A1488",
+    "dungeon_count": "034A138C",
+    "dungeon_warps": "0349D384",
+    "dungeons": "0349D5C4",
+    "empty_dlist": "034A13A0",
+    "extended_savectx": "034A7B10",
+    "extern_ctxt": "0349D6F8",
+    "float_precision": "034A1380",
+    "font_sprite": "0349D968",
+    "freecam_modes": "0349C54C",
+    "hash_sprites": "034A1398",
+    "hash_symbols": "0349D82C",
+    "heap_next": "034A14BC",
+    "heart_sprite": "0349D8E8",
+    "icon_sprites": "0349C610",
+    "illegal_model": "034A149C",
+    "item_digit_sprite": "0349D908",
+    "item_draw_table": "0349D9E0",
+    "item_overrides_count": "034A148C",
+    "item_table": "0349EFDC",
+    "items": "0349D8AC",
+    "items_debug": "0349CBCC",
+    "items_sprite": "0349D988",
+    "key_counts": "0349EFB8",
+    "key_rupee_clock_sprite": "0349D928",
+    "last_fog_distance": "034A1390",
+    "linkhead_skull_sprite": "0349D8F8",
+    "medals": "0349D5AC",
+    "medals_sprite": "0349D998",
+    "menu_categories": "0349D540",
+    "menu_not_on_dup": "034A143C",
+    "missing_dlist": "034A1498",
+    "normal_dd": "034A13FC",
+    "normal_no_dd": "034A1404",
+    "num_override_flags": "034A1464",
+    "num_to_bits": "0349D86C",
+    "object_slots": "034A7A4C",
+    "ocarina_button_sprite": "0349D8D8",
+    "outgoing_queue": "034A1564",
+    "overworld_warps": "0349D0FC",
+    "quest_items_sprite": "0349D978",
+    "reward_rows": "0349D5A0",
+    "rupee_colors": "0349C634",
+    "rupee_digit_sprite": "0349D918",
+    "satisified_pending_frames": "034A1466",
+    "scene_fog_distance": "034A1394",
+    "setup_db": "0349D9B8",
+    "show_input_viewer": "034A1381",
+    "silver_rupee_vars": "0349EEB0",
+    "song_note_sprite": "0349D938",
+    "stones_sprite": "0349D9A8",
+    "text_cursor_border_base": "034A13AC",
+    "text_cursor_border_max": "034A13A8",
+    "text_cursor_inner_base": "034A13B4",
+    "text_cursor_inner_max": "034A13B0",
+    "text_height": "034A141C",
+    "text_width": "034A1420",
+    "texture_table": "034A1190",
+    "trade_quest_items": "0349C7E0",
+    "triforce_sprite": "0349D948"
+>>>>>>> Age change keeps respawn point
 }

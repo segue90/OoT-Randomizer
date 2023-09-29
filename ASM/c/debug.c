@@ -173,6 +173,11 @@ void draw_debug_menu(z64_disp_buf_t *db) {
                     z64_game.link_age = !z64_game.link_age;
                     z64_file.link_age = age;
                     z64_game.entrance_index = z64_file.entrance_index;
+
+                    // Shoutouts to OoTMM
+                    z64_Play_SetupRespawnPoint(&z64_game, 1, 0xDFF);
+                    z64_file.void_flag = 2;
+
                     z64_game.scene_load_flag = 0x14;
                     z64_game.fadeout_transition = 0x02;
                     show_warp_menu = 0;
