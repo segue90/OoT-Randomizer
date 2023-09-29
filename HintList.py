@@ -566,7 +566,7 @@ hintTable: dict[str, tuple[list[str] | str, Optional[str], str | list[str]]] = {
     'ZF Bottom Freestanding PoH':                                  ("#under the icy waters# lies", "at the #bottom of Zora's Fountain# lies", ['overworld', 'sometimes']),
     'GC Pot Freestanding PoH':                                     ("spinning #Goron pottery# contains", "the #Goron Pot's happy face# spits out", ['overworld', 'sometimes']),
     'ZD King Zora Thawed':                                         ("a #defrosted dignitary# gifts", "unfreezing #King Zora# grants", ['overworld', 'sometimes']),
-    'DMC Deku Scrub':                                              ("a single #scrub in the crater# sells", "a single #scrub in Death Mountain Crater# sells", ['overworld', 'sometimes']),
+    'DMC Deku Scrub':                                              ("a single #scrub in the crater# sells", "a lone #scrub in Death Mountain Crater# sells", ['overworld', 'sometimes']),
     'DMC GS Crate':                                                ("a spider under a #crate in the crater# holds", None, ['overworld', 'sometimes']),
     'LW Target in Woods':                                          ("shooting a #target in the woods# grants", None, ['overworld', 'sometimes']),
     'ZR Frogs in the Rain':                                        ("#frogs in a storm# gift", "playing #Song of Storms to Frogs# rewards", ['overworld', 'sometimes']),
