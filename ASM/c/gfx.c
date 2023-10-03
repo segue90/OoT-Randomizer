@@ -105,6 +105,10 @@ sprite_t buttons_sprite = {
 
 
 int sprite_bytes_per_tile(sprite_t *sprite) {
+    if (sprite->im_siz == G_IM_SIZ_4b) {
+        // No idea why
+        return sprite->tile_w * sprite->tile_h * sprite->bytes_per_texel / 2;
+    }
     return sprite->tile_w * sprite->tile_h * sprite->bytes_per_texel;
 }
 
@@ -132,10 +136,10 @@ void sprite_texture(z64_disp_buf_t *db, sprite_t * sprite, int tile_index, int16
         int16_t width, int16_t height) {
     int width_factor = (1<<10) * sprite->tile_w / width;
     int height_factor = (1<<10) * sprite->tile_h / height;
-    gDPLoadTextureBlock(db->p++,
+    if (sprite->im_siz == G_IM_SIZ_4b) {
+        gDPLoadTextureBlock_4b(db->p++,
         ((uint8_t*)(sprite->buf)) + (tile_index * sprite_bytes_per_tile(sprite)),
         sprite->im_fmt,
-        sprite->im_siz,
         sprite->tile_w,
         sprite->tile_h,
         0,
@@ -145,7 +149,24 @@ void sprite_texture(z64_disp_buf_t *db, sprite_t * sprite, int tile_index, int16
         G_TX_NOMASK,
         G_TX_NOLOD,
         G_TX_NOLOD
-    );
+        );
+    }
+    else {
+        gDPLoadTextureBlock(db->p++,
+            ((uint8_t*)(sprite->buf)) + (tile_index * sprite_bytes_per_tile(sprite)),
+            sprite->im_fmt,
+            sprite->im_siz,
+            sprite->tile_w,
+            sprite->tile_h,
+            0,
+            G_TX_NOMIRROR | G_TX_WRAP,
+            G_TX_NOMIRROR | G_TX_WRAP,
+            G_TX_NOMASK,
+            G_TX_NOMASK,
+            G_TX_NOLOD,
+            G_TX_NOLOD
+        );
+    }
 
     gSPTextureRectangle(db->p++, left * 4, top * 4, (left + width) * 4, (top * height) * 4, G_TX_RENDERTILE, 0,0,width_factor, height_factor);
 }

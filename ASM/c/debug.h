@@ -53,6 +53,7 @@ typedef void(*usebutton_t)(z64_game_t *game, z64_link_t *link, uint8_t item, uin
 void debug_utilities(z64_disp_buf_t *db);
 void draw_debug_menu(z64_disp_buf_t *db);
 void draw_debug_numbers(z64_disp_buf_t *db);
+void draw_input_viewer(z64_disp_buf_t *db);
 int debug_menu_is_drawn();
 void draw_debug_int(int whichNumber, int numberToShow);
 void draw_debug_float(int whichNumber, float numberToShow);

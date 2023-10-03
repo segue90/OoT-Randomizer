@@ -129,6 +129,7 @@ void debug_utilities(z64_disp_buf_t *db)
 
     draw_debug_menu(db);
     draw_debug_numbers(db);
+    draw_input_viewer(db);
 }
 
 int debug_menu_is_drawn() {
@@ -481,12 +482,14 @@ void draw_debug_menu(z64_disp_buf_t *db) {
     }
 }
 
+
+
+
 void draw_a(z64_disp_buf_t *db) {
 
     if (z64_game.common.input[0].raw.pad.a) {
-        //text_print_size("A", Z64_SCREEN_WIDTH / 12 + 8*font_sprite.tile_w, 11 * Z64_SCREEN_HEIGHT / 12 , debug_text_width);
         gDPSetPrimColor(db->p++, 0, 0, 0x00, 0x00, 0xFF, 0xFF); // blue
-        sprite_draw(db, &buttons_sprite, 0, Z64_SCREEN_WIDTH / 12 + 3*buttons_sprite.tile_w,
+        sprite_texture(db, &buttons_sprite, 0, Z64_SCREEN_WIDTH / 12 + 8*rupee_digit_sprite.tile_w,
          11 * Z64_SCREEN_HEIGHT / 12, debug_text_width, debug_text_height);
     }
 }
@@ -494,9 +497,8 @@ void draw_a(z64_disp_buf_t *db) {
 void draw_b(z64_disp_buf_t *db) {
 
     if (z64_game.common.input[0].raw.pad.b) {
-       // text_print_size("B", Z64_SCREEN_WIDTH / 12 + 9*font_sprite.tile_w, 11 * Z64_SCREEN_HEIGHT / 12, debug_text_width);
-        gDPSetPrimColor(db->p++, 0, 0, 0xFF, 0x00, 0x00, 0xFF); // blue
-        sprite_draw(db, &buttons_sprite, 1, Z64_SCREEN_WIDTH / 12 + 4*buttons_sprite.tile_w,
+        gDPSetPrimColor(db->p++, 0, 0, 0xFF, 0x00, 0x00, 0xFF); // red
+        sprite_texture(db, &buttons_sprite, 1, Z64_SCREEN_WIDTH / 12 + 8*rupee_digit_sprite.tile_w + buttons_sprite.tile_w,
          11 * Z64_SCREEN_HEIGHT / 12, debug_text_width, debug_text_height);
     }
 }
@@ -514,7 +516,7 @@ void draw_cdown(z64_disp_buf_t *db) {
 
     if (z64_game.common.input[0].raw.pad.cd) {
         gDPSetPrimColor(db->p++, 0, 0, 0xF4, 0xEC, 0x30, 0xFF); // yellow
-        sprite_draw(db, &buttons_sprite, 7, Z64_SCREEN_WIDTH / 12 + 5*buttons_sprite.tile_w,
+        sprite_texture(db, &buttons_sprite, 7, Z64_SCREEN_WIDTH / 12 + 8*rupee_digit_sprite.tile_w + 2*buttons_sprite.tile_w,
          11 * Z64_SCREEN_HEIGHT / 12, debug_text_width, debug_text_height);
     }
 }
@@ -523,7 +525,7 @@ void draw_cup(z64_disp_buf_t *db) {
 
     if (z64_game.common.input[0].raw.pad.cu) {
         gDPSetPrimColor(db->p++, 0, 0, 0xF4, 0xEC, 0x30, 0xFF); // yellow
-        sprite_draw(db, &buttons_sprite, 6, Z64_SCREEN_WIDTH / 12 + 8*buttons_sprite.tile_w,
+        sprite_texture(db, &buttons_sprite, 6, Z64_SCREEN_WIDTH / 12 + 8*rupee_digit_sprite.tile_w + 5*buttons_sprite.tile_w,
          11 * Z64_SCREEN_HEIGHT / 12, debug_text_width, debug_text_height);
     }
 }
@@ -533,7 +535,7 @@ void draw_cleft(z64_disp_buf_t *db) {
 
     if (z64_game.common.input[0].raw.pad.cl) {
         gDPSetPrimColor(db->p++, 0, 0, 0xF4, 0xEC, 0x30, 0xFF); // yellow
-        sprite_draw(db, &buttons_sprite, 8, Z64_SCREEN_WIDTH / 12 + 7*buttons_sprite.tile_w,
+        sprite_texture(db, &buttons_sprite, 8, Z64_SCREEN_WIDTH / 12 + 8*rupee_digit_sprite.tile_w + 4*buttons_sprite.tile_w,
          11 * Z64_SCREEN_HEIGHT / 12, debug_text_width, debug_text_height);
     }
 }
@@ -542,7 +544,7 @@ void draw_cright(z64_disp_buf_t *db) {
 
     if (z64_game.common.input[0].raw.pad.cr) {
         gDPSetPrimColor(db->p++, 0, 0, 0xF4, 0xEC, 0x30, 0xFF); // yellow
-        sprite_draw(db, &buttons_sprite, 9, Z64_SCREEN_WIDTH / 12 + 6*buttons_sprite.tile_w,
+        sprite_texture(db, &buttons_sprite, 9, Z64_SCREEN_WIDTH / 12 + 8*rupee_digit_sprite.tile_w + 3*buttons_sprite.tile_w,
          11 * Z64_SCREEN_HEIGHT / 12, debug_text_width, debug_text_height);
     }
 }
@@ -551,7 +553,7 @@ void draw_z(z64_disp_buf_t *db) {
 
     if (z64_game.common.input[0].raw.pad.z) {
         gDPSetPrimColor(db->p++, 0, 0, 0xDC, 0xDC, 0xDC, 0xFF); // grey
-        sprite_draw(db, &buttons_sprite, 5, Z64_SCREEN_WIDTH / 12 + 9*buttons_sprite.tile_w,
+        sprite_texture(db, &buttons_sprite, 5, Z64_SCREEN_WIDTH / 12 + 8*rupee_digit_sprite.tile_w + 6*buttons_sprite.tile_w,
          11 * Z64_SCREEN_HEIGHT / 12, debug_text_width, debug_text_height);
     }
 }
@@ -560,7 +562,7 @@ void draw_l(z64_disp_buf_t *db) {
 
     if (z64_game.common.input[0].raw.pad.l) {
         gDPSetPrimColor(db->p++, 0, 0, 0xDC, 0xDC, 0xDC, 0xFF); // grey
-        sprite_draw(db, &buttons_sprite, 3, Z64_SCREEN_WIDTH / 12 + 10*buttons_sprite.tile_w,
+        sprite_texture(db, &buttons_sprite, 3, Z64_SCREEN_WIDTH / 12 + 8*rupee_digit_sprite.tile_w + 7*buttons_sprite.tile_w,
          11 * Z64_SCREEN_HEIGHT / 12, debug_text_width, debug_text_height);
     }
 }
@@ -569,7 +571,7 @@ void draw_r(z64_disp_buf_t *db) {
 
     if (z64_game.common.input[0].raw.pad.r) {
         gDPSetPrimColor(db->p++, 0, 0, 0xDC, 0xDC, 0xDC, 0xFF); // grey
-        sprite_draw(db, &buttons_sprite, 4, Z64_SCREEN_WIDTH / 12 + 11*buttons_sprite.tile_w,
+        sprite_texture(db, &buttons_sprite, 4, Z64_SCREEN_WIDTH / 12 + 8*rupee_digit_sprite.tile_w + 8*buttons_sprite.tile_w,
          11 * Z64_SCREEN_HEIGHT / 12, debug_text_width, debug_text_height);
     }
 }
@@ -578,7 +580,7 @@ void draw_ddown(z64_disp_buf_t *db) {
 
     if (z64_game.common.input[0].raw.pad.dd) {
         gDPSetPrimColor(db->p++, 0, 0, 0xDC, 0xDC, 0xDC, 0xFF); // yellow
-        sprite_draw(db, &buttons_sprite, 7, Z64_SCREEN_WIDTH / 12 + 12*buttons_sprite.tile_w,
+        sprite_texture(db, &buttons_sprite, 7, Z64_SCREEN_WIDTH / 12 + 8*rupee_digit_sprite.tile_w + 9*buttons_sprite.tile_w,
          11 * Z64_SCREEN_HEIGHT / 12, debug_text_width, debug_text_height);
     }
 }
@@ -587,7 +589,7 @@ void draw_dup(z64_disp_buf_t *db) {
 
     if (z64_game.common.input[0].raw.pad.du) {
         gDPSetPrimColor(db->p++, 0, 0, 0xDC, 0xDC, 0xDC, 0xFF); // yellow
-        sprite_draw(db, &buttons_sprite, 6, Z64_SCREEN_WIDTH / 12 + 15*buttons_sprite.tile_w,
+        sprite_texture(db, &buttons_sprite, 6, Z64_SCREEN_WIDTH / 12 + 8*rupee_digit_sprite.tile_w + 12*buttons_sprite.tile_w,
          11 * Z64_SCREEN_HEIGHT / 12, debug_text_width, debug_text_height);
     }
 }
@@ -597,7 +599,7 @@ void draw_dleft(z64_disp_buf_t *db) {
 
     if (z64_game.common.input[0].raw.pad.dl) {
         gDPSetPrimColor(db->p++, 0, 0, 0xDC, 0xDC, 0xDC, 0xFF); // yellow
-        sprite_draw(db, &buttons_sprite, 8, Z64_SCREEN_WIDTH / 12 + 14*buttons_sprite.tile_w,
+        sprite_texture(db, &buttons_sprite, 8, Z64_SCREEN_WIDTH / 12 + 8*rupee_digit_sprite.tile_w + 11*buttons_sprite.tile_w,
          11 * Z64_SCREEN_HEIGHT / 12, debug_text_width, debug_text_height);
     }
 }
@@ -606,7 +608,7 @@ void draw_dright(z64_disp_buf_t *db) {
 
     if (z64_game.common.input[0].raw.pad.dr) {
         gDPSetPrimColor(db->p++, 0, 0, 0xDC, 0xDC, 0xDC, 0xFF); // yellow
-        sprite_draw(db, &buttons_sprite, 9, Z64_SCREEN_WIDTH / 12 + 13*buttons_sprite.tile_w,
+        sprite_texture(db, &buttons_sprite, 9, Z64_SCREEN_WIDTH / 12 + 8*rupee_digit_sprite.tile_w + 10*buttons_sprite.tile_w,
          11 * Z64_SCREEN_HEIGHT / 12, debug_text_width, debug_text_height);
     }
 }
@@ -717,10 +719,10 @@ void draw_debug_numbers(z64_disp_buf_t *db) {
         draw_int_helper(db, decimalValue, debug_text_x_placement + numberDigit * rupee_digit_sprite.tile_w + font_sprite.tile_w,
                         height + offsetY, color);
     }
+}
 
-    // Input viewer
+void draw_input_viewer(z64_disp_buf_t *db) {
     if (show_input_viewer) {
-        sprite_load(db, &buttons_sprite, 0, 10);
         draw_a(db);
         draw_b(db);
         draw_cup(db);
@@ -741,5 +743,4 @@ void draw_debug_numbers(z64_disp_buf_t *db) {
         draw_x_stick(db);
         draw_y_stick(db);
     }
-
 }
