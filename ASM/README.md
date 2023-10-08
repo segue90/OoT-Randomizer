@@ -8,7 +8,7 @@ Advanced modifications to the Randomzier source require a bit more software than
 ### Running
 - Download the armips assembler: <https://github.com/Kingcom/armips>
   - [Windows automated builds](https://buildbot.orphis.net/armips/)
-  - On other platforms you'll need `cmake` and either `ninja` or `make` installed. All of these should be available in the package repositories of every major Linux distribution and Homebrew on macOS. After, follow the [building from source instructions](https://github.com/Kingcom/armips#22-building-from-source).
+  - On other platforms you'll need either `clang` or `gcc`, `cmake`, and either `ninja` or `make` installed. All of these should be available in the package repositories of every major Linux distribution and Homebrew on macOS. After, follow the [building from source instructions](https://github.com/Kingcom/armips#22-building-from-source).
 - Put the armips executable in the `tools` directory, or somewhere in your PATH.
 - Put the ROM you want to patch at `roms/base.z64`. This needs to be an uncompressed ROM; OoTRandomizer will produce one at ZOOTDEC.z64 when you run it with a compressed ROM.
 - Run `python build.py`, which will:
