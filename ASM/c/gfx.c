@@ -3,9 +3,9 @@
 #include "util.h"
 #include "z64.h"
 
-extern uint8_t FONT_TEXTURE[];
-extern uint8_t DPAD_TEXTURE[];
-extern uint8_t TRIFORCE_ICON_TEXTURE[];
+extern uint8_t FONT_RESOURCE[];
+extern uint8_t DPAD_RESOURCE[];
+extern uint8_t TRIFORCE_SPRITE_RESOURCE[];
 
 Gfx setup_db[] =
 {
@@ -187,8 +187,8 @@ void gfx_init() {
     medals_sprite.buf = title_static.buf + 0x2980;
     items_sprite.buf = icon_item_static.buf;
     quest_items_sprite.buf = icon_item_24_static.buf;
-    dpad_sprite.buf = DPAD_TEXTURE;
-    triforce_sprite.buf = TRIFORCE_ICON_TEXTURE;
+    dpad_sprite.buf = DPAD_RESOURCE;
+    triforce_sprite.buf = TRIFORCE_SPRITE_RESOURCE;
     song_note_sprite.buf = icon_item_static.buf + 0x00088040;
     key_rupee_clock_sprite.buf = parameter_static.buf + 0x00001E00;
     rupee_digit_sprite.buf = parameter_static.buf + 0x3040;
@@ -200,7 +200,7 @@ void gfx_init() {
     int font_bytes = sprite_bytes(&font_sprite);
     font_sprite.buf = heap_alloc(font_bytes);
     for (int i = 0; i < font_bytes / 2; i++) {
-        font_sprite.buf[2*i] = (FONT_TEXTURE[i] >> 4) | 0xF0;
-        font_sprite.buf[2*i + 1] = FONT_TEXTURE[i] | 0xF0;
+        font_sprite.buf[2*i] = (FONT_RESOURCE[i] >> 4) | 0xF0;
+        font_sprite.buf[2*i + 1] = FONT_RESOURCE[i] | 0xF0;
     }
 }
