@@ -1294,37 +1294,13 @@ nop
 ; Item menu
 ;==================================================================================================
 
-; Left movement check
+; Reimplement KaleidoScope_DrawItemSelect
 ; Replaces:
-;   beq     s4, t5, 0x8038F2B4
-;   nop
-.orga 0xBB77B4 ; In memory: 0x8038F134
-    nop
+;   something I'll get back to
+.orga 0xBB7670 ; In memory: ??
+    jal     KaleidoScope_DrawItemSelect
     nop
 
-; Right movement check
-; Replaces:
-;   beq     s4, t4, 0x8038F2B4
-;   nop
-.orga 0xBB7894 ; In memory: 0x8038F214
-    nop
-    nop
-
-; Upward movement check
-; Replaces:
-;   beq     s4, t4, 0x8038F598
-;   nop
-.orga 0xBB7BA0 ; In memory: 0x8038F520
-    nop
-    nop
-
-; Downward movement check
-; Replaces:
-;   beq     s4, t4, 0x8038F598
-;   nop
-.orga 0xBB7BFC ; In memory: 0x8038F57C
-    nop
-    nop
 
 ; Remove "to Equip" text if the cursor is on an empty slot
 ; Replaces:

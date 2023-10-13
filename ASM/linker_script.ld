@@ -1,0 +1,12 @@
+"gSfxDefaultPos" = 0x80104394;
+"gSfxDefaultFreqAndVolScale" = 0x801043A0;
+"gSfxDefaultReverb" = 0x801043A8;
+"KaleidoScope_DrawAmmoCount" = 0x80819670;
+"KaleidoScope_DrawCursor" = 0x8081F760;
+"KaleidoScope_DrawQuadTextureRGBA32" = 0x8081F1E8;
+"gItemIcons" = 0x800F8D2C;
+"KaleidoScope_QuadTextureIA8" = 0x8081EE60;
+"KaleidoScope_SetCursorVtx" = 0x80819BF4;
+"KaleidoScope_MoveCursorToSpecialPos" = 0x8081F184;
+"gSlotAgeReqs" = 0x80829D74;
+"gEquippedItemOutlineTex" = 0x2000E00;
