@@ -1297,8 +1297,8 @@ nop
 ; Reimplement KaleidoScope_DrawItemSelect
 ; Replaces:
 ;   something I'll get back to
-.orga 0xBB7670 ; In memory: ??
-    jal     KaleidoScope_DrawItemSelect
+.orga 0xBB7670 ; In memory: 0x8038EFF0
+    j     KaleidoScope_DrawItemSelect
     nop
 
 

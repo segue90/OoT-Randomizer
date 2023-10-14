@@ -1,13 +1,6 @@
 #include "audio.h"
+#include "gfx.h"
 #include "kaleido_item.h"
-
-uint8_t* gSlotAgeReqs;
-
-#define AGE_REQ_NONE 9
-#define CHECK_AGE_REQ_SLOT(slot) \
-    ((gSlotAgeReqs[slot] == AGE_REQ_NONE) || gSlotAgeReqs[slot] == ((void)0, z64_file.link_age))
-void* gItemIcons;
-void* gEquippedItemOutlineTex;
 
 void KaleidoScope_DrawItemSelect(z64_game_t* play) {
     static int16_t magicArrowEffectsR[] = { 255, 100, 255 };
@@ -26,76 +19,44 @@ void KaleidoScope_DrawItemSelect(z64_game_t* play) {
     int16_t oldCursorPoint;
     int16_t moveCursorResult;
 
-//    z64_disp_buf_t *db_opa = &(z64_ctxt.gfx->poly_opa);
-    z64_disp_buf_t *db_opa = &(play->common.gfx->poly_opa);
-    z64_disp_buf_t *db_ovl = &(play->common.gfx->overlay);
-    Gfx *orig_opa;
-    Gfx *orig_ovl;
-    {
-        (void) play->common.gfx;
-        orig_opa = db_opa->p;
-        orig_ovl = db_ovl->p;
-        db_opa->p++;
-        db_ovl->p++;
-    }// OPEN_DISPS(play->common.gfx, "../z_kaleido_item.c", 234);
+    OPEN_DISPS(play->common.gfx);
 
-    {
-        z64_disp_buf_t *db_opa_ = &(play->common.gfx->poly_opa);
-        (void) play->common.gfx;
-        Gfx *orig_opa_ = db_opa_->p;
-        db_opa_->p++;
+    gfx_setup_dl_42_opa(play->common.gfx);
 
-        gsDPPipeSync();
-        gsSPTexture(0xFFFF, 0xFFFF, 0, G_TX_RENDERTILE, G_ON);
-        gsDPSetCombineMode(G_CC_MODULATEIDECALA, G_CC_MODULATEIDECALA);
-        gsDPSetOtherMode(G_AD_NOTPATTERN | G_CD_MAGICSQ | G_CK_NONE | G_TC_FILT | G_TF_BILERP | G_TT_NONE | G_TL_TILE |
-                         G_TD_CLAMP | G_TP_PERSP | G_CYC_1CYCLE | G_PM_NPRIMITIVE,
-                         G_AC_NONE | G_ZS_PIXEL | G_RM_XLU_SURF | G_RM_XLU_SURF2);
-        gsSPLoadGeometryMode(G_SHADE | G_CULL_BACK | G_SHADING_SMOOTH);
-        gsSPEndDisplayList();
-
-        db_opa_->p = orig_opa_;
-    }// Gfx_SetupDL_42Opa(play->common.gfx);
-
-        gDPSetCombineMode(db_opa->p++, G_CC_MODULATEIA_PRIM, G_CC_MODULATEIA_PRIM);
+    gDPSetCombineMode(POLY_OPA_DISP++, G_CC_MODULATEIA_PRIM, G_CC_MODULATEIA_PRIM);
 
     pauseCtx->cursor_color_set = 0;
     pauseCtx->name_color_set = 0;
 
     if ((pauseCtx->state == PAUSE_STATE_MAIN) && (pauseCtx->changing == PAUSE_MAIN_STATE_IDLE) &&
         (pauseCtx->screen_idx == PAUSE_ITEM)) {
-        moveCursorResult = 0;
         oldCursorPoint = pauseCtx->cursor_point[PAUSE_ITEM];
-
         cursorItem = pauseCtx->cursor_item[PAUSE_ITEM];
         cursorSlot = pauseCtx->cursor_slot[PAUSE_ITEM];
+        moveCursorResult = 0;
 
         if (pauseCtx->cursor_special_pos == 0) {
             pauseCtx->cursor_color_set = 4;
 
-            if (ABS(pauseCtx->stick_movement_x) > 30) {
+            if (cursorItem == PAUSE_ITEM_NONE) {
+                pauseCtx->stick_movement_x = 40;
+            }
 
-                if (cursorItem == PAUSE_ITEM_NONE) {
-                    pauseCtx->stick_movement_x = 40;
-                }
+            if (ABS(pauseCtx->stick_movement_x) > 30) {
                 cursorPoint = pauseCtx->cursor_point[PAUSE_ITEM];
                 cursorX = pauseCtx->cursor_x[PAUSE_ITEM];
                 cursorY = pauseCtx->cursor_y[PAUSE_ITEM];
 
-                // Seems necessary to match
-                if (pauseCtx->cursor_x[PAUSE_ITEM]) {}
-                if (z64_file.items[pauseCtx->cursor_point[PAUSE_ITEM]]) {}
-
                 while (moveCursorResult == 0) {
                     if (pauseCtx->stick_movement_x < -30) {
+                        // Move left
                         if (pauseCtx->cursor_x[PAUSE_ITEM] != 0) {
                             pauseCtx->cursor_x[PAUSE_ITEM]--;
                             pauseCtx->cursor_point[PAUSE_ITEM] -= 1;
 
-                            // if (z64_file.items[pauseCtx->cursor_point[PAUSE_ITEM]] !=
-                            //     ITEM_NONE) {
-                            moveCursorResult = 1;
-                            // }
+                            if(z64_file.items[pauseCtx->cursor_point[PAUSE_ITEM]] != ITEM_NONE) {
+                                moveCursorResult = 1;
+                            }
                         } else {
                             pauseCtx->cursor_x[PAUSE_ITEM] = cursorX;
                             pauseCtx->cursor_y[PAUSE_ITEM]++;
@@ -114,10 +75,8 @@ void KaleidoScope_DrawItemSelect(z64_game_t* play) {
                             if (cursorY == pauseCtx->cursor_y[PAUSE_ITEM]) {
                                 pauseCtx->cursor_x[PAUSE_ITEM] = cursorX;
                                 pauseCtx->cursor_point[PAUSE_ITEM] = cursorPoint;
-
-                                KaleidoScope_MoveCursorToSpecialPos(play, PAUSE_CURSOR_PAGE_LEFT);
-
                                 moveCursorResult = 2;
+                                KaleidoScope_MoveCursorToSpecialPos(play, PAUSE_CURSOR_PAGE_LEFT);
                             }
                         }
                     } else if (pauseCtx->stick_movement_x > 30) {
@@ -125,10 +84,9 @@ void KaleidoScope_DrawItemSelect(z64_game_t* play) {
                             pauseCtx->cursor_x[PAUSE_ITEM]++;
                             pauseCtx->cursor_point[PAUSE_ITEM] += 1;
 
-                            // if (z64_file.items[pauseCtx->cursor_point[PAUSE_ITEM]] !=
-                            //     ITEM_NONE) {
-                            moveCursorResult = 1;
-                            // }
+                            if(z64_file.items[pauseCtx->cursor_point[PAUSE_ITEM]] != ITEM_NONE) {
+                                moveCursorResult = 1;
+                            }
                         } else {
                             pauseCtx->cursor_x[PAUSE_ITEM] = cursorX;
                             pauseCtx->cursor_y[PAUSE_ITEM]++;
@@ -157,11 +115,12 @@ void KaleidoScope_DrawItemSelect(z64_game_t* play) {
                 }
 
                 if (moveCursorResult == 1) {
-//                    cursorItem = gSaveContext.save.info.inventory.items[pauseCtx->cursor_point[PAUSE_ITEM]];
-                      cursorItem = z64_file.items[pauseCtx->cursor_point[PAUSE_ITEM]];
+                    // Selected slot changed, update item reference
+                    cursorItem = z64_file.items[pauseCtx->cursor_point[PAUSE_ITEM]];
                 }
             }
         } else if (pauseCtx->cursor_special_pos == PAUSE_CURSOR_PAGE_LEFT) {
+            // On Page Left special position going Right
             if (pauseCtx->stick_movement_x > 30) {
                 pauseCtx->name_display_timer = 0;
                 pauseCtx->cursor_special_pos = 0;
@@ -171,6 +130,7 @@ void KaleidoScope_DrawItemSelect(z64_game_t* play) {
 
                 cursorPoint = cursorX = cursorY = 0;
                 while (1) {
+                    // Tries to reset state, forgets to unset cursor_item
                     if (z64_file.items[cursorPoint] != ITEM_NONE) {
                         pauseCtx->cursor_point[PAUSE_ITEM] = cursorPoint;
                         pauseCtx->cursor_x[PAUSE_ITEM] = cursorX;
@@ -197,20 +157,18 @@ void KaleidoScope_DrawItemSelect(z64_game_t* play) {
                 }
             }
         } else {
+            // On Page Right special position going Left
             if (pauseCtx->stick_movement_x < -30) {
                 pauseCtx->name_display_timer = 0;
                 pauseCtx->cursor_special_pos = 0;
 
-                //FUN_800c806c(0x4809,0xffffffff80104394,4,0xffffffff801043a0,&DAT_801043a0,&DAT_801043a8)
-                //z64_Audio_PlaySoundGeneral(sfxId, (void *)0x80104394, 4, (float *)0x801043A0, (float *)0x801043A0, (uint8_t *)0x801043A8);
                 z64_Audio_PlaySoundGeneral(NA_SE_SY_CURSOR, &gSfxDefaultPos, 4, &gSfxDefaultFreqAndVolScale,
                                            &gSfxDefaultFreqAndVolScale, &gSfxDefaultReverb);
-//                Audio_PlaySfxGeneral(NA_SE_SY_CURSOR, &gSfxDefaultPos, 4, &gSfxDefaultFreqAndVolScale,
-//                                     &gSfxDefaultFreqAndVolScale, &gSfxDefaultReverb);
 
                 cursorPoint = cursorX = 5;
                 cursorY = 0;
                 while (1) {
+                    // Tries to reset state, forgets to unset cursor_item
                     if (z64_file.items[cursorPoint] != ITEM_NONE) {
                         pauseCtx->cursor_point[PAUSE_ITEM] = cursorPoint;
                         pauseCtx->cursor_x[PAUSE_ITEM] = cursorX;
@@ -232,7 +190,6 @@ void KaleidoScope_DrawItemSelect(z64_game_t* play) {
                         continue;
                     }
 
-                    //FUN_8081f184
                     KaleidoScope_MoveCursorToSpecialPos(play, PAUSE_CURSOR_PAGE_LEFT);
                     break;
                 }
@@ -242,20 +199,20 @@ void KaleidoScope_DrawItemSelect(z64_game_t* play) {
         if (pauseCtx->cursor_special_pos == 0) {
             if (cursorItem != PAUSE_ITEM_NONE) {
                 if (ABS(pauseCtx->stick_movement_y) > 30) {
-                    moveCursorResult = 0;
-
                     cursorPoint = pauseCtx->cursor_point[PAUSE_ITEM];
                     cursorY = pauseCtx->cursor_y[PAUSE_ITEM];
+                    moveCursorResult = 0;
+
                     while (moveCursorResult == 0) {
                         if (pauseCtx->stick_movement_y > 30) {
+                            // Moving up
                             if (pauseCtx->cursor_y[PAUSE_ITEM] != 0) {
                                 pauseCtx->cursor_y[PAUSE_ITEM]--;
                                 pauseCtx->cursor_point[PAUSE_ITEM] -= 6;
 
-                                // if (z64_file.items[pauseCtx->cursor_point[PAUSE_ITEM]] !=
-                                //     ITEM_NONE) {
-                                moveCursorResult = 1;
-                                // }
+                                if(z64_file.items[pauseCtx->cursor_point[PAUSE_ITEM]] != ITEM_NONE) {
+                                    moveCursorResult = 1;
+                                }
                             } else {
                                 pauseCtx->cursor_y[PAUSE_ITEM] = cursorY;
                                 pauseCtx->cursor_point[PAUSE_ITEM] = cursorPoint;
@@ -267,10 +224,9 @@ void KaleidoScope_DrawItemSelect(z64_game_t* play) {
                                 pauseCtx->cursor_y[PAUSE_ITEM]++;
                                 pauseCtx->cursor_point[PAUSE_ITEM] += 6;
 
-                                // if (z64_file.items[pauseCtx->cursor_point[PAUSE_ITEM]] !=
-                                //     ITEM_NONE) {
-                                moveCursorResult = 1;
-                                // }
+                                if(z64_file.items[pauseCtx->cursor_point[PAUSE_ITEM]] != ITEM_NONE) {
+                                    moveCursorResult = 1;
+                                }
                             } else {
                                 pauseCtx->cursor_y[PAUSE_ITEM] = cursorY;
                                 pauseCtx->cursor_point[PAUSE_ITEM] = cursorPoint;
@@ -279,8 +235,6 @@ void KaleidoScope_DrawItemSelect(z64_game_t* play) {
                             }
                         }
                     }
-
-                    cursorPoint = PAUSE_ITEM;
                 }
             }
 
@@ -288,9 +242,7 @@ void KaleidoScope_DrawItemSelect(z64_game_t* play) {
 
             pauseCtx->cursor_color_set = 4;
 
-            if (moveCursorResult != 2) {
-                cursorItem = z64_file.items[pauseCtx->cursor_point[PAUSE_ITEM]];
-            }
+            cursorItem = z64_file.items[pauseCtx->cursor_point[PAUSE_ITEM]];
 
             pauseCtx->cursor_item[PAUSE_ITEM] = cursorItem;
             pauseCtx->cursor_slot[PAUSE_ITEM] = cursorSlot;
@@ -300,15 +252,13 @@ void KaleidoScope_DrawItemSelect(z64_game_t* play) {
             }
 
             if (cursorItem != PAUSE_ITEM_NONE) {
-                index = cursorSlot * 4; // required to match?
-                //FUN_80819bf4
+                index = cursorSlot * 4;
                 KaleidoScope_SetCursorVtx(pauseCtx, index, pauseCtx->item_vtx);
 
-                if ((pauseCtx->state == PAUSE_STATE_MAIN) &&
+                if ((pauseCtx->debugState == 0) && (pauseCtx->state == PAUSE_STATE_MAIN) &&
                     (pauseCtx->changing == PAUSE_MAIN_STATE_IDLE)) {
                     if (input->pad_pressed.cl || input->pad_pressed.cd || input->pad_pressed.cr) {
-//                    if (CHECK_BTN_ANY(input->press.button, BTN_CLEFT | BTN_CDOWN | BTN_CRIGHT)) {
-                        if (CHECK_AGE_REQ_SLOT(cursorSlot) && (cursorItem != ITEM_SOLD_OUT) && (cursorItem != ITEM_NONE)) {
+                        if (CHECK_AGE_REQ_SLOT(cursorSlot) && (cursorItem != ITEM_SOLD_OUT)) {
                             if (input->pad_pressed.cl) {
                                 pauseCtx->equip_target_c_btn = 0;
                             } else if (input->pad_pressed.cd) {
@@ -369,37 +319,38 @@ void KaleidoScope_DrawItemSelect(z64_game_t* play) {
                                  &gSfxDefaultFreqAndVolScale, &gSfxDefaultReverb);
         }
     } else if ((pauseCtx->changing == PAUSE_MAIN_STATE_3) && (pauseCtx->screen_idx == PAUSE_ITEM)) {
-        //FUN_80819bf4
         KaleidoScope_SetCursorVtx(pauseCtx, cursorSlot * 4, pauseCtx->item_vtx);
         pauseCtx->cursor_color_set = 4;
     }
 
-    gDPSetCombineLERP(db_ovl->p++, PRIMITIVE, ENVIRONMENT, TEXEL0, ENVIRONMENT, TEXEL0, 0, PRIMITIVE, 0, PRIMITIVE,
-                      ENVIRONMENT, TEXEL0, ENVIRONMENT, TEXEL0, 0, PRIMITIVE, 0);
-    gDPSetPrimColor(db_opa->p++, 0, 0, 255, 255, 255, pauseCtx->alpha);
-    gDPSetEnvColor(db_opa->p++, 0, 0, 0, 0);
 
+    gDPSetCombineLERP(OVERLAY_DISP++, PRIMITIVE, ENVIRONMENT, TEXEL0, ENVIRONMENT, TEXEL0, 0, PRIMITIVE, 0, PRIMITIVE,
+                      ENVIRONMENT, TEXEL0, ENVIRONMENT, TEXEL0, 0, PRIMITIVE, 0);
+    gDPSetPrimColor(POLY_OPA_DISP++, 0, 0, 255, 255, 255, pauseCtx->alpha);
+    gDPSetEnvColor(POLY_OPA_DISP++, 0, 0, 0, 0);
+
+    // Draw outline around equipped items
     for (i = 0, j = 24 * 4; i < 3; i++, j += 4) {
         if (z64_file.button_items[i + 1] != ITEM_NONE) {
-//        if (gSaveContext.save.info.equips.buttonItems[i + 1] != ITEM_NONE) {
-            gSPVertex(db_opa->p++, &pauseCtx->item_vtx[j], 4, 0);
-            //FUN_8081EE60 -- gEquippedItemOutlineTex = 0x2000e00 Not pointer in ghidra??
-            db_opa->p = KaleidoScope_QuadTextureIA8(db_opa->p, gEquippedItemOutlineTex, 32, 32, 0);
+            gSPVertex(POLY_OPA_DISP++ , &pauseCtx->item_vtx[j], 4, 0);
+            POLY_OPA_DISP = KaleidoScope_QuadTextureIA8(POLY_OPA_DISP, gEquippedItemOutlineTex, 32, 32, 0);
         }
     }
 
-    gDPPipeSync(db_opa->p++);
-    gDPSetCombineMode(db_opa->p++, G_CC_MODULATEIA_PRIM, G_CC_MODULATEIA_PRIM);
+    gDPPipeSync(POLY_OPA_DISP++);
+    gDPSetCombineMode(POLY_OPA_DISP++, G_CC_MODULATEIA_PRIM, G_CC_MODULATEIA_PRIM);
 
+    // Draw the item icons in the menu
     for (i = j = 0; i < 24; i++, j += 4) {
-        gDPSetPrimColor(db_opa->p++, 0, 0, 255, 255, 255, pauseCtx->alpha);
+        gDPSetPrimColor(POLY_OPA_DISP++, 0, 0, 255, 255, 255, pauseCtx->alpha);
 
-        if (z64_file.items[i] != ITEM_NONE) {
+        if (z64_file.items[i] != ITEM_NONE) { // Only if you've obtained it
             if ((pauseCtx->changing == PAUSE_MAIN_STATE_IDLE) && (pauseCtx->screen_idx == PAUSE_ITEM) &&
-                (pauseCtx->cursor_special_pos == 0)) {
-                if (CHECK_AGE_REQ_SLOT(i)) {
-                    if ((sEquipState == 2) && (i == 3)) {
-                        gDPSetPrimColor(db_opa->p++, 0, 0, magicArrowEffectsR[pauseCtx->equip_target_item - 0xBF],
+                (pauseCtx->cursor_special_pos == 0)) { // Cursor is over an item
+                if (CHECK_AGE_REQ_SLOT(i)) { // Item can be equipped as current age
+                    if ((sEquipState == 2) && (i == 3)) { // Currently equipping a bow item?
+                        // This doesn't seem to do anything?
+                        gDPSetPrimColor(POLY_OPA_DISP++, 0, 0, magicArrowEffectsR[pauseCtx->equip_target_item - 0xBF],
                                         magicArrowEffectsG[pauseCtx->equip_target_item - 0xBF],
                                         magicArrowEffectsB[pauseCtx->equip_target_item - 0xBF], pauseCtx->alpha);
 
@@ -414,7 +365,7 @@ void KaleidoScope_DrawItemSelect(z64_game_t* play) {
 
                         pauseCtx->item_vtx[j + 2].v.ob[1] = pauseCtx->item_vtx[j + 3].v.ob[1] =
                                 pauseCtx->item_vtx[j + 0].v.ob[1] - 32;
-                    } else if (i == cursorSlot) {
+                    } else if (i == cursorSlot) { // Draw the item the cursor is over slightly larger
                         pauseCtx->item_vtx[j + 0].v.ob[0] = pauseCtx->item_vtx[j + 2].v.ob[0] =
                                 pauseCtx->item_vtx[j + 0].v.ob[0] - 2;
 
@@ -430,32 +381,27 @@ void KaleidoScope_DrawItemSelect(z64_game_t* play) {
                 }
             }
 
-            gSPVertex(db_opa->p++, &pauseCtx->item_vtx[j + 0], 4, 0);
-            //FUN_8081f1e8
+            gSPVertex(POLY_OPA_DISP++, &pauseCtx->item_vtx[j + 0], 4, 0);
             KaleidoScope_DrawQuadTextureRGBA32(play->common.gfx,
-                                               &gItemIcons[z64_file.items[i]], ITEM_ICON_WIDTH,
+                                               gItemIcons[z64_file.items[i]], ITEM_ICON_WIDTH,
                                                ITEM_ICON_HEIGHT, 0);
         }
     }
 
     if (pauseCtx->cursor_special_pos == 0) {
-        //FUN_8081f760
         KaleidoScope_DrawCursor(play, PAUSE_ITEM);
     }
 
-    gDPPipeSync(db_opa->p++);
-    gDPSetCombineLERP(db_opa->p++, PRIMITIVE, ENVIRONMENT, TEXEL0, ENVIRONMENT, TEXEL0, 0, PRIMITIVE, 0, PRIMITIVE,
+    gDPPipeSync(POLY_OPA_DISP++);
+    gDPSetCombineLERP(POLY_OPA_DISP++, PRIMITIVE, ENVIRONMENT, TEXEL0, ENVIRONMENT, TEXEL0, 0, PRIMITIVE, 0, PRIMITIVE,
                       ENVIRONMENT, TEXEL0, ENVIRONMENT, TEXEL0, 0, PRIMITIVE, 0);
 
+    // Draw the current ammo amounts
     for (i = 0; i < 15; i++) {
         if ((gAmmoItems[i] != ITEM_NONE) && (z64_file.items[i] != ITEM_NONE)) {
-            //FUN_80819670
             KaleidoScope_DrawAmmoCount(pauseCtx, play->common.gfx, z64_file.items[i]);
         }
     }
 
-    {
-        db_opa->p = orig_opa;
-        db_ovl->p = orig_ovl;
-    } //CLOSE_DISPS(play->common.gfx, "../z_kaleido_item.c", 516);
+    CLOSE_DISPS(play->common.gfx);
 }

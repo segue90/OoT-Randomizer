@@ -1150,13 +1150,15 @@ typedef struct
     Vtx              *save_vtx;
     char              unk_01_3[0x64];
     uint16_t          state;                    /* 0x01D4 */
-    char              unk_02_[0x000E];          /* 0x01D6 */
+    uint16_t          debugState;               /* 0x01D6 */
+    char              unk_02_[0x000C];          /* 0x01D8 */
     uint16_t          changing;                 /* 0x01E4 */
     uint16_t          screen_prev_idx;          /* 0x01E6 */
     uint16_t          screen_idx;               /* 0x01E8 */
-    char              unk_03_[0x001C];
-    uint16_t          alpha;
-    int16_t           offset_y;
+    char              unk_03_[0x001E];          /* 0x01EA */
+    uint16_t          alpha;                    /* 0x0208 */
+    int16_t           offset_y;                 /* 0x020A */
+    char              unk_04_[0x0008];          /* 0x020C */
     int16_t           stick_movement_x;         /* 0x0214 */
     int16_t           stick_movement_y;         /* 0x0216 */
     int16_t           cursor_point[5];          /* 0x0218 */
@@ -1879,6 +1881,9 @@ typedef enum {
 #define LINK_IS_ADULT (z64_file.link_age == 0)
 #define SLOT(item) gItemSlots[item]
 #define INV_CONTENT(item) z64_file.items[SLOT(item)]
+#define ABS(x) ((x) >= 0 ? (x) : -(x))
+#define CHECK_BTN_ALL(state, combo) (~((state) | ~(combo)) == 0)
+#define CHECK_BTN_ANY(state, combo) (((state) & (combo)) != 0)
 
 /* dram addresses */
 #define z64_EnItem00Action_addr                 0x800127E0

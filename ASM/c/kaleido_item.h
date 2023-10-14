@@ -6,10 +6,9 @@
 
 #define PAUSE_ITEM_NONE 999
 
+#define PAUSE_CURSOR_TRANSITIONING_FROM_PAGE 9
 #define PAUSE_CURSOR_PAGE_LEFT 10
 #define PAUSE_CURSOR_PAGE_RIGHT 11
-
-#define ABS(x) ((x) >= 0 ? (x) : -(x))
 
 typedef enum {
     /*  0 */ PAUSE_STATE_OFF,
@@ -48,22 +47,20 @@ typedef enum {
     /* 9 */ PAUSE_MAIN_STATE_9
 } PauseMainState;
 
-uint8_t gAmmoItems[] = {
-        ITEM_STICK, ITEM_NUT, ITEM_BOMB, ITEM_BOW,  ITEM_NONE, ITEM_NONE, ITEM_SLINGSHOT,  ITEM_NONE,
-        ITEM_BOMBCHU,    ITEM_NONE,     ITEM_NONE, ITEM_NONE, ITEM_NONE, ITEM_NONE, ITEM_BEAN, ITEM_NONE,
-};
+extern uint8_t gAmmoItems[16];
+extern uint8_t gSlotAgeReqs[24];
+extern void* gItemIcons[130];
+extern void* gEquippedItemOutlineTex[0x400];
 
-static int16_t sEquipState = 0;
-static int16_t sEquipAnimTimer = 0;
-static int16_t sEquipMoveTimer = 10;
-
-
-void KaleidoScope_DrawAmmoCount(z64_pause_ctxt_t* pause_ctxt, z64_gfx_t* gfx_ctxt, int16_t item);
-void KaleidoScope_DrawCursor(z64_game_t* play, int16_t page_index);
-void KaleidoScope_DrawQuadTextureRGBA32(z64_gfx_t* gfx_ctxt, void* texture, int16_t width, int16_t height, uint16_t point);
-Gfx* KaleidoScope_QuadTextureIA8(Gfx* gfx_ctx, void* texture, int16_t width, int16_t height, uint16_t point);
-void KaleidoScope_SetCursorVtx(z64_pause_ctxt_t* pause_ctxt, uint16_t index, Vtx* vtx);
-void KaleidoScope_MoveCursorToSpecialPos(z64_game_t* play, uint16_t special_position);
+/* Reimplemented */
 void KaleidoScope_DrawItemSelect(z64_game_t* play);
+
+/* Referenced */
+void KaleidoScope_DrawAmmoCount(z64_pause_ctxt_t* pause_ctxt, z64_gfx_t* gfx_ctxt, int16_t item);
+void KaleidoScope_SetCursorVtx(z64_pause_ctxt_t* pause_ctxt, uint16_t index, Vtx* vtx);
+Gfx* KaleidoScope_QuadTextureIA8(Gfx* gfx_ctx, void* texture, int16_t width, int16_t height, uint16_t point);
+void KaleidoScope_MoveCursorToSpecialPos(z64_game_t* play, uint16_t special_position);
+void KaleidoScope_DrawQuadTextureRGBA32(z64_gfx_t* gfx_ctxt, void* texture, uint16_t width, uint16_t height, uint16_t point);
+void KaleidoScope_DrawCursor(z64_game_t* play, int16_t page_index);
 
 #endif //KALEIDO_ITEM_H
