@@ -259,6 +259,7 @@ void KaleidoScope_DrawItemSelect(z64_game_t* play) {
 
             pauseCtx->cursor_color_set = 4;
 
+            // Update the item the cursor is pointing to if you have made a valid menu move. If you have not enjoy quick swap
             if (moveCursorResult == 1) {
                 cursorItem = z64_file.items[pauseCtx->cursor_point[PAUSE_ITEM]];
             } else if (moveCursorResult != 2) {
@@ -281,7 +282,8 @@ void KaleidoScope_DrawItemSelect(z64_game_t* play) {
                 if ((pauseCtx->debugState == 0) && (pauseCtx->state == PAUSE_STATE_MAIN) &&
                     (pauseCtx->changing == PAUSE_MAIN_STATE_IDLE)) {
                     if (input->pad_pressed.cl || input->pad_pressed.cd || input->pad_pressed.cr) {
-                        if (CHECK_AGE_REQ_SLOT(cursorSlot) && (cursorItem != ITEM_SOLD_OUT)) {
+                        if (CHECK_AGE_REQ_SLOT(cursorSlot) && (cursorItem != ITEM_SOLD_OUT)
+                                && cursorItem != ITEM_NONE) {
                             if (input->pad_pressed.cl) {
                                 pauseCtx->equip_target_c_btn = 0;
                             } else if (input->pad_pressed.cd) {
