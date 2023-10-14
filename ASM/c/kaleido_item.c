@@ -58,9 +58,8 @@ void KaleidoScope_DrawItemSelect(z64_game_t* play) {
                             pauseCtx->cursor_x[PAUSE_ITEM]--;
                             pauseCtx->cursor_point[PAUSE_ITEM] -= 1;
 
-                            if(z64_file.items[pauseCtx->cursor_point[PAUSE_ITEM]] != ITEM_NONE) {
-                                moveCursorResult = 1;
-                            }
+                            // Randomizer needs X navigation to be unlimited to avoid impossible menu configurations
+                            moveCursorResult = 1;
                         } else {
                             pauseCtx->cursor_x[PAUSE_ITEM] = cursorX;
                             pauseCtx->cursor_y[PAUSE_ITEM]++;
@@ -93,9 +92,8 @@ void KaleidoScope_DrawItemSelect(z64_game_t* play) {
                             pauseCtx->cursor_x[PAUSE_ITEM]++;
                             pauseCtx->cursor_point[PAUSE_ITEM] += 1;
 
-                            if(z64_file.items[pauseCtx->cursor_point[PAUSE_ITEM]] != ITEM_NONE) {
-                                moveCursorResult = 1;
-                            }
+                            // Randomizer needs X navigation to be unlimited to avoid impossible menu configurations
+                            moveCursorResult = 1;
                         } else {
                             pauseCtx->cursor_x[PAUSE_ITEM] = cursorX;
                             pauseCtx->cursor_y[PAUSE_ITEM]++;
