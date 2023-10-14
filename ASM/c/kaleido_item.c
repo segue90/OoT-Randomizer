@@ -270,7 +270,11 @@ void KaleidoScope_DrawItemSelect(z64_game_t* play) {
             pauseCtx->cursor_slot[PAUSE_ITEM] = cursorSlot;
 
             // Darken the name of the item if current age can't equip it
-            if (!CHECK_AGE_REQ_SLOT(cursorSlot)) {
+            // Randomizer also checks to see if the item under the cursor has been obtained. Setting name color to 1 is
+            // a quick hack to prevent the name texture from switching to the equip textures, and an item you haven't
+            // obtained yet doesn't display any name at all so the info display stays blank. Essentially a port of wulfy83's
+            // ASM hack that did this same thing to the original kaleido_item.
+            if (!CHECK_AGE_REQ_SLOT(cursorSlot) || cursorItem == ITEM_NONE) {
                 pauseCtx->name_color_set = 1;
             }
 

@@ -1301,23 +1301,6 @@ nop
     j     KaleidoScope_DrawItemSelect
     nop
 
-
-; Remove "to Equip" text if the cursor is on an empty slot
-; Replaces:
-;   addu    s1, t6, t7
-;   lbu     v0, 0x0000 (s1)
-.orga 0xBB7C88 ; In memory: 0x8038F608
-    jal     item_menu_prevent_empty_equip
-    addu    s1, t6, t7
-
-; Prevent empty slots from being equipped
-; Replaces:
-;   lbu     v0, 0x0000 (s1)
-;   addiu   at, r0, 0x0009
-.orga 0xBB7D10 ; In memory: 0x8038F690
-    jal     item_menu_prevent_empty_equip
-    nop
-
 ;==================================================================================================
 ; Song Fixes
 ;==================================================================================================
