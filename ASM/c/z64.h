@@ -1137,18 +1137,18 @@ typedef struct
     void             *name_texture;             /* 0x0138 */
     void             *player_segment;           /* 0x013C */
     char              unk_01_[0x0004];          /* 0x0140 */
-    Vtx              *item_page_vtx;
-    Vtx              *equip_page_vtx;
-    Vtx              *map_page_vtx;
-    Vtx              *quest_page_vtx;
-    Vtx              *info_panel_vtx;
-    Vtx              *item_vtx;
-    Vtx              *equip_vtx;
-    char              unk_01_2[0x04];
-    Vtx              *quest_vtx;
-    Vtx              *cursor_vtx;
-    Vtx              *save_vtx;
-    char              unk_01_3[0x64];
+    Vtx              *item_page_vtx;            /* 0x0144 */
+    Vtx              *equip_page_vtx;           /* 0x0148 */
+    Vtx              *map_page_vtx;             /* 0x014C */
+    Vtx              *quest_page_vtx;           /* 0x0150 */
+    Vtx              *info_panel_vtx;           /* 0x0154 */
+    Vtx              *item_vtx;                 /* 0x0158 */
+    Vtx              *equip_vtx;                /* 0x015C */
+    char              unk_01_2[0x04];           /* 0x0160 */
+    Vtx              *quest_vtx;                /* 0x0164 */
+    Vtx              *cursor_vtx;               /* 0x0168 */
+    Vtx              *save_vtx;                 /* 0x016C */
+    char              unk_01_3[0x64];           /* 0x0170 */
     uint16_t          state;                    /* 0x01D4 */
     uint16_t          debugState;               /* 0x01D6 */
     char              unk_02_[0x000C];          /* 0x01D8 */
@@ -1882,8 +1882,6 @@ typedef enum {
 #define SLOT(item) gItemSlots[item]
 #define INV_CONTENT(item) z64_file.items[SLOT(item)]
 #define ABS(x) ((x) >= 0 ? (x) : -(x))
-#define CHECK_BTN_ALL(state, combo) (~((state) | ~(combo)) == 0)
-#define CHECK_BTN_ANY(state, combo) (((state) & (combo)) != 0)
 
 /* dram addresses */
 #define z64_EnItem00Action_addr                 0x800127E0

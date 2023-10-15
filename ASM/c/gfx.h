@@ -5,6 +5,7 @@
 
 extern Gfx setup_db[];
 extern Gfx empty_dlist[];
+extern void* z64_ItemIcons[130];
 
 #define WORK_DISP __gfxCtx->work.p
 #define POLY_OPA_DISP __gfxCtx->poly_opa.p
@@ -59,6 +60,6 @@ void sprite_draw(z64_disp_buf_t *db, sprite_t *sprite, int tile_index,
 void sprite_texture(z64_disp_buf_t *db, sprite_t * sprite, int tile_index,
         int16_t left, int16_t top, int16_t width, int16_t height);
 
-void gfx_setup_dl_42_opa(z64_gfx_t* gfx_ctxt);
+void z64_Gfx_SetupDL_42Opa(z64_gfx_t* gfx_ctxt);
 
 #endif

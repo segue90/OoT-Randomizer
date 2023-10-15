@@ -47,10 +47,8 @@ typedef enum {
     /* 9 */ PAUSE_MAIN_STATE_9
 } PauseMainState;
 
-extern uint8_t gAmmoItems[16];
-extern uint8_t gSlotAgeReqs[24];
-extern void* gItemIcons[130];
-extern void* gEquippedItemOutlineTex[0x400];
+extern uint8_t z64_AmmoItems[16];
+extern void* z64_EquippedItemOutlineTex[0x400];
 
 /* Reimplemented */
 void KaleidoScope_DrawItemSelect(z64_game_t* play);
