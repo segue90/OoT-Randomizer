@@ -9,10 +9,12 @@ CPPFLAGS = -DF3DEX_GBI_2
 OUTDIR := build
 OBJDIR := build/bin
 SRCDIR := c
+LINKDIR := link_scripts
 vpath %.c c
 vpath %.h c
 
 OBJECTS = $(patsubst $(SRCDIR)/%.c,$(OBJDIR)/%.o,$(sort $(wildcard $(SRCDIR)/*.c)))
+LINKSCRIPTS = $(wildcard $(LINKDIR)/*.ld)
 
 .PHONY: all clean bundle symbols
 
@@ -31,7 +33,7 @@ $(OBJDIR):
 $(OBJECTS): | $(OBJDIR)
 
 bundle: $(OBJECTS)
-	$(LD) -T ootSymbols.ld -o $(OUTDIR)/bundle.o -i -L. $(patsubst %.o,-l:%.o,$(OBJECTS))
+	$(LD) $(addprefix -T ,$(LINKSCRIPTS)) -o $(OUTDIR)/bundle.o -i -L. $(patsubst %.o,-l:%.o,$(OBJECTS))
 
 symbols: bundle
 	$(OBJDUMP) -t $(OUTDIR)/bundle.o | tr -d '\015' > $(OUTDIR)/c_symbols.txt

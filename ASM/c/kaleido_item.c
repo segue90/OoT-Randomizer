@@ -25,8 +25,8 @@ void KaleidoScope_DrawItemSelect(z64_game_t* play) {
 
     gDPSetCombineMode(POLY_OPA_DISP++, G_CC_MODULATEIA_PRIM, G_CC_MODULATEIA_PRIM);
 
-        pause_ctxt->cursor_color_set = 0;
-        pause_ctxt->name_color_set = 0;
+    pause_ctxt->cursor_color_set = 0;
+    pause_ctxt->name_color_set = 0;
 
     if ((pause_ctxt->state == PAUSE_STATE_MAIN) && (pause_ctxt->changing == PAUSE_MAIN_STATE_IDLE) &&
         (pause_ctxt->screen_idx == PAUSE_ITEM)) {
@@ -361,7 +361,7 @@ void KaleidoScope_DrawItemSelect(z64_game_t* play) {
     // Draw outline around equipped items
     for (i = 0, j = 24 * 4; i < 3; i++, j += 4) {
         if (z64_file.button_items[i + 1] != ITEM_NONE) {
-            gSPVertex(POLY_OPA_DISP++ , &pause_ctxt->item_vtx[j], 4, 0);
+            gSPVertex(POLY_OPA_DISP++, &pause_ctxt->item_vtx[j], 4, 0);
             POLY_OPA_DISP = KaleidoScope_QuadTextureIA8(POLY_OPA_DISP, z64_EquippedItemOutlineTex, 32, 32, 0);
         }
     }
