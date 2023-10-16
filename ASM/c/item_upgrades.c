@@ -36,7 +36,7 @@ uint16_t no_upgrade(z64_file_t *save, override_t override) {
 
 uint16_t hookshot_upgrade(z64_file_t *save, override_t override) {
     switch ((override.value.base.player == PLAYER_ID || !MW_PROGRESSIVE_ITEMS_ENABLE) ? save->items[Z64_SLOT_HOOKSHOT] : MW_PROGRESSIVE_ITEMS_STATE[override.value.base.player].hookshot) {
-        case -1: case 0: return 0x08; // Hookshot
+        case ITEM_NONE: case 0: return 0x08; // Hookshot
         default: return 0x09; // Longshot
     }
 }
@@ -123,7 +123,7 @@ uint16_t bombchu_upgrade(z64_file_t *save, override_t override) {
 
 uint16_t ocarina_upgrade(z64_file_t *save, override_t override) {
     switch ((override.value.base.player == PLAYER_ID || !MW_PROGRESSIVE_ITEMS_ENABLE) ? save->items[Z64_SLOT_OCARINA] : MW_PROGRESSIVE_ITEMS_STATE[override.value.base.player].ocarina) {
-        case -1: case 0: return 0x3B; // Fairy Ocarina
+        case ITEM_NONE: case 0: return 0x3B; // Fairy Ocarina
         default: return 0x0C; // Ocarina of Time
     }
 }

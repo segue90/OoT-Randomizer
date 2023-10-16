@@ -377,24 +377,9 @@ void KaleidoScope_DrawItemSelect(z64_game_t* play) {
             if ((pause_ctxt->changing == PAUSE_MAIN_STATE_IDLE) && (pause_ctxt->screen_idx == PAUSE_ITEM) &&
                 (pause_ctxt->cursor_special_pos == 0)) { // Cursor is over an item
                 if (CHECK_AGE_REQ_SLOT(i)) { // Item can be equipped as current age
-                    if ((z64_sEquipState == 2) && (i == 3)) { // Currently equipping a bow item?
-                        // This doesn't seem to do anything?
-                        gDPSetPrimColor(POLY_OPA_DISP++, 0, 0, magic_arrow_effects_r[pause_ctxt->equip_target_item - 0xBF],
-                                        magic_arrow_effects_g[pause_ctxt->equip_target_item - 0xBF],
-                                        magic_arrow_effects_b[pause_ctxt->equip_target_item - 0xBF], pause_ctxt->alpha);
-
-                        pause_ctxt->item_vtx[j + 0].v.ob[0] = pause_ctxt->item_vtx[j + 2].v.ob[0] =
-                                pause_ctxt->item_vtx[j + 0].v.ob[0] - 2;
-
-                        pause_ctxt->item_vtx[j + 1].v.ob[0] = pause_ctxt->item_vtx[j + 3].v.ob[0] =
-                                pause_ctxt->item_vtx[j + 0].v.ob[0] + 32;
-
-                        pause_ctxt->item_vtx[j + 0].v.ob[1] = pause_ctxt->item_vtx[j + 1].v.ob[1] =
-                                pause_ctxt->item_vtx[j + 0].v.ob[1] + 2;
-
-                        pause_ctxt->item_vtx[j + 2].v.ob[1] = pause_ctxt->item_vtx[j + 3].v.ob[1] =
-                                pause_ctxt->item_vtx[j + 0].v.ob[1] - 32;
-                    } else if (i == cursor_slot) { // Draw the item the cursor is over slightly larger
+                    // In vanilla there is code here that is supposed to tint the bow icon when equipping magic arrows
+                    // however it either doesn't work, or is only visible for a frame so has been removed from here.
+                    if (i == cursor_slot) { // Draw the item the cursor is over slightly larger
                         pause_ctxt->item_vtx[j + 0].v.ob[0] = pause_ctxt->item_vtx[j + 2].v.ob[0] =
                                 pause_ctxt->item_vtx[j + 0].v.ob[0] - 2;
 
