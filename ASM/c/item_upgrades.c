@@ -112,7 +112,7 @@ uint16_t magic_upgrade(z64_file_t *save, override_t override) {
 }
 
 uint16_t bombchu_upgrade(z64_file_t *save, override_t override) {
-    if (save->items[Z64_SLOT_BOMBCHU] == -1) {
+    if (save->items[Z64_SLOT_BOMBCHU] == ITEM_NONE) {
         return 0x6B; // Bombchu 20 pack
     }
     if (save->ammo[8] <= 5) {
@@ -163,7 +163,7 @@ uint16_t health_upgrade_cap(z64_file_t *save, override_t override) {
 }
 
 uint16_t bombchus_to_bag(z64_file_t *save, override_t override) {
-    if (FREE_BOMBCHU_DROPS && ((override.value.base.player == PLAYER_ID || !MW_PROGRESSIVE_ITEMS_ENABLE) ? save->items[Z64_SLOT_BOMBCHU] == -1 : !MW_PROGRESSIVE_ITEMS_STATE[override.value.base.player].chu_bag)) {
+    if (FREE_BOMBCHU_DROPS && ((override.value.base.player == PLAYER_ID || !MW_PROGRESSIVE_ITEMS_ENABLE) ? save->items[Z64_SLOT_BOMBCHU] == ITEM_NONE : !MW_PROGRESSIVE_ITEMS_STATE[override.value.base.player].chu_bag)) {
         // First chu pack found, convert to bombchu bag to
         // tell player about chu drops. Different bags
         // to preserve original chu refill count.
