@@ -1029,7 +1029,7 @@
         "key_appearance_match_dungeon": true,
         "clearer_hints": true,
         "hints": "always",
-        "hint_dist": "mw4",
+        "hint_dist": "mw_path",
         "item_hints": [],
         "hint_dist_user": {},
         "misc_hints": [
