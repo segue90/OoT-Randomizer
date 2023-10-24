@@ -97,12 +97,12 @@ class World:
 
         # trials that can be skipped will be decided later
         self.skipped_trials: dict[str, bool] = {
-            'Forest': False,
-            'Fire': False,
-            'Water': False,
             'Spirit': False,
+            'Light': False,
+            'Fire': False,
             'Shadow': False,
-            'Light': False
+            'Water': False,
+            'Forest': False,
         }
 
         # empty dungeons will be decided later
