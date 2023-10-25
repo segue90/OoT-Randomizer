@@ -4,7 +4,7 @@ const int8_t debug_text_width = 16;
 const int8_t debug_text_height = 16;
 colorRGB8_t debug_text_color = { 0xE0, 0xE0, 0x10 }; // Yellow
 int8_t show_input_viewer = 1;
-int8_t float_precision = 2;
+int8_t float_precision = 5;
 int8_t menu_not_on_dup = 0;
 
 menu_category_t menu_categories[] = {
@@ -117,6 +117,7 @@ void draw_debug_float(int whichNumber, float numberToShow) {
 
 void debug_utilities(z64_disp_buf_t *db)
 {
+
     if (!DEBUG_MODE){
         return;
     }
@@ -129,7 +130,6 @@ void debug_utilities(z64_disp_buf_t *db)
 
     draw_debug_menu(db);
     draw_debug_numbers(db);
-    draw_input_viewer(db);
 }
 
 int debug_menu_is_drawn() {
@@ -482,137 +482,6 @@ void draw_debug_menu(z64_disp_buf_t *db) {
     }
 }
 
-
-
-
-void draw_a(z64_disp_buf_t *db) {
-
-    if (z64_game.common.input[0].raw.pad.a) {
-        gDPSetPrimColor(db->p++, 0, 0, 0x00, 0x00, 0xFF, 0xFF); // blue
-        sprite_texture(db, &buttons_sprite, 0, Z64_SCREEN_WIDTH / 12 + 8*rupee_digit_sprite.tile_w,
-         11 * Z64_SCREEN_HEIGHT / 12, debug_text_width, debug_text_height);
-    }
-}
-
-void draw_b(z64_disp_buf_t *db) {
-
-    if (z64_game.common.input[0].raw.pad.b) {
-        gDPSetPrimColor(db->p++, 0, 0, 0xFF, 0x00, 0x00, 0xFF); // red
-        sprite_texture(db, &buttons_sprite, 1, Z64_SCREEN_WIDTH / 12 + 8*rupee_digit_sprite.tile_w + buttons_sprite.tile_w,
-         11 * Z64_SCREEN_HEIGHT / 12, debug_text_width, debug_text_height);
-    }
-}
-
-void draw_start(z64_disp_buf_t *db) {
-
-    if (z64_game.common.input[0].raw.pad.s) {
-        gDPSetPrimColor(db->p++, 0, 0, 0xDC, 0xDC, 0xDC, 0xFF); // grey
-        text_print_size("S", Z64_SCREEN_WIDTH / 12 + 10*buttons_sprite.tile_w, 11 * Z64_SCREEN_HEIGHT / 12, debug_text_width);
-        //text_flush_size(db, debug_text_width, debug_text_height, 0, 0);
-    }
-}
-
-void draw_cdown(z64_disp_buf_t *db) {
-
-    if (z64_game.common.input[0].raw.pad.cd) {
-        gDPSetPrimColor(db->p++, 0, 0, 0xF4, 0xEC, 0x30, 0xFF); // yellow
-        sprite_texture(db, &buttons_sprite, 7, Z64_SCREEN_WIDTH / 12 + 8*rupee_digit_sprite.tile_w + 2*buttons_sprite.tile_w,
-         11 * Z64_SCREEN_HEIGHT / 12, debug_text_width, debug_text_height);
-    }
-}
-
-void draw_cup(z64_disp_buf_t *db) {
-
-    if (z64_game.common.input[0].raw.pad.cu) {
-        gDPSetPrimColor(db->p++, 0, 0, 0xF4, 0xEC, 0x30, 0xFF); // yellow
-        sprite_texture(db, &buttons_sprite, 6, Z64_SCREEN_WIDTH / 12 + 8*rupee_digit_sprite.tile_w + 5*buttons_sprite.tile_w,
-         11 * Z64_SCREEN_HEIGHT / 12, debug_text_width, debug_text_height);
-    }
-}
-
-
-void draw_cleft(z64_disp_buf_t *db) {
-
-    if (z64_game.common.input[0].raw.pad.cl) {
-        gDPSetPrimColor(db->p++, 0, 0, 0xF4, 0xEC, 0x30, 0xFF); // yellow
-        sprite_texture(db, &buttons_sprite, 8, Z64_SCREEN_WIDTH / 12 + 8*rupee_digit_sprite.tile_w + 4*buttons_sprite.tile_w,
-         11 * Z64_SCREEN_HEIGHT / 12, debug_text_width, debug_text_height);
-    }
-}
-
-void draw_cright(z64_disp_buf_t *db) {
-
-    if (z64_game.common.input[0].raw.pad.cr) {
-        gDPSetPrimColor(db->p++, 0, 0, 0xF4, 0xEC, 0x30, 0xFF); // yellow
-        sprite_texture(db, &buttons_sprite, 9, Z64_SCREEN_WIDTH / 12 + 8*rupee_digit_sprite.tile_w + 3*buttons_sprite.tile_w,
-         11 * Z64_SCREEN_HEIGHT / 12, debug_text_width, debug_text_height);
-    }
-}
-
-void draw_z(z64_disp_buf_t *db) {
-
-    if (z64_game.common.input[0].raw.pad.z) {
-        gDPSetPrimColor(db->p++, 0, 0, 0xDC, 0xDC, 0xDC, 0xFF); // grey
-        sprite_texture(db, &buttons_sprite, 5, Z64_SCREEN_WIDTH / 12 + 8*rupee_digit_sprite.tile_w + 6*buttons_sprite.tile_w,
-         11 * Z64_SCREEN_HEIGHT / 12, debug_text_width, debug_text_height);
-    }
-}
-
-void draw_l(z64_disp_buf_t *db) {
-
-    if (z64_game.common.input[0].raw.pad.l) {
-        gDPSetPrimColor(db->p++, 0, 0, 0xDC, 0xDC, 0xDC, 0xFF); // grey
-        sprite_texture(db, &buttons_sprite, 3, Z64_SCREEN_WIDTH / 12 + 8*rupee_digit_sprite.tile_w + 7*buttons_sprite.tile_w,
-         11 * Z64_SCREEN_HEIGHT / 12, debug_text_width, debug_text_height);
-    }
-}
-
-void draw_r(z64_disp_buf_t *db) {
-
-    if (z64_game.common.input[0].raw.pad.r) {
-        gDPSetPrimColor(db->p++, 0, 0, 0xDC, 0xDC, 0xDC, 0xFF); // grey
-        sprite_texture(db, &buttons_sprite, 4, Z64_SCREEN_WIDTH / 12 + 8*rupee_digit_sprite.tile_w + 8*buttons_sprite.tile_w,
-         11 * Z64_SCREEN_HEIGHT / 12, debug_text_width, debug_text_height);
-    }
-}
-
-void draw_ddown(z64_disp_buf_t *db) {
-
-    if (z64_game.common.input[0].raw.pad.dd) {
-        gDPSetPrimColor(db->p++, 0, 0, 0xDC, 0xDC, 0xDC, 0xFF); // yellow
-        sprite_texture(db, &buttons_sprite, 7, Z64_SCREEN_WIDTH / 12 + 8*rupee_digit_sprite.tile_w + 9*buttons_sprite.tile_w,
-         11 * Z64_SCREEN_HEIGHT / 12, debug_text_width, debug_text_height);
-    }
-}
-
-void draw_dup(z64_disp_buf_t *db) {
-
-    if (z64_game.common.input[0].raw.pad.du) {
-        gDPSetPrimColor(db->p++, 0, 0, 0xDC, 0xDC, 0xDC, 0xFF); // yellow
-        sprite_texture(db, &buttons_sprite, 6, Z64_SCREEN_WIDTH / 12 + 8*rupee_digit_sprite.tile_w + 12*buttons_sprite.tile_w,
-         11 * Z64_SCREEN_HEIGHT / 12, debug_text_width, debug_text_height);
-    }
-}
-
-
-void draw_dleft(z64_disp_buf_t *db) {
-
-    if (z64_game.common.input[0].raw.pad.dl) {
-        gDPSetPrimColor(db->p++, 0, 0, 0xDC, 0xDC, 0xDC, 0xFF); // yellow
-        sprite_texture(db, &buttons_sprite, 8, Z64_SCREEN_WIDTH / 12 + 8*rupee_digit_sprite.tile_w + 11*buttons_sprite.tile_w,
-         11 * Z64_SCREEN_HEIGHT / 12, debug_text_width, debug_text_height);
-    }
-}
-
-void draw_dright(z64_disp_buf_t *db) {
-
-    if (z64_game.common.input[0].raw.pad.dr) {
-        gDPSetPrimColor(db->p++, 0, 0, 0xDC, 0xDC, 0xDC, 0xFF); // yellow
-        sprite_texture(db, &buttons_sprite, 9, Z64_SCREEN_WIDTH / 12 + 8*rupee_digit_sprite.tile_w + 10*buttons_sprite.tile_w,
-         11 * Z64_SCREEN_HEIGHT / 12, debug_text_width, debug_text_height);
-    }
-}
-
 // Helper function for drawing numbers to the HUD.
 int draw_int_helper(z64_disp_buf_t *db, int32_t number, int16_t left, int16_t top, colorRGBA8_t color) {
 
@@ -649,18 +518,6 @@ int draw_int_helper(z64_disp_buf_t *db, int32_t number, int16_t left, int16_t to
     return j;
 }
 
-void draw_x_stick(z64_disp_buf_t *db) {
-    colorRGBA8_t color = { 0xF4, 0xEC, 0x30, 0xFF};
-    draw_int_helper(db, z64_game.common.input[0].raw.x, Z64_SCREEN_WIDTH / 12,
-        11 * Z64_SCREEN_HEIGHT / 12, color);
-}
-
-void draw_y_stick(z64_disp_buf_t *db) {
-    colorRGBA8_t color = { 0xF4, 0xEC, 0x30, 0xFF};
-    draw_int_helper(db, z64_game.common.input[0].raw.y, Z64_SCREEN_WIDTH / 12 + 4*rupee_digit_sprite.tile_w,
-        11 * Z64_SCREEN_HEIGHT / 12, color);
-}
-
 
 void draw_debug_numbers(z64_disp_buf_t *db) {
 
@@ -692,13 +549,18 @@ void draw_debug_numbers(z64_disp_buf_t *db) {
         if (debugNumberIsInUsage[i] != DEBUG_NUMBER_FLOAT) {
             continue;
         }
-        int decimalValue = 0;
-        int entireValue = (int)(numberToShow);
+        float decimalValue = 0;
+        int32_t entireValue = (int32_t)(numberToShow);
         if (numberToShow > 0) {
-            decimalValue = (numberToShow - entireValue) * 10 * float_precision;
+            decimalValue = (numberToShow - entireValue);
         }
         else {
-            decimalValue = (entireValue - numberToShow) * 10 * float_precision;
+            decimalValue = (entireValue - numberToShow);
+        }
+        int precision_copy = float_precision;
+        while(precision_copy) {
+            decimalValue *= 10;
+            precision_copy--;
         }
 
         int debug_text_x_placement = Z64_SCREEN_WIDTH / 12;
@@ -718,29 +580,5 @@ void draw_debug_numbers(z64_disp_buf_t *db) {
         text_flush_size(db, rupee_digit_sprite.tile_w, rupee_digit_sprite.tile_h, 0, 0);
         draw_int_helper(db, decimalValue, debug_text_x_placement + numberDigit * rupee_digit_sprite.tile_w + font_sprite.tile_w,
                         height + offsetY, color);
-    }
-}
-
-void draw_input_viewer(z64_disp_buf_t *db) {
-    if (show_input_viewer) {
-        draw_a(db);
-        draw_b(db);
-        draw_cup(db);
-        draw_cdown(db);
-        draw_cleft(db);
-        draw_cright(db);
-        //draw_start(db);
-
-        draw_z(db);
-        draw_l(db);
-        draw_r(db);
-
-        draw_dup(db);
-        draw_ddown(db);
-        draw_dleft(db);
-        draw_dright(db);
-
-        draw_x_stick(db);
-        draw_y_stick(db);
     }
 }
