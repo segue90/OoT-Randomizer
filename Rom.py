@@ -88,7 +88,7 @@ class Rom(BigStream):
         if rom_crc not in valid_crc:
             # Bad CRC validation
             raise RuntimeError(f'ROM file {input_file} is not a valid OoT 1.0 US ROM.')
-        elif len(self.buffer) < 0x2000000 or len(self.buffer) > 0x4000000 or file_name[1].lower() not in ['.z64', '.n64']:
+        elif len(self.buffer) < 0x2000000 or len(self.buffer) > 0x4000000 or file_name[1].lower() not in ('.z64', '.n64'):
             # ROM is too big, or too small, or a bad type
             raise RuntimeError(f'ROM file {input_file} is not a valid OoT 1.0 US ROM.')
         elif len(self.buffer) == 0x2000000:

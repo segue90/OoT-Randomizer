@@ -2798,9 +2798,9 @@ class SettingInfos:
         ''',
         default        = 'off',
         choices        = {
-            'off': 'Off',
+            'off':     'Off',
             'vanilla': 'Vanilla Behavior',
-            'easy': 'Easier Behavior'
+            'easy':    'Easier Behavior',
         },
         shared         = True,
         gui_params     = {
@@ -2808,7 +2808,7 @@ class SettingInfos:
             'distribution': [
                 ('off',          1),
                 ('vanilla',      1),
-                ('easy',         1)
+                ('easy',         1),
             ],
         },
     )
