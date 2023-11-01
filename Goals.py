@@ -31,7 +31,7 @@ validColors: list[str] = [
     'Light Blue',
     'Pink',
     'Yellow',
-    'Black'
+    'Black',
 ]
 
 

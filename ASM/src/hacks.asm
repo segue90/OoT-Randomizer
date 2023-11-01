@@ -3637,7 +3637,7 @@ courtyard_guards_kill:
 ; Allow ice arrows to melt red ice
 ;===================================================================================================
 .orga 0xDB32C8
-    jal blue_fire_arrows ; replaces addiu at, zero, 0x00F0
+    jal     blue_fire_arrows ; replaces addiu at, zero, 0x00F0
 
 ;===================================================================================================
 ; Give each cursed skulltula house resident a different text ID, for skulltula reward hints
@@ -3723,7 +3723,7 @@ courtyard_guards_kill:
     lw      s0, 0x4(sp)
     jr      ra
     addiu   sp, sp, 0x10
-    ;Remove the rest of the old function
+    ; Remove the rest of the old function
     nop
     nop
     nop
@@ -3737,8 +3737,8 @@ courtyard_guards_kill:
 ;==================================================================================================
 ; Load current mask on scene change
 ;==================================================================================================
-;Player_Init (0x80844DE8)
-;Replaces:
+; Player_Init (0x80844DE8)
+; Replaces:
 ;jal     func_80834000
 .orga 0xBE28EC
     jal     player_save_mask
