@@ -511,8 +511,9 @@
           "col_span": 2,
           "row_span": [2,2,2],
           "settings": [
-            "background_music",
+            "custom_music_directorypicker",
             "custom_music_unavailable_msg",
+            "background_music",
             "fanfares",
             "ocarina_fanfares",
             "credits_music"
@@ -527,8 +528,8 @@
           "col_span": 2,
           "row_span": [2,2,2],
           "settings": [
-            "background_music",
             "custom_music_directorypicker",
+            "background_music",
             "fanfares",
             "ocarina_fanfares",
             "credits_music"
