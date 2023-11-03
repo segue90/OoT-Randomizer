@@ -4453,8 +4453,8 @@ class SettingInfos:
         ''',
         default        = False,
         disable    = {
-            True : {'sections' : [ "musicsfx_section", "generalsfx_section", "UIsfx_section", "itemsfx_section" ],
-            'settings' : ["sfx_navi_overworld", "sfx_navi_enemy", "sfx_horse_neigh", "sfx_cucco"]
+            True : {'sections' : [ "generalsfx_section", "UIsfx_section", "itemsfx_section" ],
+            'settings' : ["sfx_navi_overworld", "sfx_navi_enemy", "sfx_horse_neigh", "sfx_cucco", "background_music", "fanfares", "ocarina_fanfares", "credits_music"]
             }
         }
     )
@@ -4505,8 +4505,7 @@ class SettingInfos:
             'randomize_key': 'randomize_all_sfx',
             'distribution':  [
                 ('random', 1),
-            ],
-            'web:option_remove': ['random_custom_only'],
+            ]
         },
     )
 
@@ -4534,8 +4533,7 @@ class SettingInfos:
             'randomize_key': 'randomize_all_sfx',
             'distribution': [
                 ('random', 1),
-            ],
-            'web:option_remove': ['random_custom_only'],
+            ]
         },
     )
 
