@@ -1802,9 +1802,9 @@
         "gerudo_fortress": "fast",
         "dungeon_shortcuts_choice": "choice",
         "dungeon_shortcuts": [
-          "Jabu Jabus Belly",
-          "Forest Temple",
-          "Shadow Temple"
+            "Jabu Jabus Belly",
+            "Forest Temple",
+            "Shadow Temple"
         ],
         "starting_age": "adult",
         "mq_dungeons_mode": "vanilla",
