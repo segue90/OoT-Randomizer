@@ -49,7 +49,7 @@ defaultHintDists: list[str] = [
     'bingo.json',
     'chaos.json',
     'chaos_no_goal.json',
-    'coop3.json',
+    'coop.json',
     'ddr.json',
     'important_checks.json',
     'league.json',

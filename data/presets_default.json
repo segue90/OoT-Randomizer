@@ -1907,7 +1907,7 @@
         "key_appearance_match_dungeon": false,
         "clearer_hints": true,
         "hints": "always",
-        "hint_dist": "coop3",
+        "hint_dist": "coop",
         "item_hints": [],
         "hint_dist_user": {},
         "misc_hints": [
