@@ -1789,12 +1789,11 @@
         "locations": {
             "Kak Granny Trade Odd Mushroom": "'Odd Potion Access'",
             # Granny will not sell her item without turning in odd mushroom
-            # If the adult trade item(s) in the world are all after odd mushroom,
-            # allow any of the later sequence items to satisfy logic. The patcher
-            # sets the flag needed for her to sell stuff if odd mushroom can't be obtained.
-            "Kak Granny Buy Blue Potion": "Progressive_Wallet and is_adult and
-                (Odd_Mushroom or ((Odd_Potion or Poachers_Saw or Broken_Sword or
-                Prescription or Eyeball_Frog or Eyedrops or Claim_Check) and not adult_trade_shuffle))"
+            "Kak Granny Buy Blue Potion": "Progressive_Wallet and is_adult and ('Odd Potion Access' or
+                ((selected_adult_trade_item == 'Odd Potion' or selected_adult_trade_item == 'Poachers Saw' or
+                selected_adult_trade_item == 'Broken Sword' or selected_adult_trade_item == 'Prescription' or
+                selected_adult_trade_item == 'Eyeball Frog' or selected_adult_trade_item == 'Eyedrops' or
+                selected_adult_trade_item == 'Claim Check') and not adult_trade_shuffle))"
         },
         "exits": {
             "Kak Backyard": "True"
