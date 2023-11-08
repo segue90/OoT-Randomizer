@@ -4557,7 +4557,7 @@ class SettingInfos:
         default        = False,
     )
     
-    custom_music_directorypicker = Fileinput(
+    custom_music_directorypicker = Directoryinput(
         gui_text   = "Custom Music",
         shared     = False,
         cosmetic   = True,
@@ -4565,7 +4565,7 @@ class SettingInfos:
             Upload custom music files in OoTR's dedicated .ootrs format.
             You can upload individual files or directories consisting of multiple
             custom sequences. Implementation into the seed is controlled by 
-            the background_music setting above.
+            the background_music setting.
             Note: Multiple directories at once can only be uploaded by dragging them
             onto the text field.
         ''',
