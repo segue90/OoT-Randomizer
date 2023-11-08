@@ -1606,6 +1606,7 @@
                         (logic_kakariko_tower_gs and (Sticks or Kokiri_Sword))))",
             "Kak Backyard": "is_adult or at_day",
             "Graveyard": "True",
+            # The seemingly redundant `open_kakariko == 'open'` check is to allow supplementary searches, which can't collect events, to use this path.
             "Kak Behind Gate": "is_adult or 'Kakariko Village Gate Open' or open_kakariko == 'open'"
         }
     },
