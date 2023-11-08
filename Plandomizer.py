@@ -843,6 +843,13 @@ class WorldDistribution:
         if self.locations:
             locations = {loc: self.locations[loc] for loc in random.sample(sorted(self.locations), len(self.locations))}
         used_items = []
+        # Override the adult trade item used to control trade quest flags during patching.
+        # This has to run before placing other items because the selected trade
+        # item impacts logic for buying a blue potion from Granny's Potion shop.
+        adult_trade_matcher = self.pattern_matcher("#AdultTrade")
+        plando_adult_trade = list(filter(lambda location_record_pair: adult_trade_matcher(location_record_pair[1].item), self.pattern_dict_items(locations)))
+        if plando_adult_trade and not world.settings.adult_trade_shuffle and world.settings.adult_trade_start:
+            world.selected_adult_trade_item = plando_adult_trade[0][1].item # ugly but functional, see the loop below for how this is indexed
         record: LocationRecord
         for (location_name, record) in self.pattern_dict_items(locations):
             if record.item is None:
@@ -891,11 +898,6 @@ class WorldDistribution:
 
             if record.item == '#Junk' and location.type == 'Song' and world.settings.shuffle_song_items == 'song' and not any(name in song_list and r.count for name, r in world.settings.starting_items.items()):
                 record.item = '#JunkSong'
-
-            adult_trade_matcher  = self.pattern_matcher("#AdultTrade")
-            if adult_trade_matcher(record.item) and not world.settings.adult_trade_shuffle and world.settings.adult_trade_start:
-                # Override the adult trade item used to control trade quest flags during patching
-                world.selected_adult_trade_item = record.item
 
             ignore_pools = None
             is_invert = self.pattern_matcher(record.item)('!')
