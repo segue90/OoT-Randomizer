@@ -2267,6 +2267,7 @@
         },
         "exits": {
             "DMC Central Nearby": "True",
+            # The seemingly redundant `plant_beans` checks are to allow supplementary searches, which can't collect events, to use these paths.
             "DMC Lower Nearby": "
                 is_adult and (Hover_Boots or Hookshot or here(can_plant_bean) or plant_beans)",
             "DMC Upper Nearby": "is_adult and (here(can_plant_bean) or plant_beans)",
