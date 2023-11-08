@@ -518,6 +518,7 @@
             "Zoras Domain": "is_child and can_dive",
             "LH Owl Flight": "is_child",
             "LH Lab": "True",
+            # The seemingly redundant `plant_beans` check is to allow supplementary searches, which can't collect events, to use this path.
             "LH Fishing Island": "
                 is_child or can_use(Scarecrow) or
                 here(can_plant_bean) or plant_beans or 'Water Temple Clear'",
