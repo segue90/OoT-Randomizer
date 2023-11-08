@@ -504,12 +504,31 @@
           ]
         },
         {
-          "name": "musicsfx_section",
+          "name": "musicsfx_section_generator",
           "text": "Music",
+          "app_type": ["generator"],
           "is_sfx": true,
           "col_span": 2,
           "row_span": [2,2,2],
           "settings": [
+            "custom_music_directorypicker",
+            "custom_music_unavailable_msg",
+            "background_music",
+            "fanfares",
+            "ocarina_fanfares",
+            "credits_music"
+          ]
+        },
+        {
+          "name": "musicsfx_section_patcher",
+          "text": "Music",
+          "exclude_from_electron": true,
+          "app_type": ["patcher"],
+          "is_sfx": true,
+          "col_span": 2,
+          "row_span": [2,2,2],
+          "settings": [
+            "custom_music_directorypicker",
             "background_music",
             "fanfares",
             "ocarina_fanfares",
