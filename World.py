@@ -78,7 +78,16 @@ class World:
         self.disable_trade_revert: bool = self.shuffle_interior_entrances or settings.shuffle_overworld_entrances or settings.adult_trade_shuffle
         self.skip_child_zelda: bool = 'Zeldas Letter' not in settings.shuffle_child_trade and \
                                       'Zeldas Letter' in self.distribution.starting_items
-        self.selected_adult_trade_item: str = ''
+        self.selected_adult_trade_item: str = random.choice(settings.adult_trade_start) if settings.adult_trade_start else None
+        # Override the adult trade item used to control trade quest flags during patching if any are placed in plando.
+        # This has to run here because the rule parser caches world attributes and this attribute impacts logic for buying a blue potion from Granny's Potion shop.
+        locations = {}
+        if self.distribution.locations:
+            locations = {loc: self.distribution.locations[loc] for loc in random.sample(sorted(self.distribution.locations), len(self.distribution.locations))}
+        adult_trade_matcher = self.distribution.pattern_matcher("#AdultTrade")
+        plando_adult_trade = list(filter(lambda location_record_pair: adult_trade_matcher(location_record_pair[1].item), self.distribution.pattern_dict_items(locations)))
+        if plando_adult_trade and not settings.adult_trade_shuffle and settings.adult_trade_start:
+            self.selected_adult_trade_item = plando_adult_trade[0][1].item # ugly but functional, see the loop in Plandomizer.WorldDistribution.fill for how this is indexed
         self.adult_trade_starting_inventory: str = ''
 
         if (settings.open_forest == 'closed'
