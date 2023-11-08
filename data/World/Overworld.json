@@ -326,6 +326,7 @@
         "exits": {
             "LW Forest Exit": "True",
             "GC Woods Warp": "True",
+            # The seemingly redundant `plant_beans` check is to allow supplementary searches, which can't collect events, to use this path.
             "LW Bridge": "
                 is_adult and
                 (Hover_Boots or Longshot or here(can_plant_bean) or plant_beans or logic_lost_woods_bridge)",
