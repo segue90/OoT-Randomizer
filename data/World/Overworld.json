@@ -1789,7 +1789,7 @@
         "locations": {
             "Kak Granny Trade Odd Mushroom": "'Odd Potion Access'",
             # Granny will not sell her item without turning in odd mushroom
-            "Kak Granny Buy Blue Potion": "Progressive_Wallet and is_adult and ('Odd Potion Access' or
+            "Kak Granny Buy Blue Potion": "Progressive_Wallet and ('Odd Potion Access' or
                 ((selected_adult_trade_item == 'Odd Potion' or selected_adult_trade_item == 'Poachers Saw' or
                 selected_adult_trade_item == 'Broken Sword' or selected_adult_trade_item == 'Prescription' or
                 selected_adult_trade_item == 'Eyeball Frog' or selected_adult_trade_item == 'Eyedrops' or
