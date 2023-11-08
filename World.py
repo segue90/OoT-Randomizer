@@ -78,8 +78,9 @@ class World:
         self.disable_trade_revert: bool = self.shuffle_interior_entrances or settings.shuffle_overworld_entrances or settings.adult_trade_shuffle
         self.skip_child_zelda: bool = 'Zeldas Letter' not in settings.shuffle_child_trade and \
                                       'Zeldas Letter' in self.distribution.starting_items
+        self.selected_adult_trade_item: str = None
         if not settings.adult_trade_shuffle and settings.adult_trade_start:
-            self.selected_adult_trade_item: str = random.choice(settings.adult_trade_start)
+            self.selected_adult_trade_item = random.choice(settings.adult_trade_start)
             # Override the adult trade item used to control trade quest flags during patching if any are placed in plando.
             # This has to run here because the rule parser caches world attributes and this attribute impacts logic for buying a blue potion from Granny's Potion shop.
             adult_trade_matcher = self.distribution.pattern_matcher("#AdultTrade")
