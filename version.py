@@ -1,8 +1,4 @@
-<<<<<<< HEAD
 __version__ = '8.0.0'
-=======
-__version__ = '7.1.210'
->>>>>>> Dev
 
 # This is a supplemental version number for branches based off of main dev.
 supplementary_version = 1
