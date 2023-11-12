@@ -3814,6 +3814,16 @@ class SettingInfos:
         default        = False,
     )
 
+    input_viewer = Checkbutton(
+        gui_text       = 'Input Viewer',
+        shared         = False,
+        cosmetic       = True,
+        gui_tooltip    = '''\
+            Show the controller inputs in form of icons at the bottom of the screen.
+        ''',
+        default        = False,
+    )
+
     model_adult = Combobox(
         gui_text       = 'Adult Link Model',
         shared         = False,
