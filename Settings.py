@@ -84,10 +84,7 @@ class Settings(SettingInfos):
             del settings_dict['compress_rom']
         if strict:
             validate_settings(settings_dict)
-        self.settings_dict.update(settings_dict)
-        for info in self.setting_infos.values():
-            if info.name not in self.settings_dict:
-                self.settings_dict[info.name] = info.default
+        self.update(settings_dict, initialize=True)
 
         if self.world_count < 1:
             self.world_count = 1
@@ -104,6 +101,14 @@ class Settings(SettingInfos):
         settings = copy.copy(self)
         settings.settings_dict = copy.deepcopy(settings.settings_dict)
         return settings
+
+    def update(self, settings_dict: dict[str, Any], *, initialize: bool = False) -> None:
+        for info in self.setting_infos.values():
+            if info.type is type(None):
+                continue
+            if not initialize and info.name not in settings_dict:
+                continue
+            setattr(self, info.name, settings_dict[info.name] if info.name in settings_dict else info.default)
 
     def get_settings_display(self) -> str:
         padding = 0
@@ -247,10 +252,6 @@ class Settings(SettingInfos):
         else:
             self.seed = seed
         self.sanitize_seed()
-        self.numeric_seed = self.get_numeric_seed()
-
-    def update(self) -> None:
-        self.settings_string = self.get_settings_string()
         self.numeric_seed = self.get_numeric_seed()
 
     def load_distribution(self) -> None:
