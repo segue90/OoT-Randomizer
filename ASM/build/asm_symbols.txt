@@ -1518,8 +1518,6 @@
 80420AD0 texture_table
 80420CC0 .byt:0001
 80420CC0 float_precision
-80420CC1 .byt:0001
-80420CC1 show_input_viewer
 80420CC4 .byt:0003
 80420CC4 debug_text_color
 80420CC7 .byt:0001

@@ -3,7 +3,6 @@
 const int8_t debug_text_width = 16;
 const int8_t debug_text_height = 16;
 colorRGB8_t debug_text_color = { 0xE0, 0xE0, 0x10 }; // Yellow
-int8_t show_input_viewer = 1;
 int8_t float_precision = 5;
 int8_t menu_not_on_dup = 0;
 

@@ -431,7 +431,6 @@ SYMBOL TABLE:
 00000000         *UND*	00000000 CFG_RAINBOW_BOMBCHU_TRAIL_INNER_ENABLED
 000146f4 g     F .text	0000003c SaveFile_UnsetTradeItemAsOwned
 0000c0dc g     F .text	0000015c draw_gi_bullet_bags
-00000001 g     O .sdata	00000001 show_input_viewer
 0000a484 g     F .text	000001a0 sprite_load
 0000b40c g     F .text	000000a4 draw_gi_sold_out
 000099f4 g     F .text	00000054 Item_DropCollectible_Actor_Spawn_Override

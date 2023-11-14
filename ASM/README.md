@@ -17,7 +17,7 @@ How to use the Debug mode:
 - You will then have access to a hidden menu with the following options:
   - Instant warps to Dungeons, Bosses or Overworld locations
   - Item inventory edits
-  - Instant age switch
+  - Instant age switch with the current location kept
   - Bunny Hood applied on
 The menu will appear if you press either L+R or Dpad-Up according to what you set for the menu_not_on_dup variable in debug.c.
 Use Dpad-Left/Dpad-Right and A/B to navigate it.
@@ -26,4 +26,3 @@ The warps and items are easily customizable with the code at the top of debug.c.
 - Additionally, you can call functions to print numbers on screen, to help you debug new features.
 Call either draw_debug_int or draw_debug_float in your code, with the first argument being the number wanted to be displayed, and the 
 second argument its place on the screen (up to 10 values).
-- An input display is also available, but the icons are currently bugged on Dolphin.
