@@ -45,7 +45,7 @@ Recompiling the C code for randomizer requires the N64 development tools to be i
 
 You can substitute using the `tools` folder with adding the `n64/bin` folder to your environment PATH if you need an advanced setup.
 ### Running
-To recompile the C modules, use `python build.py --compile-c` in this directory, or adjust the path to `build.py` relative to where you terminal is.
+To recompile the C modules, use `python build.py --compile-c` in this directory, or adjust the path to `build.py` relative to your terminal's working directory.
 
 ## Debugging Symbols for Project64
 To generate symbols for the Project64 debugger, use the `--pj64sym` option:
