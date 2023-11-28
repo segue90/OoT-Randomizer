@@ -4065,3 +4065,12 @@ courtyard_guards_kill:
 ; Replaces Item_Give(play, ITEM_OCARINA_FAIRY)
     jal      fairy_ocarina_getitem_override
     nop
+
+;===================================================================================================
+; Cancel Volvagia flying form hitbox when her health is already at O
+;===================================================================================================
+; Replaces addiu   a2, $zero, 0x0004
+;          andi    t6, a1, 0x0002
+.orga 0xCEA41C
+    jal     volvagia_flying_hitbox
+    nop
