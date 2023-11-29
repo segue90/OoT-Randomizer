@@ -110,6 +110,10 @@ issue. You should always Hard Reset to avoid this issue entirely.
 
 ### Dev
 
+#### New Features
+* **Hints**
+  * The `Clearer Hints` option now provides clearer hints for the rainbow bridge text on the altar in the Temple of Time.
+
 ### 8.0
 
 #### New Features
