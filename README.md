@@ -111,6 +111,8 @@ issue. You should always Hard Reset to avoid this issue entirely.
 ### Dev
 
 #### New Features
+* **Settings**
+  * `Minor Items in Big/Gold chests` has been converted into a multiselect so you may granularly make bombchus, shields, or stick/nut capacity appear in big chests.
 * **Hints**
   * The `Clearer Hints` option now provides clearer hints for the rainbow bridge text on the altar in the Temple of Time.
   * New option in hint distribution `combine_trial_hints` which combines multiple trials hints into one.
