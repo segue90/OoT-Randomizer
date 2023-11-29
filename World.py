@@ -1370,3 +1370,7 @@ class World:
 
             if useless_area:
                 self.empty_areas[area] = area_info
+
+
+    def __repr__(self) -> str:
+        return "W%d" % (self.id)

@@ -149,6 +149,10 @@ class Location:
     def __str__(self) -> str:
         return self.name
 
+    def __repr__(self) -> str:
+        item_repr = self.item.__repr__() if self.item else "<empty>"
+        return f"{self.world.__repr__()} {self.name} with {item_repr}"
+
 
 @overload
 def LocationFactory(locations: str) -> Location:
