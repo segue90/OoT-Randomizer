@@ -29,7 +29,7 @@ tools_dir = os.path.join(root_dir, 'tools')
 tools_bin_dir = os.path.join(tools_dir, 'bin')
 # Makes it possible to copy the full toolchain prefix into the "tools" directory
 n64_bin_dir = os.path.join(tools_dir, "n64", "bin")
-os.environ['PATH'] = tools_dir + tools_bin_dir + n64_bin_dir + os.pathsep + os.environ['PATH']
+os.environ['PATH'] = os.pathsep.join([tools_dir, tools_bin_dir, n64_bin_dir, os.environ['PATH']])
 
 run_dir = root_dir
 

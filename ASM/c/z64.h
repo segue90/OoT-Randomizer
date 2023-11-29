@@ -1869,6 +1869,7 @@ typedef enum {
 #define Font_LoadChar_addr                      0x8005BCE4
 #define GetItem_Draw_addr                       0x800570C0
 #define z64_Audio_GetActiveSeqId_addr           0x800CAB18
+#define z64_Play_SetupRespawnPoint_addr         0x8009D94C
 
 /* rom addresses */
 #define z64_icon_item_static_vaddr              0x007BD000
@@ -1951,6 +1952,7 @@ typedef void(*PlaySFX_proc) (uint16_t sfxId);
 typedef void(*z64_ScalePitchAndTempo_proc)(float scaleTempoAndFreq, uint8_t duration);
 typedef void(*GetItem_Draw_proc)(z64_game_t* game, int16_t drawId);
 typedef uint16_t (*z64_Audio_GetActiveSeqId_proc)(uint8_t seqId);
+typedef void(*z64_Play_SetupRespawnPoint_proc)(z64_game_t *game, int32_t respawnMode, int32_t playerParams);
 
 /* data */
 #define z64_file_mq             (*(OSMesgQueue*)      z64_file_mq_addr)
@@ -2036,6 +2038,7 @@ typedef uint16_t (*z64_Audio_GetActiveSeqId_proc)(uint8_t seqId);
 #define Message_ContinueTextbox ((Message_ContinueTextbox_proc)Message_ContinueTextbox_addr)
 #define z64_ScalePitchAndTempo        ((z64_ScalePitchAndTempo_proc)z64_ScalePitchAndTempo_addr)
 #define z64_Audio_GetActiveSeqId ((z64_Audio_GetActiveSeqId_proc)z64_Audio_GetActiveSeqId_addr)
+#define z64_Play_SetupRespawnPoint ((z64_Play_SetupRespawnPoint_proc)z64_Play_SetupRespawnPoint_addr)
 
 #define PlaySFX ((PlaySFX_proc)PlaySFX_addr)
 #define Font_LoadChar ((Font_LoadChar_proc)Font_LoadChar_addr)

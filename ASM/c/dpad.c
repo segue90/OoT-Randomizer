@@ -132,14 +132,14 @@ void draw_dpad_and_menu_utilities() {
 
             gDPPipeSync(db->p++);
             gDPSetCombineMode(db->p++, G_CC_MODULATEIA_PRIM, G_CC_MODULATEIA_PRIM);
-            sprite_load(db, &button_sprite, 0, 5);
+            sprite_load(db, &ocarina_button_sprite, 0, 5);
 
             gDPSetPrimColor(db->p++, 0, 0, 0x00, 0x00, 0xFF, alpha); // blue
             if (CFG_CORRECT_MODEL_COLORS) {
                 gDPSetPrimColor(db->p++, 0, 0, CFG_A_BUTTON_COLOR.r, CFG_A_BUTTON_COLOR.g, CFG_A_BUTTON_COLOR.b, alpha);
             }
             if (z64_file.scene_flags[0x50].unk_00_ & 1 << 0) { // A
-                sprite_draw(db, &button_sprite, 0, left_ocarina_buttons, top_ocarina_buttons, icon_width, icon_height);
+                sprite_draw(db, &ocarina_button_sprite, 0, left_ocarina_buttons, top_ocarina_buttons, icon_width, icon_height);
             }
 
             gDPSetPrimColor(db->p++, 0, 0, 0xF4, 0xEC, 0x30, alpha); // yellow
@@ -147,16 +147,16 @@ void draw_dpad_and_menu_utilities() {
                 gDPSetPrimColor(db->p++, 0, 0, CFG_C_BUTTON_COLOR.r, CFG_C_BUTTON_COLOR.g, CFG_C_BUTTON_COLOR.b, alpha);
             }
             if (z64_file.scene_flags[0x50].unk_00_ & 1 << 2) { // C Down
-                sprite_draw(db, &button_sprite, 1, left_ocarina_buttons + icon_width, top_ocarina_buttons, icon_width, icon_height);
+                sprite_draw(db, &ocarina_button_sprite, 1, left_ocarina_buttons + icon_width, top_ocarina_buttons, icon_width, icon_height);
             }
             if (z64_file.scene_flags[0x50].unk_00_ & 1 << 4) { // C right
-                sprite_draw(db, &button_sprite, 2, left_ocarina_buttons + 2*icon_width, top_ocarina_buttons, icon_width, icon_height);
+                sprite_draw(db, &ocarina_button_sprite, 2, left_ocarina_buttons + 2*icon_width, top_ocarina_buttons, icon_width, icon_height);
             }
             if (z64_file.scene_flags[0x50].unk_00_ & 1 << 3) { // C left
-                sprite_draw(db, &button_sprite, 3, left_ocarina_buttons + 3*icon_width, top_ocarina_buttons, icon_width, icon_height);
+                sprite_draw(db, &ocarina_button_sprite, 3, left_ocarina_buttons + 3*icon_width, top_ocarina_buttons, icon_width, icon_height);
             }
             if (z64_file.scene_flags[0x50].unk_00_ & 1 << 1) { // C up
-                sprite_draw(db, &button_sprite, 4, left_ocarina_buttons + 4*icon_width, top_ocarina_buttons, icon_width, icon_height);
+                sprite_draw(db, &ocarina_button_sprite, 4, left_ocarina_buttons + 4*icon_width, top_ocarina_buttons, icon_width, icon_height);
             }
 
             gDPPipeSync(db->p++);
