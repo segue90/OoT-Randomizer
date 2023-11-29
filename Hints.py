@@ -1120,7 +1120,7 @@ def get_important_check_hint(spoiler: Spoiler, world: World, checked: set[str]) 
     for location in world.get_filled_locations():
         if (HintArea.at(location).text(world.settings.clearer_hints) not in top_level_locations
                 and (HintArea.at(location).text(world.settings.clearer_hints) + ' Important Check') not in checked
-                and "pocket" not in HintArea.at(location).text(world.settings.clearer_hints)):
+                and HintArea.at(location) != HintArea.ROOT):
             top_level_locations.append(HintArea.at(location).text(world.settings.clearer_hints))
     hint_loc = random.choice(top_level_locations)
     item_count = 0
@@ -1181,28 +1181,10 @@ hint_func: dict[str, HintFunc | BarrenFunc] = {
     'random':           get_random_location_hint,
     'junk':             get_junk_hint,
     'named-item':       get_specific_item_hint,
-    'important_check':  get_important_check_hint
+    'important_check':  get_important_check_hint,
 }
 
-hint_dist_keys: set[str] = {
-    'trial',
-    'always',
-    'dual_always',
-    'entrance_always',
-    'woth',
-    'goal',
-    'barren',
-    'item',
-    'song',
-    'overworld',
-    'dungeon',
-    'entrance',
-    'sometimes',
-    'dual',
-    'random',
-    'junk',
-    'named-item'
-}
+hint_dist_keys: set[str] = set(hint_func)
 
 
 def build_bingo_hint_list(board_url: str) -> list[str]:

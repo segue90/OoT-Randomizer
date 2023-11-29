@@ -9,8 +9,8 @@ extern uint8_t CFG_DISPLAY_DPAD;
 //unknown 02 is a pointer to some kind of audio configuration Always 801043A0 in my testing
 //unknown 03 is always a3 in my testing
 //unknown 04 is always a3 + 0x08 in my testing (801043A8)
-typedef void(*playsfx_t)(uint16_t sfx, z64_xyzf_t *unk_00_, int8_t unk_01_ , float *unk_02_, float *unk_03_, float *unk_04_);
-typedef void(*usebutton_t)(z64_game_t *game, z64_link_t *link, uint8_t item, uint8_t button);
+typedef void(*playsfx_t)(uint16_t sfx, z64_xyzf_t* unk_00_, int8_t unk_01_ , float* unk_02_, float* unk_03_, float* unk_04_);
+typedef void(*usebutton_t)(z64_game_t* game, z64_link_t* link, uint8_t item, uint8_t button);
 
 #define z64_playsfx   ((playsfx_t)      0x800C806C)
 #define z64_usebutton ((usebutton_t)    0x8038C9A0)
@@ -68,7 +68,7 @@ void handle_dpad() {
 }
 
 void draw_dpad_and_menu_utilities() {
-    z64_disp_buf_t *db = &(z64_ctxt.gfx->overlay);
+    z64_disp_buf_t* db = &(z64_ctxt.gfx->overlay);
     if (CAN_DRAW_DUNGEON_INFO || (DISPLAY_DPAD && CFG_DISPLAY_DPAD) || CAN_DRAW_TRADE_DPAD || CAN_DRAW_OCARINA_BUTTONS) {
 
         gSPDisplayList(db->p++, &setup_db);
@@ -220,15 +220,13 @@ void draw_dpad_and_menu_utilities() {
             if (z64_file.items[Z64_SLOT_CHILD_TRADE] >= Z64_ITEM_WEIRD_EGG && z64_file.items[Z64_SLOT_CHILD_TRADE] <= Z64_ITEM_MASK_OF_TRUTH && z64_file.link_age == 1) {
                 if (!CAN_USE_DPAD || !CAN_USE_CHILD_TRADE) {
                     gDPSetPrimColor(db->p++, 0, 0, 0xFF, 0xFF, 0xFF, alpha * 0x46 / 0xFF);
-                }
-                else {
+                } else {
                     gDPSetPrimColor(db->p++, 0, 0, 0xFF, 0xFF, 0xFF, alpha);
                 }
                 sprite_load(db, &items_sprite, z64_file.items[Z64_SLOT_CHILD_TRADE], 1);
                 if (z64_link.current_mask >= 1 && z64_link.current_mask <= 9) {
                     sprite_draw(db, &items_sprite, 0, left_main_dpad + 12, top_main_dpad, 16, 16);
-                }
-                else {
+                } else {
                     sprite_draw(db, &items_sprite, 0, left_main_dpad + 14, top_main_dpad + 2, 12, 12);
                 }
             }
@@ -247,4 +245,3 @@ void draw_dpad_and_menu_utilities() {
         gDPPipeSync(db->p++);
     }
 }
-

@@ -1463,9 +1463,9 @@ class SettingInfos:
             'remove':      'Remove',
             'vanilla':     'Vanilla Locations',
             'dungeon':     'Own Dungeon',
+            'regional':    'Regional',
             'overworld':   'Overworld Only',
             'any_dungeon': 'Any Dungeon',
-            'regional':    'Regional',
             'anywhere':    'Anywhere',
         },
         gui_tooltip    = '''\
@@ -1491,16 +1491,16 @@ class SettingInfos:
             'Own Dungeon': Silver Rupees can only appear
             in their respective dungeon.
 
+            'Regional': Silver Rupees can only appear in regions
+            near the original dungeon (including the dungeon
+            itself or other dungeons in the region).
+            <a href="https://wiki.ootrandomizer.com/index.php?title=Hints#Hint_Regions" target="_blank">The Wiki has a list of corresponding regions here.</a>
+
             'Overworld Only': Silver Rupees can only appear
             outside of dungeons.
 
             'Any Dungeon': Silver Rupees can only appear in a
             dungeon, but not necessarily the dungeon they are for.
-
-            'Regional': Silver Rupees can only appear in regions
-            near the original dungeon (including the dungeon
-            itself or other dungeons in the region).
-            <a href="https://wiki.ootrandomizer.com/index.php?title=Hints#Hint_Regions" target="_blank">The Wiki has a list of corresponding regions here.</a>
 
             'Anywhere': Silver Rupees can appear
             anywhere in the world.
@@ -2805,9 +2805,9 @@ class SettingInfos:
         ''',
         default        = 'off',
         choices        = {
-            'off': 'Off',
+            'off':     'Off',
             'vanilla': 'Vanilla Behavior',
-            'easy': 'Easier Behavior'
+            'easy':    'Easier Behavior',
         },
         shared         = True,
         gui_params     = {
@@ -2815,7 +2815,7 @@ class SettingInfos:
             'distribution': [
                 ('off',          1),
                 ('vanilla',      1),
-                ('easy',         1)
+                ('easy',         1),
             ],
         },
     )
@@ -3720,7 +3720,7 @@ class SettingInfos:
         default        = 'right',
         choices        = {
             'off':   'Off',
-            'left': 'On the left',
+            'left':  'On the left',
             'right': 'On the right',
         },
     )

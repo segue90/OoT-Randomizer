@@ -2173,7 +2173,6 @@
     },
     {
         "region_name": "DMC Pierre Platform",
-        "font_color": "Red",
         "scene": "Death Mountain Crater",
         "hint": "DEATH_MOUNTAIN_CRATER",
         "locations": {
