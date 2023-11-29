@@ -1469,13 +1469,19 @@ def build_world_gossip_hints(spoiler: Spoiler, world: World, checked_locations: 
         elif world.settings.trials_random and world.settings.trials == 0:
             add_hint(spoiler, world, stone_groups, GossipText("Sheik dispelled the barrier around #Ganon's Tower#.", ['Yellow']), hint_dist['trial'][1], force_reachable=True, hint_type='trial')
         elif 3 < world.settings.trials < 6:
-            for trial, skipped in world.skipped_trials.items():
-                if skipped:
-                    add_hint(spoiler, world, stone_groups, GossipText("the #%s Trial# was dispelled by Sheik." % trial, ['Yellow']), hint_dist['trial'][1], force_reachable=True, hint_type='trial')
+            if world.hint_dist_user['combine_trial_hints'] and world.settings.trials < 5:
+                add_hint(spoiler, world, stone_groups, GossipText("the #%s Trials# were dispelled by Sheik." % natjoin(trial for trial, skipped in world.skipped_trials.items() if skipped), ['Yellow']), hint_dist['trial'][1], force_reachable=True, hint_type='trial')
+            else:
+                for trial, skipped in world.skipped_trials.items():
+                    if skipped:
+                        add_hint(spoiler, world, stone_groups, GossipText("the #%s Trial# was dispelled by Sheik." % trial, ['Yellow']), hint_dist['trial'][1], force_reachable=True, hint_type='trial')
         elif 0 < world.settings.trials <= 3:
-            for trial, skipped in world.skipped_trials.items():
-                if not skipped:
-                    add_hint(spoiler, world, stone_groups, GossipText("the #%s Trial# protects Ganon's Tower." % trial, ['Pink']), hint_dist['trial'][1], force_reachable=True, hint_type='trial')
+            if world.hint_dist_user['combine_trial_hints'] and world.settings.trials > 1:
+                add_hint(spoiler, world, stone_groups, GossipText("the #%s Trials# protect Ganon's Tower." % natjoin(trial for trial, skipped in world.skipped_trials.items() if not skipped), ['Pink']), hint_dist['trial'][1], force_reachable=True, hint_type='trial')
+            else:
+                for trial, skipped in world.skipped_trials.items():
+                    if not skipped:
+                        add_hint(spoiler, world, stone_groups, GossipText("the #%s Trial# protects Ganon's Tower." % trial, ['Pink']), hint_dist['trial'][1], force_reachable=True, hint_type='trial')
 
     # Add user-specified hinted item locations if using a built-in hint distribution
     # Raise error if hint copies is zero
@@ -1767,6 +1773,20 @@ def get_raw_text(string: str) -> str:
         else:
             text += char
     return text
+
+
+# build a list of elements in English
+def natjoin(elements: Iterable[str], conjunction: str = 'and') -> Optional[str]:
+    elements = list(elements)
+    if len(elements) == 0:
+        return None
+    elif len(elements) == 1:
+        return elements[0]
+    elif len(elements) == 2:
+        return f'{elements[0]} {conjunction} {elements[1]}'
+    else:
+        *rest, last = elements
+        return f'{", ".join(rest)}, {conjunction} {last}'
 
 
 def hint_dist_files() -> list[str]:

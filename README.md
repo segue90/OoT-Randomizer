@@ -113,6 +113,7 @@ issue. You should always Hard Reset to avoid this issue entirely.
 #### New Features
 * **Hints**
   * The `Clearer Hints` option now provides clearer hints for the rainbow bridge text on the altar in the Temple of Time.
+  * New option in hint distribution `combine_trial_hints` which combines multiple trials hints into one.
 
 ### 8.0
 

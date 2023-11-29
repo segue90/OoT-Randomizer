@@ -105,12 +105,12 @@ class World:
 
         # trials that can be skipped will be decided later
         self.skipped_trials: dict[str, bool] = {
-            'Forest': False,
-            'Fire': False,
-            'Water': False,
             'Spirit': False,
-            'Shadow': False,
             'Light': False,
+            'Fire': False,
+            'Shadow': False,
+            'Water': False,
+            'Forest': False,
         }
 
         # empty dungeons will be decided later
@@ -183,6 +183,8 @@ class World:
             self.hint_dist_user['use_default_goals'] = True
         if 'upgrade_hints' not in self.hint_dist_user:
             self.hint_dist_user['upgrade_hints'] = 'off'
+        if 'combine_trial_hints' not in self.hint_dist_user:
+            self.hint_dist_user['combine_trial_hints'] = False
 
         # Validate hint distribution format
         # Originally built when I was just adding the type distributions
