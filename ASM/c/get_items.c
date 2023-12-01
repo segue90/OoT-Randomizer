@@ -33,6 +33,7 @@ extern uint16_t OUTGOING_ITEM;
 extern uint16_t OUTGOING_PLAYER;
 extern uint16_t GET_ITEM_SEQ_ID;
 xflag_t drop_collectible_override_flag; // Flag used by hacks in Item_DropCollectible to override the item being dropped. Set it to the flag for the overridden item.
+xflag_t* spawn_actor_with_flag = NULL;
 
 override_t active_override = { 0 };
 int active_override_is_outgoing = 0;

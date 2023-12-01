@@ -15,6 +15,7 @@ extern uint8_t POTCRATE_TEXTURES_MATCH_CONTENTS;
 extern uint16_t CURR_ACTOR_SPAWN_INDEX;
 extern uint8_t SHUFFLE_SILVER_RUPEES;
 extern int8_t curr_scene_setup;
+extern xflag_t* spawn_actor_with_flag;
 
 #define BG_HAKA_TUBO        0x00BB  // Shadow temple spinning pot
 #define BG_SPOT18_BASKET    0x015C  // Goron city spinning pot
@@ -40,7 +41,7 @@ ActorAdditionalData* Actor_GetAdditionalData(z64_actor_t* actor) {
 // Called from Actor_UpdateAll when spawning the actors in the scene's/room's actor list to store flags in the new space that we added to the actors.
 // Prior to being called, CURR_ACTOR_SPAWN_INDEX is set to the current position in the actor spawn list.
 void Actor_After_UpdateAll_Hack(z64_actor_t* actor, z64_game_t* game) {
-    Actor_StoreFlag(actor, game, CURR_ACTOR_SPAWN_INDEX);
+    Actor_StoreFlagByIndex(actor, game, CURR_ACTOR_SPAWN_INDEX);
     Actor_StoreChestType(actor, game);
 
     // Add additional actor hacks here. These get called shortly after the call to actor_init
@@ -51,28 +52,11 @@ void Actor_After_UpdateAll_Hack(z64_actor_t* actor, z64_game_t* game) {
 
 // For pots/crates/beehives, store the flag in the new space in the actor instance.
 // Flag consists of the room #, scene setup, and the actor index
-void Actor_StoreFlag(z64_actor_t* actor, z64_game_t* game, uint16_t actor_index) {
-    // Zeroize extra data;
+void Actor_StoreFlag(z64_actor_t* actor, z64_game_t* game, xflag_t flag) {
     ActorAdditionalData* extra = Actor_GetAdditionalData(actor);
-
-    xflag_t flag = (xflag_t) { 0 };
-
-    flag.scene = z64_game.scene_index;
-    if(z64_game.scene_index == 0x3E) {
-        flag.grotto.room = actor->room_index;
-        flag.grotto.grotto_id = z64_file.grotto_id & 0x1F;
-        flag.grotto.flag = actor_index;
-        flag.grotto.subflag = 0;
-    }
-    else {
-        flag.room = actor->room_index;
-        flag.setup = curr_scene_setup;
-        flag.flag = actor_index;
-        flag.subflag = 0;
-    }
-
     flag = resolve_alternative_flag(&flag);
-    extra->actor_id = actor_index;
+    if(CURR_ACTOR_SPAWN_INDEX)
+        extra->actor_id = CURR_ACTOR_SPAWN_INDEX;
     override_t override = lookup_override_by_newflag(&flag);
     if(override.key.all)
     {
@@ -99,6 +83,31 @@ void Actor_StoreFlag(z64_actor_t* actor, z64_game_t* game, uint16_t actor_index)
             }
         }
     }
+
+}
+
+// For pots/crates/beehives, store the flag in the new space in the actor instance.
+// Flag consists of the room #, scene setup, and the actor index
+void Actor_StoreFlagByIndex(z64_actor_t* actor, z64_game_t* game, uint16_t actor_index) {
+    // Zeroize extra data;
+    
+    xflag_t flag = (xflag_t) { 0 };
+
+    flag.scene = z64_game.scene_index;
+    if(z64_game.scene_index == 0x3E) {
+        flag.grotto.room = actor->room_index;
+        flag.grotto.grotto_id = z64_file.grotto_id & 0x1F;
+        flag.grotto.flag = actor_index;
+        flag.grotto.subflag = 0;
+    }
+    else {
+        flag.room = actor->room_index;
+        flag.setup = curr_scene_setup;
+        flag.flag = actor_index;
+        flag.subflag = 0;
+    }
+
+    Actor_StoreFlag(actor, game, flag);
 
 }
 
@@ -260,6 +269,13 @@ z64_actor_t * Actor_Spawn_Hook(void* actorCtx, z64_game_t* globalCtx, int16_t ac
 
     if(continue_spawn) {
         z64_actor_t* spawned = Actor_Spawn_Continue(actorCtx, globalCtx, actorId, posX, posY, posZ, rotX, rotY, rotZ, params);
+        if(spawned) {
+            if(spawn_actor_with_flag)
+            {
+                Actor_StoreFlag(spawned, globalCtx, *spawn_actor_with_flag);
+                Actor_StoreChestType(spawned, globalCtx);
+            }
+        }
         return spawned;
     }
     return NULL;

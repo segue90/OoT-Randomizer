@@ -69,7 +69,7 @@ void EnWonderItem_DropCollectible_Hack(EnWonderItem* this, z64_game_t* globalCtx
     // Override behavior. Spawn an overridden collectible on link
     if(this->overridden)
     {
-        xflag_t* flag = &(Actor_GetAdditionalData(this)->flag);
+        xflag_t* flag = &(Actor_GetAdditionalData(&this->actor)->flag);
         drop_collectible_override_flag = *flag;
         if(autoCollect)
             z64_Item_DropCollectible2(globalCtx, &(z64_link.common.pos_world), 0);
