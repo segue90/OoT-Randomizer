@@ -2,6 +2,8 @@
 #include "z64.h"
 #include "en_wonderitem.h"
 #include "get_items.h"
+#include "actor.h"
+#include "scene.h"
 
 static colorRGBA8_t sEffectPrimColorRed = { 255, 0, 0, 0 };
 static colorRGBA8_t sEffectPrimColorGreen = { 0, 255, 0, 0 };
@@ -15,8 +17,6 @@ static colorRGBA8_t sEffectEnvColor = { 255, 255, 255, 0 };
 static z64_xyzf_t sEffectVelocity = { 0.0f, 0.5f, 0.0f };
 static z64_xyzf_t sEffectAccel = { 0.0f, 0.5f, 0.0f };
 
-
-extern uint16_t drop_collectible_override_flag;
 extern uint16_t CURR_ACTOR_SPAWN_INDEX;
 
 void EnWonderitem_AfterInitHack(z64_actor_t* this, z64_game_t* globalCtx)
@@ -29,14 +29,10 @@ void EnWonderitem_AfterInitHack(z64_actor_t* this, z64_game_t* globalCtx)
     EnWonderItem* wonderitem = (EnWonderItem*)this;
     wonderitem->overridden = 0;
 
-    EnItem00 dummy;
-    dummy.actor.actor_id = 0x15;
-    dummy.actor.rot_init.y = this->rot_init.y; //flag was just stored in y rotation
-    dummy.actor.variable = 0;
+    xflag_t flag = Actor_GetAdditionalData(this)->flag;
 
     // Check if the Wonderitem should be overridden
-    dummy.override = lookup_override(&(dummy.actor), globalCtx->scene_index, 0);
-    if(dummy.override.key.all != 0 && !Get_CollectibleOverrideFlag(&dummy))
+    if(flag.all && !Get_NewOverrideFlag(&flag))
     {
         wonderitem->overridden = 1;
     }
@@ -73,12 +69,13 @@ void EnWonderItem_DropCollectible_Hack(EnWonderItem* this, z64_game_t* globalCtx
     // Override behavior. Spawn an overridden collectible on link
     if(this->overridden)
     {
-        drop_collectible_override_flag = this->actor.rot_init.y;
+        xflag_t* flag = &(Actor_GetAdditionalData(this)->flag);
+        drop_collectible_override_flag = *flag;
         if(autoCollect)
             z64_Item_DropCollectible2(globalCtx, &(z64_link.common.pos_world), 0);
         else
             z64_Item_DropCollectible(globalCtx, &this->actor.pos_world, 0);
-        drop_collectible_override_flag = 0;
+        z64_bzero(&drop_collectible_override_flag, sizeof(drop_collectible_override_flag));
         if (this->switchFlag >= 0)
             z64_Flags_SetSwitch(globalCtx, this->switchFlag);
         z64_ActorKill(&this->actor);
@@ -135,15 +132,17 @@ void EnWonderItem_Update_Hack(EnWonderItem* this) {
 
 // Hack to not kill wonderitem when switch flag is set if we need to override still
 uint32_t EnWonderItem_Kill_Hack(EnWonderItem* this) {
-    EnItem00 dummy;
-    dummy.actor.actor_id = 0x15;
-    dummy.actor.rot_init.y = (CURR_ACTOR_SPAWN_INDEX) | (this->actor.room_index << 8);
-    dummy.actor.variable = 0;
-
+    
+    xflag_t flag = { 0 };
+    flag.flag = CURR_ACTOR_SPAWN_INDEX;
+    flag.scene = z64_game.scene_index;
+    flag.room = this->actor.room_index;
+    flag.setup = curr_scene_setup;
+    
     // Check if the Wonderitem should be overridden
-    dummy.override = lookup_override(&(dummy.actor), z64_game.scene_index, 0);
+    override_t override = lookup_override_by_newflag(&flag);
 
-    if(dummy.override.key.all != 0 && !Get_CollectibleOverrideFlag(&dummy))
+    if(override.key.all != 0 && !Get_NewOverrideFlag(&flag))
         return 0;
     if ((this->switchFlag >= 0) && z64_Flags_GetSwitch(&z64_game, this->switchFlag))
         return 1;
