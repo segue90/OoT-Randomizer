@@ -4556,6 +4556,28 @@ class SettingInfos:
         },
     )
 
+    display_custom_song_names = Combobox(
+        gui_text       = 'Display Custom Music Names',
+        shared         = False,
+        cosmetic       = True,
+        default        = 'off',
+        choices        = {
+            'off':               'Off',
+            'top':               'At the top of the screen',
+            'pause':             'In pause screen only'
+        },
+        gui_tooltip    = '''\
+            'off': Not displayed.
+
+            'At the top of the screen': The song name will be briefly
+            displayed at the top of the screen at every scene transition,
+            and permanently on the pause screen.
+
+            'In pause screen only': The song name will be displayed only
+            on the pause screen.
+        ''',
+    )
+
     fanfares = Combobox(
         gui_text       = 'Fanfares',
         shared         = False,

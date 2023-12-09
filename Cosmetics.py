@@ -976,6 +976,27 @@ def patch_input_viewer(rom: Rom, settings: Settings, log: CosmeticsLog, symbols:
         rom.write_byte(symbols['CFG_INPUT_VIEWER'], 0x00)
     log.display_dpad = settings.display_dpad
 
+def patch_song_names(rom: Rom, settings: Settings, log: CosmeticsLog, symbols: dict[str, int]) -> None:
+    bytes_to_write = []
+    if settings.display_custom_song_names != 'off':
+        if settings.display_custom_song_names == 'top':
+            rom.write_byte(symbols['CFG_SONG_NAME_POSITION'], 0x00)
+        if settings.display_custom_song_names == 'pause':
+            rom.write_byte(symbols['CFG_SONG_NAME_POSITION'], 0x01)
+
+
+        for area, song_name in log.bgm.items():
+            text_bytes = []
+            if (len(song_name) > 50):
+                song_name_cropped = song_name[:50]
+                text_bytes = list(ord(c) for c in song_name_cropped)
+            else:
+                text_bytes[0:len(song_name)] = list(ord(c) for c in song_name)
+                text_bytes[len(song_name):50] = [ord('\0')] * (50 - len(song_name))
+            bytes_to_write += text_bytes
+    rom.write_bytes(symbols['CFG_SONG_NAMES'], bytes_to_write)
+    log.display_custom_song_names = settings.display_custom_song_names
+
 legacy_cosmetic_data_headers: list[int] = [
     0x03481000,
     0x03480810,
@@ -1179,6 +1200,18 @@ patch_sets[0x1F073FE1] = {
     "symbols": {
         **patch_sets[0x1F073FE0]["symbols"],
         "CFG_INPUT_VIEWER": 0x006B,
+    }
+}
+
+# 8.0.11
+patch_sets[0x1F073FE1] = {
+    "patches": patch_sets[0x1F073FE0]["patches"] + [
+        patch_song_names,
+    ],
+    "symbols": {
+        **patch_sets[0x1F073FE0]["symbols"],
+        "CFG_SONG_NAME_POSITION": 0x006B,
+        "CFG_SONG_NAMES": 0x006C,
     }
 }
 

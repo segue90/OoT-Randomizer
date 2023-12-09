@@ -137,6 +137,7 @@ void draw_silver_rupee_count(z64_game_t* globalCtx, z64_disp_buf_t* db) {
 }
 
 void draw_dungeon_info(z64_disp_buf_t* db) {
+    show_dungeon_info = 0;
     pad_t pad_held = z64_ctxt.input[0].raw.pad;
     int draw = CAN_DRAW_DUNGEON_INFO && !CAN_DRAW_TRADE_DPAD && (
         ((pad_held.dl || pad_held.dr || pad_held.dd) && CFG_DPAD_DUNGEON_INFO_ENABLE) ||
@@ -152,6 +153,7 @@ void draw_dungeon_info(z64_disp_buf_t* db) {
     gSPDisplayList(db->p++, &setup_db);
 
     if (pad_held.a && !((pad_held.dl || pad_held.dr || pad_held.dd) && !CFG_DPAD_DUNGEON_INFO_ENABLE)) {
+        show_dungeon_info = 1;
         uint16_t altar_flags = z64_file.inf_table[27];
         int show_medals = CFG_DUNGEON_INFO_REWARD_ENABLE && (!CFG_DUNGEON_INFO_REWARD_NEED_ALTAR || (altar_flags & 1)) && CFG_DUNGEON_INFO_REWARD_SUMMARY_ENABLE;
         int show_stones = CFG_DUNGEON_INFO_REWARD_ENABLE && (!CFG_DUNGEON_INFO_REWARD_NEED_ALTAR || (altar_flags & 2)) && CFG_DUNGEON_INFO_REWARD_SUMMARY_ENABLE;
@@ -471,6 +473,7 @@ void draw_dungeon_info(z64_disp_buf_t* db) {
         // Finish
 
     } else if (pad_held.dd) {
+        show_dungeon_info = 1;
         uint16_t altar_flags = z64_file.inf_table[27];
         int show_medals = CFG_DUNGEON_INFO_REWARD_ENABLE && (!CFG_DUNGEON_INFO_REWARD_NEED_ALTAR || (altar_flags & 1));
         int show_stones = CFG_DUNGEON_INFO_REWARD_ENABLE && (!CFG_DUNGEON_INFO_REWARD_NEED_ALTAR || (altar_flags & 2));
@@ -555,6 +558,7 @@ void draw_dungeon_info(z64_disp_buf_t* db) {
 
         left += (0x16 * font_sprite.tile_w) + padding;
     } else if (pad_held.dr) {
+        show_dungeon_info = 1;
         // Set up dimensions
 
         int icon_size = 16;
@@ -715,6 +719,7 @@ void draw_dungeon_info(z64_disp_buf_t* db) {
             gDPSetPrimColor(db->p++, 0, 0, 0xFF, 0xFF, 0xFF, 0xFF);
         }
     } else { // pad_held.dl
+        show_dungeon_info = 1;
         int show_map_compass = 1;
         int show_skulls = 1;
         int show_mq = CFG_DUNGEON_INFO_MQ_ENABLE;
@@ -823,4 +828,8 @@ void draw_dungeon_info(z64_disp_buf_t* db) {
 
     // Finish
     text_flush(db);
+}
+
+int dungeon_info_is_drawn() {
+    return show_dungeon_info;
 }
