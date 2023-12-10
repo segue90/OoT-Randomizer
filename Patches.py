@@ -2969,8 +2969,25 @@ def get_doors_to_unlock(rom: Rom, world: World) -> dict[int, list[int]]:
                 return [0x00D4 + scene * 0x1C + 0x04 + flag_byte, flag_bits]
 
         # Return Boss Doors that should be unlocked
-        if (world.settings.shuffle_bosskeys == 'remove' and scene != 0x0A) or (world.settings.shuffle_ganon_bosskey == 'remove' and scene == 0x0A) or (world.settings.shuffle_pots and scene == 0x0A and switch_flag == 0x15):
-            if actor_id == 0x002E and door_type == 0x05:
+        if actor_id == 0x002E and door_type == 0x05:
+            dungeons = {
+                0x00: 'Deku Tree',
+                0x01: 'Dodongos Cavern',
+                0x02: 'Jabu Jabus Belly',
+                0x03: 'Forest Temple',
+                0x04: 'Fire Temple',
+                0x05: 'Water Temple',
+                0x06: 'Spirit Temple',
+                0x07: 'Shadow Temple',
+                0x0A: 'Ganons Castle',
+            }
+            if scene in dungeons and world.keyring_give_bk(dungeons[scene]):
+                setting = world.settings.shuffle_smallkeys
+            elif scene == 0x0A:
+                setting = world.settings.shuffle_ganon_bosskey
+            else:
+                setting = world.settings.shuffle_bosskeys
+            if setting == 'remove' or (world.settings.shuffle_pots and scene == 0x0A and switch_flag == 0x15):
                 return [0x00D4 + scene * 0x1C + 0x04 + flag_byte, flag_bits]
 
     return get_actor_list(rom, get_door_to_unlock)
