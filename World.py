@@ -1159,6 +1159,7 @@ class World:
         dungeon_name = HintArea.at(region).dungeon_name
         return dungeon_name in self.settings.dungeon_shortcuts
 
+    # Returns whether the given dungeon has a keyring.
     def keyring(self, dungeon_name: str) -> bool:
         if dungeon_name in ('Forest Temple', 'Fire Temple', 'Water Temple', 'Shadow Temple', 'Spirit Temple', 'Bottom of the Well', 'Gerudo Training Ground', 'Ganons Castle'):
             return dungeon_name in self.settings.key_rings and self.settings.shuffle_smallkeys != 'vanilla'
@@ -1169,6 +1170,7 @@ class World:
         else:
             raise ValueError(f'Attempted to check keyring for unknown dungeon {dungeon_name!r}')
 
+    # Returns whether the given dungeon has a keyring that includes the boss key.
     def keyring_give_bk(self, dungeon_name: str) -> bool:
         return (
             dungeon_name in ('Forest Temple', 'Fire Temple', 'Water Temple', 'Shadow Temple', 'Spirit Temple')
