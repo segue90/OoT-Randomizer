@@ -71,8 +71,12 @@ static uint32_t frames = 0;
 static uint32_t display_song_name_flag = 0;
 static uint16_t previousSeqIndexName = 0;
 
+uint8_t are_song_displayed() {
+    return *CFG_SONG_NAMES ? 1 : 0;
+}
+
 void display_song_name(z64_disp_buf_t* db) {
-    if (!(dungeon_info_is_drawn()) && *CFG_SONG_NAMES) {
+    if (!(dungeon_info_is_drawn()) && are_song_displayed()) {
 
         uint8_t alpha;
         if (z64_Audio_GetActiveSeqId(0) != previousSeqIndexName) {
@@ -82,6 +86,11 @@ void display_song_name(z64_disp_buf_t* db) {
             frames = 0;
         }
         if (!(display_song_name_flag == 1 || z64_game.pause_ctxt.state == 6)) {
+            return;
+        }
+
+        // If model text is displayed, don't show the names in inventory screen.
+        if (illegal_model && z64_game.pause_ctxt.state == 6 && z64_game.pause_ctxt.screen_idx == 0) {
             return;
         }
 
@@ -139,7 +148,7 @@ void display_song_name(z64_disp_buf_t* db) {
 }
 
 void display_song_name_on_file_select(z64_disp_buf_t* db) {
-    if (!(dungeon_info_is_drawn()) && *CFG_SONG_NAMES) {
+    if (!(dungeon_info_is_drawn()) && are_song_displayed()) {
         uint8_t top = 7;
         uint8_t left = 7;
         uint8_t alpha = 255;
