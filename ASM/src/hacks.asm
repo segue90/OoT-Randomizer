@@ -4074,6 +4074,21 @@ courtyard_guards_kill:
 ; Replaces Item_Give(play, ITEM_OCARINA_FAIRY)
     jal      fairy_ocarina_getitem_override
     nop
+;===================================================================================================
+; Move the small key counter horizontally if we have boss key, to make room for the BK icon.
+;===================================================================================================
+; Replaces addiu   t7, $zero, 0x001A
+;          addiu   t8, $zero, 0x00BE
+.orga 0xAEB8AC
+    jal     move_key_icon
+    addiu   t8, $zero, 0x00BE
+
+; Replaces
+;          addiu   s2, $zero, 0x002A
+;          addiu   t8, $zero, 0x00BE
+.orga 0xAEB998
+    jal     move_key_counter
+    addiu   t8, $zero, 0x00BE
 
 ;===================================================================================================
 ; Adds a textbox for adult shooting gallery if game was played without a bow

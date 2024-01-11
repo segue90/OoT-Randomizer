@@ -23,6 +23,8 @@ extern dungeon_entry_t dungeons[14];
 
 void draw_dungeon_info(z64_disp_buf_t* db);
 void draw_silver_rupee_count(z64_game_t* globalCtx, z64_disp_buf_t* db);
+void draw_boss_key(z64_game_t* globalCtx, z64_disp_buf_t* db);
+extern uint8_t bk_display;
 
 extern unsigned char CFG_DUNGEON_IS_MQ[14];
 extern uint32_t CFG_DUNGEON_INFO_ENABLE;
