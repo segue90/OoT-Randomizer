@@ -5,13 +5,22 @@ import * as path from "path";
 import * as url from "url";
 import * as windowStateKeeper from "electron-window-state";
 import * as remoteMain from '@electron/remote/main'
+import * as child from 'child_process';
+import * as treeKill from 'tree-kill';
 
 remoteMain.initialize();
 
 var win: BrowserWindow;
 var isRelease: boolean = false;
 
-function createApp() {
+function promiseFromChildProcess(child) {
+  return new Promise(function (resolve, reject) {
+    child.addListener("error", reject);
+    child.addListener("exit", resolve);
+  });
+}
+
+async function createApp() {
 
   //Fix up empty node command line in bundled mode
   if (app.isPackaged) {
@@ -36,6 +45,10 @@ function createApp() {
     else if ((arg === "p" || arg === "python") && i < (process.argv.length - 1)) { //Path to the python executable
       programOpts["python"] = process.argv[++i];
     }
+  }
+
+  if (!("python" in programOpts)) {
+    programOpts["python"] = await determineDefaultPyPath();
   }
 
   global["commandLineArgs"] = programOpts;
@@ -231,6 +244,66 @@ app.on('web-contents-created', (event, contents) => {
   });
 
 });
+
+//Python
+function determineDefaultPyPath() {
+  return new Promise(function (resolve, reject) {
+
+    var error = "";
+    var version = "";
+
+    if (os.platform() != "win32") {
+        resolve("python3");
+    }
+
+    let defaultWindowsExec = "python";
+
+    let pythonExec = child.spawn(defaultWindowsExec, ["--version"], { shell: true }).on('error', err => {
+      reject(err);
+    });
+
+    pythonExec.stderr.on('data', data => {
+      error = data.toString();
+    });
+
+    
+    pythonExec.stdout.on('data', data => {
+      version = data.toString();
+
+      if (version.toLowerCase().includes("python"))
+        version = version.toLowerCase().split("python")[1].trim();
+
+    });
+    
+    promiseFromChildProcess(pythonExec).then(function () {
+
+      pythonExec = null;
+
+      if (error)
+        reject(error);
+      else {
+        const [semVer, major, minor, patch, prerelease, buildmetadata] = version.match(/^(0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]\d*)(?:-((?:0|[1-9]\d*|\d*[a-zA-Z-][0-9a-zA-Z-]*)(?:\.(?:0|[1-9]\d*|\d*[a-zA-Z-][0-9a-zA-Z-]*))*))?(?:\+([0-9a-zA-Z-]+(?:\.[0-9a-zA-Z-]+)*))?$/) ?? [];
+        console.log(semVer,major,minor)
+
+        if (!semVer)
+          reject("Python could not be found. Please install Python 3.8+");
+        else if ((major != "3") || (parseInt(minor) < 11)) {
+          resolve("py");
+        }
+
+        resolve(defaultWindowsExec);
+      }
+        
+    }).catch(err => {
+      reject(err);
+    });
+
+    setTimeout(() => {
+      if (pythonExec)
+        treeKill(pythonExec.pid);
+    }, 2000);
+  });
+}
 
 //CSP
 function manageCSP() {

@@ -266,6 +266,10 @@ post.on('updateDynamicSetting', function (event) {
       post.send(window, 'updateDynamicSettingSuccess', res);
       
   }).catch((err) => {
+
+      if (os.platform() == "win32")
+        alert("The Python version used to run the GUI is not supported! If you have python 3.8+ installed, make sure app execution aliases for python are disabled.");
+
       post.send(window, 'updateDynamicSettingError', err);
   })
 })
