@@ -9,6 +9,12 @@ import * as post from 'post-robot';
 const generator = remote.require(path.join(__dirname, '../src/modules/generator.js'));
 const commander = remote.getGlobal("commandLineArgs");
 
+if ("criticalBootError" in commander)
+{
+   alert(commander.criticalBootError);
+   remote.app.quit();
+}
+
 var testMode = commander.release || remote.app.isPackaged ? false : true;
 console.log("Test Mode:", testMode);
 

@@ -48,7 +48,12 @@ async function createApp() {
   }
 
   if (!("python" in programOpts)) {
-    programOpts["python"] = await determineDefaultPyPath();
+    try {
+      programOpts["python"] = await determineDefaultPyPath();
+    }
+    catch(ex) {
+      programOpts["criticalBootError"] = ex;
+    }
   }
 
   global["commandLineArgs"] = programOpts;
@@ -282,11 +287,11 @@ function determineDefaultPyPath() {
         const [semVer, major, minor, patch, prerelease, buildmetadata] = version.match(/^(0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]\d*)(?:-((?:0|[1-9]\d*|\d*[a-zA-Z-][0-9a-zA-Z-]*)(?:\.(?:0|[1-9]\d*|\d*[a-zA-Z-][0-9a-zA-Z-]*))*))?(?:\+([0-9a-zA-Z-]+(?:\.[0-9a-zA-Z-]+)*))?$/) ?? [];
 
         if (!semVer)
-          reject("Python could not be found. Please install Python 3.8+");
+          resolve("");
         else if ((major != "3") || (parseInt(minor) < 11)) {
           resolve("py");
         }
-        
+
         resolve(defaultWindowsExec);
       }
         
