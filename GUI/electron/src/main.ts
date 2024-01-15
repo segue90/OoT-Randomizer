@@ -266,31 +266,27 @@ function determineDefaultPyPath() {
       error = data.toString();
     });
 
-    
     pythonExec.stdout.on('data', data => {
       version = data.toString();
 
       if (version.toLowerCase().includes("python"))
         version = version.toLowerCase().split("python")[1].trim();
-
     });
     
     promiseFromChildProcess(pythonExec).then(function () {
-
       pythonExec = null;
 
       if (error)
         reject(error);
       else {
         const [semVer, major, minor, patch, prerelease, buildmetadata] = version.match(/^(0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]\d*)(?:-((?:0|[1-9]\d*|\d*[a-zA-Z-][0-9a-zA-Z-]*)(?:\.(?:0|[1-9]\d*|\d*[a-zA-Z-][0-9a-zA-Z-]*))*))?(?:\+([0-9a-zA-Z-]+(?:\.[0-9a-zA-Z-]+)*))?$/) ?? [];
-        console.log(semVer,major,minor)
 
         if (!semVer)
           reject("Python could not be found. Please install Python 3.8+");
         else if ((major != "3") || (parseInt(minor) < 11)) {
           resolve("py");
         }
-
+        
         resolve(defaultWindowsExec);
       }
         
