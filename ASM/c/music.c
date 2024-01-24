@@ -76,7 +76,9 @@ uint8_t are_song_displayed() {
 }
 
 void display_song_name(z64_disp_buf_t* db) {
-    if (!(dungeon_info_is_drawn()) && are_song_displayed()) {
+    if (are_song_displayed() &&
+        !(dungeon_info_is_drawn()) && // Don't display if the custom rando pause screen if displayed.
+        !(z64_link.state_flags_2 & 0x8000000)) { // Don't display if Link is playing the Ocarina.
 
         uint8_t alpha;
         if (z64_Audio_GetActiveSeqId(0) != previousSeqIndexName) {
@@ -126,8 +128,10 @@ void display_song_name(z64_disp_buf_t* db) {
                 bgm_found = i;
                 break;
             }
+            // In case the active sequence was not listed.
+            bgm_found = -1;
         }
-        if (bgm_found > -1) {
+        if (bgm_found > -1 && bgm_found < 47) {
             char subStringName[50];
             uint8_t subStringNameLength = 0;
             for (uint8_t j = 0; j < 50; j++) {
