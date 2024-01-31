@@ -120,6 +120,7 @@ issue. You should always Hard Reset to avoid this issue entirely.
 
 #### Bug Fixes
 * Fix the `Silver Rupee Pouches` setting not being hidden when `Silver Rupee Pouches Mode` is set to `Random Puzzles`.
+* Fix an issue in the Co-op hint distribution which caused seed generation failures for some settings.
 
 ### 8.0
 
