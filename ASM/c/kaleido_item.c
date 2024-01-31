@@ -360,13 +360,7 @@ void KaleidoScope_DrawItemSelect(z64_game_t* play) {
 
     // Draw outline around equipped items
     for (i = 0, j = 24 * 4; i < 3; i++, j += 4) {
-        uint8_t current_c_item = z64_file.button_items[i + 1];
-        if (current_c_item != ITEM_NONE) {
-            if (current_c_item >= ITEM_BOW_ARROW_FIRE && current_c_item <= ITEM_BOW_ARROW_LIGHT) {
-                gDPSetPrimColor(POLY_OPA_DISP++, 0, 0, magic_arrow_effects_r[current_c_item - ITEM_BOW_ARROW_FIRE],
-                                magic_arrow_effects_g[current_c_item - ITEM_BOW_ARROW_FIRE],
-                                magic_arrow_effects_b[current_c_item - ITEM_BOW_ARROW_FIRE], pause_ctxt->alpha);
-            }
+        if (z64_file.button_items[i + 1] != ITEM_NONE) {
             gSPVertex(POLY_OPA_DISP++, &pause_ctxt->item_vtx[j], 4, 0);
             POLY_OPA_DISP = KaleidoScope_QuadTextureIA8(POLY_OPA_DISP, z64_EquippedItemOutlineTex, 32, 32, 0);
         }
