@@ -327,12 +327,13 @@ class World:
         # over again after the first round through the categories.
         if len(self.goal_categories) > 0:
             self.one_hint_per_goal = True
+            minor_goal_categories = ('door_of_time', 'ganon')
             goal_list1 = []
             for category in self.goal_categories.values():
-                if category.name != 'door_of_time':
+                if category.name not in minor_goal_categories:
                     goal_list1 = [goal.name for goal in category.goals]
             for category in self.goal_categories.values():
-                if goal_list1 != [goal.name for goal in category.goals] and category.name != 'door_of_time':
+                if goal_list1 != [goal.name for goal in category.goals] and category.name not in minor_goal_categories:
                     self.one_hint_per_goal = False
 
         # initialize category check for first rounds of goal hints
