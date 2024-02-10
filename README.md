@@ -123,6 +123,7 @@ issue. You should always Hard Reset to avoid this issue entirely.
 * Fix an issue in the Co-op hint distribution which caused seed generation failures for some settings.
 * Fix bug which causes `Maps and Compasses Give Information` to fail when logic is set to `Glitched`.
 * Put a band-aid on a softlock which occurs when collecting a shuffled silver rupee on the ladder in the Bottom of the Well by disallowing silver rupees on this location.
+* You can no longer wear bunny hood while turning adult, then save and reset before leaving the temple of time to keep bunny hood as adult.
 
 #### Other Changes
 * Removing small keys for a dungeon with key rings and `Key Rings give Boss Keys` enabled will now open the boss door instead of giving the player the boss key.
