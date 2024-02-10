@@ -1,6 +1,8 @@
 # This script is called by GitHub Actions, see .github/workflows/python.yml
 # To fix code style errors, run: python3 ./CI.py --fix --no_unit_tests
 
+from __future__ import annotations
+
 import argparse
 import json
 import os.path
