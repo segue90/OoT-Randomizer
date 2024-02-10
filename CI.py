@@ -16,13 +16,15 @@ from SettingsList import SettingInfos, logic_tricks, validate_settings
 from Utils import data_path
 
 
-def error(msg: str, can_fix: bool) -> None:
+def error(msg: str, can_fix: bool | str) -> None:
     if not hasattr(error, "count"):
         error.count = 0
     print(msg, file=sys.stderr)
     error.count += 1
     if can_fix:
         error.can_fix = True
+        if can_fix == 'release':
+            error.can_fix_release = True
     else:
         error.cannot_fix = True
 
@@ -115,7 +117,7 @@ def check_release_presets(fix_errors: bool = False) -> None:
 
     for preset_name, preset in presets.items():
         if not preset['create_spoiler']:
-            error(f'{preset_name} preset does not create spoiler logs', True)
+            error(f'{preset_name} preset does not create spoiler logs', 'release')
             preset['create_spoiler'] = True
 
     if fix_errors:
@@ -220,10 +222,15 @@ def exit_ci(fix_errors: bool = False) -> NoReturn:
                 sys.exit(0)
         else:
             if getattr(error, 'can_fix', False):
-                if getattr(error, 'cannot_fix', False):
-                    print('Run `CI.py --fix --no_unit_tests` to automatically fix some of these errors.', file=sys.stderr)
+                if getattr(error, 'can_fix_release', False):
+                    release_arg = ' --release'
                 else:
-                    print('Run `CI.py --fix --no_unit_tests` to automatically fix these errors.', file=sys.stderr)
+                    release_arg = ''
+                if getattr(error, 'cannot_fix', False):
+                    which_errors = 'some of these errors'
+                else:
+                    which_errors = 'these errors'
+                print(f'Run `CI.py --fix --no_unit_tests{release_arg}` to automatically fix {which_errors}.', file=sys.stderr)
             sys.exit(1)
     else:
         print(f'CI checks successful.')
