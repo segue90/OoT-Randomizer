@@ -123,6 +123,9 @@ issue. You should always Hard Reset to avoid this issue entirely.
 * Fix an issue in the Co-op hint distribution which caused seed generation failures for some settings.
 * Fix bug which causes `Maps and Compasses Give Information` to fail when logic is set to `Glitched`.
 
+#### Other Changes
+* Removing small keys for a dungeon with key rings and `Key Rings give Boss Keys` enabled will now open the boss door instead of giving the player the boss key.
+
 ### 8.0
 
 #### New Features
