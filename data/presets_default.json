@@ -532,7 +532,8 @@
     },
     "DDR Weekly (2023-06-12)": {
         "aliases": [
-            "ddr"
+            "ddr",
+            "ddrweekly"
         ],
         "show_seed_info": true,
         "user_message": "DDR Season 2",
@@ -1796,7 +1797,8 @@
     "Co-Op Tournament Season 3": {
         "aliases": [
             "co-op",
-            "co-op_s3"
+            "co-op_s3",
+            "coop"
         ],
         "show_seed_info": true,
         "user_message": "Co-Op Tournament Season 3",
