@@ -3816,7 +3816,7 @@ courtyard_guards_kill:
 ;lh      t8, 0xA4(s1)
 ;lui     t1, 0x8012
 ; SaveContext->save.info.playerData.savedSceneId = play->sceneId;
-.orga 0xBC4048
+.orga 0xBC5120
     jal     player_save_mask
     nop
 
