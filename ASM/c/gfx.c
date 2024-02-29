@@ -103,7 +103,6 @@ sprite_t buttons_sprite = {
 };
 
 
-
 int sprite_bytes_per_tile(sprite_t* sprite) {
     if (sprite->im_siz == G_IM_SIZ_4b) {
         // this format is nibble based, so 4bits = half a byte
@@ -122,15 +121,15 @@ void sprite_load(z64_disp_buf_t* db, sprite_t* sprite,
     int height = sprite->tile_h * tile_count;
     if (sprite->im_siz == G_IM_SIZ_4b) {
         gDPLoadTextureTile_4b(db->p++,
-        sprite->buf + (start_tile * sprite_bytes_per_tile(sprite)),
-        sprite->im_fmt,
-        width, height,
-        0, 0,
-        width - 1, height - 1,
-        0,
-        G_TX_WRAP, G_TX_WRAP,
-        G_TX_NOMASK, G_TX_NOMASK,
-        G_TX_NOLOD, G_TX_NOLOD);
+            sprite->buf + start_tile * sprite_bytes_per_tile(sprite),
+            sprite->im_fmt,
+            width, height,
+            0, 0,
+            width - 1, height - 1,
+            0,
+            G_TX_WRAP, G_TX_WRAP,
+            G_TX_NOMASK, G_TX_NOMASK,
+            G_TX_NOLOD, G_TX_NOLOD);
     }
     else {
         gDPLoadTextureTile(db->p++,
@@ -180,26 +179,26 @@ void sprite_texture_4b(z64_disp_buf_t *db, sprite_t *sprite, int tile_index, int
 
     gDPPipeSync(db->p++);
     gDPSetCombineLERP(db->p++, PRIMITIVE, ENVIRONMENT, TEXEL0, ENVIRONMENT, TEXEL0, 0, PRIMITIVE, 0, PRIMITIVE,
-                  ENVIRONMENT, TEXEL0, ENVIRONMENT, TEXEL0, 0, PRIMITIVE, 0);
+        ENVIRONMENT, TEXEL0, ENVIRONMENT, TEXEL0, 0, PRIMITIVE, 0);
 
     gDPSetEnvColor(db->p++, 0, 0, 0, 255);
 
     gDPLoadTextureBlock_4b(db->p++,
-    ((uint8_t*)(sprite->buf)) + (tile_index * sprite_bytes_per_tile(sprite)),
-    sprite->im_fmt,
-    sprite->tile_w,
-    sprite->tile_h,
-    0,
-    G_TX_NOMIRROR | G_TX_CLAMP,
-    G_TX_NOMIRROR | G_TX_CLAMP,
-    G_TX_NOMASK,
-    G_TX_NOMASK,
-    G_TX_NOLOD,
-    G_TX_NOLOD
+        ((uint8_t*)(sprite->buf)) + tile_index * sprite_bytes_per_tile(sprite),
+        sprite->im_fmt,
+        sprite->tile_w,
+        sprite->tile_h,
+        0,
+        G_TX_NOMIRROR | G_TX_CLAMP,
+        G_TX_NOMIRROR | G_TX_CLAMP,
+        G_TX_NOMASK,
+        G_TX_NOMASK,
+        G_TX_NOLOD,
+        G_TX_NOLOD
     );
 
     gSPTextureRectangle(db->p++, left * 4, top * 4, (left + width) * 4,
-     (top * height) * 4, G_TX_RENDERTILE, 0, 0, width_factor, height_factor);
+        (top * height) * 4, G_TX_RENDERTILE, 0, 0, width_factor, height_factor);
 }
 
 void sprite_draw(z64_disp_buf_t* db, sprite_t* sprite, int tile_index,

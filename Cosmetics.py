@@ -975,6 +975,7 @@ def patch_input_viewer(rom: Rom, settings: Settings, log: CosmeticsLog, symbols:
     else:
         rom.write_byte(symbols['CFG_INPUT_VIEWER'], 0x00)
     log.display_dpad = settings.display_dpad
+
 legacy_cosmetic_data_headers: list[int] = [
     0x03481000,
     0x03480810,
@@ -1180,6 +1181,7 @@ patch_sets[0x1F073FE1] = {
         "CFG_INPUT_VIEWER": 0x006B,
     }
 }
+
 def patch_cosmetics(settings: Settings, rom: Rom) -> CosmeticsLog:
     # re-seed for aesthetic effects. They shouldn't be affected by the generation seed
     random.seed()
