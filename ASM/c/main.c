@@ -57,7 +57,6 @@ void after_game_state_update() {
         draw_illegal_model_text(&(z64_ctxt.gfx->overlay));
         draw_input_viewer(&(z64_ctxt.gfx->overlay));
         debug_utilities(&(z64_ctxt.gfx->overlay));
-
     }
     give_ganon_boss_key();
 }

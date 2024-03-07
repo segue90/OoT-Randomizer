@@ -69,13 +69,12 @@ void text_flush(z64_disp_buf_t* db) {
     text_flush_size(db, font_sprite.tile_w, font_sprite.tile_h, 0, 0);
 }
 
-int draw_int(z64_disp_buf_t *db, int32_t number, int16_t left, int16_t top, colorRGBA8_t color) {
+int draw_int(z64_disp_buf_t* db, int32_t number, int16_t left, int16_t top, colorRGBA8_t color) {
     draw_int_size(db, number, left, top, color, 8, 16);
 }
 
 // Helper function for drawing numbers to the HUD.
-int draw_int_size(z64_disp_buf_t *db, int32_t number, int16_t left, int16_t top, colorRGBA8_t color, int16_t width, int16_t height) {
-
+int draw_int_size(z64_disp_buf_t* db, int32_t number, int16_t left, int16_t top, colorRGBA8_t color, int16_t width, int16_t height) {
     int isNegative = 0;
     if (number < 0) {
         number *= -1;
@@ -89,11 +88,10 @@ int draw_int_size(z64_disp_buf_t *db, int32_t number, int16_t left, int16_t top,
         digits[j] = number % 10;
         number = number / 10;
         j++;
-    }
-    while ( number > 0 );
+    } while (number > 0);
     // This combiner mode makes it look like the rupee count
     gDPSetCombineLERP(db->p++, 0, 0, 0, PRIMITIVE, TEXEL0, 0, PRIMITIVE, 0, 0, 0, 0, PRIMITIVE,
-                            TEXEL0, 0, PRIMITIVE, 0);
+        TEXEL0, 0, PRIMITIVE, 0);
 
     // Set the color
     gDPSetPrimColor(db->p++, 0, 0, color.r, color.g, color.b, color.a);
