@@ -125,6 +125,7 @@ issue. You should always Hard Reset to avoid this issue entirely.
 * Put a band-aid on a softlock which occurs when collecting a shuffled silver rupee on the ladder in the Bottom of the Well by disallowing silver rupees on this location.
 * You can no longer wear bunny hood while turning adult, then save and reset before leaving the temple of time to keep bunny hood as adult.
 * If the GUI fails to load Python, it will now display an error message instead of appearing to load forever.
+* Fix bug where specifying custom music sequences via cosmetics plando was incompatible with actively disabling sequences.
 
 #### Other Changes
 * Removing small keys for a dungeon with key rings and `Key Rings give Boss Keys` enabled will now open the boss door instead of giving the player the boss key.
