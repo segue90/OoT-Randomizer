@@ -12,9 +12,9 @@ import unittest
 from io import StringIO
 from typing import NoReturn
 
-
-import Unittest as Tests
+from Messages import ITEM_MESSAGES, KEYSANITY_MESSAGES, MISC_MESSAGES
 from SettingsList import SettingInfos, logic_tricks, validate_settings
+import Unittest as Tests
 from Utils import data_path
 
 
@@ -128,6 +128,23 @@ def check_release_presets(fix_errors: bool = False) -> None:
             print(file=file)
 
 
+# Check the message tables to ensure no duplicate entries exist.
+# This is not a perfect check because it doesn't account for everything that gets manually done in Patches.py
+# For that, we perform additional checking at patch time
+def check_message_duplicates() -> None:
+    def check_for_duplicates(new_item_messages: list[tuple[int, str]]) -> None:
+        for i in range(0, len(new_item_messages)):
+            for j in range(i, len(new_item_messages)):
+                if i != j:
+                    message_id1, message1 = new_item_messages[i]
+                    message_id2, message2 = new_item_messages[j]
+                    if message_id1 == message_id2:
+                        error(f'Duplicate MessageID found: {hex(message_id1)}, {message1}, {message2}', False)
+
+    messages = ITEM_MESSAGES + KEYSANITY_MESSAGES + MISC_MESSAGES
+    check_for_duplicates(messages)
+
+
 def check_code_style(fix_errors: bool = False) -> None:
     # Check for code style errors
     repo_dir = pathlib.Path(os.path.dirname(os.path.realpath(__file__)))
@@ -208,6 +225,7 @@ def run_ci_checks() -> NoReturn:
         check_presets_formatting(args.fix)
         if args.release:
             check_release_presets(args.fix)
+        check_message_duplicates()
 
     exit_ci(args.fix)
 
