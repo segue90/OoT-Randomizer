@@ -113,6 +113,7 @@ issue. You should always Hard Reset to avoid this issue entirely.
 
 #### New Features
 * New cosmetic option `Input Viewer` for showing control stick values and pressed buttons at the bottom of the screen.
+* A text box has been added when completing the adult shooting gallery without a bow to warn the player that they haven't received the real reward.
 
 #### Bug Fixes
 * Goal hints can now hint items required to defeat Ganon even if they're not required for the rainbow bridge, Ganon's boss key, or the trials. These items will be hinted as being on the "path of the hero".

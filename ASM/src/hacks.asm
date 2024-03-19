@@ -4074,3 +4074,12 @@ courtyard_guards_kill:
 ; Replaces Item_Give(play, ITEM_OCARINA_FAIRY)
     jal      fairy_ocarina_getitem_override
     nop
+
+;===================================================================================================
+; Adds a textbox for adult shooting gallery if game was played without a bow
+;===================================================================================================
+.orga 0xD36164
+; Replaces sw      t4, 0x01EC(a2)
+;          sw      t1, 0x0118(a2)
+    jal     shooting_gallery_no_bow
+    nop

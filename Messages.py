@@ -553,6 +553,7 @@ MISC_MESSAGES: list[tuple[int, tuple[str | bytearray, int]]] = [
     (0x0459, ("\x12\x68\x7AMweep\x07\x04\x5A", 0x23)),
     (0x045A, ("\x12\x68\x7AMweep\x07\x04\x5B", 0x23)),
     (0x045B, ("\x12\x68\x7AMweep", 0x23)),
+    (0x045C, ("Come back when you have\x01your own bow and you'll get the\x01\x05\x41real prize\x05\x40!\x0E\x78", 0x00)),
     (0x6013, ("Hey, newcomer!\x04Want me to throw you in jail?\x01\x01\x1B\x05\x42No\x01Yes\x05\x40", 0x00)),
 ]
 
@@ -1301,10 +1302,6 @@ def shuffle_messages(messages: list[Message], except_hints: bool = True) -> list
         shuffle_messages.scrubs_message_ids +
         [0x5036, 0x70F5] # Chicken count and poe count respectively
     )
-    shuffle_exempt = [
-        0x208D,         # "One more lap!" for Cow in House race.
-        0xFFFC,         # Character data from JP table used on title and file select screens
-    ]
 
     permutation = [i for i, _ in enumerate(messages)]
 
@@ -1319,6 +1316,7 @@ def shuffle_messages(messages: list[Message], except_hints: bool = True) -> list
             [0x5036, 0x70F5] # Chicken count and poe count respectively
         )
         shuffle_exempt = [
+            0x045C,         # Adult shooting gallery helping message when the player wins without having a bow
             0x208D,         # "One more lap!" for Cow in House race.
             0xFFFC,         # Character data from JP table used on title and file select screens
         ]
