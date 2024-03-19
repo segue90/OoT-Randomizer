@@ -112,6 +112,7 @@ issue. You should always Hard Reset to avoid this issue entirely.
 ### Dev
 
 #### New Features
+* New cosmetic option `Input Viewer` for showing control stick values and pressed buttons at the bottom of the screen.
 
 #### Bug Fixes
 * Goal hints can now hint items required to defeat Ganon even if they're not required for the rainbow bridge, Ganon's boss key, or the trials. These items will be hinted as being on the "path of the hero".

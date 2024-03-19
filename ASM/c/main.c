@@ -22,6 +22,8 @@
 #include "music.h"
 #include "uninvertYaxis.h"
 #include "debug.h"
+#include "inputviewer.h"
+
 
 void Gameplay_InitSkybox(z64_game_t* globalCtx, int16_t skyboxId);
 
@@ -53,6 +55,7 @@ void after_game_state_update() {
         draw_triforce_count(&(z64_ctxt.gfx->overlay));
         draw_silver_rupee_count(&z64_game, &(z64_ctxt.gfx->overlay));
         draw_illegal_model_text(&(z64_ctxt.gfx->overlay));
+        draw_input_viewer(&(z64_ctxt.gfx->overlay));
         debug_utilities(&(z64_ctxt.gfx->overlay));
     }
     give_ganon_boss_key();
