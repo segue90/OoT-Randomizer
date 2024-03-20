@@ -119,6 +119,7 @@ issue. You should always Hard Reset to avoid this issue entirely.
 * Goal hints can now hint items required to defeat Ganon even if they're not required for the rainbow bridge, Ganon's boss key, or the trials. These items will be hinted as being on the "path of the hero".
 
 #### Other Changes
+* Clarified the error message shown when an unshuffled trade quest item is used as a starting item.
 
 ### 8.1
 
