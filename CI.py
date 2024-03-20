@@ -79,7 +79,7 @@ def check_presets_formatting(fix_errors: bool = False) -> None:
             # sort the settings within each preset
             setting_name: preset[setting_name]
             for setting_name, setting in SettingInfos.setting_infos.items()
-            if setting_name != 'starting_items' and setting.shared and setting_name in preset
+            if setting_name != 'starting_items' and (setting.shared or setting_name == 'aliases') and setting_name in preset
         }
         for preset_name, preset in presets.items()
     }

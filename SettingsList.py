@@ -24,6 +24,7 @@ if TYPE_CHECKING:
 
 class SettingInfos:
     # Internal & Non-GUI Settings
+    aliases = SettingInfoList(None, None, False)
     cosmetics_only = Checkbutton(None)
     check_version = Checkbutton(None)
     checked_version = SettingInfoStr(None, None)
@@ -5125,6 +5126,8 @@ def validate_settings(settings_dict: dict[str, Any], *, check_conflicts: bool = 
             raise TypeError('Supplied choice %r for setting %r is of type %r, expecting %r' % (choice, setting, type(choice).__name__, info.type.__name__))
         # If setting is a list, must check each element
         if isinstance(choice, list):
+            if not info.choice_list:
+                continue
             for element in choice:
                 if element not in info.choice_list:
                     raise ValueError('%r is not a valid choice for setting %r. %s' % (element, setting, build_close_match(element, 'choice', info.choice_list)))
