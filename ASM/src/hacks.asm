@@ -4083,3 +4083,12 @@ courtyard_guards_kill:
 ;          sw      t1, 0x0118(a2)
     jal     shooting_gallery_no_bow
     nop
+
+;===================================================================================================
+; Cancel Volvagia flying form hitbox when her health is already at O
+;===================================================================================================
+; Replaces addiu   a2, $zero, 0x0004
+;          andi    t6, a1, 0x0002
+.orga 0xCEA41C
+    jal     volvagia_flying_hitbox
+    nop
