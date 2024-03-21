@@ -119,6 +119,7 @@ issue. You should always Hard Reset to avoid this issue entirely.
 #### Bug Fixes
 * Goal hints can now hint items required to defeat Ganon even if they're not required for the rainbow bridge, Ganon's boss key, or the trials. These items will be hinted as being on the "path of the hero".
 * Fix a softlock present in the original game when damaging Volvagia's second hitbox during the death cutscene.
+* Don't start the trade sequence timer if getting the `ZD King Zora Thawed` item while the Eyeball Frog is in the inventory.
 
 #### Other Changes
 * Clarified the error message shown when an unshuffled trade quest item is used as a starting item.
