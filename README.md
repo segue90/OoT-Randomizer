@@ -122,6 +122,7 @@ issue. You should always Hard Reset to avoid this issue entirely.
 * Fix a softlock present in the original game when damaging Volvagia's second hitbox during the death cutscene.
 * Don't start the trade sequence timer if getting the `ZD King Zora Thawed` item while the Eyeball Frog is in the inventory.
 * Fix missing visual frost effect for ice traps in most chests.
+* Fix the items on the right side of the mask shop being available without paying for all borrowed masks first.
 
 #### Other Changes
 * Clarified the error message shown when an unshuffled trade quest item is used as a starting item.
