@@ -5,10 +5,10 @@ SYMBOL TABLE:
 00000000 l    d  .text	00000000 .text
 00016bf8 l    d  .rodata	00000000 .rodata
 00017300 l    d  .data	00000000 .data
-0002615c l    d  .reginfo	00000000 .reginfo
-0002615c l    d  .pdr	00000000 .pdr
-00026159 l    d  .gnu.attributes	00000000 .gnu.attributes
-00026159 l    d  .mdebug.abi32	00000000 .mdebug.abi32
+0002651c l    d  .reginfo	00000000 .reginfo
+0002651c l    d  .pdr	00000000 .pdr
+00026519 l    d  .gnu.attributes	00000000 .gnu.attributes
+00026519 l    d  .mdebug.abi32	00000000 .mdebug.abi32
 00000000 l    d  .comment	00000000 .comment
 00000000 l    df *ABS*	00000000 actor.c
 00000000 l    df *ABS*	00000000 agony.c
@@ -113,7 +113,7 @@ SYMBOL TABLE:
 00000000 l    df *ABS*	00000000 menu.c
 00000000 l    df *ABS*	00000000 message.c
 00000000 l    df *ABS*	00000000 misc_colors.c
-00026024 l     O .data	00000004 frames
+000263e4 l     O .data	00000004 frames
 00016e64 l       .rodata	00000000 $LC0
 00016e68 l       .rodata	00000000 $LC1
 00016e6c l       .rodata	00000000 $LC2
@@ -131,9 +131,9 @@ SYMBOL TABLE:
 00016f40 l       .rodata	00000000 $LC9
 00016f44 l       .rodata	00000000 $LC10
 00000000 l    df *ABS*	00000000 music.c
-000260f1 l     O .data	00000001 isSlowedDown
-000260f2 l     O .data	00000002 previousSeqIndexChange
-000260f0 l     O .data	00000001 isSpeedup
+000264b1 l     O .data	00000001 isSlowedDown
+000264b2 l     O .data	00000002 previousSeqIndexChange
+000264b0 l     O .data	00000001 isSpeedup
 00016f48 l       .rodata	00000000 $LC0
 00016f4c l       .rodata	00000000 $LC1
 00016f50 l       .rodata	00000000 $LC2
@@ -163,14 +163,14 @@ SYMBOL TABLE:
 00000000 l    df *ABS*	00000000 scarecrow.c
 00000000 l    df *ABS*	00000000 scene.c
 00000000 l    df *ABS*	00000000 text.c
-00026144 l     O .data	00000004 text_buf
-00026148 l     O .data	00000004 text_end
+00026504 l     O .data	00000004 text_buf
+00026508 l     O .data	00000004 text_end
 00000000 l    df *ABS*	00000000 textures.c
 00000000 l    df *ABS*	00000000 trade_quests.c
 00017070 l     O .rodata	00000008 sMaskPaymentPrice
 00000000 l    df *ABS*	00000000 triforce.c
-0002614c l     O .data	00000004 render_triforce_flag
-00026150 l     O .data	00000004 frames
+0002650c l     O .data	00000004 render_triforce_flag
+00026510 l     O .data	00000004 frames
 000172e0 l       .rodata	00000000 $LC0
 000172e8 l       .rodata	00000000 $LC1
 000172f0 l       .rodata	00000000 $LC2
@@ -252,7 +252,7 @@ SYMBOL TABLE:
 0000dc78 g     F .text	0000018c draw_gi_gs_token
 0000ea54 g     F .text	000002d4 draw_gi_boss_keys
 000120cc g     F .text	00000074 FindSize
-0001d674 g     O .data	00000004 active_override_is_outgoing
+0001da34 g     O .data	00000004 active_override_is_outgoing
 0000ff78 g     F .text	00000024 give_double_magic
 000181c4 g     O .data	00000004 normal_dd
 0000bc84 g     F .text	0000039c update_hud_colors
@@ -260,10 +260,10 @@ SYMBOL TABLE:
 00000000         *UND*	00000000 CFG_DUNGEON_REWARDS
 00016334 g     F .text	0000001c CanBuy_RightSideMask
 00017ce0 g     O .data	00000003 debug_text_color
-0002602a g     O .data	00000001 adult_safe
+000263ea g     O .data	00000001 adult_safe
 00010aa0 g     F .text	0000007c letter_to_bottle
 00000000         *UND*	00000000 CFG_B_BUTTON_COLOR
-0001d656 g     O .data	00000001 satisfied_pending_frames
+0001da16 g     O .data	00000001 satisfied_pending_frames
 00009510 g     F .text	0000006c resolve_alternative_override
 00000000         *UND*	00000000 CFG_CUSTOM_MESSAGE_1
 0000f2d0 g     F .text	000002d8 draw_gi_chubag
@@ -281,8 +281,8 @@ SYMBOL TABLE:
 00013d80 g     F .text	000000d4 BgSpot18Basket_RupeeDropHook
 0000ace0 g     F .text	000000ac dispatch_item
 00018030 g     O .data	00000002 loaded_room_bit_offset
-0002602c g     O .data	00000002 illegal_model
-0001d660 g     O .data	00000004 active_item_graphic_id
+000263ec g     O .data	00000002 illegal_model
+0001da20 g     O .data	00000004 active_item_graphic_id
 000180e0 g     O .data	00000010 dpad_sprite
 000181c0 g     O .data	00000004 a_button
 00000000         *UND*	00000000 CFG_SHOW_SETTING_INFO
@@ -299,7 +299,7 @@ SYMBOL TABLE:
 0001022c g     F .text	0000008c resolve_text_silver_rupee_pouches
 00000000         *UND*	00000000 CFG_C_NOTE_COLOR
 00000000         *UND*	00000000 OUTGOING_PLAYER
-0001d58c g     O .data	000000ca xflag_scene_table
+0001d94c g     O .data	000000ca xflag_scene_table
 000070d0 g     F .text	000000b8 EnWonderItem_Kill_Hack
 000169b4 g     F .text	00000240 override_weather_state
 0001b70c g     O .data	00000100 FILENAME_ENCODING
@@ -319,8 +319,8 @@ SYMBOL TABLE:
 0001560c g     F .text	00000030 text_flush
 00000000         *UND*	00000000 CFG_RAINBOW_SWORD_INNER_ENABLED
 000153d4 g     F .text	000000a8 text_print_size
-00026140 g     O .data	00000001 curr_scene_setup
-0001be58 g     O .data	000008c0 alt_overrides
+00026500 g     O .data	00000001 curr_scene_setup
+0001be58 g     O .data	00000c80 alt_overrides
 00015f78 g     F .text	00000154 SetupMaskShopHelloDialogOverride
 00018120 g     O .data	00000010 medals_sprite
 00007188 g     F .text	00000064 interpolate
@@ -343,9 +343,9 @@ SYMBOL TABLE:
 00018190 g     O .data	00000004 a_note_font_glow_max
 00017078 g     O .rodata	00000268 trade_quest_items
 0000c968 g     F .text	00000118 draw_gi_various_opa0_xlu1
-0001d678 g     O .data	00000010 active_override
+0001da38 g     O .data	00000010 active_override
 00018140 g     O .data	00000008 empty_dlist
-000260f4 g     O .data	00000004 RANDOMIZER_RNG_SEED
+000264b4 g     O .data	00000004 RANDOMIZER_RNG_SEED
 00015d00 g     F .text	00000070 IsTradeItemTraded
 00000000         *UND*	00000000 INCOMING_ITEM
 000181b8 g     O .data	00000004 c_button
@@ -373,9 +373,9 @@ SYMBOL TABLE:
 00018100 g     O .data	00000010 quest_items_sprite
 00009b08 g     F .text	00000070 after_key_received
 00000000         *UND*	00000000 PLANDOMIZER_USED
-00026158 g     O .data	00000001 KAKARIKO_WEATHER_FORECAST
+00026518 g     O .data	00000001 KAKARIKO_WEATHER_FORECAST
 00016934 g     F .text	0000003c heap_alloc
-0001d670 g     O .data	00000004 active_item_row
+0001da30 g     O .data	00000004 active_item_row
 00010ce4 g     F .text	0000007c after_game_state_update
 00000000         *UND*	00000000 CFG_DUNGEON_INFO_REWARD_SUMMARY_ENABLE
 0001bdd0 g     O .data	00000080 outgoing_queue
@@ -405,9 +405,9 @@ SYMBOL TABLE:
 00000000         *UND*	00000000 CFG_RAINBOW_SWORD_OUTER_ENABLED
 0000ff5c g     F .text	0000001c give_magic
 00018080 g     O .data	00000010 linkhead_skull_sprite
-0001d668 g     O .data	00000004 active_item_text_id
+0001da28 g     O .data	00000004 active_item_text_id
 0000c06c g     F .text	00000014 ice_trap_is_pending
-0001d6a0 g     O .data	00008980 cfg_item_overrides
+0001da60 g     O .data	00008980 cfg_item_overrides
 00018170 g     O .data	00000004 text_cursor_border_max
 0000f5a8 g     F .text	00000138 draw_gi_a_button
 00000000         *UND*	00000000 DPAD_TEXTURE
@@ -422,12 +422,12 @@ SYMBOL TABLE:
 00015968 g     F .text	00000080 SaveFile_TradeItemIsTraded
 0001315c g     F .text	0000005c Health_IsCritical
 00015f04 g     F .text	0000005c ShouldSkullKidSpawn
-0001d664 g     O .data	00000004 active_item_object_id
+0001da24 g     O .data	00000004 active_item_object_id
 00000000         *UND*	00000000 CFG_RAINBOW_BOOM_TRAIL_INNER_ENABLED
 000106c8 g     F .text	00000078 wallet_upgrade
 00000000         *UND*	00000000 EPONAS_SONG_NOTES
 00012220 g     F .text	000000ec check_skeleton
-0001d65c g     O .data	00000004 active_item_fast_chest
+0001da1c g     O .data	00000004 active_item_fast_chest
 0001be54 g     O .data	00000002 num_override_flags
 00010100 g     F .text	0000007c unlock_ocarina_note
 000181a4 g     O .data	00000004 c_note_g
@@ -527,7 +527,7 @@ SYMBOL TABLE:
 000181a0 g     O .data	00000004 c_note_b
 0000b054 g     F .text	000000e0 get_skulltula_token
 00000000         *UND*	00000000 CFG_RAINBOW_NAVI_IDLE_INNER_ENABLED
-000260f8 g     O .data	00000048 extended_savectx
+000264b8 g     O .data	00000048 extended_savectx
 0000b1a4 g     F .text	000000bc fairy_ocarina_getitem
 0000c080 g     F .text	00000018 push_pending_ice_trap
 00000000         *UND*	00000000 CFG_DUNGEON_INFO_REWARD_ENABLE
@@ -542,18 +542,18 @@ SYMBOL TABLE:
 00010a28 g     F .text	00000078 seeds_to_rupee
 0000ff9c g     F .text	0000000c give_fairy_ocarina
 0001295c g     F .text	00000050 lookup_model
-00026021 g     O .data	00000001 OPEN_KAKARIKO
+000263e1 g     O .data	00000001 OPEN_KAKARIKO
 0001be50 g     O .data	00000004 collectible_override_flags
 00011d6c g     F .text	000001f0 draw_illegal_model_text
 00000000         *UND*	00000000 CHEST_LENS_ONLY
 00017d08 g     O .data	00000134 dungeons
 00017c7c g     O .data	00000060 menu_categories
 00000000         *UND*	00000000 CFG_CUSTOM_MESSAGE_2
-00026029 g     O .data	00000001 child_safe
+000263e9 g     O .data	00000001 child_safe
 00000000         *UND*	00000000 CFG_DUNGEON_INFO_ENABLE
 00000000         *UND*	00000000 CFG_DUNGEON_IS_MQ
-00026028 g     O .data	00000001 missing_dlist
-0001d694 g     O .data	00000004 dummy_actor
+000263e8 g     O .data	00000001 missing_dlist
+0001da54 g     O .data	00000004 dummy_actor
 000113c4 g     F .text	000001a4 update_boomerang_trail_colors
 00000000         *UND*	00000000 CFG_RAINBOW_NAVI_NPC_OUTER_ENABLED
 0000effc g     F .text	000002d4 draw_gi_boss_altflip
@@ -572,7 +572,7 @@ SYMBOL TABLE:
 0000fb10 g     F .text	00000038 give_tycoon_wallet
 00000000         *UND*	00000000 CFG_RAINBOW_TUNIC_ENABLED
 00018174 g     O .data	00000004 text_cursor_border_base
-0001d698 g     O .data	00000004 item_overrides_count
+0001da58 g     O .data	00000004 item_overrides_count
 0000e5a0 g     F .text	0000013c draw_gi_song_notes
 00000000         *UND*	00000000 CFG_BOOM_TRAIL_INNER_COLOR
 0001417c g     F .text	000000dc ObjTsubo_SpawnCollectible_Hack
@@ -600,7 +600,7 @@ SYMBOL TABLE:
 00000000         *UND*	00000000 FREE_BOMBCHU_DROPS
 00010b58 g     F .text	000000a8 bombchus_to_bag
 00016e14 g     O .rodata	00000006 defaultHeart
-0001d658 g     O .data	00000002 incoming_junk
+0001da18 g     O .data	00000002 incoming_junk
 000181b0 g     O .data	00000004 a_note_g
 00010c4c g     F .text	0000004c c_init
 000160cc g     F .text	00000268 TryPaybackMaskOverride
@@ -610,7 +610,7 @@ SYMBOL TABLE:
 000180d0 g     O .data	00000010 triforce_sprite
 00000540 g     F .text	0000010c Actor_SpawnEntry_Hack
 00000000         *UND*	00000000 EXTERN_DAMAGE_MULTIPLYER
-00026022 g     O .data	00000001 MAX_RUPEES
+000263e2 g     O .data	00000001 MAX_RUPEES
 0000a2e4 g     F .text	00000380 get_xflag_bit_offset
 00012cb4 g     F .text	00000300 item_etcetera_draw
 00018060 g     O .data	00000010 ocarina_button_sprite
@@ -619,15 +619,15 @@ SYMBOL TABLE:
 00000000         *UND*	00000000 SPEED_MULTIPLIER
 00007b64 g     F .text	00000ea0 draw_file_icons
 000157d0 g     F .text	00000038 SaveFile_SetTradeItemAsOwned
-0001d66c g     O .data	00000004 active_item_action_id
-0001c718 g     O .data	00000bb8 xflag_room_blob
+0001da2c g     O .data	00000004 active_item_action_id
+0001cad8 g     O .data	00000bb8 xflag_room_blob
 00009c90 g     F .text	000001cc try_pending_item
 0000c320 g     F .text	00000120 draw_gi_compass
 0001ba0c g     O .data	000001f0 texture_table
 0000fff4 g     F .text	0000002c fill_wallet_upgrade
 0000a664 g     F .text	0000006c Get_NewFlag
 0000c1bc g     F .text	000000c0 draw_gi_eggs_and_medallions
-00026154 g     O .data	00000004 heap_next
+00026514 g     O .data	00000004 heap_next
 0000140c g     F .text	00000008 debug_utilities
 00000000         *UND*	00000000 TRIFORCE_ICON_TEXTURE
 00000000         *UND*	00000000 MW_PROGRESSIVE_ITEMS_ENABLE
@@ -645,7 +645,7 @@ SYMBOL TABLE:
 000093c4 g     F .text	000000f0 lookup_override_by_key
 0001230c g     F .text	00000238 check_model_skeletons
 0000a2d8 g     F .text	0000000c reset_collectible_mutex
-0001d68c g     O .data	00000008 drop_collectible_override_flag
+0001da4c g     O .data	00000008 drop_collectible_override_flag
 00006df8 g     F .text	00000240 EnWonderItem_DropCollectible_Hack
 00000000         *UND*	00000000 SHUFFLE_SILVER_RUPEES
 00012544 g     F .text	0000006c load_object_file
@@ -672,7 +672,7 @@ SYMBOL TABLE:
 00000000         *UND*	00000000 OUTGOING_ITEM
 0001587c g     F .text	00000078 SaveFile_UpdateShiftableItem
 00015f60 g     F .text	00000018 IsCuccoGivenToCuccoLady
-00026020 g     O .data	00000001 COMPLETE_MASK_QUEST
+000263e0 g     O .data	00000001 COMPLETE_MASK_QUEST
 00012bec g     F .text	00000064 skull_token_draw
 0000a720 g     F .text	00000074 Item_DropCollectible_Room_Hack
 000158f4 g     F .text	00000038 SaveFile_SetTradeItemAsTraded
@@ -694,9 +694,9 @@ SYMBOL TABLE:
 00012140 g     F .text	000000e0 FindHierarchy
 00000000         *UND*	00000000 CFG_RAINBOW_NAVI_PROP_INNER_ENABLED
 00012b88 g     F .text	00000064 heart_container_draw
-0001d688 g     O .data	00000004 spawn_actor_with_flag
+0001da48 g     O .data	00000004 spawn_actor_with_flag
 0000c120 g     F .text	0000009c draw_gi_bombchu_and_masks
-00026030 g     O .data	000000c0 object_slots
+000263f0 g     O .data	000000c0 object_slots
 00017838 g     O .data	00000286 overworld_warps
 0000fba0 g     F .text	00000094 give_small_key
 00000000         *UND*	00000000 CFG_DUNGEON_INFO_MQ_ENABLE
@@ -720,7 +720,7 @@ SYMBOL TABLE:
 000110ec g     F .text	000000e8 Message_AddFileName
 00001154 g     F .text	00000048 draw_chest
 00000000         *UND*	00000000 CFG_A_BUTTON_COLOR
-0001d2d0 g     O .data	000002bc xflag_room_table
+0001d690 g     O .data	000002bc xflag_room_table
 00000000         *UND*	00000000 FIX_BROKEN_DROPS
 00000000         *UND*	00000000 GET_ITEM_SEQ_ID
 0000b260 g     F .text	00000064 sprite_bytes_per_tile
