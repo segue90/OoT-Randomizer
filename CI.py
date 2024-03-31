@@ -12,6 +12,7 @@ from typing import NoReturn
 
 
 from Main import resolve_settings
+from Patches import get_override_table, get_override_table_bytes
 from Rom import Rom
 import Unittest as Tests
 from SettingsList import SettingInfos, logic_tricks, validate_settings
@@ -196,6 +197,11 @@ def check_table_sizes() -> None:
     alt_list_bytes = get_alt_list_bytes(alt_list)
     if(len(alt_list_bytes) > rom.sym_length('alt_overrides')):
         error(f'Exceeded alt override table size: {len(alt_list)}', False)
+
+    override_table = get_override_table(world)
+    override_table_bytes = get_override_table_bytes(override_table)
+    if len(override_table_bytes) >= rom.sym_length('cfg_item_overrides'):
+        error("Exceeded override table size: " + str(len(override_table)), False)
 
 def run_ci_checks() -> NoReturn:
     parser = argparse.ArgumentParser()
