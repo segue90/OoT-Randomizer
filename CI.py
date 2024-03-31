@@ -11,6 +11,8 @@ from io import StringIO
 from typing import NoReturn
 
 
+from Main import resolve_settings
+from Rom import Rom
 import Unittest as Tests
 from SettingsList import SettingInfos, logic_tricks, validate_settings
 from Utils import data_path
@@ -170,6 +172,30 @@ def check_code_style(fix_errors: bool = False) -> None:
     check_file_format(repo_dir / 'data' / 'presets_default.json')
     check_file_format(repo_dir / 'data' / 'settings_mapping.json')
 
+# Check the sizes of the xflag, alt_override, and cfg_item_override tables, using hopefully the worst case
+def check_table_sizes() -> None:
+    from SceneFlags import build_xflag_tables, build_xflags_from_world, get_alt_list_bytes, get_collectible_flag_table_bytes
+    from World import World
+    from Settings import Settings
+    filename = 'plando-table-tests'
+    distribution_file = Tests.load_spoiler(os.path.join(Tests.test_dir, 'plando', filename + '.json'))
+    settings = Tests.load_settings(distribution_file['settings'], seed='TESTTESTTEST', filename=filename)
+    resolve_settings(settings)
+    world = World(0,settings)
+    for filename in ('Overworld.json', 'Bosses.json'):
+        world.load_regions_from_json(os.path.join(data_path('World'), filename))
+    world.create_dungeons()
+
+    xflags_tables, alt_list = build_xflags_from_world(world)
+    xflag_scene_table, xflag_room_table, xflag_room_blob, max_bit = build_xflag_tables(xflags_tables)
+    rom = Rom()
+    if len(xflag_room_table) > rom.sym_length('xflag_room_table'):
+        error(f'Exceeded xflag room table size: {len(xflag_room_table)}', False)
+    if len(xflag_room_blob) > rom.sym_length('xflag_room_blob'):
+        error(f'Exceed xflag blob table size: {len(xflag_room_blob)}', False)
+    alt_list_bytes = get_alt_list_bytes(alt_list)
+    if(len(alt_list_bytes) > rom.sym_length('alt_overrides')):
+        error(f'Exceeded alt override table size: {len(alt_list)}', False)
 
 def run_ci_checks() -> NoReturn:
     parser = argparse.ArgumentParser()
@@ -185,9 +211,9 @@ def run_ci_checks() -> NoReturn:
         check_hell_mode_tricks(args.fix)
         check_code_style(args.fix)
         check_presets_formatting(args.fix)
+        check_table_sizes()
 
     exit_ci(args.fix)
-
 
 def exit_ci(fix_errors: bool = False) -> NoReturn:
     if hasattr(error, "count") and error.count:
