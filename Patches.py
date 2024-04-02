@@ -2292,10 +2292,7 @@ def patch_rom(spoiler: Spoiler, world: World, rom: Rom) -> Rom:
         rom.write_int32(symbol, 0x00000001)
 
     # Specify which textures we want
-    symbol = rom.sym('CHEST_GILDED_TEXTURE')
-    rom.write_byte(symbol, 0x01)
-    if 'major' not in world.settings.chest_textures_specific:
-        rom.write_byte(symbol, 0x00)
+    rom.write_byte(rom.sym('CHEST_GILDED_TEXTURE'), 'major' in world.settings.chest_textures_specific)
     symbol = rom.sym('CHEST_GOLD_TEXTURE')
     rom.write_byte(symbol, 0x01)
     if 'bosskeys' not in world.settings.chest_textures_specific:

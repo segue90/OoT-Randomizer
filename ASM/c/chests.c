@@ -160,8 +160,7 @@ void draw_chest_lid(z64_game_t* game, z64_actor_t* actor, Gfx** opa_ptr) {
         (SOA_UNLOCKS_CHEST_TEXTURE && z64_file.stone_of_agony == 0)) {
         set_chest_texture(gfx, chest_type, opa_ptr);
         gSPDisplayList((*opa_ptr)++, 0x060010C0);
-    }
-    else {
+    } else {
         gSPDisplayList((*opa_ptr)++, 0x06001678);
     }
 }

@@ -3257,8 +3257,7 @@ class SettingInfos:
         ''',
         shared         = True,
         disable        = {
-            'off': {'settings': ['minor_items_as_major_chest']},
-            'off': {'settings': ['chest_textures_specific']},
+            'off': {'settings': ['minor_items_as_major_chest', 'chest_textures_specific']},
             'classic': {'settings': ['chest_textures_specific']},
             '!textures': {'settings': ['soa_unlocks_chest_texture']},
         },
@@ -3267,11 +3266,11 @@ class SettingInfos:
     chest_textures_specific = MultipleSelect(
         gui_text        = 'Chest textures',
         choices         = {
-            'major':                  "Major items",
-            'bosskeys':               "Boss keys",
-            'keys':                   "Small keys",
-            'tokens':                 "Gold Skulltula tokens",
-            'hearts':                 "Hearts",
+            'major':    "Major items",
+            'bosskeys': "Boss keys",
+            'keys':     "Small keys",
+            'tokens':   "Gold Skulltula tokens",
+            'hearts':   "Hearts",
         },
         default         = ['major', 'bosskeys','keys', 'tokens', 'hearts'],
         gui_tooltip     = '''\
@@ -3365,11 +3364,11 @@ class SettingInfos:
     potcrate_textures_specific = MultipleSelect(
         gui_text        = 'Pots and crates textures',
         choices         = {
-            'major':                  "Major items",
-            'bosskeys':               "Boss keys",
-            'keys':                   "Small keys",
-            'tokens':                 "Gold Skulltula tokens",
-            'hearts':                 "Hearts",
+            'major':    "Major items",
+            'bosskeys': "Boss keys",
+            'keys':     "Small keys",
+            'tokens':   "Gold Skulltula tokens",
+            'hearts':   "Hearts",
         },
         default         = ['major', 'bosskeys', 'keys', 'tokens', 'hearts'],
         gui_tooltip     = '''\
