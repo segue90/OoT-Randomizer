@@ -985,15 +985,13 @@ def patch_song_names(rom: Rom, settings: Settings, log: CosmeticsLog, symbols: d
             rom.write_byte(symbols['CFG_SONG_NAME_POSITION'], 0x01)
 
 
-        for area, song_name in log.bgm.items():
-            text_bytes = []
-            if (len(song_name) > 50):
-                song_name_cropped = song_name[:50]
-                text_bytes = list(ord(c) for c in song_name_cropped)
-            else:
-                text_bytes[0:len(song_name)] = list(ord(c) for c in song_name)
-                text_bytes[len(song_name):50] = [ord('\0')] * (50 - len(song_name))
-            bytes_to_write += text_bytes
+    for area, song_name in log.bgm.items():
+        if len(song_name) > 50:
+            song_name_cropped = song_name[:50]
+            text_bytes = [ord(c) for c in song_name_cropped]
+        else:
+            text_bytes = [ord(c) for c in song_name] + [ord('\0')] * (50 - len(song_name))
+        bytes_to_write += text_bytes
     rom.write_bytes(symbols['CFG_SONG_NAMES'], bytes_to_write)
     log.display_custom_song_names = settings.display_custom_song_names
 
@@ -1203,15 +1201,15 @@ patch_sets[0x1F073FE1] = {
     }
 }
 
-# 8.0.11
+# 8.1.16
 patch_sets[0x1F073FE1] = {
     "patches": patch_sets[0x1F073FE0]["patches"] + [
         patch_song_names,
     ],
     "symbols": {
         **patch_sets[0x1F073FE0]["symbols"],
-        "CFG_SONG_NAME_POSITION": 0x006B,
-        "CFG_SONG_NAMES": 0x006C,
+        "CFG_SONG_NAME_POSITION": 0x006C,
+        "CFG_SONG_NAMES": 0x006D,
     }
 }
 

@@ -77,7 +77,7 @@ uint8_t are_song_displayed() {
 
 void display_song_name(z64_disp_buf_t* db) {
     if (are_song_displayed() &&
-        !(dungeon_info_is_drawn()) && // Don't display if the custom rando pause screen if displayed.
+        !dungeon_info_is_drawn() && // Don't display if the custom rando pause screen if displayed.
         !(z64_link.state_flags_2 & 0x8000000)) { // Don't display if Link is playing the Ocarina.
 
         uint8_t alpha;
@@ -152,7 +152,7 @@ void display_song_name(z64_disp_buf_t* db) {
 }
 
 void display_song_name_on_file_select(z64_disp_buf_t* db) {
-    if (!(dungeon_info_is_drawn()) && are_song_displayed()) {
+    if (!dungeon_info_is_drawn() && are_song_displayed()) {
         uint8_t top = 7;
         uint8_t left = 7;
         uint8_t alpha = 255;

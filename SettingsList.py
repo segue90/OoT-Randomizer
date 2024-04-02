@@ -4562,9 +4562,9 @@ class SettingInfos:
         cosmetic       = True,
         default        = 'off',
         choices        = {
-            'off':               'Off',
-            'top':               'At the top of the screen',
-            'pause':             'In pause screen only'
+            'off':   'Off',
+            'top':   'At the top of the screen',
+            'pause': 'In pause screen only',
         },
         gui_tooltip    = '''\
             'off': Not displayed.
