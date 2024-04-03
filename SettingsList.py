@@ -3264,7 +3264,7 @@ class SettingInfos:
     )
 
     chest_textures_specific = MultipleSelect(
-        gui_text        = 'Chest textures',
+        gui_text        = 'Chest Textures',
         choices         = {
             'major':    "Major items",
             'bosskeys': "Boss keys",
@@ -3285,7 +3285,7 @@ class SettingInfos:
     )
 
     soa_unlocks_chest_texture = Checkbutton(
-        gui_text       = 'Stone of Agony unlocks chest textures',
+        gui_text       = 'Stone of Agony Unlocks Chest Textures',
         gui_tooltip    = '''\
             Textures for chests will only be correct
             when Stone of Agony is found.
@@ -3362,7 +3362,7 @@ class SettingInfos:
     )
 
     potcrate_textures_specific = MultipleSelect(
-        gui_text        = 'Pots and crates textures',
+        gui_text        = 'Pot and Crate Textures',
         choices         = {
             'major':    "Major items",
             'bosskeys': "Boss keys",
@@ -3383,7 +3383,7 @@ class SettingInfos:
     )
 
     soa_unlocks_potcrate_texture = Checkbutton(
-        gui_text       = 'Stone of Agony unlocks pots and crates textures',
+        gui_text       = 'Stone of Agony Unlocks Pot and Crate Textures',
         gui_tooltip    = '''\
             Textures for pots and crates will only be correct
             when Stone of Agony is found.
