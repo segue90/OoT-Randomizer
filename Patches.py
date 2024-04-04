@@ -2589,6 +2589,9 @@ def patch_rom(spoiler: Spoiler, world: World, rom: Rom) -> Rom:
             rom.write_byte(0x280CDDE, 0)
             rom.write_byte(0x280CDEE, 0)
 
+    # Meg respawns after 30 frames instead of 100 frames after getting hit
+    rom.write_byte(0xCDA723, 0x1E)
+
     # actually write the save table to rom
     world.distribution.give_items(world, save_context)
     if world.settings.starting_age == 'adult':
