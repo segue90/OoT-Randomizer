@@ -17,8 +17,17 @@
 
 ; Check the flag when starting the timer
 
-; Replaces     lh      t6, 0x01D0(a1)
-;              addiu   $at, $zero, 0x0003
-.org 0x80ad6cf8
+; Replaces
+;   li      at, 0x35
+;   li      a0, 0xb4
+.org 0x80ad6d20
     jal     kz_no_timer
-    addiu   $at, $zero, 0x0003
+    li      at, 0x35 ; Replaced code
+
+; Reset the flag after setting the timer
+.org 0x80ad6d58
+; Replaces
+;   sh      r0, 0x1d0(a1)
+;   sw      t2, 0x180(a1)
+    jal     kz_reset_trade_flag
+    sh      r0, 0x1d0(a1) ; Replaced code
