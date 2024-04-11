@@ -28,7 +28,7 @@ kz_no_timer:
     ; Displaced code
     lh      t6, 0x01D0(a1)
 
-    lw      t2, 0x01F9(a1)           ; isTrading flag
+    lb      t2, 0x01F9(a1)           ; isTrading flag
     bnez    t2, @@return             ; if not istrading, we're getting the zora tunic item
     nop
     li      t6, 0                    ; in that case, make sure we don't start the timer
@@ -36,3 +36,9 @@ kz_no_timer:
 @@return:
     jr      ra
     nop
+
+kz_store_is_trading:
+    sb      r0, 0x1f8(s0) ; Replaced code
+    addiu   t8, r0, 0x0001
+    jr      ra
+    sb      t8, 0x1f9(s0) ; Store a flag in some unused space in kz actor.
