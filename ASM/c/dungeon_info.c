@@ -144,7 +144,8 @@ void is_bk_displayed() {
 
         int index = scene == 13 ? 10 : scene;
         if (z64_file.dungeon_items[index].boss_key) {
-            bk_display = 1;
+            bk_display++;
+            bk_display = bk_display > 1 ? 2 : bk_display;
             return;
         }
     }
@@ -154,7 +155,7 @@ void is_bk_displayed() {
 // Draw a boss key icon in dungeons.
 void draw_boss_key(z64_game_t* globalCtx, z64_disp_buf_t* db) {
     is_bk_displayed();
-    if (bk_display) {
+    if (bk_display > 1) { // Delay by one frame to let other counters move first.
         gDPPipeSync(db->p++);
         gDPSetCombineMode(db->p++, G_CC_MODULATEIA_PRIM, G_CC_MODULATEIA_PRIM);
         gDPSetPrimColor(db->p++, 0, 0, 0xFF, 0xFF, 0xFF, globalCtx->hud_alpha_channels.rupees_keys_magic);

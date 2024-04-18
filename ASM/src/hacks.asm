@@ -4118,3 +4118,5 @@ courtyard_guards_kill:
 .orga 0xE56B38
     jal     kz_no_timer
     addiu   $at, $zero, 0x0003
+
+.include "hacks/z_parameter.asm"

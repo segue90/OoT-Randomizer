@@ -1,6 +1,6 @@
 move_key_icon:
     ; displaced code
-    addiu   t7, $zero, 0x001A ; Normal x coordinate
+    addiu   t8, $zero, 0x00BE
 
     li      s0, bk_display
     lw      s0, 0x00 (s0)
@@ -15,7 +15,7 @@ move_key_icon:
 
 move_key_counter:
     ; displaced code
-    addiu   s2, $zero, 0x002A ; Normal x coordinate
+    addiu   t8, $zero, 0x00BE
 
     li      s0, bk_display
     lw      s0, 0x00 (s0)
