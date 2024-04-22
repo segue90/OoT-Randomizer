@@ -129,6 +129,7 @@ issue. You should always Hard Reset to avoid this issue entirely.
 
 #### Other Changes
 * Clarified the error message shown when an unshuffled trade quest item is used as a starting item.
+* Locations in pre-completed dungeons will no longer be hinted.
 
 ### 8.1
 
