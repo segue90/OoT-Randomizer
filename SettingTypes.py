@@ -59,7 +59,7 @@ class SettingInfo:
         self.disabled_default = self.default if disabled_default is None else disabled_default
 
         # used to when random options are set for this setting
-        if 'distribution' not in self.gui_params:
+        if 'distribution' not in self.gui_params and 'randomize_key' in self.gui_params:
             if self.gui_type == 'MultipleSelect':
                 self.gui_params['distribution'] = [(list(choice), 1) for choice in powerset(self.choice_list)]
             else:
