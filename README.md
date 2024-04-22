@@ -118,6 +118,7 @@ issue. You should always Hard Reset to avoid this issue entirely.
 * The plando-only `item_hints` setting can now include special items such as songs or keys.
 * Add new options for chest/pot/etc. textures, including `Stone of Agony Unlocks Chest Textures` which gives new functionality to the Stone of Agony.
 * A boss key icon will now be displayed near the small key icon in dungeons where it has been obtained.
+* The name of the currently playing custom music will now be displayed.
 
 #### Bug Fixes
 * Goal hints can now hint items required to defeat Ganon even if they're not required for the rainbow bridge, Ganon's boss key, or the trials. These items will be hinted as being on the "path of the hero".
