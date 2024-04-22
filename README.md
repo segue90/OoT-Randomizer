@@ -127,6 +127,7 @@ issue. You should always Hard Reset to avoid this issue entirely.
 * The Stone of Agony can now be foolish in Glitched Logic and No Logic, as it already was with the `Hidden Grottos without Stone of Agony` trick enabled.
 * Fix seeds with Plentiful item pool and no adult trade items selected failing to generate.
 * Fix castle courtyard exiting to incorrect area in Ganon's Castle Dungeon ER.
+* Fix heart piece count getting zeroed out incorrectly in certain circumstances.
 
 #### Other Changes
 * Clarified the error message shown when an unshuffled trade quest item is used as a starting item.
