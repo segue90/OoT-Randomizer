@@ -136,6 +136,7 @@ issue. You should always Hard Reset to avoid this issue entirely.
 * Locations in pre-completed dungeons will no longer be hinted.
 * Treasure Chest Game key and silver rupee options are now included in `Randomize Main Rule Settings`.
 * Meg will now take less time before respawning after getting hurt.
+* Pause menu has been modified so that equip swap will work again.
 
 ### 8.1
 
