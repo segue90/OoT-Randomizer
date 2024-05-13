@@ -1,4 +1,4 @@
-__version__ = '8.1.36'
+__version__ = '8.1.34'
 
 # This is a supplemental version number for branches based off of main dev.
 supplementary_version = 0
@@ -15,4 +15,3 @@ base_version = __version__
 
 # And finally, the completed version string. This is what is displayed and used for salting seeds.
 __version__ = f'{base_version} f.LUM'
-g
