@@ -1324,7 +1324,8 @@ def patch_rom(spoiler: Spoiler, world: World, rom: Rom) -> Rom:
     save_context.write_bits(0x0ED6, 0x10)  # "Spoke to Mido After Deku Tree's Death"
     save_context.write_bits(0x0EDA, 0x08)  # "Began Nabooru Battle"
     save_context.write_bits(0x0EDC, 0x80)  # "Entered the Master Sword Chamber"
-    save_context.write_bits(0x0EDD, 0x20)  # "Pulled Master Sword from Pedestal"
+    if world.settings.skip_reward_from_rauru:
+        save_context.write_bits(0x0EDD, 0x20)  # "Pulled Master Sword from Pedestal"
     save_context.write_bits(0x0EE0, 0x80)  # "Spoke to Kaepora Gaebora by Lost Woods"
     save_context.write_bits(0x0EE7, 0x20)  # "Nabooru Captured by Twinrova"
     save_context.write_bits(0x0EE7, 0x10)  # "Spoke to Nabooru in Spirit Temple"
@@ -1978,7 +1979,7 @@ def patch_rom(spoiler: Spoiler, world: World, rom: Rom) -> Rom:
         if world.settings.deadly_bonks == 'ohko':
             rom.write_int16(rom.sym('CFG_BONK_DAMAGE'), 0xFFFE)
 
-    # Patch songs and boss rewards
+    # Patch songs
     for location in world.get_filled_locations():
         if location.type == 'Song' and not songs_as_items:
             item = location.item

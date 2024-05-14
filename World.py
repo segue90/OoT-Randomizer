@@ -824,7 +824,7 @@ class World:
                     dot_items.append({'name': 'Song of Time', 'quantity': 2 if self.settings.shuffle_song_items == 'any' and self.settings.item_pool_value == 'plentiful' else 1, 'minimum': 1, 'hintable': True})
                     if self.settings.shuffle_ocarinas:
                         dot_items.append({'name': 'Ocarina', 'quantity': 3 if self.settings.item_pool_value == 'plentiful' else 2, 'minimum': 1, 'hintable': True})
-                dot.add_goal(Goal(self, 'Door of Time', 'path of time', 'Light Blue', items=dot_items))
+                dot.add_goal(Goal(self, 'Door of Time', 'path of #time#', 'Light Blue', items=dot_items))
                 self.goal_categories[dot.name] = dot
 
             # Bridge goals will always be defined as they have the most immediate priority
