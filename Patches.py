@@ -1837,16 +1837,16 @@ def patch_rom(spoiler: Spoiler, world: World, rom: Rom) -> Rom:
     update_message_by_id(messages, 0x4050, new_message)
 
     # Set Dungeon Reward Actor in Jabu Jabu to be accurate
-    if location is not None and location.item is not None:  # TODO make actor invisible if no item?
-        jabu_item = location.item
-        jabu_actor_type = jabu_item.special.get('actor_type', 0x15) #TODO handle non-dungeon-reward items
-        set_jabu_stone_actors(rom, jabu_actor_type)
-        # Also set the right object for the actor, since medallions and stones require different objects
-        # MQ is handled separately, as we include both objects in the object list in mqu.json (Scene 2, Room 6)
-        if not world.dungeon_mq['Jabu Jabus Belly']:
-            jabu_stone_object = jabu_item.special.get('object_id', 0x00AD) #TODO handle non-dungeon-reward items
-            rom.write_int16(0x277D068, jabu_stone_object)
-            rom.write_int16(0x277D168, jabu_stone_object)
+    #if location is not None and location.item is not None:  # TODO make actor invisible if no item?
+    #    jabu_item = location.item
+    #    jabu_actor_type = jabu_item.special.get('actor_type', 0x15) #TODO handle non-dungeon-reward items
+    #    set_jabu_stone_actors(rom, jabu_actor_type)
+    #    # Also set the right object for the actor, since medallions and stones require different objects
+    #    # MQ is handled separately, as we include both objects in the object list in mqu.json (Scene 2, Room 6)
+    #    if not world.dungeon_mq['Jabu Jabus Belly']:
+    #        jabu_stone_object = jabu_item.special.get('object_id', 0x00AD) #TODO handle non-dungeon-reward items
+    #        rom.write_int16(0x277D068, jabu_stone_object)
+    #        rom.write_int16(0x277D168, jabu_stone_object)
 
     # use faster jabu elevator
     if not world.dungeon_mq['Jabu Jabus Belly'] and world.settings.shuffle_scrubs == 'off':

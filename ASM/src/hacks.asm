@@ -3616,13 +3616,22 @@ courtyard_guards_kill:
     sw     a1, 0x64(sp)
 
 ;==================================================================================================
-; Jabu Spiritual Stone Actor Override
+; Override appearance of Zoras Sapphire spiritual stone inside Jabu
 ;==================================================================================================
-; Replaces: addiu   t8, zero, 0x0006
-;           sh      t8, 0x017C(a0)
-.orga 0xCC8594
-    jal     demo_effect_medal_init
-    addiu   t8, zero, 0x0006
+.headersize(0x8092ACC0 - 0x00CC8430)
+; Increase the size of DemoEffect actor to store override
+.org 0x8093019c
+; Replaces: .d32 0x00000190
+.d32 0x000001C0
+
+; Hook the function DemoEffect_DrawJewel
+.org 0x8092e3f8
+; Replaces:
+;   addiu   sp, sp, -0x78
+;   sw      s3, 0x40(sp)
+    j   DemoEffect_DrawJewel_Hook
+    nop
+DemoEffect_DrawJewel_AfterHook:
 
 ;==================================================================================================
 ; Use Sticks and Masks as Adult
