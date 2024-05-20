@@ -1766,63 +1766,8 @@ def patch_rom(spoiler: Spoiler, world: World, rom: Rom) -> Rom:
     new_message = "\x08What should I do!?\x01My \x05\x41Cuccos\x05\x40 have all flown away!\x04You, little boy, please!\x01Please gather at least \x05\x41%d Cuccos\x05\x40\x01for me.\x02" % world.settings.chicken_count
     update_message_by_id(messages, 0x5036, new_message)
 
-    # Find an item location behind the Jabu boss door by searching regions breadth-first without going back into Jabu proper
-    if world.settings.logic_rules == 'glitched':
-        location = world.get_location('Barinade')
-    else:
-        jabu_reward_regions = {world.get_entrance('Jabu Jabus Belly Before Boss -> Barinade Boss Room').connected_region}
-        already_checked = set()
-        location = None
-        while jabu_reward_regions:
-            locations = [
-                loc
-                for region in jabu_reward_regions
-                if region is not None and region.locations is not None
-                for loc in region.locations
-                if not loc.locked
-                and loc.has_item()
-                and not loc.item.event
-                and (loc.type != "Shop" or loc.name in world.shop_prices) # ignore regular shop items (but keep special deals)
-            ]
-            if locations:
-                # Location types later in the list will be preferred over earlier ones or ones not in the list.
-                # This ensures that if the region behind the boss door is a boss arena, the medallion or stone will be used.
-                priority_types = (
-                    "Freestanding",
-                    "ActorOverride",
-                    "RupeeTower",
-                    "Pot",
-                    "Crate",
-                    "FlyingPot",
-                    "SmallCrate",
-                    "Beehive",
-                    "SilverRupee",
-                    "GS Token",
-                    "GrottoScrub",
-                    "Scrub",
-                    "Shop",
-                    "MaskShop",
-                    "NPC",
-                    "Collectable",
-                    "Chest",
-                    "Cutscene",
-                    "Song",
-                    "BossHeart",
-                    "Boss",
-                )
-                best_type = max((location.type for location in locations), key=lambda type: priority_types.index(type) if type in priority_types else -1)
-                location = random.choice(list(filter(lambda loc: loc.type == best_type, locations)))
-                break
-            already_checked |= jabu_reward_regions
-            jabu_reward_regions = {
-                exit.connected_region
-                for region in jabu_reward_regions
-                if region is not None
-                for exit in region.exits
-                if exit.connected_region is not None and exit.connected_region.dungeon != 'Jabu Jabus Belly' and exit.connected_region.name not in already_checked
-            }
-
     # Update "Princess Ruto got the Spiritual Stone!" text before the midboss in Jabu
+    location = world.bigocto_location()
     if location is None or location.item is None:
         jabu_item = None
         new_message = f"\x08Princess Ruto got \x01\x05\x43nothing\x05\x40!\x01Well, that's disappointing...\x02"
