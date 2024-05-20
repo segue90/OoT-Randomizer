@@ -105,6 +105,6 @@ typedef struct DemoEffect {
     // original size = 0x0190
     /* 0x0190 */ override_t override;
     /* 0x0xxx*/ bool override_initialized;
-} DemoEffect; 
+} DemoEffect;
 
 #endif

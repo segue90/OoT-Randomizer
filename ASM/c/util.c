@@ -25,7 +25,8 @@ void file_init(file_t* file) {
 
 void* resolve_overlay_addr(void* addr, uint16_t overlay_id) {
     ActorOverlay overlay = gActorOverlayTable[overlay_id];
-    if(overlay.loadedRamAddr)
+    if (overlay.loadedRamAddr) {
         return addr - overlay.vramStart + overlay.loadedRamAddr;
+    }
     return NULL;
 }
