@@ -6,17 +6,17 @@
 extern void DemoEffect_DrawJewel(z64_actor_t* this, z64_game_t* globalCtx, void* func);
 extern void* DemoEffect_DrawJewel_AfterHook;
 
+extern override_key_t CFG_BIGOCTO_OVERRIDE_KEY;
+
 void DemoEffect_DrawJewel_Hook(DemoEffect* this, z64_game_t* globalCtx) {
     if (!this->override_initialized) {
         if (globalCtx->scene_index == 0x02) {
-            override_key_t sapphire_override_key = {
-                .scene = 0x13,
-                .type = 0x00,
-                .flag = 0x65,
-            };
-            this->override = lookup_override_by_key(sapphire_override_key);
+            if (CFG_BIGOCTO_OVERRIDE_KEY.all) {
+                this->override = lookup_override_by_key(CFG_BIGOCTO_OVERRIDE_KEY);
+            }
             if (this->override.key.all) {
                 this->actor.rot_2.x = 0;
+                this->actor.scale = (z64_xyzf_t) { 0.02f, 0.02f, 0.02f };
             }
         }
 
