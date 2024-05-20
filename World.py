@@ -1134,6 +1134,7 @@ class World:
                     # Location types later in the list will be preferred over earlier ones or ones not in the list.
                     # This ensures that if the region behind the boss door is a boss arena, the medallion or stone will be used.
                     priority_types = (
+                        "Wonderitem",
                         "Freestanding",
                         "ActorOverride",
                         "RupeeTower",
