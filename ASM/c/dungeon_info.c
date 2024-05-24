@@ -557,7 +557,7 @@ void draw_dungeon_info(z64_disp_buf_t* db) {
 
         left += icon_size + padding;
 
-        // Draw reward worlds
+        // Draw reward world numbers
 
         if (CFG_DUNGEON_INFO_REWARD_WORLDS_ENABLE) {
             for (int i = 0; i < 9; i++) {
