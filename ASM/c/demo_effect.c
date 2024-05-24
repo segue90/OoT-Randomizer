@@ -8,6 +8,7 @@ extern void* DemoEffect_DrawJewel_AfterHook;
 
 extern override_key_t CFG_BIGOCTO_OVERRIDE_KEY;
 
+// Overrides the item model for the dungeon reward shown before the Big Octo fight
 void DemoEffect_DrawJewel_Hook(DemoEffect* this, z64_game_t* globalCtx) {
     if (!this->override_initialized) {
         if (globalCtx->scene_index == 0x02) {
