@@ -119,6 +119,8 @@ issue. You should always Hard Reset to avoid this issue entirely.
 * Add new options for chest/pot/etc. textures, including `Stone of Agony Unlocks Chest Textures` which gives new functionality to the Stone of Agony.
 * A boss key icon will now be displayed near the small key icon in dungeons where it has been obtained.
 * The name of the currently playing custom music will now be displayed.
+* New setting to control how dungeon rewards are shuffled.
+* The `Links Pocket` location is renamed to `ToT Reward from Rauru`, and a new setting has been added that controls whether it is skipped.
 
 #### Bug Fixes
 * Goal hints can now hint items required to defeat Ganon even if they're not required for the rainbow bridge, Ganon's boss key, or the trials. These items will be hinted as being on the "path of the hero".
@@ -134,7 +136,8 @@ issue. You should always Hard Reset to avoid this issue entirely.
 * Meg will now take less time before respawning after getting hurt.
 * The cutscenes for stealing Epona by jumping over a fence are now sped up. Previously, only the cutscene for jumping over the front gate was shortened.
 * The cutscenes for pulling and dropping the Master Sword are now sped up.
-* The cutscenes changing the water level in Lake Hylia and the Kakariko well are now even faster.
+* The cutscene changing the water level of the Kakariko well is now even faster.
+* The cutscenes playing when a blue warp is taken for the first time have been removed.
 
 #### Other Changes
 * Clarified the error message shown when an unshuffled trade quest item is used as a starting item.

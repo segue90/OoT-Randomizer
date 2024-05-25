@@ -11,4 +11,5 @@ void Actor_StoreChestType(z64_actor_t* actor, z64_game_t* game);
 z64_actor_t* Actor_SpawnEntry_Hack(void* actorCtx, ActorEntry* actorEntry, z64_game_t* globalCtx);
 bool spawn_override_silver_rupee(ActorEntry* actorEntry, z64_game_t* globalCtx, bool* overridden);
 void after_spawn_override_silver_rupee(z64_actor_t* actor, bool overridden);
+extern ActorOverlay gActorOverlayTable[];
 #endif
