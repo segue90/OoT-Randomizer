@@ -10,6 +10,8 @@ typedef struct {
     uint8_t silver_rupee_counts[0x16];
     bool collected_dungeon_rewards[8];
     override_t incoming_queue[3];
+    uint8_t password[6];
+    uint8_t password_clear;
 } extended_savecontext_static_t __attribute__ ((aligned (8)));
 
 
