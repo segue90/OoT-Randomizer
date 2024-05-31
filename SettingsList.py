@@ -2102,9 +2102,7 @@ class SettingInfos:
         },
     )
 
-    empty_dungeon_rewards = Combobox(
-        name            = 'empty_dungeons_rewards',
-        multiple_select = True,
+    empty_dungeons_rewards = MultipleSelect(
         gui_text        = 'Pre-completed Dungeon Rewards',
         choices         = {
             'Kokiri Emerald':         "Kokiri Emerald",
