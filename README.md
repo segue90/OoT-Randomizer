@@ -131,6 +131,7 @@ issue. You should always Hard Reset to avoid this issue entirely.
 * Fix seeds with Plentiful item pool and no adult trade items selected failing to generate.
 * Fix castle courtyard exiting to incorrect area in Ganon's Castle Dungeon ER.
 * Fix heart piece count getting zeroed out incorrectly in certain circumstances.
+* Business scrubs now take their payment before giving the item.
 
 #### New Speedups
 * Meg will now take less time before respawning after getting hurt.

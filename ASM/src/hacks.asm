@@ -4248,3 +4248,4 @@ DemoEffect_DrawJewel_AfterHook:
 
 
 .include "hacks/ovl_en_kz.asm"
+.include "hacks/ovl_en_dns.asm"
