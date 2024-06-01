@@ -815,6 +815,7 @@ SYMBOL TABLE:
 0000c2d8 g     F .text	000000c4 draw_start
 00018900 g     F .text	00000508 draw_triforce_count
 00000000         *UND*	00000000 PLAYER_NAME_ID
+800d6218 g       *ABS*	00000000 Message_CloseTextbox
 00017bfc g     F .text	00000020 GetTradeItemIndex
 00000000         *UND*	00000000 CFG_TUNIC_COLORS
 00021004 g     O .data	000000bc bgm_sequence_ids
