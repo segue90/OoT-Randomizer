@@ -1,5 +1,6 @@
 #ifndef SAVE_H
 #define SAVE_H
+#include <stdbool.h>
 
 #include "z64.h"
 #include "get_items.h"
@@ -7,6 +8,7 @@
 // Struct for storing additional data in SRAM. This has to always be a multiple of 2 bytes long supposedly.
 typedef struct {
     uint8_t silver_rupee_counts[0x16];
+    bool collected_dungeon_rewards[8];
     override_t incoming_queue[3];
 } extended_savecontext_static_t __attribute__ ((aligned (8)));
 

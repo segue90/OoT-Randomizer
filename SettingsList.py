@@ -24,6 +24,7 @@ if TYPE_CHECKING:
 
 class SettingInfos:
     # Internal & Non-GUI Settings
+    aliases = SettingInfoList(None, None, False)
     cosmetics_only = Checkbutton(None)
     check_version = Checkbutton(None)
     checked_version = SettingInfoStr(None, None)
@@ -597,8 +598,8 @@ class SettingInfos:
                     'shuffle_grotto_entrances', 'shuffle_dungeon_entrances',
                     'shuffle_bosses', 'shuffle_overworld_entrances', 'shuffle_gerudo_valley_river_exit', 'owl_drops', 'warp_songs', 'spawn_positions',
                     'triforce_hunt', 'triforce_count_per_world', 'triforce_goal_per_world', 'free_bombchu_drops', 'one_item_per_dungeon',
-                    'shuffle_mapcompass', 'shuffle_smallkeys', 'shuffle_hideoutkeys', 'key_rings_choice', 'key_rings',
-                    'shuffle_bosskeys', 'enhance_map_compass',
+                    'shuffle_mapcompass', 'shuffle_smallkeys', 'shuffle_hideoutkeys', 'shuffle_tcgkeys', 'key_rings_choice', 'key_rings',
+                    'shuffle_silver_rupees', 'silver_rupee_pouches_choice', 'silver_rupee_pouches', 'shuffle_bosskeys', 'enhance_map_compass',
                 ],
             },
         },
@@ -737,7 +738,7 @@ class SettingInfos:
             'vanilla':    "Vanilla",
             'stones':     "Stones",
             'medallions': "Medallions",
-            'dungeons':   "Dungeons",
+            'dungeons':   "Dungeon Rewards",
             'tokens':     "Tokens",
             'hearts':     "Hearts",
         },
@@ -748,7 +749,7 @@ class SettingInfos:
             'Vanilla': Shadow and Spirit Medallions.
             'Stones': A configurable amount of Spiritual Stones.
             'Medallions': A configurable amount of Medallions.
-            'Dungeons': A configurable amount of Dungeon Rewards.
+            'Dungeon Rewards': A configurable amount of Dungeon Rewards.
             'Tokens': A configurable amount of Gold Skulltula Tokens.
             'Hearts': A configurable amount of hearts.
         ''',
@@ -867,7 +868,7 @@ class SettingInfos:
             'vanilla':    'Vanilla Requirements',
             'stones':     'Spiritual Stones',
             'medallions': 'Medallions',
-            'dungeons':   'Dungeons',
+            'dungeons':   'Dungeon Rewards',
             'tokens':     'Gold Skulltula Tokens',
             'hearts':     'Hearts',
             'random':     'Random'
@@ -877,7 +878,7 @@ class SettingInfos:
             'Vanilla Requirements': Spirit/Shadow Medallions and Light Arrows.
             'Spiritual Stones': A configurable amount of Spiritual Stones.
             'Medallions': A configurable amount of Medallions.
-            'Dungeons': A configurable amount of Dungeon Rewards.
+            'Dungeon Rewards': A configurable amount of Dungeon Rewards.
             'Gold Skulltula Tokens': A configurable amount of Gold Skulltula Tokens.
             'Hearts': A configurable amount of hearts.
             'Random': A random Rainbow Bridge requirement excluding Gold Skulltula Tokens.
@@ -1032,7 +1033,7 @@ class SettingInfos:
             'on_lacs':         "Light Arrow Cutscene",
             'stones':          "Stones",
             'medallions':      "Medallions",
-            'dungeons':        "Dungeons",
+            'dungeons':        "Dungeon Rewards",
             'tokens':          "Tokens",
             'hearts':          "Hearts",
         },
@@ -1068,7 +1069,7 @@ class SettingInfos:
             'Medallions': Ganon's Castle Boss Key will be awarded
             when reaching the target number of Medallions.
 
-            'Dungeons': Ganon's Castle Boss Key will be awarded
+            'Dungeon Rewards': Ganon's Castle Boss Key will be awarded
             when reaching the target number of Dungeon Rewards.
 
             'Tokens': Ganon's Castle Boss Key will be awarded
@@ -1181,6 +1182,64 @@ class SettingInfos:
         gui_params       = {
             "hide_when_disabled": True,
         },
+    )
+
+    shuffle_dungeon_rewards = Combobox(
+        gui_text       = 'Shuffle Dungeon Rewards',
+        default        = 'reward',
+        choices        = {
+            'vanilla':     'Vanilla Locations',
+            'reward':      'Dungeon Reward Locations',
+            'dungeon':     'Own Dungeon',
+            'regional':    'Regional',
+            'overworld':   'Overworld Only',
+            'any_dungeon': 'Any Dungeon',
+            'anywhere':    'Anywhere',
+        },
+        gui_tooltip    = '''\
+            This controls where Medallions and Spiritual Stones can
+            appear.
+
+            'Vanilla Locations': Medallions and Spiritual Stones will
+            appear in their vanilla locations.
+
+            'Dungeon Reward Locations': Medallions and Spiritual
+            Stones will be awarded when stepping into the blue warps
+            of boss rooms, but not necessarily the boss's vanilla
+            reward. In Multiworld, dungeon rewards will only appear
+            in their own world.
+
+            If you use one of the following options, note that after
+            receiving the last required medallion for the Burning
+            Kakariko cutscene while already in Kakariko, the cutscene
+            doesn't play until you leave and reenter Kakariko (or enter
+            and exit a building).
+
+            'Own Dungeon': Each dungeon reward appears in its respective
+            dungeon, but not necessarily on the boss. If boss entrances
+            are mixed, boss rooms that aren't in a dungeon can't have
+            dungeon rewards. The Light Medallion appears in the Temple
+            of Time, or may be a starting item if the "Free Reward from
+            Rauru" setting is enabled.
+
+            'Regional': Dungeon rewards can only appear in regions
+            near the original dungeon (including the dungeon
+            itself or other dungeons in the region).
+            <a href="https://wiki.ootrandomizer.com/index.php?title=Hints#Hint_Regions" target="_blank">The Wiki has a list of corresponding regions here.</a>
+
+            'Overworld Only': Dungeon rewards can only appear
+            outside of dungeons.
+
+            'Any Dungeon': Dungeon rewards can only appear
+            inside of dungeons.
+
+            'Anywhere': Dungeon rewards can appear anywhere
+            in the world.
+        ''',
+        gui_params     = {
+            'randomize_key': 'randomize_settings',
+        },
+        shared         = True,
     )
 
     shuffle_bosskeys = Combobox(
@@ -1536,9 +1595,9 @@ class SettingInfos:
         ''',
         shared         = True,
         disable        = {
-            'off': {'settings' : ['silver_rupee_pouches']},
-            'all': {'settings' : ['silver_rupee_pouches']},
-            'random': {'setings' : ['silver_rupee_pouches']},
+            'off':    {'settings' : ['silver_rupee_pouches']},
+            'all':    {'settings' : ['silver_rupee_pouches']},
+            'random': {'settings' : ['silver_rupee_pouches']},
         },
         gui_params     = {
             "hide_when_disabled": True,
@@ -3016,6 +3075,16 @@ class SettingInfos:
 
     # Other
 
+    skip_reward_from_rauru = Checkbutton(
+        gui_text       = 'Free Reward from Rauru',
+        gui_tooltip    = '''\
+            The item given by Rauru beyond the Door of Time
+            (the Light Medallion in the vanilla game) is
+            given as a starting item instead.
+        ''',
+        shared         = True,
+    )
+
     no_escape_sequence = Checkbutton(
         gui_text       = 'Skip Tower Escape Sequence',
         gui_tooltip    = '''\
@@ -3283,7 +3352,42 @@ class SettingInfos:
         ''',
         shared         = True,
         disable        = {
-            'off': {'settings': ['minor_items_as_major_chest']},
+            'off': {'settings': ['minor_items_as_major_chest', 'chest_textures_specific']},
+            'classic': {'settings': ['chest_textures_specific']},
+            '!textures': {'settings': ['soa_unlocks_chest_texture']},
+        },
+    )
+
+    chest_textures_specific = MultipleSelect(
+        gui_text        = 'Chest Textures',
+        choices         = {
+            'major':    "Major items",
+            'bosskeys': "Boss keys",
+            'keys':     "Small keys",
+            'tokens':   "Gold Skulltula tokens",
+            'hearts':   "Hearts",
+        },
+        default         = ['major', 'bosskeys','keys', 'tokens', 'hearts'],
+        gui_tooltip     = '''\
+            Select specific chest textures.
+            Any unchecked option will make all items in the category
+            appear in brown chests.
+        ''',
+        shared          = True,
+        gui_params     = {
+            "hide_when_disabled": True,
+        },
+    )
+
+    soa_unlocks_chest_texture = Checkbutton(
+        gui_text       = 'Stone of Agony Unlocks Chest Textures',
+        gui_tooltip    = '''\
+            Textures for chests will only be correct
+            when Stone of Agony is found.
+        ''',
+        shared         = True,
+        gui_params     = {
+            "hide_when_disabled": True,
         },
     )
 
@@ -3347,6 +3451,42 @@ class SettingInfos:
             Beehives will wiggle until their item is collected.
         ''',
         shared         = True,
+        disable        = {
+            '!textures_content': {'settings': ['potcrate_textures_specific', 'soa_unlocks_potcrate_texture']},
+        },
+    )
+
+    potcrate_textures_specific = MultipleSelect(
+        gui_text        = 'Pot and Crate Textures',
+        choices         = {
+            'major':    "Major items",
+            'bosskeys': "Boss keys",
+            'keys':     "Small keys",
+            'tokens':   "Gold Skulltula tokens",
+            'hearts':   "Hearts",
+        },
+        default         = ['major', 'bosskeys', 'keys', 'tokens', 'hearts'],
+        gui_tooltip     = '''\
+            Select specific pots and crates textures.
+            Any unchecked option will make all items in the category
+            appear in regular pots/crates.
+        ''',
+        shared          = True,
+        gui_params     = {
+            "hide_when_disabled": True,
+        },
+    )
+
+    soa_unlocks_potcrate_texture = Checkbutton(
+        gui_text       = 'Stone of Agony Unlocks Pot and Crate Textures',
+        gui_tooltip    = '''\
+            Textures for pots and crates will only be correct
+            when Stone of Agony is found.
+        ''',
+        shared         = True,
+        gui_params     = {
+            "hide_when_disabled": True,
+        },
     )
 
     key_appearance_match_dungeon = Checkbutton(
@@ -3439,7 +3579,7 @@ class SettingInfos:
         gui_type       = None,
         gui_text       = None,
         shared         = True,
-        choices        = [name for name, item in ItemInfo.items.items() if item.type == 'Item']
+        choices        = [name for name, item in ItemInfo.items.items() if item.type not in ('Drop', 'Event', 'Refill', 'Shop')]
     )
 
     hint_dist_user = SettingInfoDict(None, None, True, {})
@@ -3837,6 +3977,16 @@ class SettingInfos:
             Uninvert the Y axis in first person camera.
             Note that this can make some tricks or glitches
             harder to pull off.
+        ''',
+        default        = False,
+    )
+
+    input_viewer = Checkbutton(
+        gui_text       = 'Input Viewer',
+        shared         = False,
+        cosmetic       = True,
+        gui_tooltip    = '''\
+            Show the controller inputs in form of icons at the bottom of the screen.
         ''',
         default        = False,
     )
@@ -4572,6 +4722,28 @@ class SettingInfos:
         },
     )
 
+    display_custom_song_names = Combobox(
+        gui_text       = 'Display Custom Music Names',
+        shared         = False,
+        cosmetic       = True,
+        default        = 'off',
+        choices        = {
+            'off':   'Off',
+            'top':   'At the top of the screen',
+            'pause': 'In pause screen only',
+        },
+        gui_tooltip    = '''\
+            'off': Not displayed.
+
+            'At the top of the screen': The song name will be briefly
+            displayed at the top of the screen at every scene transition,
+            and permanently on the pause screen.
+
+            'In pause screen only': The song name will be displayed only
+            on the pause screen.
+        ''',
+    )
+
     fanfares = Combobox(
         gui_text       = 'Fanfares',
         shared         = False,
@@ -5142,6 +5314,8 @@ def validate_settings(settings_dict: dict[str, Any], *, check_conflicts: bool = 
             raise TypeError('Supplied choice %r for setting %r is of type %r, expecting %r' % (choice, setting, type(choice).__name__, info.type.__name__))
         # If setting is a list, must check each element
         if isinstance(choice, list):
+            if not info.choice_list:
+                continue
             for element in choice:
                 if element not in info.choice_list:
                     raise ValueError('%r is not a valid choice for setting %r. %s' % (element, setting, build_close_match(element, 'choice', info.choice_list)))

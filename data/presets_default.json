@@ -1,5 +1,8 @@
 {
     "Easy Mode": {
+        "aliases": [
+            "easy"
+        ],
         "show_seed_info": true,
         "user_message": "Easy Mode",
         "world_count": 1,
@@ -30,6 +33,7 @@
         "ganon_bosskey_rewards": 9,
         "ganon_bosskey_tokens": 100,
         "ganon_bosskey_hearts": 20,
+        "shuffle_dungeon_rewards": "reward",
         "shuffle_bosskeys": "dungeon",
         "shuffle_smallkeys": "dungeon",
         "shuffle_hideoutkeys": "vanilla",
@@ -106,6 +110,7 @@
         "start_with_consumables": true,
         "start_with_rupees": true,
         "starting_hearts": 3,
+        "skip_reward_from_rauru": true,
         "no_escape_sequence": true,
         "no_guard_stealth": true,
         "no_epona_race": true,
@@ -126,9 +131,25 @@
         "ruto_already_f1_jabu": false,
         "ocarina_songs": "off",
         "correct_chest_appearances": "off",
+        "chest_textures_specific": [
+            "major",
+            "bosskeys",
+            "keys",
+            "tokens",
+            "hearts"
+        ],
+        "soa_unlocks_chest_texture": false,
         "minor_items_as_major_chest": [],
         "invisible_chests": false,
         "correct_potcrate_appearances": "textures_unchecked",
+        "potcrate_textures_specific": [
+            "major",
+            "bosskeys",
+            "keys",
+            "tokens",
+            "hearts"
+        ],
+        "soa_unlocks_potcrate_texture": false,
         "key_appearance_match_dungeon": false,
         "clearer_hints": true,
         "hints": "always",
@@ -166,6 +187,10 @@
         ]
     },
     "S7 Tournament": {
+        "aliases": [
+            "s7",
+            "tournament"
+        ],
         "show_seed_info": true,
         "user_message": "S7 Tournament",
         "world_count": 1,
@@ -196,6 +221,7 @@
         "ganon_bosskey_rewards": 9,
         "ganon_bosskey_tokens": 100,
         "ganon_bosskey_hearts": 20,
+        "shuffle_dungeon_rewards": "reward",
         "shuffle_bosskeys": "dungeon",
         "shuffle_smallkeys": "dungeon",
         "shuffle_hideoutkeys": "vanilla",
@@ -290,6 +316,7 @@
         "start_with_consumables": true,
         "start_with_rupees": false,
         "starting_hearts": 3,
+        "skip_reward_from_rauru": true,
         "no_escape_sequence": true,
         "no_guard_stealth": true,
         "no_epona_race": true,
@@ -310,9 +337,25 @@
         "ruto_already_f1_jabu": false,
         "ocarina_songs": "off",
         "correct_chest_appearances": "both",
+        "chest_textures_specific": [
+            "major",
+            "bosskeys",
+            "keys",
+            "tokens",
+            "hearts"
+        ],
+        "soa_unlocks_chest_texture": false,
         "minor_items_as_major_chest": [],
         "invisible_chests": false,
         "correct_potcrate_appearances": "textures_content",
+        "potcrate_textures_specific": [
+            "major",
+            "bosskeys",
+            "keys",
+            "tokens",
+            "hearts"
+        ],
+        "soa_unlocks_potcrate_texture": false,
         "key_appearance_match_dungeon": false,
         "clearer_hints": true,
         "hints": "always",
@@ -345,11 +388,15 @@
             "Claim Check"
         ]
     },
-    "Standard Weekly (Latest)": {
+    "Standard Weekly (2024-05-30)": {
+        "aliases": [
+            "Standard Weekly (Latest)",
+            "weekly"
+        ],
         "show_seed_info": true,
         "user_message": "Standard Weekly (Latest)",
         "world_count": 1,
-        "create_spoiler": false,
+        "create_spoiler": true,
         "randomize_settings": false,
         "logic_rules": "glitchless",
         "reachable_locations": "all",
@@ -362,7 +409,7 @@
         "lacs_rewards": 9,
         "lacs_tokens": 100,
         "lacs_hearts": 20,
-        "bridge": "medallions",
+        "bridge": "dungeons",
         "bridge_medallions": 6,
         "bridge_stones": 3,
         "bridge_rewards": 9,
@@ -376,6 +423,7 @@
         "ganon_bosskey_rewards": 9,
         "ganon_bosskey_tokens": 100,
         "ganon_bosskey_hearts": 20,
+        "shuffle_dungeon_rewards": "reward",
         "shuffle_bosskeys": "dungeon",
         "shuffle_smallkeys": "dungeon",
         "shuffle_hideoutkeys": "vanilla",
@@ -387,7 +435,7 @@
         "silver_rupee_pouches_choice": "off",
         "silver_rupee_pouches": [],
         "shuffle_mapcompass": "startwith",
-        "enhance_map_compass": false,
+        "enhance_map_compass": true,
         "open_forest": "closed_deku",
         "open_kakariko": "open",
         "open_door_of_time": true,
@@ -399,28 +447,26 @@
         "mq_dungeons_mode": "vanilla",
         "mq_dungeons_specific": [],
         "mq_dungeons_count": 0,
-        "empty_dungeons_mode": "none",
+        "empty_dungeons_mode": "count",
         "empty_dungeons_specific": [],
         "empty_dungeons_count": 2,
         "shuffle_interior_entrances": "off",
         "shuffle_hideout_entrances": false,
-        "shuffle_grotto_entrances": true,
+        "shuffle_grotto_entrances": false,
         "shuffle_dungeon_entrances": "off",
         "shuffle_bosses": "off",
         "shuffle_overworld_entrances": false,
         "shuffle_gerudo_valley_river_exit": false,
         "owl_drops": false,
         "warp_songs": false,
-        "spawn_positions": [
-            "child"
-        ],
+        "spawn_positions": [],
         "free_bombchu_drops": false,
         "one_item_per_dungeon": false,
         "shuffle_song_items": "song",
         "shopsanity": "off",
         "shopsanity_prices": "random",
         "tokensanity": "off",
-        "shuffle_scrubs": "low",
+        "shuffle_scrubs": "off",
         "shuffle_child_trade": [],
         "shuffle_freestanding_items": "off",
         "shuffle_pots": "off",
@@ -458,7 +504,8 @@
             "logic_lens_shadow",
             "logic_lens_shadow_platform",
             "logic_lens_bongo",
-            "logic_lens_spirit"
+            "logic_lens_spirit",
+            "logic_visible_collisions"
         ],
         "starting_equipment": [
             "deku_shield"
@@ -471,6 +518,7 @@
         "start_with_consumables": true,
         "start_with_rupees": false,
         "starting_hearts": 3,
+        "skip_reward_from_rauru": true,
         "no_escape_sequence": true,
         "no_guard_stealth": true,
         "no_epona_race": true,
@@ -483,7 +531,7 @@
         "auto_equip_masks": false,
         "plant_beans": false,
         "chicken_count_random": false,
-        "chicken_count": 4,
+        "chicken_count": 7,
         "big_poe_count_random": false,
         "big_poe_count": 1,
         "easier_fire_arrow_entry": false,
@@ -491,13 +539,29 @@
         "ruto_already_f1_jabu": false,
         "ocarina_songs": "off",
         "correct_chest_appearances": "both",
+        "chest_textures_specific": [
+            "major",
+            "bosskeys",
+            "keys",
+            "tokens",
+            "hearts"
+        ],
+        "soa_unlocks_chest_texture": false,
         "minor_items_as_major_chest": [],
         "invisible_chests": false,
         "correct_potcrate_appearances": "textures_content",
+        "potcrate_textures_specific": [
+            "major",
+            "bosskeys",
+            "keys",
+            "tokens",
+            "hearts"
+        ],
+        "soa_unlocks_potcrate_texture": false,
         "key_appearance_match_dungeon": false,
         "clearer_hints": true,
         "hints": "always",
-        "hint_dist": "weekly",
+        "hint_dist": "tournament",
         "item_hints": [],
         "hint_dist_user": {},
         "misc_hints": [
@@ -505,7 +569,8 @@
             "ganondorf",
             "warp_songs_and_owls",
             "40_skulltulas",
-            "50_skulltulas"
+            "50_skulltulas",
+            "unique_merchants"
         ],
         "text_shuffle": "none",
         "damage_multiplier": "normal",
@@ -526,6 +591,10 @@
         ]
     },
     "DDR Weekly (2023-06-12)": {
+        "aliases": [
+            "ddr",
+            "ddrweekly"
+        ],
         "show_seed_info": true,
         "user_message": "DDR Season 2",
         "world_count": 1,
@@ -556,6 +625,7 @@
         "ganon_bosskey_rewards": 9,
         "ganon_bosskey_tokens": 100,
         "ganon_bosskey_hearts": 20,
+        "shuffle_dungeon_rewards": "reward",
         "shuffle_bosskeys": "dungeon",
         "shuffle_smallkeys": "dungeon",
         "shuffle_hideoutkeys": "vanilla",
@@ -653,6 +723,7 @@
         "start_with_consumables": false,
         "start_with_rupees": false,
         "starting_hearts": 3,
+        "skip_reward_from_rauru": true,
         "no_escape_sequence": true,
         "no_guard_stealth": true,
         "no_epona_race": true,
@@ -673,9 +744,25 @@
         "ruto_already_f1_jabu": false,
         "ocarina_songs": "off",
         "correct_chest_appearances": "off",
+        "chest_textures_specific": [
+            "major",
+            "bosskeys",
+            "keys",
+            "tokens",
+            "hearts"
+        ],
+        "soa_unlocks_chest_texture": false,
         "minor_items_as_major_chest": [],
         "invisible_chests": false,
         "correct_potcrate_appearances": "textures_unchecked",
+        "potcrate_textures_specific": [
+            "major",
+            "bosskeys",
+            "keys",
+            "tokens",
+            "hearts"
+        ],
+        "soa_unlocks_potcrate_texture": false,
         "key_appearance_match_dungeon": false,
         "clearer_hints": true,
         "hints": "always",
@@ -712,6 +799,9 @@
         ]
     },
     "Scrub Tournament": {
+        "aliases": [
+            "scrub"
+        ],
         "show_seed_info": true,
         "user_message": "Scrub Tournament",
         "world_count": 1,
@@ -742,6 +832,7 @@
         "ganon_bosskey_rewards": 9,
         "ganon_bosskey_tokens": 100,
         "ganon_bosskey_hearts": 20,
+        "shuffle_dungeon_rewards": "reward",
         "shuffle_bosskeys": "dungeon",
         "shuffle_smallkeys": "dungeon",
         "shuffle_hideoutkeys": "vanilla",
@@ -843,6 +934,7 @@
         "start_with_consumables": true,
         "start_with_rupees": true,
         "starting_hearts": 4,
+        "skip_reward_from_rauru": true,
         "no_escape_sequence": true,
         "no_guard_stealth": true,
         "no_epona_race": true,
@@ -863,9 +955,25 @@
         "ruto_already_f1_jabu": true,
         "ocarina_songs": "off",
         "correct_chest_appearances": "textures",
+        "chest_textures_specific": [
+            "major",
+            "bosskeys",
+            "keys",
+            "tokens",
+            "hearts"
+        ],
+        "soa_unlocks_chest_texture": false,
         "minor_items_as_major_chest": [],
         "invisible_chests": false,
         "correct_potcrate_appearances": "textures_unchecked",
+        "potcrate_textures_specific": [
+            "major",
+            "bosskeys",
+            "keys",
+            "tokens",
+            "hearts"
+        ],
+        "soa_unlocks_potcrate_texture": false,
         "key_appearance_match_dungeon": false,
         "clearer_hints": true,
         "hints": "always",
@@ -894,6 +1002,10 @@
         ]
     },
     "Multiworld Tournament Season 4": {
+        "aliases": [
+            "mw",
+            "mw_s4"
+        ],
         "show_seed_info": true,
         "user_message": "Multiworld Tournament Season 4",
         "world_count": 3,
@@ -924,6 +1036,7 @@
         "ganon_bosskey_rewards": 9,
         "ganon_bosskey_tokens": 100,
         "ganon_bosskey_hearts": 20,
+        "shuffle_dungeon_rewards": "reward",
         "shuffle_bosskeys": "dungeon",
         "shuffle_smallkeys": "dungeon",
         "shuffle_hideoutkeys": "vanilla",
@@ -1022,6 +1135,7 @@
         "start_with_consumables": true,
         "start_with_rupees": true,
         "starting_hearts": 3,
+        "skip_reward_from_rauru": true,
         "no_escape_sequence": true,
         "no_guard_stealth": true,
         "no_epona_race": true,
@@ -1042,9 +1156,25 @@
         "ruto_already_f1_jabu": true,
         "ocarina_songs": "off",
         "correct_chest_appearances": "textures",
+        "chest_textures_specific": [
+            "major",
+            "bosskeys",
+            "keys",
+            "tokens",
+            "hearts"
+        ],
+        "soa_unlocks_chest_texture": false,
         "minor_items_as_major_chest": [],
         "invisible_chests": false,
         "correct_potcrate_appearances": "textures_content",
+        "potcrate_textures_specific": [
+            "major",
+            "bosskeys",
+            "keys",
+            "tokens",
+            "hearts"
+        ],
+        "soa_unlocks_potcrate_texture": false,
         "key_appearance_match_dungeon": true,
         "clearer_hints": true,
         "hints": "always",
@@ -1076,6 +1206,9 @@
         ]
     },
     "Hell Mode": {
+        "aliases": [
+            "hell"
+        ],
         "show_seed_info": true,
         "user_message": "Hell Mode",
         "world_count": 1,
@@ -1106,6 +1239,7 @@
         "ganon_bosskey_rewards": 9,
         "ganon_bosskey_tokens": 100,
         "ganon_bosskey_hearts": 20,
+        "shuffle_dungeon_rewards": "anywhere",
         "shuffle_bosskeys": "keysanity",
         "shuffle_smallkeys": "keysanity",
         "shuffle_hideoutkeys": "keysanity",
@@ -1376,6 +1510,7 @@
         "start_with_consumables": false,
         "start_with_rupees": false,
         "starting_hearts": 3,
+        "skip_reward_from_rauru": false,
         "no_escape_sequence": false,
         "no_guard_stealth": false,
         "no_epona_race": false,
@@ -1396,9 +1531,25 @@
         "ruto_already_f1_jabu": false,
         "ocarina_songs": "all",
         "correct_chest_appearances": "off",
+        "chest_textures_specific": [
+            "major",
+            "bosskeys",
+            "keys",
+            "tokens",
+            "hearts"
+        ],
+        "soa_unlocks_chest_texture": false,
         "minor_items_as_major_chest": [],
         "invisible_chests": true,
         "correct_potcrate_appearances": "off",
+        "potcrate_textures_specific": [
+            "major",
+            "bosskeys",
+            "keys",
+            "tokens",
+            "hearts"
+        ],
+        "soa_unlocks_potcrate_texture": false,
         "key_appearance_match_dungeon": false,
         "clearer_hints": false,
         "hints": "none",
@@ -1432,6 +1583,9 @@
         ]
     },
     "Bingo": {
+        "aliases": [
+            "bingo"
+        ],
         "show_seed_info": true,
         "user_message": "Bingo",
         "world_count": 1,
@@ -1462,6 +1616,7 @@
         "ganon_bosskey_rewards": 9,
         "ganon_bosskey_tokens": 100,
         "ganon_bosskey_hearts": 20,
+        "shuffle_dungeon_rewards": "reward",
         "shuffle_bosskeys": "dungeon",
         "shuffle_smallkeys": "dungeon",
         "shuffle_hideoutkeys": "vanilla",
@@ -1545,6 +1700,7 @@
         "start_with_consumables": false,
         "start_with_rupees": false,
         "starting_hearts": 3,
+        "skip_reward_from_rauru": true,
         "no_escape_sequence": true,
         "no_guard_stealth": false,
         "no_epona_race": false,
@@ -1565,9 +1721,25 @@
         "ruto_already_f1_jabu": false,
         "ocarina_songs": "off",
         "correct_chest_appearances": "off",
+        "chest_textures_specific": [
+            "major",
+            "bosskeys",
+            "keys",
+            "tokens",
+            "hearts"
+        ],
+        "soa_unlocks_chest_texture": false,
         "minor_items_as_major_chest": [],
         "invisible_chests": false,
         "correct_potcrate_appearances": "textures_unchecked",
+        "potcrate_textures_specific": [
+            "major",
+            "bosskeys",
+            "keys",
+            "tokens",
+            "hearts"
+        ],
+        "soa_unlocks_potcrate_texture": false,
         "key_appearance_match_dungeon": false,
         "clearer_hints": true,
         "hints": "always",
@@ -1597,9 +1769,13 @@
             "Claim Check"
         ]
     },
-    "League S5": {
+    "League S6": {
+        "aliases": [
+            "league",
+            "league_s6"
+        ],
         "show_seed_info": true,
-        "user_message": "OoTR League S5",
+        "user_message": "OoTR League S6",
         "world_count": 1,
         "create_spoiler": false,
         "randomize_settings": false,
@@ -1628,6 +1804,7 @@
         "ganon_bosskey_rewards": 9,
         "ganon_bosskey_tokens": 100,
         "ganon_bosskey_hearts": 20,
+        "shuffle_dungeon_rewards": "reward",
         "shuffle_bosskeys": "dungeon",
         "shuffle_smallkeys": "dungeon",
         "shuffle_hideoutkeys": "vanilla",
@@ -1647,7 +1824,7 @@
         "gerudo_fortress": "fast",
         "dungeon_shortcuts_choice": "off",
         "dungeon_shortcuts": [],
-        "starting_age": "random",
+        "starting_age": "adult",
         "mq_dungeons_mode": "vanilla",
         "mq_dungeons_specific": [],
         "mq_dungeons_count": 0,
@@ -1725,6 +1902,7 @@
         "start_with_consumables": true,
         "start_with_rupees": true,
         "starting_hearts": 3,
+        "skip_reward_from_rauru": true,
         "no_escape_sequence": true,
         "no_guard_stealth": true,
         "no_epona_race": true,
@@ -1732,7 +1910,7 @@
         "complete_mask_quest": false,
         "useful_cutscenes": false,
         "fast_chests": true,
-        "free_scarecrow": false,
+        "free_scarecrow": true,
         "fast_bunny_hood": true,
         "auto_equip_masks": false,
         "plant_beans": false,
@@ -1742,12 +1920,28 @@
         "big_poe_count": 1,
         "easier_fire_arrow_entry": false,
         "fae_torch_count": 3,
-        "ruto_already_f1_jabu": false,
+        "ruto_already_f1_jabu": true,
         "ocarina_songs": "off",
         "correct_chest_appearances": "both",
+        "chest_textures_specific": [
+            "major",
+            "bosskeys",
+            "keys",
+            "tokens",
+            "hearts"
+        ],
+        "soa_unlocks_chest_texture": false,
         "minor_items_as_major_chest": [],
         "invisible_chests": false,
         "correct_potcrate_appearances": "textures_content",
+        "potcrate_textures_specific": [
+            "major",
+            "bosskeys",
+            "keys",
+            "tokens",
+            "hearts"
+        ],
+        "soa_unlocks_potcrate_texture": false,
         "key_appearance_match_dungeon": false,
         "clearer_hints": true,
         "hints": "always",
@@ -1781,6 +1975,11 @@
         ]
     },
     "Co-Op Tournament Season 3": {
+        "aliases": [
+            "co-op",
+            "co-op_s3",
+            "coop"
+        ],
         "show_seed_info": true,
         "user_message": "Co-Op Tournament Season 3",
         "world_count": 1,
@@ -1811,6 +2010,7 @@
         "ganon_bosskey_rewards": 9,
         "ganon_bosskey_tokens": 100,
         "ganon_bosskey_hearts": 20,
+        "shuffle_dungeon_rewards": "reward",
         "shuffle_bosskeys": "dungeon",
         "shuffle_smallkeys": "dungeon",
         "shuffle_hideoutkeys": "vanilla",
@@ -1889,6 +2089,7 @@
             "logic_child_deadhand",
             "logic_man_on_roof",
             "logic_dc_jump",
+            "logic_dc_scarecrow_gs",
             "logic_rusted_switches",
             "logic_windmill_poh",
             "logic_crater_bean_poh_with_hovers",
@@ -1912,6 +2113,7 @@
         "start_with_consumables": true,
         "start_with_rupees": true,
         "starting_hearts": 3,
+        "skip_reward_from_rauru": true,
         "no_escape_sequence": true,
         "no_guard_stealth": true,
         "no_epona_race": true,
@@ -1932,9 +2134,25 @@
         "ruto_already_f1_jabu": false,
         "ocarina_songs": "off",
         "correct_chest_appearances": "off",
+        "chest_textures_specific": [
+            "major",
+            "bosskeys",
+            "keys",
+            "tokens",
+            "hearts"
+        ],
+        "soa_unlocks_chest_texture": false,
         "minor_items_as_major_chest": [],
         "invisible_chests": false,
         "correct_potcrate_appearances": "textures_unchecked",
+        "potcrate_textures_specific": [
+            "major",
+            "bosskeys",
+            "keys",
+            "tokens",
+            "hearts"
+        ],
+        "soa_unlocks_potcrate_texture": false,
         "key_appearance_match_dungeon": false,
         "clearer_hints": true,
         "hints": "always",
