@@ -10,7 +10,7 @@ void manage_uninvert_yaxis() {
             return;
         }
         // Also never in pause menu.
-        if (z64_game.pause_ctxt.state == 6) {
+        if (z64_game.pause_ctxt.state == PAUSE_STATE_MAIN) {
             return;
         }
         if (z64_game.camera_mode == CAM_MODE_FIRST_PERSON ||
