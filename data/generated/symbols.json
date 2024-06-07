@@ -1295,7 +1295,7 @@
     "AUDIO_THREAD_INFO": "03484AC0",
     "AUDIO_THREAD_INFO_MEM_SIZE": "03484ADC",
     "AUDIO_THREAD_INFO_MEM_START": "03484AD8",
-    "AUDIO_THREAD_MEM_START": "034B1FA0",
+    "AUDIO_THREAD_MEM_START": "034B2000",
     "AUTO_TRACKER_CONTEXT": "03481DEC",
     "AUTO_TRACKER_VERSION": "03481DEC",
     "BONK_LAST_FRAME": "03484648",
@@ -1374,6 +1374,7 @@
     "CHEST_LENS_ONLY": "03483EFC",
     "CHEST_SILVER_TEXTURE": "03481DCA",
 <<<<<<< HEAD
+<<<<<<< HEAD
     "CHEST_SIZE_MATCH_CONTENTS": "034A8390",
     "CHEST_SIZE_TEXTURE": "034A838C",
     "CHEST_SKULL_TEXTURE": "03481DCB",
@@ -1386,6 +1387,13 @@
     "CHEST_TEXTURE_MATCH_CONTENTS": "034A8CAC",
     "COMPLETE_MASK_QUEST": "034B1E78",
 >>>>>>> a2fe228e (Fixing some stuff)
+=======
+    "CHEST_SIZE_MATCH_CONTENTS": "034A8D00",
+    "CHEST_SIZE_TEXTURE": "034A8CFC",
+    "CHEST_SKULL_TEXTURE": "03481DCB",
+    "CHEST_TEXTURE_MATCH_CONTENTS": "034A8D04",
+    "COMPLETE_MASK_QUEST": "034B1ED0",
+>>>>>>> b2d671d5 (Fix save checksum calculation. Need to fix backup save thing)
     "COOP_CONTEXT": "03480020",
     "COOP_VERSION": "03480020",
     "COSMETIC_CONTEXT": "03480C3C",
@@ -1396,12 +1404,17 @@
     "DEBUG_OFFSET": "034841C0",
     "DISABLE_TIMERS": "03481DB9",
 <<<<<<< HEAD
+<<<<<<< HEAD
     "DPAD_RESOURCE": "034A09C8",
     "DPAD_RESOURCE_END": "034A11C8",
 =======
     "DPAD_RESOURCE": "034A12E0",
     "DPAD_RESOURCE_END": "034A1AE0",
 >>>>>>> a2fe228e (Fixing some stuff)
+=======
+    "DPAD_RESOURCE": "034A1338",
+    "DPAD_RESOURCE_END": "034A1B38",
+>>>>>>> b2d671d5 (Fix save checksum calculation. Need to fix backup save thing)
     "DUNGEONS_SHUFFLED": "03481DBA",
     "EPONAS_SONG_NOTES": "03481DC7",
     "EXTENDED_INITIAL_SAVE_DATA": "03481B9C",
@@ -1423,18 +1436,18 @@
     "GET_CHEST_OVERRIDE_WRAPPER": "03483EF8",
 =======
     "EXTERN_DAMAGE_MULTIPLYER": "034845D5",
-    "EXTRA_BOWLING_SHUFFLE": "034A8CA0",
+    "EXTRA_BOWLING_SHUFFLE": "034A8CF8",
     "FAST_BUNNY_HOOD_ENABLED": "03481DBD",
     "FAST_CHESTS": "03481DB3",
-    "FILENAME_ENCODING": "034A86B4",
+    "FILENAME_ENCODING": "034A870C",
     "FIX_BROKEN_DROPS": "03481DBE",
     "FONTLOADSTATUS_EXTENDED": "034854E0",
-    "FONT_RESOURCE": "034A1AE0",
-    "FONT_RESOURCE_END": "034A2FA8",
+    "FONT_RESOURCE": "034A1B38",
+    "FONT_RESOURCE_END": "034A3000",
     "FREE_BOMBCHU_DROPS": "03481DA4",
     "FREE_SCARECROW_ENABLED": "03481DAC",
-    "GANON_BOSS_KEY_CONDITION": "034B1F5E",
-    "GANON_BOSS_KEY_CONDITION_COUNT": "034B1F5C",
+    "GANON_BOSS_KEY_CONDITION": "034B1FB6",
+    "GANON_BOSS_KEY_CONDITION_COUNT": "034B1FB4",
     "GET_CHEST_OVERRIDE_WRAPPER": "03483F00",
 >>>>>>> a2fe228e (Fixing some stuff)
     "GET_ITEM_SEQ_ID": "03480C92",
@@ -1449,10 +1462,14 @@
     "INITIAL_SAVE_DATA": "0348179C",
     "JABU_ELEVATOR_ENABLE": "03481DB0",
 <<<<<<< HEAD
+<<<<<<< HEAD
     "KAKARIKO_WEATHER_FORECAST": "034B1674",
 =======
     "KAKARIKO_WEATHER_FORECAST": "034B1F9C",
 >>>>>>> a2fe228e (Fixing some stuff)
+=======
+    "KAKARIKO_WEATHER_FORECAST": "034B1FF4",
+>>>>>>> b2d671d5 (Fix save checksum calculation. Need to fix backup save thing)
     "KEYRING_BOSSKEY_CONDITION": "03481DC2",
     "KING_DODONGO_BONKS": "034847A8",
     "LACS_CONDITION": "03481E2C",
@@ -1460,15 +1477,20 @@
     "MALON_GAVE_ICETRAP": "03485C9C",
     "MALON_TEXT_ID": "03481DB8",
 <<<<<<< HEAD
+<<<<<<< HEAD
     "MAX_RUPEES": "034B155A",
 =======
     "MAX_RUPEES": "034B1E7A",
 >>>>>>> a2fe228e (Fixing some stuff)
+=======
+    "MAX_RUPEES": "034B1ED2",
+>>>>>>> b2d671d5 (Fix save checksum calculation. Need to fix backup save thing)
     "MOVED_ADULT_KING_ZORA": "034855B0",
     "MW_PROGRESSIVE_ITEMS_ENABLE": "0348002B",
     "MW_PROGRESSIVE_ITEMS_STATE": "0348083C",
     "MW_SEND_OWN_ITEMS": "0348002A",
     "NO_COLLECTIBLE_HEARTS": "03481DB2",
+<<<<<<< HEAD
 <<<<<<< HEAD
     "NO_ESCAPE_SEQUENCE": "034A8444",
     "OCARINAS_SHUFFLED": "03481DB1",
@@ -1478,6 +1500,11 @@
     "OCARINAS_SHUFFLED": "03481DB1",
     "OPEN_KAKARIKO": "034B1E79",
 >>>>>>> a2fe228e (Fixing some stuff)
+=======
+    "NO_ESCAPE_SEQUENCE": "034A8DBF",
+    "OCARINAS_SHUFFLED": "03481DB1",
+    "OPEN_KAKARIKO": "034B1ED1",
+>>>>>>> b2d671d5 (Fix save checksum calculation. Need to fix backup save thing)
     "OUTGOING_ITEM": "03480030",
     "OUTGOING_KEY": "0348002C",
     "OUTGOING_PLAYER": "03480032",
@@ -1509,9 +1536,9 @@
 =======
     "RAINBOW_BRIDGE_CONDITION": "03481E28",
     "RAINBOW_BRIDGE_COUNT": "03481E30",
-    "RANDOMIZER_RNG_SEED": "034B1F58",
+    "RANDOMIZER_RNG_SEED": "034B1FB0",
     "RANDO_CONTEXT": "03480000",
-    "RNG_SEED_INT": "034A8A68",
+    "RNG_SEED_INT": "034A8AC0",
     "SET_BONK_FLAG": "03484680",
     "SHOW_CHEST_WITH_INVERTED_LENS": "03483FC0",
     "SHUFFLE_BEANS": "03484818",
@@ -1532,6 +1559,7 @@
     "SPOILER_AVAILABLE": "03481DBF",
     "START_TWINROVA_FIGHT": "03485668",
 <<<<<<< HEAD
+<<<<<<< HEAD
     "Sram_InitNewSave": "034A8194",
     "TIME_STRING_TXT": "03481778",
     "TIME_TRAVEL_SAVED_EQUIPS": "034830D8",
@@ -1541,18 +1569,27 @@
     "TRIFORCE_SPRITE_RESOURCE_END": "034A3690",
 =======
     "Sram_InitNewSave": "034A8AAC",
+=======
+    "Sram_InitNewSave": "034A8B04",
+>>>>>>> b2d671d5 (Fix save checksum calculation. Need to fix backup save thing)
     "TIME_STRING_TXT": "03481778",
     "TIME_TRAVEL_SAVED_EQUIPS": "034830E0",
     "TRIFORCE_HUNT_ENABLED": "03481E34",
     "TRIFORCE_PIECES_REQUIRED": "03481E36",
+<<<<<<< HEAD
     "TRIFORCE_SPRITE_RESOURCE": "034A2FA8",
     "TRIFORCE_SPRITE_RESOURCE_END": "034A3FA8",
 >>>>>>> a2fe228e (Fixing some stuff)
+=======
+    "TRIFORCE_SPRITE_RESOURCE": "034A3000",
+    "TRIFORCE_SPRITE_RESOURCE_END": "034A4000",
+>>>>>>> b2d671d5 (Fix save checksum calculation. Need to fix backup save thing)
     "TWINROVA_ACTION_TIMER": "0348566C",
     "VERSION_STRING_TXT": "03481744",
     "WINDMILL_SONG_ID": "03481DB6",
     "WINDMILL_TEXT_ID": "03481DB7",
     "WORLD_STRING_TXT": "03481768",
+<<<<<<< HEAD
 <<<<<<< HEAD
     "a_button": "034A4508",
     "a_note_b": "034A44F4",
@@ -1790,5 +1827,129 @@
     "trade_quest_items": "034A1054",
     "triforce_sprite": "034A4D30"
 >>>>>>> a2fe228e (Fixing some stuff)
+<<<<<<< HEAD
 >>>>>>> e92341eb (Fixing some stuff)
+=======
+=======
+    "a_button": "034A4E78",
+    "a_note_b": "034A4E64",
+    "a_note_font_glow_base": "034A4E4C",
+    "a_note_font_glow_max": "034A4E48",
+    "a_note_g": "034A4E68",
+    "a_note_glow_base": "034A4E54",
+    "a_note_glow_max": "034A4E50",
+    "a_note_r": "034A4E6C",
+    "active_item_action_id": "034A9528",
+    "active_item_fast_chest": "034A9518",
+    "active_item_graphic_id": "034A951C",
+    "active_item_object_id": "034A9520",
+    "active_item_row": "034A952C",
+    "active_item_text_id": "034A9524",
+    "active_override": "034A9534",
+    "active_override_is_outgoing": "034A9530",
+    "adultSkeleton": "034A8908",
+    "adult_safe": "034B1EDA",
+    "alt_overrides": "034A8E5C",
+    "b_button": "034A4E74",
+    "beating_dd": "034A4E80",
+    "beating_no_dd": "034A4E88",
+    "bgm_sequence_ids": "034A8A04",
+    "bk_display": "034A8D74",
+    "bosses_warps": "034A43E0",
+    "buffer_password": "034A8DB4",
+    "buttons_sprite": "034A4D08",
+    "c_button": "034A4E70",
+    "c_note_b": "034A4E58",
+    "c_note_font_glow_base": "034A4E3C",
+    "c_note_font_glow_max": "034A4E38",
+    "c_note_g": "034A4E5C",
+    "c_note_glow_base": "034A4E44",
+    "c_note_glow_max": "034A4E40",
+    "c_note_r": "034A4E60",
+    "cfg_item_overrides": "034A9550",
+    "childSkeleton": "034A880C",
+    "child_safe": "034B1ED9",
+    "collectible_mutex": "034A8DD0",
+    "collectible_override": "034A8DC0",
+    "collectible_override_flags": "034A8E54",
+    "collectible_scene_flags_table": "034A912C",
+    "cooldown": "034A8DBA",
+    "curr_scene_setup": "034B1FDC",
+    "debug_text_color": "034A49DC",
+    "debug_text_height": "034A0BEE",
+    "debug_text_width": "034A0BEF",
+    "defaultDDHeart": "034A0DA4",
+    "defaultHeart": "034A0DAC",
+    "dpad_sprite": "034A4D98",
+    "drop_collectible_override_flag": "034A9544",
+    "dummy_actor": "034A9548",
+    "dungeon_count": "034A4B38",
+    "dungeon_warps": "034A47BC",
+    "dungeons": "034A4A04",
+    "empty_dlist": "034A4DF8",
+    "extended_savectx": "034B1FB8",
+    "extern_ctxt": "034A4B68",
+    "float_precision": "034A49D8",
+    "font_sprite": "034A4DA8",
+    "freecam_modes": "034A0C54",
+    "hash_sprites": "034A4CE4",
+    "hash_symbols": "034A4CA4",
+    "heap_next": "034B1FF0",
+    "heart_sprite": "034A4D28",
+    "icon_sprites": "034A0D24",
+    "illegal_model": "034B1EDC",
+    "input_icon_height": "034A0DBE",
+    "input_icon_width": "034A0DBF",
+    "input_number_height": "034A0DBC",
+    "input_number_width": "034A0DBD",
+    "item_digit_sprite": "034A4D48",
+    "item_draw_table": "034A4E8C",
+    "item_overrides_count": "034A954C",
+    "item_table": "034A65CC",
+    "items": "034A4CEC",
+    "items_debug": "034A4004",
+    "items_sprite": "034A4DC8",
+    "key_counts": "034A65A8",
+    "key_rupee_clock_sprite": "034A4D68",
+    "last_fog_distance": "034A4B7C",
+    "left_alignment": "034A0DBA",
+    "linkhead_skull_sprite": "034A4D38",
+    "medals": "034A49EC",
+    "medals_sprite": "034A4DD8",
+    "menu_categories": "034A4978",
+    "menu_not_on_dup": "034A8D08",
+    "missing_dlist": "034B1ED8",
+    "normal_dd": "034A4E7C",
+    "normal_no_dd": "034A4E84",
+    "num_override_flags": "034A8E58",
+    "num_to_bits": "034A8AC4",
+    "object_slots": "034B1EE0",
+    "ocarina_button_sprite": "034A4D18",
+    "outgoing_queue": "034A8DD4",
+    "overworld_warps": "034A4534",
+    "password_index": "034A8DBE",
+    "quest_items_sprite": "034A4DB8",
+    "reward_rows": "034A49E0",
+    "rupee_colors": "034A0D98",
+    "rupee_digit_sprite": "034A4D58",
+    "satisfied_pending_frames": "034A9514",
+    "scene_fog_distance": "034A4B80",
+    "setup_db": "034A4E00",
+    "shooting_gallery_show_message": "034B1ED3",
+    "silver_rupee_vars": "034A64A0",
+    "song_note_sprite": "034A4D78",
+    "stones_sprite": "034A4DE8",
+    "tentatives": "034A8DBC",
+    "text_cursor_border_base": "034A4E2C",
+    "text_cursor_border_max": "034A4E28",
+    "text_cursor_inner_base": "034A4E34",
+    "text_cursor_inner_max": "034A4E30",
+    "text_height": "034A0EF0",
+    "text_width": "034A0EF4",
+    "texture_table": "034A8B08",
+    "top_alignment": "034A0DB8",
+    "trade_quest_items": "034A10AC",
+    "triforce_sprite": "034A4D88"
+>>>>>>> b2d671d5 (Fix save checksum calculation. Need to fix backup save thing)
+>>>>>>> bc8885e8 (Fix save checksum calculation. Need to fix backup save thing)
 }
