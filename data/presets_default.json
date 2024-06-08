@@ -555,7 +555,7 @@
         "key_appearance_match_dungeon": false,
         "clearer_hints": true,
         "hints": "always",
-        "hint_dist": "tournament",
+        "hint_dist": "weekly",
         "item_hints": [],
         "hint_dist_user": {},
         "misc_hints": [
@@ -563,8 +563,7 @@
             "ganondorf",
             "warp_songs_and_owls",
             "40_skulltulas",
-            "50_skulltulas",
-            "unique_merchants"
+            "50_skulltulas"
         ],
         "text_shuffle": "none",
         "damage_multiplier": "normal",
