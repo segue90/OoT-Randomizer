@@ -2070,7 +2070,8 @@ class SettingInfos:
         disable        = {
             '!specific': {'settings': ['empty_dungeons_specific']},
             '!rewards':  {'settings': ['empty_dungeons_rewards']},
-            '!count':    {'settings': ['empty_dungeons_count']}
+            '!count':    {'settings': ['empty_dungeons_count']},
+            'rewards':   {'settings': ['shuffle_dungeon_rewards']},
         },
         gui_params     = {
             'distribution':  [
