@@ -2118,8 +2118,8 @@ class SettingInfos:
         },
         default         = [],
         gui_tooltip     = '''\
-            Select the specific dungeons rewards you would
-            like to be pre-completed.
+            Select the specific dungeons rewards whose
+            dungeons you would like to be pre-completed.
         ''',
         shared          = True,
         gui_params      = {
