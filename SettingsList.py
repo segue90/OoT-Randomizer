@@ -2122,7 +2122,7 @@ class SettingInfos:
             like to be pre-completed.
         ''',
         shared          = True,
-        gui_params     = {
+        gui_params      = {
             "hide_when_disabled": True,
         },
     )
