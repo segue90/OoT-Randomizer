@@ -2047,7 +2047,7 @@ class SettingInfos:
             randomly rolled with no major items, but their dungeon rewards won't
             be given for free.
             - 'Specific Dungeons': Choose which specific dungeons will be pre-completed.
-            - 'Specific Rewards': Choose which specific dungeon rewards will be in pre-completed dungeons.
+            - 'Specific Rewards': Choose which specific dungeon rewards will be in pre-completed dungeons. Not compatible with shuffled dungeon rewards.
             - 'Count': Choose how many pre-completed dungeons will be randomly chosen.
 
             A same dungeon won't be both MQ and pre-completed unless it has been
