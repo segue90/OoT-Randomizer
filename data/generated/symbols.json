@@ -1282,25 +1282,14 @@
     "ADULT_VALID_ITEMS": "034833C4",
     "APPLY_BONK_DAMAGE": "034846FC",
     "AUDIOBANK_TABLE_EXTENDED": "03484AE0",
-<<<<<<< HEAD
-    "AUDIO_THREAD_INFO": "03484AB8",
-    "AUDIO_THREAD_INFO_MEM_SIZE": "03484AD4",
-    "AUDIO_THREAD_INFO_MEM_START": "03484AD0",
-    "AUDIO_THREAD_MEM_START": "034B1680",
-    "AUTO_TRACKER_CONTEXT": "03481DE4",
-    "AUTO_TRACKER_VERSION": "03481DE4",
-    "BONK_LAST_FRAME": "03484640",
-    "CFG_ADULT_TRADE_SHUFFLE": "03486144",
-=======
     "AUDIO_THREAD_INFO": "03484AC0",
     "AUDIO_THREAD_INFO_MEM_SIZE": "03484ADC",
     "AUDIO_THREAD_INFO_MEM_START": "03484AD8",
-    "AUDIO_THREAD_MEM_START": "034B2060",
+    "AUDIO_THREAD_MEM_START": "034B2080",
     "AUTO_TRACKER_CONTEXT": "03481DEC",
     "AUTO_TRACKER_VERSION": "03481DEC",
     "BONK_LAST_FRAME": "03484648",
     "CFG_ADULT_TRADE_SHUFFLE": "03486168",
->>>>>>> a2fe228e (Fixing some stuff)
     "CFG_AUDIOBANK_TABLE_EXTENDED_ADDR": "03480CA0",
     "CFG_A_BUTTON_COLOR": "03480C4C",
     "CFG_A_NOTE_COLOR": "03480C6A",
@@ -1373,35 +1362,11 @@
     "CHEST_HEART_TEXTURE": "03481DCC",
     "CHEST_LENS_ONLY": "03483EFC",
     "CHEST_SILVER_TEXTURE": "03481DCA",
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-    "CHEST_SIZE_MATCH_CONTENTS": "034A8390",
-    "CHEST_SIZE_TEXTURE": "034A838C",
+    "CHEST_SIZE_MATCH_CONTENTS": "034A8D80",
+    "CHEST_SIZE_TEXTURE": "034A8D7C",
     "CHEST_SKULL_TEXTURE": "03481DCB",
-    "CHEST_TEXTURE_MATCH_CONTENTS": "034A8394",
-    "COMPLETE_MASK_QUEST": "034B1558",
-=======
-    "CHEST_SIZE_MATCH_CONTENTS": "034A8CA8",
-    "CHEST_SIZE_TEXTURE": "034A8CA4",
-    "CHEST_SKULL_TEXTURE": "03481DCB",
-    "CHEST_TEXTURE_MATCH_CONTENTS": "034A8CAC",
-    "COMPLETE_MASK_QUEST": "034B1E78",
->>>>>>> a2fe228e (Fixing some stuff)
-=======
-    "CHEST_SIZE_MATCH_CONTENTS": "034A8D00",
-    "CHEST_SIZE_TEXTURE": "034A8CFC",
-    "CHEST_SKULL_TEXTURE": "03481DCB",
-    "CHEST_TEXTURE_MATCH_CONTENTS": "034A8D04",
-    "COMPLETE_MASK_QUEST": "034B1ED0",
->>>>>>> b2d671d5 (Fix save checksum calculation. Need to fix backup save thing)
-=======
-    "CHEST_SIZE_MATCH_CONTENTS": "034A8D68",
-    "CHEST_SIZE_TEXTURE": "034A8D64",
-    "CHEST_SKULL_TEXTURE": "03481DCB",
-    "CHEST_TEXTURE_MATCH_CONTENTS": "034A8D6C",
-    "COMPLETE_MASK_QUEST": "034B1F38",
->>>>>>> ac27c376 (Fix Sram_VerifyAndLoadAllSaves and add hack for Sram_EraseSave to actually erase the save)
+    "CHEST_TEXTURE_MATCH_CONTENTS": "034A8D84",
+    "COMPLETE_MASK_QUEST": "034B1F50",
     "COOP_CONTEXT": "03480020",
     "COOP_VERSION": "03480020",
     "COSMETIC_CONTEXT": "03480C3C",
@@ -1411,58 +1376,26 @@
     "CUSTOM_KEY_MODELS": "03481DC5",
     "DEBUG_OFFSET": "034841C0",
     "DISABLE_TIMERS": "03481DB9",
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-    "DPAD_RESOURCE": "034A09C8",
-    "DPAD_RESOURCE_END": "034A11C8",
-=======
-    "DPAD_RESOURCE": "034A12E0",
-    "DPAD_RESOURCE_END": "034A1AE0",
->>>>>>> a2fe228e (Fixing some stuff)
-=======
-    "DPAD_RESOURCE": "034A1338",
-    "DPAD_RESOURCE_END": "034A1B38",
->>>>>>> b2d671d5 (Fix save checksum calculation. Need to fix backup save thing)
-=======
-    "DPAD_RESOURCE": "034A13A0",
-    "DPAD_RESOURCE_END": "034A1BA0",
->>>>>>> ac27c376 (Fix Sram_VerifyAndLoadAllSaves and add hack for Sram_EraseSave to actually erase the save)
+    "DPAD_RESOURCE": "034A13B8",
+    "DPAD_RESOURCE_END": "034A1BB8",
     "DUNGEONS_SHUFFLED": "03481DBA",
     "EPONAS_SONG_NOTES": "03481DC7",
     "EXTENDED_INITIAL_SAVE_DATA": "03481B9C",
     "EXTENDED_OBJECT_TABLE": "03481C9C",
-<<<<<<< HEAD
-    "EXTERN_DAMAGE_MULTIPLYER": "034845CD",
-    "EXTRA_BOWLING_SHUFFLE": "034A8388",
-    "FAST_BUNNY_HOOD_ENABLED": "03481DBD",
-    "FAST_CHESTS": "03481DB3",
-    "FILENAME_ENCODING": "034A7D9C",
-    "FIX_BROKEN_DROPS": "03481DBE",
-    "FONTLOADSTATUS_EXTENDED": "034854E0",
-    "FONT_RESOURCE": "034A11C8",
-    "FONT_RESOURCE_END": "034A2690",
-    "FREE_BOMBCHU_DROPS": "03481DA4",
-    "FREE_SCARECROW_ENABLED": "03481DAC",
-    "GANON_BOSS_KEY_CONDITION": "034B163E",
-    "GANON_BOSS_KEY_CONDITION_COUNT": "034B163C",
-    "GET_CHEST_OVERRIDE_WRAPPER": "03483EF8",
-=======
     "EXTERN_DAMAGE_MULTIPLYER": "034845D5",
-    "EXTRA_BOWLING_SHUFFLE": "034A8D60",
+    "EXTRA_BOWLING_SHUFFLE": "034A8D78",
     "FAST_BUNNY_HOOD_ENABLED": "03481DBD",
     "FAST_CHESTS": "03481DB3",
-    "FILENAME_ENCODING": "034A8774",
+    "FILENAME_ENCODING": "034A878C",
     "FIX_BROKEN_DROPS": "03481DBE",
     "FONTLOADSTATUS_EXTENDED": "034854E0",
-    "FONT_RESOURCE": "034A1BA0",
-    "FONT_RESOURCE_END": "034A3068",
+    "FONT_RESOURCE": "034A1BB8",
+    "FONT_RESOURCE_END": "034A3080",
     "FREE_BOMBCHU_DROPS": "03481DA4",
     "FREE_SCARECROW_ENABLED": "03481DAC",
-    "GANON_BOSS_KEY_CONDITION": "034B201E",
-    "GANON_BOSS_KEY_CONDITION_COUNT": "034B201C",
+    "GANON_BOSS_KEY_CONDITION": "034B2036",
+    "GANON_BOSS_KEY_CONDITION_COUNT": "034B2034",
     "GET_CHEST_OVERRIDE_WRAPPER": "03483F00",
->>>>>>> a2fe228e (Fixing some stuff)
     "GET_ITEM_SEQ_ID": "03480C92",
     "GET_ITEM_TRIGGERED": "034828F8",
     "GOSSIP_HINT_CONDITION": "03481DA8",
@@ -1474,64 +1407,22 @@
     "INCOMING_PLAYER": "03480026",
     "INITIAL_SAVE_DATA": "0348179C",
     "JABU_ELEVATOR_ENABLE": "03481DB0",
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-    "KAKARIKO_WEATHER_FORECAST": "034B1674",
-=======
-    "KAKARIKO_WEATHER_FORECAST": "034B1F9C",
->>>>>>> a2fe228e (Fixing some stuff)
-=======
-    "KAKARIKO_WEATHER_FORECAST": "034B1FF4",
->>>>>>> b2d671d5 (Fix save checksum calculation. Need to fix backup save thing)
-=======
-    "KAKARIKO_WEATHER_FORECAST": "034B205C",
->>>>>>> ac27c376 (Fix Sram_VerifyAndLoadAllSaves and add hack for Sram_EraseSave to actually erase the save)
+    "KAKARIKO_WEATHER_FORECAST": "034B2074",
     "KEYRING_BOSSKEY_CONDITION": "03481DC2",
     "KING_DODONGO_BONKS": "034847A8",
     "LACS_CONDITION": "03481E2C",
     "LACS_CONDITION_COUNT": "03481E32",
     "MALON_GAVE_ICETRAP": "03485C9C",
     "MALON_TEXT_ID": "03481DB8",
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-    "MAX_RUPEES": "034B155A",
-=======
-    "MAX_RUPEES": "034B1E7A",
->>>>>>> a2fe228e (Fixing some stuff)
-=======
-    "MAX_RUPEES": "034B1ED2",
->>>>>>> b2d671d5 (Fix save checksum calculation. Need to fix backup save thing)
-=======
-    "MAX_RUPEES": "034B1F3A",
->>>>>>> ac27c376 (Fix Sram_VerifyAndLoadAllSaves and add hack for Sram_EraseSave to actually erase the save)
+    "MAX_RUPEES": "034B1F52",
     "MOVED_ADULT_KING_ZORA": "034855B0",
     "MW_PROGRESSIVE_ITEMS_ENABLE": "0348002B",
     "MW_PROGRESSIVE_ITEMS_STATE": "0348083C",
     "MW_SEND_OWN_ITEMS": "0348002A",
     "NO_COLLECTIBLE_HEARTS": "03481DB2",
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-    "NO_ESCAPE_SEQUENCE": "034A8444",
+    "NO_ESCAPE_SEQUENCE": "034A8E3F",
     "OCARINAS_SHUFFLED": "03481DB1",
-    "OPEN_KAKARIKO": "034B1559",
-=======
-    "NO_ESCAPE_SEQUENCE": "034A8D67",
-    "OCARINAS_SHUFFLED": "03481DB1",
-    "OPEN_KAKARIKO": "034B1E79",
->>>>>>> a2fe228e (Fixing some stuff)
-=======
-    "NO_ESCAPE_SEQUENCE": "034A8DBF",
-    "OCARINAS_SHUFFLED": "03481DB1",
-    "OPEN_KAKARIKO": "034B1ED1",
->>>>>>> b2d671d5 (Fix save checksum calculation. Need to fix backup save thing)
-=======
-    "NO_ESCAPE_SEQUENCE": "034A8E27",
-    "OCARINAS_SHUFFLED": "03481DB1",
-    "OPEN_KAKARIKO": "034B1F39",
->>>>>>> ac27c376 (Fix Sram_VerifyAndLoadAllSaves and add hack for Sram_EraseSave to actually erase the save)
+    "OPEN_KAKARIKO": "034B1F51",
     "OUTGOING_ITEM": "03480030",
     "OUTGOING_KEY": "0348002C",
     "OUTGOING_PLAYER": "03480032",
@@ -1549,29 +1440,16 @@
     "POTCRATE_SILVER_TEXTURE": "03481DCF",
     "POTCRATE_SKULL_TEXTURE": "03481DD0",
     "POTCRATE_TEXTURES_MATCH_CONTENTS": "03481DC1",
-<<<<<<< HEAD
-    "RAINBOW_BRIDGE_CONDITION": "03481E20",
-    "RAINBOW_BRIDGE_COUNT": "03481E28",
-    "RANDOMIZER_RNG_SEED": "034B1638",
-    "RANDO_CONTEXT": "03480000",
-    "RNG_SEED_INT": "034A8150",
-    "SET_BONK_FLAG": "03484678",
-    "SHOW_CHEST_WITH_INVERTED_LENS": "03483FB8",
-    "SHUFFLE_BEANS": "03484810",
-    "SHUFFLE_CARPET_SALESMAN": "03485FF4",
-    "SHUFFLE_CHEST_GAME": "03486D6C",
-=======
     "RAINBOW_BRIDGE_CONDITION": "03481E28",
     "RAINBOW_BRIDGE_COUNT": "03481E30",
-    "RANDOMIZER_RNG_SEED": "034B2018",
+    "RANDOMIZER_RNG_SEED": "034B2030",
     "RANDO_CONTEXT": "03480000",
-    "RNG_SEED_INT": "034A8B28",
+    "RNG_SEED_INT": "034A8B40",
     "SET_BONK_FLAG": "03484680",
     "SHOW_CHEST_WITH_INVERTED_LENS": "03483FC0",
     "SHUFFLE_BEANS": "03484818",
     "SHUFFLE_CARPET_SALESMAN": "03486018",
     "SHUFFLE_CHEST_GAME": "03486D90",
->>>>>>> a2fe228e (Fixing some stuff)
     "SHUFFLE_COWS": "03481DB4",
     "SHUFFLE_GRANNYS_POTION_SHOP": "03483D54",
     "SHUFFLE_MEDIGORON": "03486074",
@@ -1585,46 +1463,19 @@
     "SPEED_MULTIPLIER": "03484080",
     "SPOILER_AVAILABLE": "03481DBF",
     "START_TWINROVA_FIGHT": "03485668",
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-    "Sram_InitNewSave": "034A8194",
-    "TIME_STRING_TXT": "03481778",
-    "TIME_TRAVEL_SAVED_EQUIPS": "034830D8",
-    "TRIFORCE_HUNT_ENABLED": "03481E2C",
-    "TRIFORCE_PIECES_REQUIRED": "03481E2E",
-    "TRIFORCE_SPRITE_RESOURCE": "034A2690",
-    "TRIFORCE_SPRITE_RESOURCE_END": "034A3690",
-=======
-    "Sram_InitNewSave": "034A8AAC",
-=======
-    "Sram_InitNewSave": "034A8B04",
->>>>>>> b2d671d5 (Fix save checksum calculation. Need to fix backup save thing)
-=======
-    "Sram_InitNewSave": "034A8B6C",
->>>>>>> ac27c376 (Fix Sram_VerifyAndLoadAllSaves and add hack for Sram_EraseSave to actually erase the save)
+    "Sram_InitNewSave": "034A8B84",
     "TIME_STRING_TXT": "03481778",
     "TIME_TRAVEL_SAVED_EQUIPS": "034830E0",
     "TRIFORCE_HUNT_ENABLED": "03481E34",
     "TRIFORCE_PIECES_REQUIRED": "03481E36",
-<<<<<<< HEAD
-<<<<<<< HEAD
-    "TRIFORCE_SPRITE_RESOURCE": "034A2FA8",
-    "TRIFORCE_SPRITE_RESOURCE_END": "034A3FA8",
->>>>>>> a2fe228e (Fixing some stuff)
-=======
-    "TRIFORCE_SPRITE_RESOURCE": "034A3000",
-    "TRIFORCE_SPRITE_RESOURCE_END": "034A4000",
->>>>>>> b2d671d5 (Fix save checksum calculation. Need to fix backup save thing)
-=======
-    "TRIFORCE_SPRITE_RESOURCE": "034A3068",
-    "TRIFORCE_SPRITE_RESOURCE_END": "034A4068",
->>>>>>> ac27c376 (Fix Sram_VerifyAndLoadAllSaves and add hack for Sram_EraseSave to actually erase the save)
+    "TRIFORCE_SPRITE_RESOURCE": "034A3080",
+    "TRIFORCE_SPRITE_RESOURCE_END": "034A4080",
     "TWINROVA_ACTION_TIMER": "0348566C",
     "VERSION_STRING_TXT": "03481744",
     "WINDMILL_SONG_ID": "03481DB6",
     "WINDMILL_TEXT_ID": "03481DB7",
     "WORLD_STRING_TXT": "03481768",
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -2113,4 +1964,125 @@
     "triforce_sprite": "034A4DF0"
 >>>>>>> ac27c376 (Fix Sram_VerifyAndLoadAllSaves and add hack for Sram_EraseSave to actually erase the save)
 >>>>>>> 836dfa79 (Fix Sram_VerifyAndLoadAllSaves and add hack for Sram_EraseSave to actually erase the save)
+=======
+    "a_button": "034A4EF8",
+    "a_note_b": "034A4EE4",
+    "a_note_font_glow_base": "034A4ECC",
+    "a_note_font_glow_max": "034A4EC8",
+    "a_note_g": "034A4EE8",
+    "a_note_glow_base": "034A4ED4",
+    "a_note_glow_max": "034A4ED0",
+    "a_note_r": "034A4EEC",
+    "active_item_action_id": "034A95A8",
+    "active_item_fast_chest": "034A9598",
+    "active_item_graphic_id": "034A959C",
+    "active_item_object_id": "034A95A0",
+    "active_item_row": "034A95AC",
+    "active_item_text_id": "034A95A4",
+    "active_override": "034A95B4",
+    "active_override_is_outgoing": "034A95B0",
+    "adultSkeleton": "034A8988",
+    "adult_safe": "034B1F5A",
+    "alt_overrides": "034A8EDC",
+    "b_button": "034A4EF4",
+    "beating_dd": "034A4F00",
+    "beating_no_dd": "034A4F08",
+    "bgm_sequence_ids": "034A8A84",
+    "bk_display": "034A8DF4",
+    "bosses_warps": "034A4460",
+    "buffer_password": "034A8E34",
+    "buttons_sprite": "034A4D88",
+    "c_button": "034A4EF0",
+    "c_note_b": "034A4ED8",
+    "c_note_font_glow_base": "034A4EBC",
+    "c_note_font_glow_max": "034A4EB8",
+    "c_note_g": "034A4EDC",
+    "c_note_glow_base": "034A4EC4",
+    "c_note_glow_max": "034A4EC0",
+    "c_note_r": "034A4EE0",
+    "cfg_item_overrides": "034A95D0",
+    "childSkeleton": "034A888C",
+    "child_safe": "034B1F59",
+    "collectible_mutex": "034A8E50",
+    "collectible_override": "034A8E40",
+    "collectible_override_flags": "034A8ED4",
+    "collectible_scene_flags_table": "034A91AC",
+    "cooldown": "034A8E3A",
+    "curr_scene_setup": "034B205C",
+    "debug_text_color": "034A4A5C",
+    "debug_text_height": "034A0C6E",
+    "debug_text_width": "034A0C6F",
+    "defaultDDHeart": "034A0E24",
+    "defaultHeart": "034A0E2C",
+    "dpad_sprite": "034A4E18",
+    "drop_collectible_override_flag": "034A95C4",
+    "dummy_actor": "034A95C8",
+    "dungeon_count": "034A4BB8",
+    "dungeon_warps": "034A483C",
+    "dungeons": "034A4A84",
+    "empty_dlist": "034A4E78",
+    "extended_savectx": "034B2038",
+    "extern_ctxt": "034A4BE8",
+    "float_precision": "034A4A58",
+    "font_sprite": "034A4E28",
+    "freecam_modes": "034A0CD4",
+    "hash_sprites": "034A4D64",
+    "hash_symbols": "034A4D24",
+    "heap_next": "034B2070",
+    "heart_sprite": "034A4DA8",
+    "icon_sprites": "034A0DA4",
+    "illegal_model": "034B1F5C",
+    "input_icon_height": "034A0E3E",
+    "input_icon_width": "034A0E3F",
+    "input_number_height": "034A0E3C",
+    "input_number_width": "034A0E3D",
+    "item_digit_sprite": "034A4DC8",
+    "item_draw_table": "034A4F0C",
+    "item_overrides_count": "034A95CC",
+    "item_table": "034A664C",
+    "items": "034A4D6C",
+    "items_debug": "034A4084",
+    "items_sprite": "034A4E48",
+    "key_counts": "034A6628",
+    "key_rupee_clock_sprite": "034A4DE8",
+    "last_fog_distance": "034A4BFC",
+    "left_alignment": "034A0E3A",
+    "linkhead_skull_sprite": "034A4DB8",
+    "medals": "034A4A6C",
+    "medals_sprite": "034A4E58",
+    "menu_categories": "034A49F8",
+    "menu_not_on_dup": "034A8D88",
+    "missing_dlist": "034B1F58",
+    "normal_dd": "034A4EFC",
+    "normal_no_dd": "034A4F04",
+    "num_override_flags": "034A8ED8",
+    "num_to_bits": "034A8B44",
+    "object_slots": "034B1F60",
+    "ocarina_button_sprite": "034A4D98",
+    "outgoing_queue": "034A8E54",
+    "overworld_warps": "034A45B4",
+    "password_index": "034A8E3E",
+    "quest_items_sprite": "034A4E38",
+    "reward_rows": "034A4A60",
+    "rupee_colors": "034A0E18",
+    "rupee_digit_sprite": "034A4DD8",
+    "satisfied_pending_frames": "034A9594",
+    "scene_fog_distance": "034A4C00",
+    "setup_db": "034A4E80",
+    "shooting_gallery_show_message": "034B1F53",
+    "silver_rupee_vars": "034A6520",
+    "song_note_sprite": "034A4DF8",
+    "stones_sprite": "034A4E68",
+    "tentatives": "034A8E3C",
+    "text_cursor_border_base": "034A4EAC",
+    "text_cursor_border_max": "034A4EA8",
+    "text_cursor_inner_base": "034A4EB4",
+    "text_cursor_inner_max": "034A4EB0",
+    "text_height": "034A0F70",
+    "text_width": "034A0F74",
+    "texture_table": "034A8B88",
+    "top_alignment": "034A0E38",
+    "trade_quest_items": "034A112C",
+    "triforce_sprite": "034A4E08"
+>>>>>>> ad55fa64 (Rebase)
 }

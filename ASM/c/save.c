@@ -170,7 +170,7 @@ void Sram_VerifyAndLoadAllSaves(z64_FileChooseContext_t* fileChooseCtx, SramCont
             else {
                 // Backup save is good so copy it to the original
                 z64_memcopy(sramCtx->readBuff + SRAM_SLOTS[slotNum], sramCtx->readBuff + SRAM_SLOTS[slotNum + 3], SLOT_SIZE);
-                
+
                 // Write the original slot
                 SsSram_ReadWrite_Safe(SRAM_BASE + SRAM_SLOTS[slotNum], sramCtx->readBuff + SRAM_SLOTS[slotNum], SLOT_SIZE, OS_WRITE);
             }
@@ -242,7 +242,7 @@ void Sram_CopySave(z64_FileChooseContext_t* fileChooseCtx, SramContext* sramCtx)
 
 // Reimplementation of Sram_EraseSave. Actually just erase the entire slot and backup slot instead of create a new blank file
 void Sram_EraseSave(z64_FileChooseContext_t* fileChooseCtx, SramContext* sramCtx) {
-    
+
     // Zero out the data in the primary slot
     int32_t offset = SRAM_SLOTS[fileChooseCtx->selectedFileIndex];
     z64_bzero(sramCtx->readBuff + offset, SLOT_SIZE);
