@@ -2229,9 +2229,9 @@
     "shuffle_individual_ocarina_notes": false,
     "shuffle_loach_reward":             "off",
     "disabled_locations":               [],
-    "starting_items":                   {
-      "Zeldas Letter": 1
-    },
+    "starting_inventory": [
+            "zeldas_letter"
+        ],        
     "start_with_consumables":           false,
     "start_with_rupees":                true,
     "starting_hearts":                  3,
