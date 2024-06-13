@@ -2283,7 +2283,7 @@
     "big_poe_count_random":             false,
     "big_poe_count":                    1,
     "easier_fire_arrow_entry":          false,
-    "fae_torch_count":                  [],
+    "fae_torch_count":                  2,
     "ruto_already_f1_jabu":             false,
     "ocarina_songs":                    "off",
     "correct_chest_appearances":        "textures",
