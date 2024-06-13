@@ -153,7 +153,7 @@ export class GeneratorComponent implements OnInit {
     return filteredTabList;
   }
 
-  generateSeed(fromPatchFile: boolean = false, webRaceSeed: boolean = false, goalHintsConfirmed: boolean = false) {
+  generateSeed(fromPatchFile: boolean = false, webRaceSeed: boolean = false, goalHintsConfirmed: boolean = false, noLogicConfirmed: boolean = false) {
 
     this.generateSeedButtonEnabled = false;
     this.seedString = this.seedString.trim().replace(/[^a-zA-Z0-9_-]/g, '');
@@ -176,6 +176,7 @@ export class GeneratorComponent implements OnInit {
     }
 
     let goalErrorText = "The selected hint distribution includes the Goal hint type. This can drastically increase generation time for large multiworld seeds. Continue?";
+    let noLogicErrorText = "You have selected No Logic. This can produce unbeatable seeds. Continue?";
     let goalDistros = this.global.getGlobalVar('generatorGoalDistros');
 
     if (!goalHintsConfirmed && goalDistros.indexOf(this.global.generator_settingsMap["hint_dist"]) > -1 && this.global.generator_settingsMap["world_count"] > 5) {
@@ -185,6 +186,23 @@ export class GeneratorComponent implements OnInit {
         //User acknowledged increased generation time for multiworld seeds with goal hints
         if (confirmed) {
           this.generateSeed(fromPatchFile, webRaceSeed, true);
+        }
+      });
+
+      this.generateSeedButtonEnabled = true;
+      this.cd.markForCheck();
+      this.cd.detectChanges();
+
+      return;
+    }
+
+    if (!noLogicConfirmed && this.global.generator_settingsMap["logic_rules"] === "none") {
+      this.dialogService.open(ConfirmationWindowComponent, {
+        autoFocus: true, closeOnBackdropClick: false, closeOnEsc: false, hasBackdrop: true, hasScroll: false, context: { dialogHeader: "No Logic Warning", dialogMessage: noLogicErrorText }
+      }).onClose.subscribe(confirmed => {
+        //User acknowledged possible unbeatability of no logic seeds
+        if (confirmed) {
+          this.generateSeed(fromPatchFile, webRaceSeed, goalHintsConfirmed, true);
         }
       });
 
@@ -824,7 +842,7 @@ export class GeneratorComponent implements OnInit {
   onDirectorySelectedWeb(event, setting: any) { //Web only
 
     let dirPickerMode: boolean = this.global.getGlobalVar("webSupportDirectoryPicker");
-    
+
     let fileList = event.currentTarget.files;
 
     if (!fileList || fileList.length < 1)
@@ -850,7 +868,7 @@ export class GeneratorComponent implements OnInit {
       if (nameParts.length > 0)
         displayName = `${nameParts.join(", ")} and ${lastNamePart}`;
       else
-        displayName = `${lastNamePart}`;   
+        displayName = `${lastNamePart}`;
     }
 
     //Set setting
