@@ -59,14 +59,14 @@ extern uint8_t CFG_FILE_SELECT_HASH[5];
 uint8_t password_index = 0;
 uint16_t tentatives = 0;
 uint16_t cooldown = 0;
-#define TEXT_WIDTH 8
-#define TEXT_HEIGHT 9
-#define BUTTON_WIDTH 12
-#define BUTTON_HEIGHT 12
+static const uint8_t TEXT_WIDTH = 8;
+static const uint8_t TEXT_HEIGHT = 9;
+static const uint8_t BUTTON_WIDTH = 12;
+static const uint8_t BUTTON_HEIGHT = 12;
 extern uint8_t PASSWORD[PASSWORD_LENGTH];
 uint8_t buffer_password[PASSWORD_LENGTH] = {0, 0, 0, 0, 0, 0,};
 
-uint8_t is_saved_password_clear(z64_menudata_t* menu_data) {
+bool is_saved_password_clear(z64_menudata_t* menu_data) {
     // Player can save in file 1 and use file 2 later, so we look at both of them.
     uint8_t fileOkPassword[2] = {1, 1};
     for (uint8_t slotFile = 0; slotFile < 2; slotFile++) {
@@ -79,16 +79,16 @@ uint8_t is_saved_password_clear(z64_menudata_t* menu_data) {
             }
         }
     }
-    return (fileOkPassword[0] || fileOkPassword[1]) ? 1 : 0;
+    return (fileOkPassword[0] || fileOkPassword[1]) ? true : false;
 }
 
-uint8_t is_buffer_password_clear() {
+bool is_buffer_password_clear() {
     for (uint8_t i = 0 ; i < PASSWORD_LENGTH; i++) {
         if (buffer_password[i] != PASSWORD[i]) {
-            return 0;
+            return false;
         }
     }
-    return 1;
+    return true;
 }
 
 void reset_buffer() {
@@ -106,7 +106,8 @@ void manage_password(z64_disp_buf_t* db, z64_menudata_t* menu_data) {
     if (cooldown > 0) {
         cooldown--;
     }
-    if (is_saved_password_clear(menu_data) == 0 && is_buffer_password_clear() == 0) { // Draw "Password locked" at the place of the Controls texture.
+    // Draw "Password locked" at the place of the Controls texture, and a key on the OK button, to display the lock.
+    if (!(is_saved_password_clear(menu_data)) && !(is_buffer_password_clear())) {
         int left = 90;
         int top = 204;
         int padding = 8;
@@ -125,14 +126,14 @@ void manage_password(z64_disp_buf_t* db, z64_menudata_t* menu_data) {
         sprite_draw(db, &quest_items_sprite, 0, left + TEXT_WIDTH + 2*padding + 15*font_sprite.tile_w, top - 2, BUTTON_WIDTH, BUTTON_HEIGHT);
         text_flush_size(db, TEXT_WIDTH, TEXT_HEIGHT, 0, 0);
     }
-    if (menu_data->menu_transition == 3) { // In the File 1/File 2 menu.
+    if (menu_data->menu_transition == SM_CONFIRM_FILE) {
         if (password_index == 0) {
-            if (menu_data->selected_sub_item == 0) { // On the Ok option.
+            if (menu_data->selected_sub_item == FS_BTN_CONFIRM_YES) {
                 if (z64_game.common.input[0].pad_pressed.a || z64_game.common.input[0].pad_pressed.s) {
                     if (is_saved_password_clear(menu_data) || is_buffer_password_clear()) {
                         // Load the game.
                         z64_PlaySFXID(NA_SE_SY_FSEL_DECIDE_L);
-                        menu_data->menu_transition = 6; // SM_FADE_OUT
+                        menu_data->menu_transition = SM_FADE_OUT;
                         Audio_StopCurrentMusic(0xF);
                     }
                     else {
@@ -154,7 +155,7 @@ void manage_password(z64_disp_buf_t* db, z64_menudata_t* menu_data) {
                 }
             }
         }
-        if (menu_data->selected_sub_item == 1) { // On the Cancel option, reproduce vanilla behaviour and reset the buffer password.
+        if (menu_data->selected_sub_item == FS_BTN_CONFIRM_QUIT) { // On the Cancel option, reproduce vanilla behaviour and reset the buffer password.
             if (z64_game.common.input[0].pad_pressed.a || z64_game.common.input[0].pad_pressed.s || z64_game.common.input[0].pad_pressed.b) {
                 z64_PlaySFXID(NA_SE_SY_FSEL_CLOSE);
                 menu_data->menu_transition++;
@@ -186,7 +187,7 @@ void manage_password(z64_disp_buf_t* db, z64_menudata_t* menu_data) {
             }
             else {
                 if (z64_game.common.input[0].pad_pressed.a) {
-                    if (menu_data->selected_sub_item == 0) {
+                    if (menu_data->selected_sub_item == FS_BTN_CONFIRM_YES) {
                         buffer_password[password_index - 1] = 1;
                         password_index++;
                     }
@@ -213,12 +214,12 @@ void manage_password(z64_disp_buf_t* db, z64_menudata_t* menu_data) {
                 }
                 if (z64_game.common.input[0].pad_pressed.b) {
                     if (password_index == 1) {
-                        z64_PlaySFXID(NA_SE_SY_ERROR);
+                        z64_PlaySFXID(NA_SE_SY_FSEL_CLOSE);
                         password_index = 0;
                     }
                     else {
+                        buffer_password[password_index] = 0;
                         password_index--;
-                        buffer_password[password_index - 1] = 0;
                     }
                 }
                 if (password_index > 6 && !is_buffer_password_clear()) {
