@@ -2725,7 +2725,7 @@ class SettingInfos:
         default        = False,
         gui_tooltip    = '''\
             Enabling this will include empty crates into the location
-            pool based on the Shuffle Pots setting chosen.
+            pool based on the Shuffle Crates setting chosen.
         ''',
         gui_params={
             "hide_when_disabled": True,
