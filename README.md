@@ -121,6 +121,7 @@ issue. You should always Hard Reset to avoid this issue entirely.
 * The name of the currently playing custom music will now be displayed.
 * New setting to control how dungeon rewards are shuffled.
 * The `Links Pocket` location is renamed to `ToT Reward from Rauru`, and a new setting has been added that controls whether it is skipped.
+* New option `Specific Rewards` for the `Pre-completed Dungeons Mode` setting, allowing the user to set dungeons to be precompleted depending on which medallion or stone they have. Not compatible with shuffled dungeon rewards.
 
 #### Bug Fixes
 * Goal hints can now hint items required to defeat Ganon even if they're not required for the rainbow bridge, Ganon's boss key, or the trials. These items will be hinted as being on the "path of the hero".
