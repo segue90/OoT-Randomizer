@@ -39,13 +39,12 @@ ActorAdditionalData* Actor_GetAdditionalData(z64_actor_t* actor) {
 // Store the flag using the pointer
 void Actor_BuildFlag(z64_actor_t* actor, xflag_t* flag, uint16_t actor_index, uint8_t subflag) {
     flag->scene = z64_game.scene_index;
-    if(z64_game.scene_index == 0x3E) {
+    if (z64_game.scene_index == 0x3E) {
         flag->grotto.room = actor->room_index;
         flag->grotto.grotto_id = z64_file.grotto_id & 0x1F;
         flag->grotto.flag = actor_index;
         flag->grotto.subflag = subflag;
-    }
-    else {
+    } else {
         flag->room = actor->room_index;
         flag->setup = curr_scene_setup;
         flag->flag = actor_index;
@@ -70,11 +69,11 @@ void Actor_After_UpdateAll_Hack(z64_actor_t* actor, z64_game_t* game) {
 void Actor_StoreFlag(z64_actor_t* actor, z64_game_t* game, xflag_t flag) {
     ActorAdditionalData* extra = Actor_GetAdditionalData(actor);
     flag = resolve_alternative_flag(&flag);
-    if(CURR_ACTOR_SPAWN_INDEX)
+    if (CURR_ACTOR_SPAWN_INDEX) {
         extra->actor_id = CURR_ACTOR_SPAWN_INDEX;
+    }
     override_t override = lookup_override_by_newflag(&flag);
-    switch(actor->actor_id)
-    {
+    switch (actor->actor_id) {
         // For the following actors we store the flag in the new space added to the actor.
         case OBJ_TSUBO:
         case EN_TUBO_TRAP:
@@ -85,8 +84,7 @@ void Actor_StoreFlag(z64_actor_t* actor, z64_game_t* game, xflag_t flag) {
         case EN_WONDER_ITEM:
         {
             // For these actors, only store the flag if there is a valid override
-            if(override.key.all)
-            {
+            if (override.key.all) {
                 extra->flag = flag;
             }
             break;
@@ -99,8 +97,7 @@ void Actor_StoreFlag(z64_actor_t* actor, z64_game_t* game, xflag_t flag) {
             // Don't really need to do this since we will recalculate the flag and check the override when spawning the subflags.
             extra->flag = flag;
         }
-        default:
-        {
+        default: {
             break;
         }
     }
@@ -119,8 +116,8 @@ void Actor_StoreFlagByIndex(z64_actor_t* actor, z64_game_t* game, uint16_t actor
 // Get an override for new flag. If the override doesn't exist, or flag has already been set, return 0.
 override_t get_newflag_override(xflag_t* flag) {
     override_t override = lookup_override_by_newflag(flag);
-    if(override.key.all != 0) {
-        if(!Get_NewFlag(flag)) {
+    if (override.key.all != 0) {
+        if (!Get_NewFlag(flag)) {
             return override;
         }
     }
@@ -133,30 +130,21 @@ void Actor_StoreChestType(z64_actor_t* actor, z64_game_t* game) {
     uint8_t* pChestType = NULL;
     override_t override = { 0 };
     xflag_t* flag = &(Actor_GetAdditionalData(actor)->flag);
-    if(actor->actor_id == OBJ_TSUBO) //Pots
-    {
+    if (actor->actor_id == OBJ_TSUBO) { // Pots
         override = get_newflag_override(flag);
         pChestType = &(((ObjTsubo*)actor)->chest_type);
-    }
-    else if(actor->actor_id == EN_TUBO_TRAP) // Flying Pots
-    {
+    } else if (actor->actor_id == EN_TUBO_TRAP) { // Flying Pots
         override = get_newflag_override(flag);
         pChestType = &(((EnTuboTrap*)actor)->chest_type);
-    }
-    else if(actor->actor_id == OBJ_KIBAKO2) // Large Crates
-    {
+    } else if (actor->actor_id == OBJ_KIBAKO2) { // Large Crates
         override = get_newflag_override(flag);
         pChestType = &(((ObjKibako2*)actor)->chest_type);
-    }
-    else if(actor->actor_id == OBJ_KIBAKO) // Small wooden crates
-    {
+    } else if (actor->actor_id == OBJ_KIBAKO) { // Small wooden crates
         override = get_newflag_override(flag);
         pChestType = &(((ObjKibako*)actor)->chest_type);
-    }
-    else if(actor->actor_id == OBJ_COMB)
-    {
+    } else if (actor->actor_id == OBJ_COMB) {
         override = get_newflag_override(flag);
-        pChestType = &(((ObjComb *)actor)->chest_type);
+        pChestType = &(((ObjComb*)actor)->chest_type);
     }
     if (override.key.all != 0 && pChestType != NULL) { // If we don't have an override key, then either this item doesn't have an override entry, or it has already been collected.
         if (POTCRATE_TEXTURES_MATCH_CONTENTS == PTMC_UNCHECKED && override.key.all > 0) { // For "unchecked" PTMC setting: Check if we have an override which means it wasn't collected.
@@ -206,11 +194,11 @@ bool spawn_override_silver_rupee(ActorEntry* actorEntry, z64_game_t* globalCtx, 
     *overridden = false;
     if (SHUFFLE_SILVER_RUPEES) { // Check if silver rupee shuffle is enabled.
         xflag_t flag = {
-        .scene = globalCtx->scene_index,
-        .setup = curr_scene_setup,
-        .room = globalCtx->room_index,
-        .flag = CURR_ACTOR_SPAWN_INDEX,
-        .subflag = 0
+            .scene = globalCtx->scene_index,
+            .setup = curr_scene_setup,
+            .room = globalCtx->room_index,
+            .flag = CURR_ACTOR_SPAWN_INDEX,
+            .subflag = 0,
         };
 
         flag = resolve_alternative_flag(&flag);
@@ -253,10 +241,9 @@ z64_actor_t* Player_SpawnEntry_Hack(void* actorCtx, ActorEntry* playerEntry, z64
 }
 
 // This is our entrypoint back into Actor_Spawn. Call/return this to spawn the actor
-extern z64_actor_t *Actor_Spawn_Continue(void* actorCtx, z64_game_t* globalCtx, int16_t actorId, float posX, float posY, float posZ, int16_t rotX, int16_t rotY, int16_t rotZ, int16_t params);
+extern z64_actor_t* Actor_Spawn_Continue(void* actorCtx, z64_game_t* globalCtx, int16_t actorId, float posX, float posY, float posZ, int16_t rotX, int16_t rotY, int16_t rotZ, int16_t params);
 
-z64_actor_t * Actor_Spawn_Hook(void* actorCtx, z64_game_t* globalCtx, int16_t actorId,
-                                float posX, float posY, float posZ, int16_t rotX, int16_t rotY, int16_t rotZ, int16_t params) {
+z64_actor_t* Actor_Spawn_Hook(void* actorCtx, z64_game_t* globalCtx, int16_t actorId, float posX, float posY, float posZ, int16_t rotX, int16_t rotY, int16_t rotZ, int16_t params) {
     bool continue_spawn = true;
 
     ActorEntry entry;
@@ -269,11 +256,10 @@ z64_actor_t * Actor_Spawn_Hook(void* actorCtx, z64_game_t* globalCtx, int16_t ac
     entry.rot.y = rotY;
     entry.rot.z = rotZ;
 
-    if(continue_spawn) {
+    if (continue_spawn) {
         z64_actor_t* spawned = Actor_Spawn_Continue(actorCtx, globalCtx, actorId, posX, posY, posZ, rotX, rotY, rotZ, params);
-        if(spawned) {
-            if(spawn_actor_with_flag)
-            {
+        if (spawned) {
+            if (spawn_actor_with_flag) {
                 Actor_StoreFlag(spawned, globalCtx, *spawn_actor_with_flag);
                 Actor_StoreChestType(spawned, globalCtx);
             }

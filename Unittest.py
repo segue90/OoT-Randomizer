@@ -882,7 +882,7 @@ class TestSceneFlags(unittest.TestCase):
             (45, 1), # Pot 4
             (46, 1), # Pot 5
         ]
-        test_encoded = [0,42,8,1,1,5]
+        test_encoded = [0, 42, 8, 1, 1, 5]
 
         flags, bits = build_room_xflags(room_locations)
         self.assertEqual(flags[41], 0)
