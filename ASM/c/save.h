@@ -1,9 +1,7 @@
 #ifndef SAVE_H
 #define SAVE_H
 #include <stdbool.h>
-
-#include "z64.h"
-#include "get_items.h"
+#include "override.h"
 
 // Struct for storing additional data in SRAM. This has to always be a multiple of 2 bytes long supposedly.
 typedef struct {
