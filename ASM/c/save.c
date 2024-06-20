@@ -242,7 +242,6 @@ void Sram_CopySave(z64_FileChooseContext_t* fileChooseCtx, SramContext* sramCtx)
 
 // Reimplementation of Sram_EraseSave. Actually just erase the entire slot and backup slot instead of create a new blank file
 void Sram_EraseSave(z64_FileChooseContext_t* fileChooseCtx, SramContext* sramCtx) {
-
     // Zero out the data in the primary slot
     int32_t offset = SRAM_SLOTS[fileChooseCtx->selectedFileIndex];
     z64_bzero(sramCtx->readBuff + offset, SLOT_SIZE);

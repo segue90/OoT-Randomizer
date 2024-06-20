@@ -64,22 +64,22 @@ static const uint8_t TEXT_HEIGHT = 9;
 static const uint8_t BUTTON_WIDTH = 12;
 static const uint8_t BUTTON_HEIGHT = 12;
 extern uint8_t PASSWORD[PASSWORD_LENGTH];
-uint8_t buffer_password[PASSWORD_LENGTH] = {0, 0, 0, 0, 0, 0,};
+uint8_t buffer_password[PASSWORD_LENGTH] = {0, 0, 0, 0, 0, 0};
 
 bool is_saved_password_clear(z64_menudata_t* menu_data) {
     // Player can save in file 1 and use file 2 later, so we look at both of them.
-    uint8_t fileOkPassword[2] = {1, 1};
+    bool fileOkPassword[2] = {true, true};
     for (uint8_t slotFile = 0; slotFile < 2; slotFile++) {
         z64_file_t* file = &menu_data->sram_buffer->primary_saves[slotFile].original_save;
         extended_savecontext_static_t* extended = &(((extended_sram_file_t*)file)->additional_save_data.extended);
         for (uint8_t i = 0 ; i < PASSWORD_LENGTH; i++) {
             if (extended->password[i] != PASSWORD[i]) {
-                fileOkPassword[slotFile] = 0;
+                fileOkPassword[slotFile] = false;
                 break;
             }
         }
     }
-    return (fileOkPassword[0] || fileOkPassword[1]) ? true : false;
+    return fileOkPassword[0] || fileOkPassword[1];
 }
 
 bool is_buffer_password_clear() {
@@ -107,15 +107,15 @@ void manage_password(z64_disp_buf_t* db, z64_menudata_t* menu_data) {
         cooldown--;
     }
     // Draw "Password locked" at the place of the Controls texture, and a key on the OK button, to display the lock.
-    if (!(is_saved_password_clear(menu_data)) && !(is_buffer_password_clear())) {
+    if (!is_saved_password_clear(menu_data) && !is_buffer_password_clear()) {
         int left = 90;
         int top = 204;
         int padding = 8;
 
         gDPPipeSync(db->p++);
         if (cooldown > 0) {
-            colorRGBA8_t color = { 0xFF, 0xFF, 0xFF, 0xFF};
-            draw_int_size(db, 1 + (cooldown / 60), left - 2*padding, top, color, 6, 12);
+            colorRGBA8_t color = {0xFF, 0xFF, 0xFF, 0xFF};
+            draw_int_size(db, 1 + cooldown / 60, left - 2 * padding, top, color, 6, 12);
         }
         gDPPipeSync(db->p++);
         gDPSetCombineMode(db->p++, G_CC_MODULATEIA_PRIM, G_CC_MODULATEIA_PRIM);
@@ -123,7 +123,7 @@ void manage_password(z64_disp_buf_t* db, z64_menudata_t* menu_data) {
         sprite_load(db, &quest_items_sprite, 17, 1);
         sprite_draw(db, &quest_items_sprite, 0, left, top - 2, BUTTON_WIDTH, BUTTON_HEIGHT);
         text_print_size("Password locked", left + TEXT_HEIGHT + padding, top, TEXT_WIDTH);
-        sprite_draw(db, &quest_items_sprite, 0, left + TEXT_WIDTH + 2*padding + 15*font_sprite.tile_w, top - 2, BUTTON_WIDTH, BUTTON_HEIGHT);
+        sprite_draw(db, &quest_items_sprite, 0, left + TEXT_WIDTH + 2 * padding + 15 * font_sprite.tile_w, top - 2, BUTTON_WIDTH, BUTTON_HEIGHT);
         text_flush_size(db, TEXT_WIDTH, TEXT_HEIGHT, 0, 0);
     }
     if (menu_data->menu_transition == SM_CONFIRM_FILE) {
@@ -135,14 +135,12 @@ void manage_password(z64_disp_buf_t* db, z64_menudata_t* menu_data) {
                         z64_PlaySFXID(NA_SE_SY_FSEL_DECIDE_L);
                         menu_data->menu_transition = SM_FADE_OUT;
                         Audio_StopCurrentMusic(0xF);
-                    }
-                    else {
+                    } else {
                         if (cooldown == 0) {
                             // Go to password screen.
                             password_index++;
                             return;
-                        }
-                        else {
+                        } else {
                             // Play an error sound until cooldown is finished.
                             z64_PlaySFXID(NA_SE_SY_ERROR);
                         }
@@ -184,14 +182,12 @@ void manage_password(z64_disp_buf_t* db, z64_menudata_t* menu_data) {
                 }
                 Sram_WriteSave(NULL, file);
                 return;
-            }
-            else {
+            } else {
                 if (z64_game.common.input[0].pad_pressed.a) {
                     if (menu_data->selected_sub_item == FS_BTN_CONFIRM_YES) {
                         buffer_password[password_index - 1] = 1;
                         password_index++;
-                    }
-                    else {
+                    } else {
                         z64_PlaySFXID(NA_SE_SY_FSEL_CLOSE);
                         menu_data->menu_transition++;
                     }
@@ -216,8 +212,7 @@ void manage_password(z64_disp_buf_t* db, z64_menudata_t* menu_data) {
                     if (password_index == 1) {
                         z64_PlaySFXID(NA_SE_SY_FSEL_CLOSE);
                         password_index = 0;
-                    }
-                    else {
+                    } else {
                         buffer_password[password_index] = 0;
                         password_index--;
                     }

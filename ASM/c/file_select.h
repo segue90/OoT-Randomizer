@@ -12,12 +12,12 @@ typedef enum {
     /* 4 */ SM_FADE_OUT_FILE_INFO,
     /* 5 */ SM_MOVE_FILE_TO_SLOT,
     /* 6 */ SM_FADE_OUT,
-    /* 7 */ SM_LOAD_GAME
+    /* 7 */ SM_LOAD_GAME,
 } SelectMode;
 
 typedef enum {
     /* 0 */ FS_BTN_CONFIRM_YES,
-    /* 1 */ FS_BTN_CONFIRM_QUIT
+    /* 1 */ FS_BTN_CONFIRM_QUIT,
 } ConfirmButtonIndex;
 
 void draw_file_select_hash(uint32_t fade_out_alpha, z64_menudata_t* menu_data);
