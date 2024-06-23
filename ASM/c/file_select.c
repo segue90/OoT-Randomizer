@@ -56,7 +56,7 @@ hash_symbol_t hash_symbols[32] = {
 
 extern uint8_t CFG_FILE_SELECT_HASH[5];
 
-uint8_t password_index = 0;
+int8_t password_index = -1;
 uint16_t tentatives = 0;
 uint16_t cooldown = 0;
 static const uint8_t TEXT_WIDTH = 8;
@@ -96,7 +96,7 @@ void reset_buffer() {
     if (is_buffer_password_clear()) {
         return;
     }
-    password_index = 0;
+    password_index = -1;
     for (uint8_t i = 0 ; i < PASSWORD_LENGTH; i++) {
         buffer_password[i] = 0;
     }
@@ -127,7 +127,7 @@ void manage_password(z64_disp_buf_t* db, z64_menudata_t* menu_data) {
         text_flush_size(db, TEXT_WIDTH, TEXT_HEIGHT, 0, 0);
     }
     if (menu_data->menu_transition == SM_CONFIRM_FILE) {
-        if (password_index == 0) {
+        if (password_index < 0) {
             if (menu_data->selected_sub_item == FS_BTN_CONFIRM_YES) {
                 if (z64_game.common.input[0].pad_pressed.a || z64_game.common.input[0].pad_pressed.s) {
                     if (is_saved_password_clear(menu_data) || is_buffer_password_clear()) {
@@ -161,7 +161,7 @@ void manage_password(z64_disp_buf_t* db, z64_menudata_t* menu_data) {
             }
         }
         // Password screen.
-        if (password_index > 0) {
+        if (password_index > -1) {
             uint8_t left_password = 0x37;
             uint8_t top_password = 0x5C;
 
@@ -172,7 +172,7 @@ void manage_password(z64_disp_buf_t* db, z64_menudata_t* menu_data) {
             text_flush_size(db, TEXT_WIDTH, TEXT_HEIGHT, 0, 0);
 
             if (is_buffer_password_clear()) {
-                password_index = 0;
+                password_index = -1;
                 z64_PlaySFXID(NA_SE_SY_CORRECT_CHIME);
                 // Write the password in save context.
                 extended_sram_file_t* file = &(menu_data->sram_buffer->primary_saves[menu_data->selected_file]);
@@ -185,7 +185,7 @@ void manage_password(z64_disp_buf_t* db, z64_menudata_t* menu_data) {
             } else {
                 if (z64_game.common.input[0].pad_pressed.a) {
                     if (menu_data->selected_sub_item == FS_BTN_CONFIRM_YES) {
-                        buffer_password[password_index - 1] = 1;
+                        buffer_password[password_index] = 1;
                         password_index++;
                     } else {
                         z64_PlaySFXID(NA_SE_SY_FSEL_CLOSE);
@@ -193,32 +193,31 @@ void manage_password(z64_disp_buf_t* db, z64_menudata_t* menu_data) {
                     }
                 }
                 if (z64_game.common.input[0].pad_pressed.cd) {
-                    buffer_password[password_index - 1] = 2;
+                    buffer_password[password_index] = 2;
                     password_index++;
                 }
                 if (z64_game.common.input[0].pad_pressed.cr) {
-                    buffer_password[password_index - 1] = 3;
+                    buffer_password[password_index] = 3;
                     password_index++;
                 }
                 if (z64_game.common.input[0].pad_pressed.cl) {
-                    buffer_password[password_index - 1] = 4;
+                    buffer_password[password_index] = 4;
                     password_index++;
                 }
                 if (z64_game.common.input[0].pad_pressed.cu) {
-                    buffer_password[password_index - 1] = 5;
+                    buffer_password[password_index] = 5;
                     password_index++;
                 }
                 if (z64_game.common.input[0].pad_pressed.b) {
-                    if (password_index == 1) {
+                    password_index--;
+                    if (password_index < 0) {
                         z64_PlaySFXID(NA_SE_SY_FSEL_CLOSE);
                         reset_buffer();
-                        password_index = 0;
                     } else {
-                        password_index--;
-                        buffer_password[password_index - 1] = 0;
+                        buffer_password[password_index] = 0;
                     }
                 }
-                if (password_index > 6 && !is_buffer_password_clear()) {
+                if (password_index > 5 && !is_buffer_password_clear()) {
                     tentatives++;
                     // Penalty cooldown every 3 tries, starting from the 6th one.
                     // File select is 60 fps, so 10sec.
@@ -231,7 +230,7 @@ void manage_password(z64_disp_buf_t* db, z64_menudata_t* menu_data) {
             }
             // Draw the password buttons.
             sprite_load(db, &ocarina_button_sprite, 0, 5);
-            for (uint8_t i = 0 ; i < password_index; i++) {
+            for (uint8_t i = 0 ; i < password_index + 1; i++) {
                 gDPSetPrimColor(db->p++, 0, 0, 0xF4, 0xEC, 0x30, 0xFF); // Yellow C buttons
                 if (buffer_password[i] - 1 == 0) { // A is blue
                     gDPSetPrimColor(db->p++, 0, 0, 0x00, 0x00, 0xFF, 0xFF);
@@ -272,7 +271,7 @@ void draw_file_select_hash(uint32_t fade_out_alpha, z64_menudata_t* menu_data) {
     }
 
     draw_file_message(db, menu_data);
-    if (password_index == 0) {
+    if (password_index < 0) {
         draw_file_icons(db, menu_data);
     }
     display_song_name_on_file_select(db);
