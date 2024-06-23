@@ -211,10 +211,11 @@ void manage_password(z64_disp_buf_t* db, z64_menudata_t* menu_data) {
                 if (z64_game.common.input[0].pad_pressed.b) {
                     if (password_index == 1) {
                         z64_PlaySFXID(NA_SE_SY_FSEL_CLOSE);
+                        reset_buffer();
                         password_index = 0;
                     } else {
-                        buffer_password[password_index] = 0;
                         password_index--;
+                        buffer_password[password_index - 1] = 0;
                     }
                 }
                 if (password_index > 6 && !is_buffer_password_clear()) {
