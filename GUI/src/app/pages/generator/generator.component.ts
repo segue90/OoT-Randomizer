@@ -153,7 +153,7 @@ export class GeneratorComponent implements OnInit {
     return filteredTabList;
   }
 
-  generateSeed(fromPatchFile: boolean = false, webRaceSeed: boolean = false, goalHintsConfirmed: boolean = false, noLogicConfirmed: boolean = false) {
+  generateSeed(fromPatchFile: boolean = false, webRaceSeed: boolean = false, goalHintsConfirmed: boolean = false) {
 
     this.generateSeedButtonEnabled = false;
     this.seedString = this.seedString.trim().replace(/[^a-zA-Z0-9_-]/g, '');
@@ -196,13 +196,15 @@ export class GeneratorComponent implements OnInit {
       return;
     }
 
-    if (!noLogicConfirmed && this.global.generator_settingsMap["logic_rules"] === "none") {
+    let noLogicConfirmed = localStorage.getItem("noLogicConfirmed")
+    if ((!noLogicConfirmed || noLogicConfirmed == "false") && this.global.generator_settingsMap["logic_rules"] === "none") {
       this.dialogService.open(ConfirmationWindowComponent, {
         autoFocus: true, closeOnBackdropClick: false, closeOnEsc: false, hasBackdrop: true, hasScroll: false, context: { dialogHeader: "No Logic Warning", dialogMessage: noLogicErrorText }
       }).onClose.subscribe(confirmed => {
         //User acknowledged possible unbeatability of no logic seeds
         if (confirmed) {
-          this.generateSeed(fromPatchFile, webRaceSeed, goalHintsConfirmed, true);
+          localStorage.setItem("noLogicConfirmed", JSON.stringify(true))
+          this.generateSeed(fromPatchFile, webRaceSeed, goalHintsConfirmed);
         }
       });
 
