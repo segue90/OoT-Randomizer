@@ -1536,6 +1536,21 @@ export class GUIGlobal implements OnDestroy {
         throw err;
     }
 
+    //If no logic was intentionally enabled, warn user one time about the consequences
+    try {
+      let logicWarningSeen = localStorage.getItem("logicWarningSeen");
+
+      if ((!logicWarningSeen || logicWarningSeen == "false") && settingsFile["logic_rules"] == "none") {
+        localStorage.setItem("logicWarningSeen", JSON.stringify(true));
+        throw { error_no_logic_enabled: "Choosing no logic can require glitches to complete the seed or in very unlikely cases be unbeatable. Continue?" };
+      }
+    }
+    catch (err) { //Bubble through in case the warning should be displayed, ignore if local storage is not available
+      if (err.hasOwnProperty('error_no_logic_enabled'))
+        throw err;
+    }
+
+
     console.log(settingsFile);
     console.log("Race Seed:", raceSeed);
 
