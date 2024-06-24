@@ -196,14 +196,14 @@ export class GeneratorComponent implements OnInit {
       return;
     }
 
-    let noLogicConfirmed = localStorage.getItem("noLogicConfirmed")
+    let noLogicConfirmed = localStorage.getItem("noLogicConfirmed");
     if ((!noLogicConfirmed || noLogicConfirmed == "false") && this.global.generator_settingsMap["logic_rules"] === "none") {
       this.dialogService.open(ConfirmationWindowComponent, {
         autoFocus: true, closeOnBackdropClick: false, closeOnEsc: false, hasBackdrop: true, hasScroll: false, context: { dialogHeader: "No Logic Warning", dialogMessage: noLogicErrorText }
       }).onClose.subscribe(confirmed => {
         //User acknowledged possible unbeatability of no logic seeds
         if (confirmed) {
-          localStorage.setItem("noLogicConfirmed", JSON.stringify(true))
+          localStorage.setItem("noLogicConfirmed", JSON.stringify(true));
           this.generateSeed(fromPatchFile, webRaceSeed, goalHintsConfirmed);
         }
       });
