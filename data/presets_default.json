@@ -2226,6 +2226,7 @@
         "user_message": "No Logic Weekly",
         "world_count": 1,
         "create_spoiler": true,
+        "password_lock": false,
         "randomize_settings": false,
         "logic_rules": "none",
         "reachable_locations": "all",
