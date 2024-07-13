@@ -55,7 +55,6 @@ void draw_file_message(z64_disp_buf_t* db, const z64_menudata_t* menu_data) {
 
         text_print_size(db, "World", left, 24 - TEXT_HEIGHT, TEXT_WIDTH, TEXT_HEIGHT);
         text_print_size(db, WORLD_STRING_TXT, left, 24, TEXT_WIDTH, TEXT_HEIGHT);
-        text_flush_size(db, TEXT_WIDTH, TEXT_HEIGHT, 0, 0);
     }
 
     if (CFG_SHOW_SETTING_INFO) {
@@ -87,7 +86,6 @@ void draw_file_message(z64_disp_buf_t* db, const z64_menudata_t* menu_data) {
                 print_msg(db, "Plandomizer",        &top);
             }
 
-            text_flush_size(db, TEXT_WIDTH, TEXT_HEIGHT, 0, 0);
         }
     }
 }

@@ -300,7 +300,6 @@ void draw_dungeon_info(z64_disp_buf_t* db) {
             int top = start_top + ((icon_size + padding) * i) + 1;
             text_print_size(db, d->name, left, top, font_width, font_height);
         }
-        text_flush_size(db, font_width, font_height, 0, 0);
 
         left += ((SHUFFLE_CHEST_GAME == 1 ? 11 : 8) * font_width) + padding;
 
@@ -328,7 +327,6 @@ void draw_dungeon_info(z64_disp_buf_t* db) {
                 int top = start_top + ((icon_size + padding) * i) + 1;
                 text_print_size(db, count, left, top, font_width, font_height);
             }
-            text_flush_size(db, font_width, font_height, 0, 0);
 
             left += (4 * font_width) + padding;
 
@@ -431,7 +429,6 @@ void draw_dungeon_info(z64_disp_buf_t* db) {
 
             left += (6 * font_width) + padding;
         }
-        text_flush_size(db, font_width, font_height, 0, 0);
 
         if (CFG_DUNGEON_INFO_SILVER_RUPEES) {
             // Draw silver rupee icons
@@ -914,7 +911,6 @@ void draw_dungeon_info(z64_disp_buf_t* db) {
     }
 
     // Finish
-    text_flush(db);
 }
 
 int dungeon_info_is_drawn() {

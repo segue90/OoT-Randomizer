@@ -1,6 +1,5 @@
 /* Addresses should be listed in order */
 z64_EquippedItemOutlineTex = 0x2000E00;
-DmaMgr_RequestSync = 0x80000df0;
 z64_Gfx_SetupDL_42Opa = 0x8007E868;
 z64_ItemIcons = 0x800F8D2C;
 z64_SfxDefaultPos = 0x80104394;
