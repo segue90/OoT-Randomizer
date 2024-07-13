@@ -14,8 +14,6 @@ typedef struct {
     uint32_t top : 12;
 } text_char_t;
 
-uint8_t font_textures[NUM_FONT_CHARS * FONT_CHAR_TEX_WIDTH * FONT_CHAR_TEX_HEIGHT / 2] __attribute__ ((aligned (8)));
-
 void print_char(z64_disp_buf_t* db, char c, int x, int y, int width, int height) {
     sprite_texture(db, &font_sprite, (c - ' '), x, y, width, height);
 }
@@ -23,7 +21,7 @@ void print_char(z64_disp_buf_t* db, char c, int x, int y, int width, int height)
 int text_print_size(z64_disp_buf_t* db, const char* s, int left, int top, int width, int height) {
     while(*s != 0x00) {
         print_char(db, *s, left, top, width, height);
-        left += 8;
+        left += width;
         s++;
     }
 

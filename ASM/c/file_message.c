@@ -72,7 +72,7 @@ void draw_file_message(z64_disp_buf_t* db, const z64_menudata_t* menu_data) {
                 doblank = 1;
             }
             if (doblank) {
-                print_msg(db,"",                   &top);
+                print_msg(db, "",                   &top);
             }
             print_msg(db, "Generated with OoTR",    &top);
             print_msg(db, VERSION_STRING_TXT,       &top);
