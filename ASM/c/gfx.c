@@ -7,6 +7,10 @@ extern uint8_t FONT_RESOURCE[];
 extern uint8_t DPAD_RESOURCE[];
 extern uint8_t TRIFORCE_SPRITE_RESOURCE[];
 
+z64_disp_buf_t* rando_db __attribute__ ((aligned (16)));
+z64_disp_buf_t rando_display_buffer_mem __attribute__ ((aligned (16)));
+Gfx rando_dl_buffer[0x1000] __attribute__ ((aligned (16)));
+
 Gfx setup_db[] = {
     gsDPPipeSync(),
 
@@ -214,6 +218,12 @@ void sprite_draw(z64_disp_buf_t* db, sprite_t* sprite, int tile_index,
             width_factor, height_factor);
 }
 
+void rando_display_buffer_init() {
+    rando_db = &rando_display_buffer_mem;
+    rando_db->buf = rando_dl_buffer;
+    rando_db->p = &rando_db->buf[0];
+}
+
 void gfx_init() {
     file_t title_static = {
         NULL, z64_file_select_static_vaddr, z64_file_select_static_vsize
@@ -266,4 +276,6 @@ void gfx_init() {
         font_sprite.buf[2*i] = (FONT_RESOURCE[i] >> 4) | 0xF0;
         font_sprite.buf[2*i + 1] = FONT_RESOURCE[i] | 0xF0;
     }
+
+    rando_display_buffer_init();
 }

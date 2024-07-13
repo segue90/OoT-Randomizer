@@ -48,18 +48,30 @@ void before_game_state_update() {
     display_misc_messages();
 }
 
+void close_rando_display_buffer() {
+    OPEN_DISPS(z64_ctxt.gfx);
+
+    gSPEndDisplayList(rando_db->p++);
+    gSPDisplayList(OVERLAY_DISP++, rando_db->buf);
+
+    CLOSE_DISPS();
+
+    rando_db->p = &rando_db->buf[0];
+}
+
 void after_game_state_update() {
     // Checks if the prerender screen is being drawn before drawing new HUD things.
     // Else this will cause graphical and/or lag issues on some emulators when pausing.
     if (R_PAUSE_BG_PRERENDER_STATE != PAUSE_BG_PRERENDER_PROCESS) {
-        draw_dungeon_info(&(z64_ctxt.gfx->overlay));
-        draw_triforce_count(&(z64_ctxt.gfx->overlay));
-        draw_boss_key(&z64_game, &(z64_ctxt.gfx->overlay));
-        draw_silver_rupee_count(&z64_game, &(z64_ctxt.gfx->overlay));
-        draw_illegal_model_text(&(z64_ctxt.gfx->overlay));
-        draw_input_viewer(&(z64_ctxt.gfx->overlay));
-        display_song_name(&(z64_ctxt.gfx->overlay));
-        debug_utilities(&(z64_ctxt.gfx->overlay));
+        draw_dungeon_info(rando_db);
+        draw_triforce_count(rando_db);
+        draw_boss_key(&z64_game, rando_db);
+        draw_silver_rupee_count(&z64_game, rando_db);
+        draw_illegal_model_text(rando_db);
+        draw_input_viewer(rando_db);
+        display_song_name(rando_db);
+        debug_utilities(rando_db);
+        close_rando_display_buffer();
     }
     give_sage_gifts();
 }
