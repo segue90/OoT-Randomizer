@@ -142,10 +142,10 @@ void display_song_name(z64_disp_buf_t* db) {
                 subStringNameLength++;
             }
             gDPSetPrimColor(db->p++, 0, 0, 0, 0, 0, alpha);
-            text_print_size(subStringName, left + 1, top + 1, TEXT_WIDTH);
+            text_print_size(db, subStringName, left + 1, top + 1, TEXT_WIDTH, TEXT_HEIGHT);
             text_flush_size(db, TEXT_WIDTH, TEXT_HEIGHT, 0, 0);
             gDPSetPrimColor(db->p++, 0, 0, 255, 255, 255, alpha);
-            text_print_size(subStringName, left, top, TEXT_WIDTH);
+            text_print_size(db, subStringName, left, top, TEXT_WIDTH, TEXT_HEIGHT);
             text_flush_size(db, TEXT_WIDTH, TEXT_HEIGHT, 0, 0);
         }
     }
@@ -167,10 +167,10 @@ void display_song_name_on_file_select(z64_disp_buf_t* db) {
             subStringNameLength++;
         }
         gDPSetPrimColor(db->p++, 0, 0, 0, 0, 0, alpha);
-        text_print_size(subStringName, left + 1, top + 1, TEXT_WIDTH);
+        text_print_size(db, subStringName, left + 1, top + 1, TEXT_WIDTH, TEXT_HEIGHT);
         text_flush_size(db, TEXT_WIDTH, TEXT_HEIGHT, 0, 0);
         gDPSetPrimColor(db->p++, 0, 0, 255, 255, 255, alpha);
-        text_print_size(subStringName, left, top, TEXT_WIDTH);
+        text_print_size(db, subStringName, left, top, TEXT_WIDTH, TEXT_HEIGHT);
         text_flush_size(db, TEXT_WIDTH, TEXT_HEIGHT, 0, 0);
     }
 }

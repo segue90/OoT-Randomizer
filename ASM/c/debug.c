@@ -340,7 +340,7 @@ void draw_debug_menu(z64_disp_buf_t *db) {
                 menu_category_t *d = &(menu_categories[i]);
                 int top = start_top + ((icon_size + padding) * i) + 1;
                 if (i != current_menu_indexes.main_index) {
-                    text_print_size(d->name, left, top, font_width);
+                    text_print_size(db, d->name, left, top, font_width, font_height);
                 }
             }
             text_flush_size(db, font_width, font_height, 0, 0);
@@ -348,7 +348,7 @@ void draw_debug_menu(z64_disp_buf_t *db) {
             gDPSetPrimColor(db->p++, 0, 0, 0xE0, 0xE0, 0x10 , 0xFF);
             menu_category_t *d = &(menu_categories[current_menu_indexes.main_index]);
             int top = start_top + ((icon_size + padding) * current_menu_indexes.main_index) + 1;
-            text_print_size(d->name, left, top, font_width);
+            text_print_size(db, d->name, left, top, font_width, font_height);
             text_flush_size(db, font_width, font_height, 0, 0);
         }
         else {
@@ -360,7 +360,7 @@ void draw_debug_menu(z64_disp_buf_t *db) {
                         warp_t *d = &(dungeon_warps[i]);
                         int top = start_top + ((icon_size + padding) * i) + 1;
                         if (i != current_menu_indexes.dungeon_index) {
-                            text_print_size(d->name, left, top, font_width);
+                            text_print_size(db, d->name, left, top, font_width, font_height);
                         }
                     }
                     text_flush_size(db, font_width, font_height, 0, 0);
@@ -368,7 +368,7 @@ void draw_debug_menu(z64_disp_buf_t *db) {
                     gDPSetPrimColor(db->p++, 0, 0, 0xE0, 0xE0, 0x10, 0xFF);
                     warp_t *d = &(dungeon_warps[current_menu_indexes.dungeon_index]);
                     int top = start_top + ((icon_size + padding) * current_menu_indexes.dungeon_index) + 1;
-                    text_print_size(d->name, left, top, font_width);
+                    text_print_size(db, d->name, left, top, font_width, font_height);
                     text_flush_size(db, font_width, font_height, 0, 0);
                     break;
 
@@ -379,14 +379,14 @@ void draw_debug_menu(z64_disp_buf_t *db) {
                             warp_t *d = &(overworld_warps[i]);
                             int top = start_top + ((icon_size + padding) * i) + 1;
                             if (i != current_menu_indexes.overworld_index) {
-                                text_print_size(d->name, left, top, font_width);
+                                text_print_size(db, d->name, left, top, font_width, font_height);
                             }
                         }
                         text_flush_size(db, font_width, font_height, 0, 0);
                         gDPSetPrimColor(db->p++, 0, 0, 0xE0, 0xE0, 0x10, 0xFF);
                         d = &(overworld_warps[current_menu_indexes.overworld_index]);
                         top = start_top + ((icon_size + padding) * current_menu_indexes.overworld_index) + 1;
-                        text_print_size(d->name, left, top, font_width);
+                        text_print_size(db, d->name, left, top, font_width, font_height);
                         text_flush_size(db, font_width, font_height, 0, 0);
                     }
                     else {
@@ -394,7 +394,7 @@ void draw_debug_menu(z64_disp_buf_t *db) {
                             warp_t *d = &(overworld_warps[i + 10]);
                             int top = start_top + ((icon_size + padding) * i) + 1;
                             if (i + 10 != current_menu_indexes.overworld_index) {
-                                text_print_size(d->name, left, top, font_width);
+                                text_print_size(db, d->name, left, top, font_width, font_height);
                             }
                         }
                         text_flush_size(db, font_width, font_height, 0, 0);
@@ -402,7 +402,7 @@ void draw_debug_menu(z64_disp_buf_t *db) {
                         gDPSetPrimColor(db->p++, 0, 0, 0xE0, 0xE0, 0x10, 0xFF);
                         d = &(overworld_warps[current_menu_indexes.overworld_index]);
                         top = start_top + ((icon_size + padding) * (current_menu_indexes.overworld_index - 10)) + 1;
-                        text_print_size(d->name, left, top, font_width);
+                        text_print_size(db, d->name, left, top, font_width, font_height);
                         text_flush_size(db, font_width, font_height, 0, 0);
                     }
                     break;
@@ -412,7 +412,7 @@ void draw_debug_menu(z64_disp_buf_t *db) {
                         warp_t *d = &(bosses_warps[i]);
                         int top = start_top + ((icon_size + padding) * i) + 1;
                         if (i != current_menu_indexes.boss_index) {
-                            text_print_size(d->name, left, top, font_width);
+                            text_print_size(db, d->name, left, top, font_width, font_height);
                         }
                     }
                     text_flush_size(db, font_width, font_height, 0, 0);
@@ -420,7 +420,7 @@ void draw_debug_menu(z64_disp_buf_t *db) {
                     gDPSetPrimColor(db->p++, 0, 0, 0xE0, 0xE0, 0x10, 0xFF);
                     d = &(bosses_warps[current_menu_indexes.boss_index]);
                     top = start_top + ((icon_size + padding) * current_menu_indexes.boss_index) + 1;
-                    text_print_size(d->name, left, top, font_width);
+                    text_print_size(db, d->name, left, top, font_width, font_height);
                     text_flush_size(db, font_width, font_height, 0, 0);
                     break;
                 case 3: // Items
@@ -430,7 +430,7 @@ void draw_debug_menu(z64_disp_buf_t *db) {
                             item_t *dd = &(items_debug[i]);
                             int top = start_top + ((icon_size + padding) * i) + 1;
                             if (i != current_menu_indexes.item_index) {
-                                text_print_size(dd->name, left, top, font_width);
+                                text_print_size(db, dd->name, left, top, font_width, font_height);
                             }
                         }
                         text_flush_size(db, font_width, font_height, 0, 0);
@@ -438,7 +438,7 @@ void draw_debug_menu(z64_disp_buf_t *db) {
                         gDPSetPrimColor(db->p++, 0, 0, 0xE0, 0xE0, 0x10, 0xFF);
                         item_t *dd = &(items_debug[current_menu_indexes.item_index]);
                         top = start_top + ((icon_size + padding) * current_menu_indexes.item_index) + 1;
-                        text_print_size(dd->name, left, top, font_width);
+                        text_print_size(db, dd->name, left, top, font_width, font_height);
                         text_flush_size(db, font_width, font_height, 0, 0);
                     }
                     if (current_menu_indexes.item_index > 9 && current_menu_indexes.item_index < 20) {
@@ -446,7 +446,7 @@ void draw_debug_menu(z64_disp_buf_t *db) {
                             item_t *dd = &(items_debug[i + 10]);
                             int top = start_top + ((icon_size + padding) * i) + 1;
                             if (i + 10 != current_menu_indexes.item_index) {
-                                text_print_size(dd->name, left, top, font_width);
+                                text_print_size(db, dd->name, left, top, font_width, font_height);
                             }
                         }
                         text_flush_size(db, font_width, font_height, 0, 0);
@@ -454,7 +454,7 @@ void draw_debug_menu(z64_disp_buf_t *db) {
                         gDPSetPrimColor(db->p++, 0, 0, 0xE0, 0xE0, 0x10 , 0xFF);
                         item_t *dd = &(items_debug[current_menu_indexes.item_index]);
                         top = start_top + ((icon_size + padding) * (current_menu_indexes.item_index - 10)) + 1;
-                        text_print_size(dd->name, left, top, font_width);
+                        text_print_size(db, dd->name, left, top, font_width, font_height);
                         text_flush_size(db, font_width, font_height, 0, 0);
                     }
                     if (current_menu_indexes.item_index > 19 && current_menu_indexes.item_index < 28) {
@@ -462,7 +462,7 @@ void draw_debug_menu(z64_disp_buf_t *db) {
                             item_t *dd = &(items_debug[i + 20]);
                             int top = start_top + ((icon_size + padding) * i) + 1;
                             if (i + 20 != current_menu_indexes.item_index) {
-                                text_print_size(dd->name, left, top, font_width);
+                                text_print_size(db, dd->name, left, top, font_width, font_height);
                             }
                         }
                         text_flush_size(db, font_width, font_height, 0, 0);
@@ -470,7 +470,7 @@ void draw_debug_menu(z64_disp_buf_t *db) {
                         gDPSetPrimColor(db->p++, 0, 0, 0xE0, 0xE0, 0x10 , 0xFF);
                         item_t *dd = &(items_debug[current_menu_indexes.item_index]);
                         top = start_top + ((icon_size + padding) * (current_menu_indexes.item_index - 20)) + 1;
-                        text_print_size(dd->name, left, top, font_width);
+                        text_print_size(db, dd->name, left, top, font_width, font_height);
                         text_flush_size(db, font_width, font_height, 0, 0);
                     }
                     break;
@@ -506,7 +506,7 @@ int draw_int_helper(z64_disp_buf_t *db, int32_t number, int16_t left, int16_t to
     // Set the color
     gDPSetPrimColor(db->p++, 0, 0, color.r, color.g, color.b, color.a);
     if (isNegative) {
-        text_print_size("-", left - rupee_digit_sprite.tile_w, top, 8);
+        text_print_size(db, "-", left - rupee_digit_sprite.tile_w, top, 8, 16);
         text_flush_size(db, 8, 16, 0, 0);
     }
     // Draw each digit
@@ -575,7 +575,7 @@ void draw_debug_numbers(z64_disp_buf_t *db) {
 
         colorRGBA8_t color = { debug_text_color.r, debug_text_color.g, debug_text_color.b, 0xFF};
         int numberDigit = draw_int_helper(db, entireValue, debug_text_x_placement, height + offsetY, color);
-        text_print_size(".", debug_text_x_placement + numberDigit * rupee_digit_sprite.tile_w, height + offsetY, rupee_digit_sprite.tile_w);
+        text_print_size(db, ".", debug_text_x_placement + numberDigit * rupee_digit_sprite.tile_w, height + offsetY, rupee_digit_sprite.tile_w, rupee_digit_sprite.tile_h);
         text_flush_size(db, rupee_digit_sprite.tile_w, rupee_digit_sprite.tile_h, 0, 0);
         draw_int_helper(db, decimalValue, debug_text_x_placement + numberDigit * rupee_digit_sprite.tile_w + font_sprite.tile_w,
                         height + offsetY, color);

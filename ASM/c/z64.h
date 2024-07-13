@@ -2434,4 +2434,6 @@ typedef void(*z64_Play_SetupRespawnPoint_proc)(z64_game_t *game, int32_t respawn
 #define ITEMGETINF_3B 0x3B
 #define ITEMGETINF_3F 0x3F
 
+extern int32_t DmaMgr_RequestSync(void* ram, uint32_t* vrom, unsigned long size);
+
 #endif
