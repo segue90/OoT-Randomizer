@@ -8,8 +8,6 @@ extern uint8_t DPAD_RESOURCE[];
 extern uint8_t TRIFORCE_SPRITE_RESOURCE[];
 
 z64_disp_buf_t* rando_db __attribute__ ((aligned (16)));
-z64_disp_buf_t rando_display_buffer_mem __attribute__ ((aligned (16)));
-Gfx rando_dl_buffer[0x1000] __attribute__ ((aligned (16)));
 
 Gfx setup_db[] = {
     gsDPPipeSync(),
@@ -219,8 +217,8 @@ void sprite_draw(z64_disp_buf_t* db, sprite_t* sprite, int tile_index,
 }
 
 void rando_display_buffer_init() {
-    rando_db = &rando_display_buffer_mem;
-    rando_db->buf = rando_dl_buffer;
+    rando_db = heap_alloc(sizeof(z64_disp_buf_t));
+    rando_db->buf = heap_alloc(0x1000);
     rando_db->p = &rando_db->buf[0];
 }
 

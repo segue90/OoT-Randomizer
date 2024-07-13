@@ -51,11 +51,10 @@ void close_rando_display_buffer() {
     OPEN_DISPS(z64_ctxt.gfx);
 
     gSPEndDisplayList(rando_db->p++);
+    rando_db->p = &rando_db->buf[0];
     gSPDisplayList(OVERLAY_DISP++, rando_db->buf);
 
     CLOSE_DISPS();
-
-    rando_db->p = &rando_db->buf[0];
 }
 
 void after_game_state_update() {
@@ -70,8 +69,8 @@ void after_game_state_update() {
         draw_input_viewer(rando_db);
         display_song_name(rando_db);
         debug_utilities(rando_db);
-        close_rando_display_buffer();
     }
+    close_rando_display_buffer();
     give_sage_gifts();
 }
 
