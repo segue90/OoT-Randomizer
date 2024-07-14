@@ -3446,8 +3446,8 @@ class SettingInfos:
     invisible_chests = Checkbutton(
         gui_text       = 'Invisible Chests',
         gui_tooltip    = '''\
-            Chests will be only be visible with
-            the Lens of Truth. Lens is not logically
+            Chests will only be visible with the
+            Lens of Truth. Lens is not logically
             required for normally visible chests.
         ''',
         shared         = True,
