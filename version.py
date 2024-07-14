@@ -1,4 +1,4 @@
-__version__ = '8.1.52'
+__version__ = '8.1.53'
 
 # This is a supplemental version number for branches based off of main dev.
 supplementary_version = 0

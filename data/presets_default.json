@@ -1779,13 +1779,13 @@
             "Claim Check"
         ]
     },
-    "League S6": {
+    "League S7": {
         "aliases": [
             "league",
-            "league_s6"
+            "league_s7"
         ],
         "show_seed_info": true,
-        "user_message": "OoTR League S6",
+        "user_message": "OoTR League S7",
         "world_count": 1,
         "create_spoiler": false,
         "randomize_settings": false,
@@ -1834,7 +1834,7 @@
         "gerudo_fortress": "fast",
         "dungeon_shortcuts_choice": "off",
         "dungeon_shortcuts": [],
-        "starting_age": "adult",
+        "starting_age": "random",
         "mq_dungeons_mode": "vanilla",
         "mq_dungeons_specific": [],
         "mq_dungeons_count": 0,
@@ -1852,7 +1852,8 @@
         "owl_drops": false,
         "warp_songs": false,
         "spawn_positions": [
-            "child"
+            "child",
+            "adult"
         ],
         "free_bombchu_drops": false,
         "one_item_per_dungeon": false,
@@ -1860,7 +1861,7 @@
         "shopsanity": "off",
         "shopsanity_prices": "random",
         "tokensanity": "off",
-        "shuffle_scrubs": "off",
+        "shuffle_scrubs": "low",
         "shuffle_child_trade": [],
         "shuffle_freestanding_items": "off",
         "shuffle_pots": "off",
@@ -1880,7 +1881,17 @@
         "shuffle_loach_reward": "off",
         "logic_no_night_tokens_without_suns_song": false,
         "disabled_locations": [
-            "Deku Theater Mask of Truth"
+            "Deku Theater Mask of Truth",
+            "Song from Impa",
+            "Dodongos Cavern Deku Scrub Lobby",
+            "Dodongos Cavern Deku Scrub Near Bomb Bag Right",
+            "Dodongos Cavern Deku Scrub Near Bomb Bag Left",
+            "Dodongos Cavern Deku Scrub Side Room Near Dodongos",
+            "Jabu Jabus Belly Deku Scrub",
+            "Ganons Castle Deku Scrub Center-Left",
+            "Ganons Castle Deku Scrub Center-Right",
+            "Ganons Castle Deku Scrub Right",
+            "Ganons Castle Deku Scrub Left"
         ],
         "allowed_tricks": [
             "logic_fewer_tunic_requirements",
@@ -1903,7 +1914,9 @@
         "starting_equipment": [
             "deku_shield"
         ],
-        "starting_songs": [],
+        "starting_songs": [
+            "prelude"
+        ],
         "starting_inventory": [
             "ocarina",
             "lens",
@@ -1921,10 +1934,10 @@
         "complete_mask_quest": false,
         "useful_cutscenes": false,
         "fast_chests": true,
-        "free_scarecrow": true,
+        "free_scarecrow": false,
         "fast_bunny_hood": true,
         "auto_equip_masks": false,
-        "plant_beans": false,
+        "plant_beans": true,
         "chicken_count_random": false,
         "chicken_count": 3,
         "big_poe_count_random": false,
