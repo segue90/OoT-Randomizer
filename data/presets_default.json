@@ -1887,7 +1887,11 @@
             "Dodongos Cavern Deku Scrub Near Bomb Bag Right",
             "Dodongos Cavern Deku Scrub Near Bomb Bag Left",
             "Dodongos Cavern Deku Scrub Side Room Near Dodongos",
-            "Jabu Jabus Belly Deku Scrub"
+            "Jabu Jabus Belly Deku Scrub",
+            "Ganons Castle Deku Scrub Center-Left",
+            "Ganons Castle Deku Scrub Center-Right",
+            "Ganons Castle Deku Scrub Right",
+            "Ganons Castle Deku Scrub Left"
         ],
         "allowed_tricks": [
             "logic_fewer_tunic_requirements",
