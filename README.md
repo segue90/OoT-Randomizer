@@ -119,6 +119,7 @@ issue. You should always Hard Reset to avoid this issue entirely.
 * The `Links Pocket` location is renamed to `ToT Reward from Rauru`, and a new setting has been added that controls whether it is skipped.
 * New option `Specific Rewards` for the `Pre-completed Dungeons Mode` setting, allowing the user to set dungeons to be precompleted depending on which medallion or stone they have. Not compatible with shuffled dungeon rewards.
 * New settings to `Include Empty Pots` and `Include Empty Crates` when pots and crates are shuffled respectively.
+* New settings preset for the No Logic Weekly.
 
 #### Other New Features
 * A text box has been added when completing the adult shooting gallery without a bow to warn the player that they haven't received the real reward.
