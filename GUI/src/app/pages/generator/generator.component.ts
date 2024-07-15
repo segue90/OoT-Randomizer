@@ -196,23 +196,27 @@ export class GeneratorComponent implements OnInit {
       return;
     }
 
-    let noLogicConfirmed = localStorage.getItem("noLogicConfirmed");
-    if ((!noLogicConfirmed || noLogicConfirmed == "false") && this.global.generator_settingsMap["logic_rules"] === "none") {
-      this.dialogService.open(ConfirmationWindowComponent, {
-        autoFocus: true, closeOnBackdropClick: false, closeOnEsc: false, hasBackdrop: true, hasScroll: false, context: { dialogHeader: "No Logic Warning", dialogMessage: noLogicErrorText }
-      }).onClose.subscribe(confirmed => {
-        //User acknowledged possible unbeatability of no logic seeds
-        if (confirmed) {
-          localStorage.setItem("noLogicConfirmed", JSON.stringify(true));
-          this.generateSeed(fromPatchFile, webRaceSeed, goalHintsConfirmed);
-        }
-      });
+    try {
+      let noLogicConfirmed = localStorage.getItem("noLogicConfirmed");
+      if ((!noLogicConfirmed || noLogicConfirmed == "false") && this.global.generator_settingsMap["logic_rules"] === "none") {
+        this.dialogService.open(ConfirmationWindowComponent, {
+          autoFocus: true, closeOnBackdropClick: false, closeOnEsc: false, hasBackdrop: true, hasScroll: false, context: { dialogHeader: "No Logic Warning", dialogMessage: noLogicErrorText }
+        }).onClose.subscribe(confirmed => {
+          //User acknowledged possible unbeatability of no logic seeds
+          if (confirmed) {
+            localStorage.setItem("noLogicConfirmed", JSON.stringify(true));
+            this.generateSeed(fromPatchFile, webRaceSeed, goalHintsConfirmed);
+          }
+        });
 
-      this.generateSeedButtonEnabled = true;
-      this.cd.markForCheck();
-      this.cd.detectChanges();
+        this.generateSeedButtonEnabled = true;
+        this.cd.markForCheck();
+        this.cd.detectChanges();
 
-      return;
+        return;
+      }
+    } catch (e) {
+      //Browser doesn't allow localStorage access
     }
 
     if (this.global.getGlobalVar('electronAvailable')) { //Electron
