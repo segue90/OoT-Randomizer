@@ -200,7 +200,7 @@ void sprite_texture_4b(z64_disp_buf_t *db, sprite_t *sprite, int tile_index, int
     );
 
     gSPTextureRectangle(db->p++, left * 4, top * 4, (left + width) * 4,
-        (top * height) * 4, G_TX_RENDERTILE, 0, 0, width_factor, height_factor);
+        (top + height) * 4, G_TX_RENDERTILE, 0, 0, width_factor, height_factor);
 }
 
 void sprite_draw(z64_disp_buf_t* db, sprite_t* sprite, int tile_index,
