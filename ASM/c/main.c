@@ -48,7 +48,15 @@ void before_game_state_update() {
 }
 
 void close_rando_display_buffer() {
+    char error_msg[256];
+
     OPEN_DISPS(z64_ctxt.gfx);
+
+    if (((int) rando_db->p - (int) rando_db->buf) > rando_db->size) {
+        sprintf(error_msg, "size = %x\nmax = %x\np = %p\nbuf = %p\nd = %p", ((int) rando_db->p - (int) rando_db->buf),
+                rando_db->size, rando_db->p, rando_db->buf, rando_db->d);
+        Fault_AddHungupAndCrashImpl("Randomizer display buffer exceeded!", error_msg);
+    }
 
     gSPEndDisplayList(rando_db->p++);
     rando_db->p = &rando_db->buf[0];
