@@ -116,11 +116,6 @@ void draw_debug_float(int whichNumber, float numberToShow) {
 
 void debug_utilities(z64_disp_buf_t *db)
 {
-
-    if (!DEBUG_MODE){
-        return;
-    }
-
     // Press L to levitate
     // Shoutouts to glankk
     if (z64_game.common.input[0].raw.pad.l) {

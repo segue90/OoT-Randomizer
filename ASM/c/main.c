@@ -52,6 +52,18 @@ void close_rando_display_buffer() {
 
     OPEN_DISPS(z64_ctxt.gfx);
 
+#if DEBUG_MODE
+    if (((int) debug_db->p - (int) debug_db->buf) > debug_db->size) {
+        sprintf(error_msg, "size = %x\nmax = %x\np = %p\nbuf = %p\nd = %p", ((int) debug_db->p - (int) debug_db->buf),
+                debug_db->size, debug_db->p, debug_db->buf, debug_db->d);
+        Fault_AddHungupAndCrashImpl("Debug display buffer exceeded!", error_msg);
+    }
+
+    gSPEndDisplayList(debug_db->p++);
+    debug_db->p = &debug_db->buf[0];
+    gSPDisplayList(OVERLAY_DISP++, debug_db->buf);
+#endif
+
     if (((int) rando_db->p - (int) rando_db->buf) > rando_db->size) {
         sprintf(error_msg, "size = %x\nmax = %x\np = %p\nbuf = %p\nd = %p", ((int) rando_db->p - (int) rando_db->buf),
                 rando_db->size, rando_db->p, rando_db->buf, rando_db->d);
@@ -76,7 +88,9 @@ void after_game_state_update() {
         draw_illegal_model_text(rando_db);
         draw_input_viewer(rando_db);
         display_song_name(rando_db);
-        debug_utilities(rando_db);
+#if DEBUG_MODE
+        debug_utilities(debug_db);
+#endif
     }
     close_rando_display_buffer();
     give_sage_gifts();

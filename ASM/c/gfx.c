@@ -1,5 +1,6 @@
 #include "gfx.h"
 
+#include "debug.h"
 #include "util.h"
 #include "z64.h"
 
@@ -9,6 +10,11 @@ extern uint8_t TRIFORCE_SPRITE_RESOURCE[];
 
 z64_disp_buf_t* rando_db __attribute__ ((aligned (16)));
 const unsigned int RANDO_DB_SIZE = 0x4000;
+
+#if DEBUG_MODE
+z64_disp_buf_t* debug_db __attribute__ ((aligned (16)));
+const unsigned int DEBUG_DB_SIZE = 0x2000;
+#endif
 
 Gfx setup_db[] = {
     gsDPPipeSync(),
@@ -218,6 +224,12 @@ void sprite_draw(z64_disp_buf_t* db, sprite_t* sprite, int tile_index,
 }
 
 void rando_display_buffer_init() {
+#if DEBUG_MODE
+    debug_db = heap_alloc(sizeof(z64_disp_buf_t));
+    debug_db->size = DEBUG_DB_SIZE;
+    debug_db->buf = heap_alloc(DEBUG_DB_SIZE);
+    debug_db->p = &debug_db->buf[0];
+#endif
     rando_db = heap_alloc(sizeof(z64_disp_buf_t));
     rando_db->size = RANDO_DB_SIZE;
     rando_db->buf = heap_alloc(RANDO_DB_SIZE);
