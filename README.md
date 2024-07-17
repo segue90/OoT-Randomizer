@@ -120,6 +120,7 @@ issue. You should always Hard Reset to avoid this issue entirely.
 * New option `Specific Rewards` for the `Pre-completed Dungeons Mode` setting, allowing the user to set dungeons to be precompleted depending on which medallion or stone they have. Not compatible with shuffled dungeon rewards.
 * New settings to `Include Empty Pots` and `Include Empty Crates` when pots and crates are shuffled respectively.
 * New settings preset for the No Logic Weekly.
+* New plando-only `password_lock` setting to require a password to start the seed. The password is a sequence of 6 button presses (A and C) shown near the top of the spoiler log.
 
 #### Other New Features
 * A text box has been added when completing the adult shooting gallery without a bow to warn the player that they haven't received the real reward.

@@ -571,6 +571,18 @@ class SettingInfos:
             ''',
     )
 
+    password_lock = Checkbutton(
+        gui_text         = "Lock Seed Behind Password",
+        gui_tooltip      = '''\
+            Starting the seed will be locked behind a password provided in the spoiler log.
+            The password is a sequence of 6 button presses (A and C).
+        ''',
+        shared           = True,
+        gui_params       = {
+            'optional': True,
+        },
+    )
+
     # Main Rules (and "Guarantee Reachable Locations")
 
     randomize_settings = Checkbutton(
