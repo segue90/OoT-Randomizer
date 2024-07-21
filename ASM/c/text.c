@@ -2,7 +2,7 @@
 
 #include "gfx.h"
 #include "util.h"
-#include "z64.h"\
+#include "z64.h"
 
 const int FONT_CHAR_TEX_WIDTH = 16;
 const int FONT_CHAR_TEX_HEIGHT = 16;
@@ -19,7 +19,7 @@ void print_char(z64_disp_buf_t* db, char c, int x, int y, int width, int height)
 }
 
 int text_print_size(z64_disp_buf_t* db, const char* s, int left, int top, int width, int height) {
-    while(*s != 0x00) {
+    while (*s != 0x00) {
         print_char(db, *s, left, top, width, height);
         left += width;
         s++;
