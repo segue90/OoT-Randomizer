@@ -273,7 +273,7 @@ void close_rando_display_buffer() {
 
     gSPEndDisplayList(rando_overlay_db.p++);
     gSPDisplayList(OVERLAY_DISP++, rando_overlay_db.buf);
-    
+
     CLOSE_DISPS();
     randoGfxPoolIndex++;
 }
