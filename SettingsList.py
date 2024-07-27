@@ -3911,7 +3911,7 @@ class SettingInfos:
         gui_text       = 'Shuffle All Selected Adult Trade Items',
         gui_tooltip    = '''\
             Enable to shuffle every selected Adult Trade Item.
-            
+
             If disabled and at least one of "Shuffle Adult Trade
             Sequence Items" is selected, Anju will always give
             a shuffled item even if Pocket Egg has not been shuffled.
@@ -3938,11 +3938,11 @@ class SettingInfos:
             'Claim Check':  'Claim Check',
         },
         gui_tooltip    = '''\
-            Select the Adult Trade Sequence items to shuffle. 
-            
-            If "Shuffle All Selected Adult Trade Items" is 
+            Select the Adult Trade Sequence items to shuffle.
+
+            If "Shuffle All Selected Adult Trade Items" is
             enabled, every selected item will be shuffled.
-            
+
             If "Shuffle All Selected Adult Trade Items" is
             disabled, only one of the selected items will be
             shuffled. If the Odd Mushroom, Eyeball Frog, or
